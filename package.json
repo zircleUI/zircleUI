@@ -19,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tinchox5/zircleUI.git"
+    "url": "git+https://github.com/zircleui/zircleUI.git"
   },
   "bugs": {
-    "url": "https://github.com/tinchox5/zircleUI/issues"
+    "url": "https://github.com/zircleUI/zircleUI/issues"
   },
-  "homepage": "https://github.com/tinchox5/zircleUI#readme",
+  "homepage": "https://github.com/zircleUI/zircleUI#readme",
   "license": {
     "type": "MIT",
     "url": "http://www.opensource.org/licenses/mit-license.php"

@@ -1,36 +1,43 @@
-# zircle
+# zircleUI
 
-> A Vue.js project
+[![npm](https://img.shields.io/npm/v/zircle.svg)](https://www.npmjs.com/package/zircle) [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
 
-## Build Setup
+> A circular zooming UI
 
-``` bash
-# install dependencies
-npm install
+## WIP
 
-# serve with hot reload at localhost:8080
-npm run dev
+## Installation
 
-# build for production with minification
-npm run build
-```
-# Demo
-
-> joya
-# Vue demo
-
-# Vue guide
-
-`v-for` usage.
-
-``` html
-<ul>
-  <li v-for="i in 10">{{ i }}</li>
-</ul>
+```bash
+npm install zircle --save 
 ```
 
-<ul>
-  <li v-for="i in 10">{{ i }}</li>
-</ul>
+## Usage
 
-# Demodos
+### Bundler (Webpack, Rollup)
+
+```js
+import Vue from 'vue'
+import zircleUI from 'zircle'
+// You need a specific loader for CSS files like https://github.com/webpack/css-loader
+import 'zircle/dist/zircle.min.css'
+
+Vue.use(zircleUI)
+```
+
+### Browser
+
+```html
+<!-- Include after Vue -->
+<!-- Local files -->
+<link rel="stylesheet" href="zircle/dist/zircle.min.css"></link>
+<script src="zircle/dist/zircle.min.js"></script>
+
+<!-- From CDN -->
+<link rel="stylesheet" href="https://unpkg.com/zircle/dist/zircle.min.css"></link>
+<script src="https://unpkg.com/zircle"></script>
+```
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
