@@ -19,7 +19,6 @@ npm install zircle --save
 ```js
 import Vue from 'vue'
 import zircleUI from 'zircle'
-// You need a specific loader for CSS files like https://github.com/webpack/css-loader
 import 'zircle/dist/zircle.min.css'
 
 Vue.use(zircleUI)
