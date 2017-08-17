@@ -1,6 +1,6 @@
 {
   "name": "zircle",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A circular zooming UI",
   "author": "tinchox5 <martinmuda@gmail.com>",
   "main": "dist/zircle.min.js",
