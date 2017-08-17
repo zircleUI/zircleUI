@@ -1,0 +1,32 @@
+{
+  "name": "zircle",
+  "version": "0.0.1",
+  "description": "A circular zooming UI",
+  "author": "tinchox5 <martinmuda@gmail.com>",
+  "main": "dist/zircle.min.js",
+  "module": "dist/zircle.min.js",
+  "browser": "dist/zircle.min.js",
+  "unpkg": "dist/zircle.min.js",
+  "style": "dist/zircle.min.css",
+  "files": [
+    "dist",
+    "src",
+    "docs"
+  ],
+  "keywords": [],
+  "dependencies": {
+    "vue": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tinchox5/zircleUI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tinchox5/zircleUI/issues"
+  },
+  "homepage": "https://github.com/tinchox5/zircleUI#readme",
+  "license": {
+    "type": "MIT",
+    "url": "http://www.opensource.org/licenses/mit-license.php"
+  }
+}
