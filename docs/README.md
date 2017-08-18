@@ -4,7 +4,7 @@
 
 > A circular zooming UI
 
-## WIP
+!> WIP
 
 ## Installation
 
@@ -13,16 +13,6 @@ npm install zircle --save
 ```
 
 ## Usage
-
-### Bundler (Webpack, Rollup)
-
-```js
-import Vue from 'vue'
-import zircleUI from 'zircle'
-import 'zircle/dist/zircle.min.css'
-
-Vue.use(zircleUI)
-```
 
 ### Browser
 
@@ -37,6 +27,17 @@ Vue.use(zircleUI)
 <script src="https://unpkg.com/zircle"></script>
 ```
 
+### Bundler (Webpack, Rollup)
+
+```js
+import Vue from 'vue'
+import zircleUI from 'zircle'
+import 'zircle/dist/zircle.min.css'
+
+Vue.use(zircleUI)
+```
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
+<iframe width="560" height="315" src="demos/browser/index.html" frameborder="0"></iframe>
