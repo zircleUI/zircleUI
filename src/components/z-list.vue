@@ -1,6 +1,8 @@
 <template>
+  
  <section title="z-list">
    <z-item 
+    :color="color"
     size="small"
     :distance="60"
     v-for="(item, index) in items"
@@ -15,7 +17,6 @@
         {{item}}
       </slot>
     </z-item>
-<!-- hacer un navigation mas simple: total, perpage, current -->
     <z-pagination  
     :collection="collection"
     :per-page="perPage"
@@ -39,7 +40,7 @@ export default {
   data () {
     return {
       items: [],
-      type: 'maindisc' // esto es para evitar que se compute mal position y escala
+      type: 'panel' // esto es para evitar que se compute mal position y escala
     }
   },
   methods: {
@@ -49,9 +50,4 @@ export default {
     }
   }
 }
-// trabajar con la escala y el grosor de las lineas para que sean uniformes aunque tenga diferentes tamanos
 </script>
-
-<style>
-
-</style>

@@ -1,14 +1,13 @@
 <template>
-<section>
-  <svg viewBox="0 0 100 100" version="1.1" class="scroll" 
-  >
-    <circle class="bar" r="50" cx="50" cy="50"  :style="[styles2]" 
-  @click="point"
- ></circle>
+<section >
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="scroll" @click="point">
+   
+    <circle r="50" cx="50" cy="50"  :style="[styles2]" ></circle>
+  </svg>
   
   </svg>
 
-  <svg version="1.1" class="scroll2" :style="[classesContent3]" 
+  <svg xmlns="http://www.w3.org/2000/svg" class="scroll2"  :style="[classesContent3]" 
   @touchstart="drag = true"
   @touchmove.prevent="slide" 
   @touchend="drag = false"
@@ -16,8 +15,7 @@
   @mousemove="slide" 
   @mouseup="drag = false"
   >
-   <circle r="8" cx="20" cy="20" class="handlebar" 
-    ></circle> 
+   <circle r="10" cx="20" cy="20" class="handlebar"></circle> 
   </svg>
 </section>
 </template>
@@ -31,49 +29,38 @@ export default {
   data () {
     return {
       type: 'scroll',
-      drag: false,
-      duration: 0.05
+      drag: false
     }
   },
   computed: {
-    anglex () {
-      return this.$root.store.state.scroll
-    },
     styles2 () {
       // progress circle
       var circleLength = 2 * Math.PI * 50
+      // progress circle
       return {
         transformOrigin: '50% 50%',
         transform: 'rotate(-45deg)',
-        transitionDuration: '1s',
-        transitionTimingFunction: 'ease-in-out',
         strokeDasharray: circleLength,
-        strokeDashoffset: ((100 - 25) / 100) * circleLength,
-        strokeWidth: '4px',
-        strokeOpacity: '0.6',
-        fill: 'none',
-        stroke: 'gray'
+        // strokeDashoffset: circleLength,
+        strokeDashoffset: -(Math.PI * 100) * ((90 - 360) / 360),
+        strokeWidth: 3
       }
     },
     position () {
       return {
-        X: (this.state.zircleWidth.xl / 2.04) * Math.cos(this.scrollVal * (Math.PI / 180)),
-        Y: (this.state.zircleWidth.xl / 2.04) * Math.sin(this.scrollVal * (Math.PI / 180))
+        X: ((this.state.zircleWidth.xl / 2) - 3) * Math.cos(this.scrollVal * (Math.PI / 180)),
+        Y: ((this.state.zircleWidth.xl / 2) - 3) * Math.sin(this.scrollVal * (Math.PI / 180))
       }
     },
     classesContent3 () {
       return {
         transformOrigin: '50% 50%',
-        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)',
-        fill: 'gray'
+        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
       }
     }
   },
   methods: {
     point (e) {
-      this.$nextTick(function () {
-        this.duration = 1
-      })
       const dimensions = this.$el.querySelector('.scroll').getBoundingClientRect()
       var centerx = (dimensions.width / 2) + dimensions.left
       var centery = (dimensions.height / 2) + dimensions.top
@@ -94,10 +81,6 @@ export default {
       }
       tangle = Math.round(tangle) - 45
       this.$emit('update:scrollVal', tangle)
-      // this.state.scroll = tangle
-      this.$nextTick(function () {
-        this.duration = 0.05
-      })
     },
     slide (e) {
       if (this.drag === true) {
@@ -122,20 +105,9 @@ export default {
         }
         tangle = Math.round(tangle) - 45
         this.$emit('update:scrollVal', tangle)
-        // this.state.scroll = tangle
       }
     }
   }
 }
 </script>
 
-<style scoped>
-.handlebar:hover {
-cursor: grab;
-}
-.handlebar:active {
-cursor: grabbing;
-}
-
-
-</style>

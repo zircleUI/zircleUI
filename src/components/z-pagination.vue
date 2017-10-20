@@ -1,9 +1,11 @@
 <template>
  <section title="z-pagination" style="z-index:9000;">
   <z-dotnav v-for="(page, index) in pages"
+  color="accent"
   :key="index"
   :total="pages.length"
   :index="index"
+  :active="active"
   size="xxs" 
   :distance="112" 
   @click.native="changePage(index)">
@@ -12,7 +14,13 @@
 </template>
 
 <script>
-import _ from 'lodash'
+function chunk (myArray, chunkSize) {
+  var results = []
+  while (myArray.length) {
+    results.push(myArray.splice(0, chunkSize))
+  }
+  return results
+}
 import zmixin from '../mixins/zircle-mixin'
 export default {
   name: 'z-pagination',
@@ -21,13 +29,15 @@ export default {
   data () {
     return {
       type: 'pagination',
-      arc: 'half'
+      arc: 'half',
+      active: 0
     }
   },
   methods: {
     changePage (index) {
       let data = this.pages[index]
       let progress = (index + 1) / this.pages.length * 100
+      this.active = index
       this.$emit('updateItems', {
         data: data,
         progress: progress
@@ -36,7 +46,7 @@ export default {
   },
   computed: {
     pages () {
-      return _.chunk(this.collection, this.perPage)
+      return chunk(this.collection, this.perPage)
     }
   },
   mounted () {
@@ -45,6 +55,3 @@ export default {
 }
 </script>
 
-<style>
-
-</style>

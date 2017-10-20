@@ -1,20 +1,14 @@
 <template>
- <section title="z-dotnav">
-  <div class="zui disc" :type="type" :class="[classes]"  :style="styles"> 
-  <div class="navplate" ></div>
-    <div class="content">
-      <slot></slot>
-    </div>
-   
+
+  <div title="z-dotnav" class="zui disc" :type="type" :class="[classes, activated]"  :style="styles.main"> 
+  <div class="navplate" :style="styles.plate"></div>
   </div>
-</section>
 </template>
 
 <script>
-// eliminar props: msg (eso se hace en cada view), ver temitas de slots...
 import zmixin from '../mixins/zircle-mixin'
 export default {
-  name: 'z-disc',
+  name: 'z-scale',
   mixins: [zmixin],
   props: {
     type: {
@@ -28,13 +22,18 @@ export default {
     index: {
       type: Number,
       default: 0
-    }
-  },
-  data () {
-    return {
+    },
+    active: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
+    activated () {
+      return {
+        'accent-secondary': this.active >= this.index
+      }
+    },
     styles () {
       switch (this.size) {
         case 'large':
@@ -54,19 +53,19 @@ export default {
           break
       }
       return {
-        width: zwidth + 'px',
-        height: zwidth + 'px',
-        margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
-        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+        main: {
+          width: zwidth + 'px',
+          height: zwidth + 'px',
+          margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
+          transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+        },
+        plate: {
+          width: zwidth + 10 + 'px',
+          height: zwidth + 10 + 'px',
+          margin: -((zwidth + 10) / 2) + 'px 0 0 ' + -((zwidth + 10) / 2) + 'px'
+        }
       }
     }
-  },
-  methods: {
   }
 }
-// trabajar con la escala y el grosor de las lineas para que sean uniformes aunque tenga diferentes tamanos
 </script>
-
-<style>
-
-</style>

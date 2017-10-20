@@ -1,19 +1,16 @@
 <template>
- <section title="z-button">
-  <div class="zui disc" :class="[classes]" :style="styles"> 
-    <div class="content">
+  <div title="z-button" class="zui disc button" :class="[classes]" :style="styles"> 
+    <div class="z-content">
       <slot></slot>
     </div>
+    <slot name="circles"></slot>
   </div>
-</section>
 </template>
 
 <script>
-// eliminar props: msg (eso se hace en cada view), ver temitas de slots...
 import zmixin from '../mixins/zircle-mixin'
 export default {
   mixins: [zmixin],
-  // props: ['label'],
   name: 'z-button',
   data () {
     return {
@@ -48,9 +45,5 @@ export default {
     }
   }
 }
-// trabajar con la escala y el grosor de las lineas para que sean uniformes aunque tenga diferentes tamanos
 </script>
 
-<style>
-  
-</style>

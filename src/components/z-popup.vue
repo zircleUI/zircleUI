@@ -1,41 +1,29 @@
 <template>
-<transition name="popup">
- <section title="popup">
- 
-  <div type="popup" class="zui pop" :class="[classes]" :style="styles" style="background: none;" @click.stop=""> 
-    <z-slider strokeWidth="4px" :progress="progress"></z-slider>
-    <div class="plate" style="filter: blur(2px); opacity: 0.65; background-color: #f5f5f5;"></div>
-    <div class="contentbox dashed" style="opacity: 0.95; background-color: #fff;">
-    <div class=" content" :class="[classesContent]">
-      <slot name='content'></slot>
-      <p class="bottom"></p>
+
+ <transition name="popup">
+  <div type="popup" class="zui pop" :class="[classes]" :style="styles.main"> 
+    <z-slider :progress="progress"></z-slider>
+    <div class="popup-plate" :style="styles.plate"></div>
+    <div class="z-contentbox dashed">
+    <div class="z-content">
+      <section>
+           <slot></slot>
+      </section>
     </div>
-    </div>
-    <slot></slot>
-    <z-button
-    size="xxs"
-    :distance="135"
-    :angle="-45"
-    @click.native="close"
-    >
-       
-          <i class="fa fa-close"></i>
-       
-    </z-button>
-     
   </div>
-</section>
+   <slot name="circles"></slot>
+</div>
 </transition>
+
 </template>
 
 <script>
-// eliminar props: msg (eso se hace en cada view), ver temitas de slots...
 import zmixin from '../mixins/zircle-mixin'
 export default {
   mixins: [zmixin],
   name: 'z-popup',
   mounted () {
-    var id = setInterval(frame, 300)
+    var id = setInterval(frame, 100)
     var vm = this
     function frame () {
       if (vm.progress >= 100) {
@@ -57,14 +45,16 @@ export default {
   computed: {
     styles () {
       return {
-        width: this.state.zircleWidth.xl + 50 + 'px',
-        height: this.state.zircleWidth.xl + 50 + 'px',
-        margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px',
-        transform: 'translate3d(' + this.$parent.position.X + 'px, ' + this.$parent.position.Y + 'px, 0px) scale(' + this.$parent.position.scalei + ')'
-      }
-    },
-    classesContent () {
-      return {
+        main: {
+          width: this.state.zircleWidth.xl + 50 + 'px',
+          height: this.state.zircleWidth.xl + 50 + 'px',
+          margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
+        },
+        plate: {
+          width: this.state.zircleWidth.xl + 150 + 'px',
+          height: this.state.zircleWidth.xl + 150 + 'px',
+          margin: -((this.state.zircleWidth.xl + 150) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 150) / 2) + 'px'
+        }
       }
     }
   },

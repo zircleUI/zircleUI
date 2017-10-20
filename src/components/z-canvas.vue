@@ -1,8 +1,8 @@
 <template>
-  <div id="container" @click.stop="goback">
-  <div id="point">
-   <slot> </slot>
-  </div>
+  <div id="z-container" @click.stop="goback" :class="$zircleStore.state.theme" :style="[state.previousView !== '' ? {cursor: 'zoom-out'} : {}]">
+    <div id="z-point">
+     <slot> </slot>
+    </div>
   </div>
 </template>
 
@@ -10,15 +10,11 @@
 /* eslint-disable no-new */
 import store from '../store/store'
 export default {
-  components: {
-  },
   data () {
     return {
       state: store.state,
       store: store
     }
-  },
-  computed: {
   },
   methods: {
     goback () {
@@ -41,35 +37,3 @@ export default {
   }
 }
 </script>
-
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-#container{
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  background: radial-gradient(circle, white, #c5c5c5);
-}
-#point{
- color: #2c3e50;
- font-family: sans-serif;
- font-size: 20px;
- position: fixed;
- top: 50%; left: 50%;
- perspective: 800px;
-}
-
-#point a {
-  color: #42b983;
-  text-decoration: none;
-}
-
-
-
-
-</style>

@@ -1,13 +1,13 @@
 <template>
-   <section title="z-item">
-    <div class="zui disc" :class="[classes]" :style="styles.main" @click.stop="move"> 
-      <div class="contentbox flow" :style="styles.label">
-        <div class="content flow" style="overflow: visible;">
+  
+    <div title="z-item" class="zui disc" :class="[classes]" :style="styles.main" @click.stop="move"> 
+      <div class="z-contentbox label" :style="styles.label" style="overflow: visible;">
+        <div class="z-content" style="overflow: visible;">
           <slot></slot>
         </div>
       </div>
     </div>
-  </section>
+  
 </template>
 
 <script>
@@ -52,9 +52,7 @@ export default {
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
         },
         label: {
-          fontSize: '11px',
-          top: zwidth / 2 + 10 + 'px',
-          overflow: 'visible'
+          top: zwidth / 2 + 10 + 'px'
         }
       }
     }
@@ -74,11 +72,8 @@ export default {
           go: go,
           next: true
         }
-        // this.state.position = position
-        // console.log('go: ' + go)
         if (this.state.router === true) {
           this.state.shadowPosition = position
-          // this.store.setAppPos(position)
           if (id !== undefined) {
             this.$router.push({name: go, params: {id: id}})
           } else {
@@ -88,13 +83,10 @@ export default {
           this.store.setAppPos(position)
         }
       } else {
-        console.error(' D NO HACE NADA')
+        // no action
       }
     }
   }
 }
 </script>
 
-<style>
-
-</style>
