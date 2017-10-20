@@ -1,8 +1,10 @@
 import store from './store/store'
-import zmaindisc from './components/z-maindisc.vue'
-import zdisc from './components/z-disc.vue'
+import zstyle from './css/z-style.vue'
+import zpanel from './components/z-panel.vue'
+import zscale from './components/z-scale.vue'
 import zitem from './components/z-item.vue'
 import zcanvas from './components/z-canvas.vue'
+import zviewmanager from './components/z-view-manager.vue'
 import ztransition from './transitions/z-transition.vue'
 import zpopup from './components/z-popup.vue'
 import zbutton from './components/z-button.vue'
@@ -19,9 +21,11 @@ const zircle = {
         return store
       }
     })
+    Vue.component('z-style', zstyle)
     Vue.component('z-canvas', zcanvas)
-    Vue.component('z-maindisc', zmaindisc)
-    Vue.component('z-disc', zdisc)
+    Vue.component('z-view-manager', zviewmanager)
+    Vue.component('z-panel', zpanel)
+    Vue.component('z-scale', zscale)
     Vue.component('z-dotnav', zdotnav)
     Vue.component('z-pagination', zpagination)
     Vue.component('z-list', zlist)

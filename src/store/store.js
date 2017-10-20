@@ -1,4 +1,3 @@
-import _ from 'lodash'
 var store = {
   state: {
     position: {
@@ -11,16 +10,14 @@ var store = {
     },
     currentView: '',
     previousView: '',
+    pastView: '',
     history: [],
     cache: [],
     lastViewCache: {
       view: ''
     },
     alert: false,
-    activePage: 0,
-    slider: 0,
-    scroll: -45,
-    mode: '',
+    mode: 'forward',
     router: false,
     shadowPosition: {
     },
@@ -31,7 +28,8 @@ var store = {
       s: 30,
       xs: 20,
       xxs: 20
-    }
+    },
+    theme: 'theme--dark'
   },
   routerHooks (data) {
     let vm = data
@@ -145,7 +143,6 @@ var store = {
       store.state.zircleWidth.xs = 60
       store.state.zircleWidth.xxs = 40
     }
-
     // large desktop
     if (window.matchMedia('(min-width: 1200px) and (orientation: portrait)').matches) {
       store.state.zircleWidth.xl = 430
@@ -186,7 +183,7 @@ var store = {
     var currentPosX = ''
     var currentPosY = ''
     // EJECUTA FUNCION
-    if (component.$parent.type === 'maindisc') {
+    if (component.$parent.type === 'panel') { // pensar en provide/inject
       var parentPosition = {
         Xi: component.$parent.position.Xi,
         Yi: component.$parent.position.Yi,
@@ -196,7 +193,6 @@ var store = {
         scale: component.$parent.position.scale
       }
     } else {
-      // console.log('ho si soy parent hibrido')
       parentPosition = {
         Xi: 0,
         Yi: 0,
@@ -206,22 +202,18 @@ var store = {
         scale: 1
       }
     }
-    if (type !== 'maindisc') {
+    if (type !== 'panel') {
       // distance prop
       // de 0 a 200%
-      // agarra la distancia base en % y la calcula con el diametro css del maindisc
+      // agarra la distancia base en % y la calcula con el diametro css del panel
       // ver tema de valor cero -->
       if (type === 'item' && component.layout === 'radial') {
-        // console.log(total, index)
         angle = (360 / total * index) - 90
-        // console.log('angle coleeciont: ' + angle)
-        // angle = angle - 90
         if (total === 1) {
           distance = 0
         }
       }
       if (type === 'item' && component.layout === 'lineal') {
-        // console.log(total, index)
         if (index === 0) {
           angle = 180
           distance = 90
@@ -232,8 +224,6 @@ var store = {
           angle = 0
           distance = 90
         }
-        // console.log('angle coleeciont: ' + angle)
-        // angle = angle - 90
         if (total === 1) {
           distance = 0
         }
@@ -304,11 +294,10 @@ var store = {
       scale = parentPosition.scale * scale
       var Xabs = parentPosition.X + currentPosX * parentPosition.scalei
       var Yabs = parentPosition.Y + currentPosY * parentPosition.scalei
-      // console.log('     %c> POINT. %cInset View: %cX: ' + X + ' Y: ' + Y + ' Scale: ' + scale + ' Xi: ' + Xi + ' Yi: ' + Yi + ' Scalei: ' + scalei + '  %cgotoView: ' + component.gotoview, 'font-weight:bold;', '', 'background-color: gray; color:white;', '')
     } else {
-      // console.log('cv ' + component.view)
-      var cacheView = _.findLast(store.state.cache, {view: component.view})
-      // console.log(cacheView)
+      var cacheView = store.state.cache.slice(0).reverse().find(function (cache) {
+        return cache.view === component.view
+      })
       if (cacheView !== undefined) {
         if (cacheView.view === component.view) {
           X = cacheView.position.X
@@ -348,12 +337,12 @@ var store = {
   setView (view) {
     store.state.currentView = view
     store.setHistory(view)
-    if (store.state.history.length > 1) {
-      let previous = _.last(_.initial(store.state.history))
-      store.state.previousView = previous
-    } else {
+    if (store.state.history.length === 1) {
       store.state.previousView = ''
-      store.state.hiddenViews = []
+      store.state.pastView = ''
+    } else if (store.state.history.length > 1) {
+      store.state.previousView = store.state.history[store.state.history.length - 2]
+      store.state.pastView = store.state.history[store.state.history.length - 3]
     }
   },
   setAppPos (data) {
@@ -373,8 +362,8 @@ var store = {
   },
   setHistory (view) {
     // only component with viewName
-    var last = _.last(store.state.history)
-    if (view !== last) {
+    var lastView = store.state.history[store.state.history.length - 1]
+    if (view !== lastView) {
       store.state.history.push(view)
       var cacheView = {
         view: view,
@@ -383,32 +372,16 @@ var store = {
       store.state.cache.push(cacheView)
     }
   },
-  clearHistory () {
-    store.state.history = []
-    store.state.cache = []
-  },
-  clearPos () {
-    store.state.position = {
-      X: 0,
-      Y: 0,
-      scale: 1,
-      Xi: 0,
-      Yi: 0,
-      scalei: 1
-    }
-  },
   goBack () {
-    // GO BACK Y GO FORWARD NO MODIFICAN EL CACHE
     if (store.state.history.length > 1) {
-      let data = _.initial(store.state.history)
-      store.state.history = data
-      let current = _.last(data)
-      store.state.lastViewCache = _.last(store.state.cache)
-      let dataCache = _.initial(store.state.cache)
-      store.state.cache = dataCache
-      let currentCache = _.last(dataCache)
+      store.state.history.pop()
+      let current = store.state.history[store.state.history.length - 1]
+      store.state.lastViewCache = store.state.cache[store.state.cache.length - 1]
+      store.state.cache.pop()
+      let currentCache = store.state.cache[store.state.cache.length - 1]
       let position = currentCache.position
       position.go = current
+      store.state.mode = 'backward'
       store.setAppPos(position)
     }
   }
