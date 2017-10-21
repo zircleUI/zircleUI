@@ -1,10 +1,17 @@
-<img src="docs/_images/logo-bold.svg" width="150">
+<p align="center">
+  <a href="http://zircle.io">
+    <img src="docs/_images/logo-bold.svg" width="150">
+  </a>
+</p>
 
-# Zircle UI
+<p align="center">
+  A circular zooming UI.
+</p>
 
-[![npm](https://img.shields.io/npm/v/zircle.svg)](https://www.npmjs.com/package/zircle) [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
-
-> A circular zooming UI
+<p align="center">
+  <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/npm/v/zircle.svg"></a>
+  <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-2.x-brightgreen.svg"></a>
+</p>
 
 ## What is Zircle UI?
 
