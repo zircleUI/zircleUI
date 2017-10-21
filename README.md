@@ -1,3 +1,5 @@
+<img src="docs/_images/logo-bold.svg" width="150">
+
 # Zircle UI
 
 [![npm](https://img.shields.io/npm/v/zircle.svg)](https://www.npmjs.com/package/zircle) [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
