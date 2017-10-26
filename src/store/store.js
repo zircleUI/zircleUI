@@ -29,7 +29,11 @@ var store = {
       xs: 20,
       xxs: 20
     },
-    theme: 'theme--dark'
+    color: 'color--black',
+    theme: 'theme--dark',
+    // temporary for pagination
+    selectedItem: '',
+    currentPage: 0
   },
   routerHooks (data) {
     let vm = data

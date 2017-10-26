@@ -1,18 +1,17 @@
 <template>
 
-  <div title="z-scale" class="zui disc" :type="type" :class="[classes]" :style="style.main"  @click.stop="move">
+  <div title="z-scale" class="zui disc" :type="type" :class="[classes, colors]" :style="style.main"  @click.stop="move">
     
     <z-range :progress='progress' v-if="range === true"></z-range>
 
     <z-slider v-if="slider === true" :progress='progress'></z-slider>
     
     <section class="z-content label" :style="style.label" style="overflow: visible;" >
-    <slot name="label" ></slot>
-  </section>
+      <slot name="label" ></slot>
+    </section>
     
     <div class="z-content">
       <slot name="picture"></slot>
-      
       <section>
          <slot></slot>
       </section>

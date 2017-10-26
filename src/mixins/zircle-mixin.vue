@@ -33,25 +33,8 @@ export default {
       return this.store.point(this)
     },
     classes () {
+      // var colorp = this.color
       return {
-        // basic scheme
-        primary: this.color === 'primary',
-        text: this.color === 'info',
-        background: this.color === 'background',
-        accent: this.color === 'accent',
-        success: this.color === 'success',
-        warning: this.color === 'warning',
-        danger: this.color === 'danger',
-        // colores
-        green: this.color === 'green',
-        red: this.color === 'red',
-        yellow: this.color === 'yellow',
-        gray: this.color === 'gray',
-        lightBlue: this.color === 'light-blue',
-        black: this.color === 'black',
-        purple: this.color === 'purple',
-        orange: this.color === 'orange',
-        blue: this.color === 'blue',
         // previuos view settings
         prevclass: this.view === this.state.previousView,
         hidden: this.$parent.view === this.state.previousView,
@@ -60,6 +43,9 @@ export default {
         // responsive animation. solo para current view
         // animation: this.view === this.state.currentView || this.$parent.view === this.state.currentView
       }
+    },
+    colors () {
+      return this.color
     }
   }
 }

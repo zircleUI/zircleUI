@@ -6,7 +6,7 @@ import zitem from './components/z-item.vue'
 import zcanvas from './components/z-canvas.vue'
 import zviewmanager from './components/z-view-manager.vue'
 import ztransition from './transitions/z-transition.vue'
-import zpopup from './components/z-popup.vue'
+import zalert from './components/z-alert.vue'
 import zbutton from './components/z-button.vue'
 import zslider from './components/z-slider.vue'
 import zrange from './components/z-range.vue'
@@ -34,7 +34,7 @@ const zircle = {
     Vue.component('z-range', zrange)
     Vue.component('z-scroll', zscroll)
     Vue.component('z-transition', ztransition)
-    Vue.component('z-popup', zpopup)
+    Vue.component('z-alert', zalert)
     Vue.component('z-button', zbutton)
   }
 }

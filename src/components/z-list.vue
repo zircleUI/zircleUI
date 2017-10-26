@@ -11,14 +11,11 @@
     :index="index"
     layout='radial'
     gotoview="item"
-    :id="item">
-    
-      <slot :item="item">
-        {{item}}
-      </slot>
+    :item="item">
+      {{item}}
     </z-item>
     <z-pagination  
-    :collection="collection"
+    :collect="resdata"
     :per-page="perPage"
     @updateItems="displayedItems" />
 </section>
@@ -31,7 +28,7 @@ export default {
   mixins: [zmixin],
   props: {
     collection: {
-      type: [Array]
+      type: Array
     },
     perPage: {
       type: [Number]
@@ -40,7 +37,8 @@ export default {
   data () {
     return {
       items: [],
-      type: 'panel' // esto es para evitar que se compute mal position y escala
+      type: 'panel', // esto es para evitar que se compute mal position y escala,
+      resdata: this.collection
     }
   },
   methods: {

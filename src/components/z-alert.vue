@@ -1,9 +1,9 @@
 <template>
 
- <transition name="popup">
-  <div type="popup" class="zui pop" :class="[classes]" :style="styles.main"> 
+ <transition name="z-alert">
+  <div type="alert" class="zui pop" :class="[classes, colors]" :style="styles.main"> 
     <z-slider :progress="progress"></z-slider>
-    <div class="popup-plate" :style="styles.plate"></div>
+    <div class="z-popup-plate" :style="styles.plate"></div>
     <div class="z-contentbox dashed">
     <div class="z-content">
       <section>
@@ -21,7 +21,7 @@
 import zmixin from '../mixins/zircle-mixin'
 export default {
   mixins: [zmixin],
-  name: 'z-popup',
+  name: 'z-alert',
   mounted () {
     var id = setInterval(frame, 100)
     var vm = this
@@ -37,7 +37,7 @@ export default {
   },
   data () {
     return {
-      type: 'popup',
+      type: 'alert',
       scrollBar: false,
       progress: 1
     }
@@ -68,13 +68,13 @@ export default {
 </script>
 
 <style>
-.popup-enter-active, .popup-leave-active {
+.z-alert-enter-active, .z-alert-leave-active {
   transition: transform 0.3s;
   position: absolute;
   top: 50%; left: 50%;
   z-index: 500;
 }
-.popup-enter, .popup-leave-to {
+.z-alert-enter, .z-alert-leave-to {
   transform: scale(0);
 }
 </style>

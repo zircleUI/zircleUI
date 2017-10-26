@@ -1,6 +1,6 @@
 <template>
   
-    <div title="z-item" class="zui disc" :class="[classes]" :style="styles.main" @click.stop="move"> 
+    <div title="z-item" class="zui disc" :class="[classes, colors]" :style="styles.main" @click.stop="move"> 
       <div class="z-contentbox label" :style="styles.label" style="overflow: visible;">
         <div class="z-content" style="overflow: visible;">
           <slot></slot>
@@ -15,7 +15,7 @@ import zmixin from '../mixins/zircle-mixin'
 export default {
   name: 'z-item',
   mixins: [zmixin],
-  props: ['total', 'index', 'layout', 'id'],
+  props: ['total', 'index', 'layout', 'item'],
   data () {
     return {
       type: 'item'
@@ -59,9 +59,13 @@ export default {
   },
   methods: {
     move () {
+      // se debe pasar el item seleccionado en el campo item
       if (this.gotoview !== undefined) {
         var go = this.gotoview
-        var id = this.id
+        var item = this.item
+        if (item !== undefined) {
+          this.state.selectedItem = item
+        }
         var position = {
           X: this.position.Xabs,
           Y: this.position.Yabs,
@@ -74,8 +78,8 @@ export default {
         }
         if (this.state.router === true) {
           this.state.shadowPosition = position
-          if (id !== undefined) {
-            this.$router.push({name: go, params: {id: id}})
+          if (item !== undefined) {
+            this.$router.push({name: go, params: {id: item}})
           } else {
             this.$router.push({name: go})
           }

@@ -1,5 +1,8 @@
 <template>
-  <div id="z-container" @click.stop="goback" :class="$zircleStore.state.theme" :style="[state.previousView !== '' ? {cursor: 'zoom-out'} : {}]">
+  <div id="z-container" 
+  :class="[$zircleStore.state.color, $zircleStore.state.theme]" 
+  :style="[state.previousView !== '' ? {cursor: 'zoom-out'} : {}]"
+  @click.stop="goback" >
     <div id="z-point">
      <slot> </slot>
     </div>
@@ -10,6 +13,12 @@
 /* eslint-disable no-new */
 import store from '../store/store'
 export default {
+  props: {
+    isStandalone: {
+      type: Boolean,
+      default: true
+    }
+  },
   data () {
     return {
       state: store.state,

@@ -1,6 +1,6 @@
 <template>
 
-  <div title="z-dotnav" class="zui disc" :type="type" :class="[classes, activated]"  :style="styles.main"> 
+  <div title="z-dotnav" class="zui disc" :type="type" :class="[classes, colors, activated]"  :style="styles.main"> 
   <div class="navplate" :style="styles.plate"></div>
   </div>
 </template>

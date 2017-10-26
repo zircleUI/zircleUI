@@ -21,7 +21,12 @@
 /* eslint-disable no-new */
 export default {
   name: 'z-view-manager',
-  props: ['list'],
+  props: {
+    list: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
     current () {
       return this.list[this.$zircleStore.state.currentView]

@@ -15,17 +15,17 @@
 
 <script>
 function chunk (myArray, chunkSize) {
-  var results = []
+  var res = []
   while (myArray.length) {
-    results.push(myArray.splice(0, chunkSize))
+    res.push(myArray.splice(0, chunkSize))
   }
-  return results
+  return res
 }
 import zmixin from '../mixins/zircle-mixin'
 export default {
   name: 'z-pagination',
   mixins: [zmixin],
-  props: ['collection', 'per-page'],
+  props: ['collect', 'per-page'],
   data () {
     return {
       type: 'pagination',
@@ -37,7 +37,8 @@ export default {
     changePage (index) {
       let data = this.pages[index]
       let progress = (index + 1) / this.pages.length * 100
-      this.active = index
+      this.state.currentPage = index
+      this.active = this.state.currentPage
       this.$emit('updateItems', {
         data: data,
         progress: progress
@@ -46,11 +47,12 @@ export default {
   },
   computed: {
     pages () {
-      return chunk(this.collection, this.perPage)
+      // console.log(this.collection)
+      return chunk(this.collect, this.perPage)
     }
   },
   mounted () {
-    this.changePage(0)
+    this.changePage(this.state.currentPage)
   }
 }
 </script>

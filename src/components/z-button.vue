@@ -1,8 +1,11 @@
 <template>
-  <div title="z-button" class="zui disc button" :class="[classes]" :style="styles"> 
+  <div title="z-button" type="button" class="zui disc button" :class="[classes, colors]" :style="style.main"> 
     <div class="z-content">
       <slot></slot>
     </div>
+    <section class="z-content label" :style="style.label">
+      <slot name="label" ></slot>
+    </section>
     <slot name="circles"></slot>
   </div>
 </template>
@@ -18,7 +21,7 @@ export default {
     }
   },
   computed: {
-    styles () {
+    style () {
       switch (this.size) {
         case 'large':
           var zwidth = this.state.zircleWidth.l
@@ -37,10 +40,17 @@ export default {
           break
       }
       return {
-        width: zwidth + 'px',
-        height: zwidth + 'px',
-        margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
-        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+        main: {
+          width: zwidth + 'px',
+          height: zwidth + 'px',
+          margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
+          transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+        },
+        label: {
+          top: zwidth / 2 + 10 + 'px',
+          fontSize: '14px',
+          overflow: 'visible'
+        }
       }
     }
   }

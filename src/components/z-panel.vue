@@ -4,7 +4,7 @@
   :title="view" 
   type="panel" 
   class="zui main" 
-  :class="[classes]" 
+  :class="[classes, colors]" 
   :style="styles.main" 
   style="overflow: visible;" 
   @click.stop="move"> 
