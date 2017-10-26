@@ -1,5 +1,5 @@
 
-!> Docs are being updated
+!> Zircle is in active development
 
 ## Guide
 
@@ -15,8 +15,21 @@ Zircle UI is a circular zooming user interface library based on Vue.js. It mixes
 -   It comes with a minimal set of UI components to build your app.
 -   It is possible to customize themes and styles to fit your needs. 
 
-#### Quick example Search fruits
+#### Quick examples 
+
+* **Zooming slider**
+
+<iframe width="450" height="500" src="//jsfiddle.net/tinchox5/Lc48vwm0/embedded/result,html,js,css" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+* **Search for fruits**
+
+fruits: ['apple', 'banana', 'orange', 'kiwi', 'melon', 'watermelon', 'lemon', 'grapes', 'peach']
+
 <iframe width="450" height="500" src="//jsfiddle.net/tinchox5/az5cf0rd/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+* **Counter** 
+
+<iframe width="450" height="500"  src="//jsfiddle.net/tinchox5/gj0bpwmf/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
 #### Dependencies
 Zircle is a Vue plugin. For this reason, it is recommendable to have some idea of how Vue works. You can try Vue and learn it in http://vuejs.org
@@ -878,10 +891,10 @@ none
 
 <iframe width="450" height="500"  src="//jsfiddle.net/tinchox5/p8133xad/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
-### Search fruits
+### Search for fruits
 <iframe width="450" height="500" src="//jsfiddle.net/tinchox5/az5cf0rd/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
-### Image slider
+### Zooming slider
 
 <iframe width="450" height="500" src="//jsfiddle.net/tinchox5/Lc48vwm0/embedded/result,html,js,css" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
