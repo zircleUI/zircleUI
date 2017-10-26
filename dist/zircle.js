@@ -1,5 +1,5 @@
 /*!
- * zircle v0.0.9
+ * zircle v0.1.0
  * (c) 2017 zircleUI
  * Released under the MIT License.
  */
@@ -41,7 +41,11 @@ var store = {
       xs: 20,
       xxs: 20
     },
-    theme: 'theme--dark'
+    color: 'color--black',
+    theme: 'theme--dark',
+    // temporary for pagination
+    selectedItem: '',
+    currentPage: 0
   },
   routerHooks: function routerHooks (data) {
     var vm = data;
@@ -435,25 +439,8 @@ var zmixin = {
       return this.store.point(this)
     },
     classes: function classes () {
+      // var colorp = this.color
       return {
-        // basic scheme
-        primary: this.color === 'primary',
-        text: this.color === 'info',
-        background: this.color === 'background',
-        accent: this.color === 'accent',
-        success: this.color === 'success',
-        warning: this.color === 'warning',
-        danger: this.color === 'danger',
-        // colores
-        green: this.color === 'green',
-        red: this.color === 'red',
-        yellow: this.color === 'yellow',
-        gray: this.color === 'gray',
-        lightBlue: this.color === 'light-blue',
-        black: this.color === 'black',
-        purple: this.color === 'purple',
-        orange: this.color === 'orange',
-        blue: this.color === 'blue',
         // previuos view settings
         prevclass: this.view === this.state.previousView,
         hidden: this.$parent.view === this.state.previousView,
@@ -462,11 +449,14 @@ var zmixin = {
         // responsive animation. solo para current view
         // animation: this.view === this.state.currentView || this.$parent.view === this.state.currentView
       }
+    },
+    colors: function colors () {
+      return this.color
     }
   }
 };
 
-var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui main",class:[_vm.classes],staticStyle:{"overflow":"visible"},style:(_vm.styles.main),attrs:{"title":_vm.view,"type":"panel"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"plate",style:(_vm.styles.plate)}),_vm._v(" "),(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.scrollBar === true)?_c('z-scroll',{staticStyle:{"overflow":"visible"},attrs:{"scrollVal":_vm.scrollVal},on:{"update:scrollVal":function($event){_vm.scrollVal=$event;}}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed"},[_vm._t("picture"),_vm._v(" "),_c('div',{staticClass:"z-content maindisc",on:{"scroll":_vm.scroll}},[_c('section',{class:[_vm.classesContent]},[_vm._t("default"),_vm._v(" "),_c('span',{staticClass:"bottom"})],2)])],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
+var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui main",class:[_vm.classes, _vm.colors],staticStyle:{"overflow":"visible"},style:(_vm.styles.main),attrs:{"title":_vm.view,"type":"panel"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"plate",style:(_vm.styles.plate)}),_vm._v(" "),(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.scrollBar === true)?_c('z-scroll',{staticStyle:{"overflow":"visible"},attrs:{"scrollVal":_vm.scrollVal},on:{"update:scrollVal":function($event){_vm.scrollVal=$event;}}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed"},[_vm._t("picture"),_vm._v(" "),_c('div',{staticClass:"z-content maindisc",on:{"scroll":_vm.scroll}},[_c('section',{class:[_vm.classesContent]},[_vm._t("default"),_vm._v(" "),_c('span',{staticClass:"bottom"})],2)])],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
   mixins: [zmixin],
   props: {
     progress: {
@@ -556,7 +546,7 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes],style:(_vm.style.main),attrs:{"title":"z-scale","type":_vm.type},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('section',{staticClass:"z-content label",staticStyle:{"overflow":"visible"},style:(_vm.style.label)},[_vm._t("label")],2),_vm._v(" "),_c('div',{staticClass:"z-content"},[_vm._t("picture"),_vm._v(" "),_c('section',[_vm._t("default")],2)],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
+var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.style.main),attrs:{"title":"z-scale","type":_vm.type},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('section',{staticClass:"z-content label",staticStyle:{"overflow":"visible"},style:(_vm.style.label)},[_vm._t("label")],2),_vm._v(" "),_c('div',{staticClass:"z-content"},[_vm._t("picture"),_vm._v(" "),_c('section',[_vm._t("default")],2)],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
   name: 'z-scale',
   mixins: [zmixin],
   props: {
@@ -675,10 +665,10 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes],style:(_vm.styles.main),attrs:{"title":"z-item"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"z-contentbox label",staticStyle:{"overflow":"visible"},style:(_vm.styles.label)},[_c('div',{staticClass:"z-content",staticStyle:{"overflow":"visible"}},[_vm._t("default")],2)])])},staticRenderFns: [],
+var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.styles.main),attrs:{"title":"z-item"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"z-contentbox label",staticStyle:{"overflow":"visible"},style:(_vm.styles.label)},[_c('div',{staticClass:"z-content",staticStyle:{"overflow":"visible"}},[_vm._t("default")],2)])])},staticRenderFns: [],
   name: 'z-item',
   mixins: [zmixin],
-  props: ['total', 'index', 'layout', 'id'],
+  props: ['total', 'index', 'layout', 'item'],
   data: function data () {
     return {
       type: 'item'
@@ -722,9 +712,13 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   },
   methods: {
     move: function move () {
+      // se debe pasar el item seleccionado en el campo item
       if (this.gotoview !== undefined) {
         var go = this.gotoview;
-        var id = this.id;
+        var item = this.item;
+        if (item !== undefined) {
+          this.state.selectedItem = item;
+        }
         var position = {
           X: this.position.Xabs,
           Y: this.position.Yabs,
@@ -737,8 +731,8 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
         };
         if (this.state.router === true) {
           this.state.shadowPosition = position;
-          if (id !== undefined) {
-            this.$router.push({name: go, params: {id: id}});
+          if (item !== undefined) {
+            this.$router.push({name: go, params: {id: item}});
           } else {
             this.$router.push({name: go});
           }
@@ -753,7 +747,13 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
 };
 
 /* eslint-disable no-new */
-var zcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:_vm.$zircleStore.state.theme,style:([_vm.state.previousView !== '' ? {cursor: 'zoom-out'} : {}]),attrs:{"id":"z-container"},on:{"click":function($event){$event.stopPropagation();_vm.goback($event);}}},[_c('div',{attrs:{"id":"z-point"}},[_vm._t("default")],2)])},staticRenderFns: [],
+var zcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[_vm.$zircleStore.state.color, _vm.$zircleStore.state.theme],style:([_vm.state.previousView !== '' ? {cursor: 'zoom-out'} : {}]),attrs:{"id":"z-container"},on:{"click":function($event){$event.stopPropagation();_vm.goback($event);}}},[_c('div',{attrs:{"id":"z-point"}},[_vm._t("default")],2)])},staticRenderFns: [],
+  props: {
+    isStandalone: {
+      type: Boolean,
+      default: true
+    }
+  },
   data: function data () {
     return {
       state: store.state,
@@ -784,7 +784,12 @@ var zcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
 /* eslint-disable no-new */
 var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',[_c(_vm.past,{tag:"component"}),_vm._v(" "),_c(_vm.previous,{tag:"component"}),_vm._v(" "),_c('z-transition',[(_vm.$zircleStore.state.router === false)?_c(_vm.current,{key:_vm.$zircleStore.state.currentView,tag:"component"}):_vm._e(),_vm._v(" "),(_vm.$zircleStore.state.router === true)?_c('router-view'):_vm._e()],1)],1)},staticRenderFns: [],
   name: 'z-view-manager',
-  props: ['list'],
+  props: {
+    list: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
     current: function current () {
       return this.list[this.$zircleStore.state.currentView]
@@ -841,9 +846,9 @@ var ztransition = {
   }
 };
 
-var zpopup = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":"popup"}},[_c('div',{staticClass:"zui pop",class:[_vm.classes],style:(_vm.styles.main),attrs:{"type":"popup"}},[_c('z-slider',{attrs:{"progress":_vm.progress}}),_vm._v(" "),_c('div',{staticClass:"popup-plate",style:(_vm.styles.plate)}),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed"},[_c('div',{staticClass:"z-content"},[_c('section',[_vm._t("default")],2)])]),_vm._v(" "),_vm._t("circles")],2)])},staticRenderFns: [],
+var zalert = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":"z-alert"}},[_c('div',{staticClass:"zui pop",class:[_vm.classes, _vm.colors],style:(_vm.styles.main),attrs:{"type":"alert"}},[_c('z-slider',{attrs:{"progress":_vm.progress}}),_vm._v(" "),_c('div',{staticClass:"z-popup-plate",style:(_vm.styles.plate)}),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed"},[_c('div',{staticClass:"z-content"},[_c('section',[_vm._t("default")],2)])]),_vm._v(" "),_vm._t("circles")],2)])},staticRenderFns: [],
   mixins: [zmixin],
-  name: 'z-popup',
+  name: 'z-alert',
   mounted: function mounted () {
     var id = setInterval(frame, 100);
     var vm = this;
@@ -859,7 +864,7 @@ var zpopup = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   },
   data: function data () {
     return {
-      type: 'popup',
+      type: 'alert',
       scrollBar: false,
       progress: 1
     }
@@ -888,7 +893,7 @@ var zpopup = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-var zbutton = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc button",class:[_vm.classes],style:(_vm.styles),attrs:{"title":"z-button"}},[_c('div',{staticClass:"z-content"},[_vm._t("default")],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
+var zbutton = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc button",class:[_vm.classes, _vm.colors],style:(_vm.style.main),attrs:{"title":"z-button","type":"button"}},[_c('div',{staticClass:"z-content"},[_vm._t("default")],2),_vm._v(" "),_c('section',{staticClass:"z-content label",style:(_vm.style.label)},[_vm._t("label")],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
   mixins: [zmixin],
   name: 'z-button',
   data: function data () {
@@ -897,7 +902,7 @@ var zbutton = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
     }
   },
   computed: {
-    styles: function styles () {
+    style: function style () {
       switch (this.size) {
         case 'large':
           var zwidth = this.state.zircleWidth.l;
@@ -916,10 +921,17 @@ var zbutton = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
           break
       }
       return {
-        width: zwidth + 'px',
-        height: zwidth + 'px',
-        margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
-        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+        main: {
+          width: zwidth + 'px',
+          height: zwidth + 'px',
+          margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
+          transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+        },
+        label: {
+          top: zwidth / 2 + 10 + 'px',
+          fontSize: '14px',
+          overflow: 'visible'
+        }
       }
     }
   }
@@ -1176,16 +1188,16 @@ var zscroll = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
 };
 
 function chunk (myArray, chunkSize) {
-  var results = [];
+  var res = [];
   while (myArray.length) {
-    results.push(myArray.splice(0, chunkSize));
+    res.push(myArray.splice(0, chunkSize));
   }
-  return results
+  return res
 }
 var zpagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticStyle:{"z-index":"9000"},attrs:{"title":"z-pagination"}},_vm._l((_vm.pages),function(page,index){return _c('z-dotnav',{key:index,attrs:{"color":"accent","total":_vm.pages.length,"index":index,"active":_vm.active,"size":"xxs","distance":112},nativeOn:{"click":function($event){_vm.changePage(index);}}})}))},staticRenderFns: [],
   name: 'z-pagination',
   mixins: [zmixin],
-  props: ['collection', 'per-page'],
+  props: ['collect', 'per-page'],
   data: function data () {
     return {
       type: 'pagination',
@@ -1197,7 +1209,8 @@ var zpagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var
     changePage: function changePage (index) {
       var data = this.pages[index];
       var progress = (index + 1) / this.pages.length * 100;
-      this.active = index;
+      this.state.currentPage = index;
+      this.active = this.state.currentPage;
       this.$emit('updateItems', {
         data: data,
         progress: progress
@@ -1206,20 +1219,21 @@ var zpagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var
   },
   computed: {
     pages: function pages () {
-      return chunk(this.collection, this.perPage)
+      // console.log(this.collection)
+      return chunk(this.collect, this.perPage)
     }
   },
   mounted: function mounted () {
-    this.changePage(0);
+    this.changePage(this.state.currentPage);
   }
 };
 
-var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"title":"z-list"}},[_vm._l((_vm.items),function(item,index){return _c('z-item',{key:index,attrs:{"color":_vm.color,"size":"small","distance":60,"total":_vm.items.length,"index":index,"layout":"radial","gotoview":"item","id":item}},[_vm._t("default",[_vm._v(" "+_vm._s(item)+" ")],{item:item})],2)}),_vm._v(" "),_c('z-pagination',{attrs:{"collection":_vm.collection,"per-page":_vm.perPage},on:{"updateItems":_vm.displayedItems}})],2)},staticRenderFns: [],
+var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"title":"z-list"}},[_vm._l((_vm.items),function(item,index){return _c('z-item',{key:index,attrs:{"color":_vm.color,"size":"small","distance":60,"total":_vm.items.length,"index":index,"layout":"radial","gotoview":"item","item":item}},[_vm._v(" "+_vm._s(item)+" ")])}),_vm._v(" "),_c('z-pagination',{attrs:{"collect":_vm.resdata,"per-page":_vm.perPage},on:{"updateItems":_vm.displayedItems}})],2)},staticRenderFns: [],
   name: 'z-list',
   mixins: [zmixin],
   props: {
     collection: {
-      type: [Array]
+      type: Array
     },
     perPage: {
       type: [Number]
@@ -1228,7 +1242,8 @@ var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   data: function data () {
     return {
       items: [],
-      type: 'panel' // esto es para evitar que se compute mal position y escala
+      type: 'panel', // esto es para evitar que se compute mal position y escala,
+      resdata: this.collection
     }
   },
   methods: {
@@ -1239,7 +1254,7 @@ var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   }
 };
 
-var zdotnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.activated],style:(_vm.styles.main),attrs:{"title":"z-dotnav","type":_vm.type}},[_c('div',{staticClass:"navplate",style:(_vm.styles.plate)})])},staticRenderFns: [],
+var zdotnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors, _vm.activated],style:(_vm.styles.main),attrs:{"title":"z-dotnav","type":_vm.type}},[_c('div',{staticClass:"navplate",style:(_vm.styles.plate)})])},staticRenderFns: [],
   name: 'z-scale',
   mixins: [zmixin],
   props: {
@@ -1321,7 +1336,7 @@ var zircle = {
     Vue.component('z-range', zrange);
     Vue.component('z-scroll', zscroll);
     Vue.component('z-transition', ztransition);
-    Vue.component('z-popup', zpopup);
+    Vue.component('z-alert', zalert);
     Vue.component('z-button', zbutton);
   }
 };

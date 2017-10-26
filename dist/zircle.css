@@ -1,121 +1,3 @@
-:root {
-
-  /* LIGHT-BLUE 
-
-   --background-color: #F1F1F1;
-   --primary-color: #5FC9F3;
-   --accent-color: #0D7FAC;
-   --success-color: #52B781;
-   --warning-color: #CFA749;
-   --danger-color: #C76B6F; 
-
-  /* BLACK */
-
-  /*
-   PURPLE 
-   --background-color: #fdecf0;
-   --primary-color: #ee305a;
-   --accent-color: #7b0a23;
-   --success-color: #7d8953;
-   --warning-color: #fa791b;
-   --danger-color: #f23d41;
-
-   ORANGE
-   --background-color: #fff8f3;
-   --primary-color: #f7892f;
-   --accent-color: #884005;
-   --success-color: #7fa446;
-   --warning-color: #fd940e;
-   --danger-color: #f55834;
-   YELLOW
-   --background-color: #fffcf2;
-   --primary-color: #ffca26;
-   --accent-color: #8c6a00;
-   --success-color: #82b743;
-   --warning-color: #ffa70b;
-   --danger-color: #f76c31;
-   BLUE 
-   
-   /* --background-color: #d4e1f1;
-   --primary-color: #3e78bb;
-   --accent-color: #182e48;
-   --success-color: #489f70;
-   --warning-color: #c58e38;
-   --danger-color: #bd535e;
-  /* GREEN 
-   --background-color: #f6fbf6;
-   --primary-color: #69bf66;
-   --accent-color: #2b6329;
-   --success-color: #55b457;
-   --warning-color: #d2a41f;
-   --danger-color: #ca6844;
-   /*
-   RED 
-   --background-color: #fef8f8;
-   --primary-color: #ef3c3b;
-   --accent-color: #860c0b;
-   --success-color: #7d8d4a;
-   --warning-color: #fa7c12;
-   --danger-color: #f34138;
-   /* GRAY 
-
-   --background-color: #e4e4e5;
-   --primary-color: #7c7e81;
-   --accent-color: #313233;
-   --success-color: #5aa05f;
-   --warning-color: #d89027;
-   --danger-color: #d0554d;
-  */
-}
-
-.theme--light {
-  --background: #859ba6;
-  --primary: #283237;
-  --accent: #000000;
-  --success: #418a49;
-  --warning: #bf7911;
-  --danger: #b73e36;
-  --background-card: #859ba6;
-  --border-card: #283237;
-  --primary-text: #283237;
-}
-
-.theme--bold-light {
-  --background: #859ba6;
-  --primary: #283237;
-  --accent: #000000;
-  --success: #418a49;
-  --warning: #bf7911;
-  --danger: #b73e36;
-  --background-card: #283237;
-  --border-card: #859ba6;
-  --primary-text: #859ba6;
-}
-
-.theme--dark {
-  --background: #283237;
-  --primary: #859ba6;
-  --accent: #000000;
-  --success: #418a49;
-  --warning: #bf7911;
-  --danger: #b73e36;
-  --background-card: #283237;
-  --border-card: #859ba6;
-  --primary-text: #859ba6;
-}
-
-.theme--bold-dark {
-  --background: #283237;
-  --primary: #859ba6;
-  --accent: #000000;
-  --success: #418a49;
-  --warning: #bf7911;
-  --danger: #b73e36;
-  --background-card: #859ba6;
-  --border-card: #283237;
-  --primary-text: #283237;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -131,12 +13,136 @@
   display: none;
 }
 
+.color--light-blue {
+  --background-color: #F1F1F1;
+  --primary-color: #5FC9F3;
+  --accent-color: #0D7FAC;
+  --success-color: #52B781;
+  --warning-color: #CFA749;
+  --danger-color: #C76B6F;
+}
+
+.color--black {
+  --background-color: #859ba6;
+  --primary-color: #283237;
+  --accent-color: #000000;
+  --success-color: #418a49;
+  --warning-color: #bf7911;
+  --danger-color: #b73e36;
+}
+
+.color--purple {
+  --background-color: #fdecf0;
+  --primary-color: #ee305a;
+  --accent-color: #7b0a23;
+  --success-color: #7d8953;
+  --warning-color: #fa791b;
+  --danger-color: #f23d41;
+}
+
+.color--orange {
+  --background-color: #fff8f3;
+  --primary-color: #f7892f;
+  --accent-color: #884005;
+  --success-color: #7fa446;
+  --warning-color: #fd940e;
+  --danger-color: #f55834;
+}
+
+.color--yellow {
+  --background-color: #fffcf2;
+  --primary-color: #ffca26;
+  --accent-color: #8c6a00;
+  --success-color: #82b743;
+  --warning-color: #ffa70b;
+  --danger-color: #f76c31;
+}
+
+.color--blue {
+  --background-color: #d4e1f1;
+  --primary-color: #3e78bb;
+  --accent-color: #182e48;
+  --success-color: #489f70;
+  --warning-color: #c58e38;
+  --danger-color: #bd535e;
+}
+
+.color--green {
+  --background-color: #f6fbf6;
+  --primary-color: #69bf66;
+  --accent-color: #2b6329;
+  --success-color: #55b457;
+  --warning-color: #d2a41f;
+  --danger-color: #ca6844;
+}
+
+.color--red {
+  --background-color: #fef8f8;
+  --primary-color: #ef3c3b;
+  --accent-color: #860c0b;
+  --success-color: #7d8d4a;
+  --warning-color: #fa7c12;
+  --danger-color: #f34138;
+}
+
+.color--gray {
+  --background-color: #e4e4e5;
+  --primary-color: #7c7e81;
+  --accent-color: #313233;
+  --success-color: #5aa05f;
+  --warning-color: #d89027;
+  --danger-color: #d0554d;
+}
+
+.theme--light {
+  --background: var(--background-color);
+  --primary: var(--primary-color);
+  --accent: var(--accent-color);
+  --background-card: var(--background-color);
+  --border-card: var(--primary-color);
+  --primary-text: var(--primary-color);
+}
+
+.theme--bold-light {
+  --background: var(--background-color);
+  --primary: var(--primary-color);
+  --accent: var(--accent-color);
+  --background-card: var(--primary-color);
+  --border-card: var(--background-color);
+  --primary-text: var(--background-color);
+}
+
+.theme--dark {
+  --background: var(--primary-color);
+  --primary: var(--background-color);
+  --accent: var(--accent-color);
+  --background-card: var(--primary-color);
+  --border-card: var(--background-color);
+  --primary-text: var(--background-color);
+}
+
+.theme--bold-dark {
+  --background: var(--primary-color);
+  --primary: var(--background-color);
+  --accent: var(--accent-color);
+  --background-card: var(--background-color);
+  --border-card: var(--primary-color);
+  --primary-text: var(--primary-color);
+}
+
 #z-container {
   position: fixed;
   height: 100%;
   width: 100%;
   background-color: var(--background);
   color: var(--primary);
+  transition: background-color 1s;
+}
+
+div[type="panel"],
+div[type="scale"],
+div[type="button"] {
+  transition: background-color 1s;
 }
 
 #z-point {
@@ -610,8 +616,8 @@ input {
 
 }
 
-.popup-enter-active,
-.popup-leave-active {
+.z-alert-enter-active,
+.z-alert-leave-active {
   transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
   transition: transform 0.3s, -webkit-transform 0.3s;
@@ -621,8 +627,8 @@ input {
   z-index: 500;
 }
 
-.popup-enter,
-.popup-leave-to {
+.z-alert-enter,
+.z-alert-leave-to {
   -webkit-transform: scale(0);
   transform: scale(0);
 }
