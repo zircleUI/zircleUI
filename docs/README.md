@@ -1,21 +1,21 @@
 
 !> Zircle is in active development
 
-## Guide
+# Guide
 
-### Introduction 
+## Introduction 
 
-#### What is Zircle UI?
+### What is Zircle UI?
 
 Zircle UI is a circular zooming user interface library based on Vue.js. It mixes two principles: **circular shapes** and **zooming navigation** in the aim of strengthening each other and create a good user experience.
 
-#### Main features
+### Main features
 -   Zooming navigation up to 9 level depth.
 -   It works well on mobile devices and big screens as it is responsive.
 -   It comes with a minimal set of UI components to build your app.
 -   It is possible to customize themes and styles to fit your needs. 
 
-#### Quick examples 
+### Quick examples 
 
 * **Zooming slider**
 
@@ -31,21 +31,21 @@ fruits: ['apple', 'banana', 'orange', 'kiwi', 'melon', 'watermelon', 'lemon', 'g
 
 <iframe width="450" height="500"  src="//jsfiddle.net/tinchox5/gj0bpwmf/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
-#### Dependencies
+### Dependencies
 Zircle is a Vue plugin. For this reason, it is recommendable to have some idea of how Vue works. You can try Vue and learn it in http://vuejs.org
 
 > **Information for Vue users**: Zircle UI follows the progressive philosophy of Vue. This implies that for small apps or prototyping you can use Zircle directly into the browser and for more complex apps you can use it with Single Page Applications. For this reason, Zircle works with or without Vue-Router.
 
-### Installation
+## Installation
 **Options**
 
-#### Direct download 
+### Direct download 
 * Download Zircle from [Github](https://github.com/zircleUI/zircleUI/tree/master/dist)
 
-#### Content delivery networks (CDN)
+### Content delivery networks (CDN)
 * Include https://unpkg.com/zircle in your project with `<script>` tag. With CDN you will have the latest version of Zircle as soon as it is published to NPM. You can also browse the source of the npm package at https://unpkg.com/zircle/ 
 
-#### NPM
+### NPM
 NPM is the recommended installation method of zircle if you are building medium to large scale applications with Vue. 
 
 ```bash 
@@ -54,15 +54,15 @@ npm install zircle --save
 
 ?> **Note**: When you install Zircle in a fresh project, Vue will also be installed since is a dependency of Zircle. On the other hand, you can install Zircle after you have started a project based on Vue. 
 
-### Initial setup and starter templates
+## Initial setup and starter templates
 There are several options to setup and start using it.
 
-#### Sandbox 
+### Sandbox 
 The easiest way to try and start using Zircle is using the [JSFiddle Zircle sandbox](https://jsfiddle.net/tinchox5/37mr5324/) or the [Codepen Zircle sandbox](https://codepen.io/zircle/pen/MExYRv)
 
 For Zircle projects based on Vue-CLi you con try the [CodeSandbox Zircle sandbox](https://codesandbox.io/s/my0ol78l08)
 
-#### Browser
+### Browser
 After you have installed Zircle using direct download or CDN, the following starter template allows you to create a Vue Instance and provides the `<z-canvas>` component to start the development of your Zircle app.
 
 ```html
@@ -100,7 +100,7 @@ After you have installed Zircle using direct download or CDN, the following star
 </html>
 ```
 
-#### Single File Components and Vue-CLI
+### Single File Components and Vue-CLI
 As Vue Documentation explains, with the previous setup you can work very well for small to medium-sized projects. However, in more complex projects, or when your frontend is entirely driven by JavaScript it is better use single-file components with a .vue extension, made possible with build tools such as Webpack or Browserify.
 
 Vue-CLI provides you with an powerful and easy tool to develop complex projects. So, after you installed and run Vue-CLI as it is described in the  [official Vue docs](https://vuejs.org/v2/guide/installation.html#CLI), you can use any of its templates with Zircle. 
@@ -146,10 +146,10 @@ export default {
 
 ?> **Note:** Before start a Zircle project with Vue-CLI you can play online with [CodeSandbox Zircle sandbox](https://codesandbox.io/s/my0ol78l08) based on Vue-CLI
 
-#### Vue-Router
+### Vue-Router
 You can use Zircle with Vue-Router in any environment (from sandbox to vue-cli). Just follow this tips and examples.
 
-##### For Browser or online source code playgrounds.
+#### For Browser or online source code playgrounds.
 
 **1. Install Vue-Router.**
 
@@ -236,7 +236,7 @@ new Vue({
 
 Check this demo in [JSFiddle](https://jsfiddle.net/tinchox5/g39omwxv/)  
 
-##### For NPM or Vue-CLI
+#### For NPM or Vue-CLI
 
 **1. Install Vue-Router in your project.**
 ```bash 
@@ -338,7 +338,7 @@ export default {
 
 Check this example on [CodeSandbox](https://codesandbox.io/s/2x39p49kmn)
 
-### Themes and colors
+## Themes and colors
 Zircle comes with nine colors and four themes under hood that are built using CSS Variables.
 
 The colors are:
@@ -386,7 +386,7 @@ Each theme is a CSS class that wraps several CSS variables
 }
 ```
 
-#### Customize
+### Customize
 The easiest way to adapt the themes to your needs is to override the color CSS clases or create a new color names
 
 Check the CSS tab of the following example
