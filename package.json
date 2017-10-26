@@ -1,6 +1,6 @@
 {
   "name": "zircle",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "A circular zooming UI",
   "author": "Martin Muda",
   "main": "dist/zircle.min.js",
@@ -18,7 +18,7 @@
     "circle"  
   ],
   "dependencies": {
-    "vue": "^2.3.0"
+    "vue": "^2.5.0"
   },
   "repository": {
     "type": "git",
