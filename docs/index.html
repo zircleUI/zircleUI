@@ -2,19 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>zircle - A circular zooming UI</title>
+  <title>Zircle - A circular zooming UI</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="A circular zooming UI">
+  <meta name="keywords" content="zui,zoomable,ui,user interface,circle">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="_css/style.css">
-  <style type="text/css" media="screen">
-    #z-container {
-position: absolute;
-}
-#z-point {
-position:absolute;
-}
-  </style>
 </head>
 <body>
   <div id="app"></div>
@@ -24,10 +17,12 @@ position:absolute;
     name: 'zircle',
     repo: 'https://github.com/zircleui/zircleUI',
     coverpage: true,
-    executeScript: true
+    executeScript: true,
+    ga: 'UA-108782619-1'
   }
 </script>
 <script src="//unpkg.com/vue/dist/vue.min.js"></script>
 <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+<script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script>
 <script src="//unpkg.com/docsify/lib/plugins/external-script.min.js"></script>
 </html>
