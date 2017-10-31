@@ -1,9 +1,8 @@
-
-!> Zircle is in active development
-
 # Guide
 
 ## Introduction 
+
+!> Zircle is in active development. Feedbacks and contributions are very welcome!
 
 ### What is Zircle UI?
 
@@ -911,6 +910,7 @@ none
 
 
 ## ToDo
+
 * Adapt Zircle to the style guide of Vue.
 * Improve Zircle State Management.
 * Improve documentation.

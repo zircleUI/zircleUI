@@ -13,6 +13,8 @@
   <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-2.x-brightgreen.svg"></a>
 </p>
 
+> Zircle is in active development. Feedbacks and contributions are very welcome!
+
 ## What is Zircle UI?
 
 **Zircle UI** is a circular zooming user interface library based on Vue.js. It mixes two principles: **circular shapes** and **zooming navigation** in the aim of strengthening each other and create a good user experience.
@@ -40,7 +42,7 @@ NPM is the recommended installation method of zircle if you are building medium 
 npm install zircle --save
 ```
 
-?> **Note**: When you install Zircle in a fresh project, Vue will also be installed since is a dependency of Zircle. On the other hand, you can install Zircle after you have started a project based on Vue. 
+> **Note**: When you install Zircle in a fresh project, Vue will also be installed since is a dependency of Zircle. On the other hand, you can install Zircle after you have started a project based on Vue. 
 
 ## Documentation
 To check out live examples and docs, visit http://zircle.io
