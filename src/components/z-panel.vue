@@ -25,9 +25,9 @@
          <slot name="picture"></slot>
     
       
-      <div class="z-content maindisc" @scroll="scroll">
+      <div class="z-content maindisc" :class="[classesContent]" :style="styles.hideScroll" @scroll="scroll">
         
-        <section :class="[classesContent]">
+        <section>
            <slot></slot>
            <span class="bottom"></span>
         </section>
@@ -92,6 +92,9 @@ export default {
           width: W + 50 + 'px',
           height: W + 50 + 'px',
           margin: -((W + 50) / 2) + 'px 0 0 ' + -((W + 50) / 2) + 'px'
+        },
+        hideScroll: {
+          width: W - 10 + 'px'
         }
       }
     },

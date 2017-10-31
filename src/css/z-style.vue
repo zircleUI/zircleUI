@@ -22,9 +22,9 @@
   display: none;
 }
 
-::-moz-scrollbar {
+/* ::-moz-scrollbar {
   display: none;
-}
+} */
 
 .color--light-blue {
   --background-color: #F1F1F1;
@@ -283,7 +283,7 @@ div[type="button"] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow-y: scroll;
+  overflow: hidden;
   border-radius: 50%;
   user-select: none;
   border: 1px solid transparent;
@@ -294,11 +294,14 @@ div[type="button"] {
 }
 
 .longtext {
-  padding-top: 100px;
+  overflow-y: scroll;
+  padding-right: 20px;
+  margin-right: -20px;
+ /* padding-top: 100px;
   height: 100%;
   width: 105%;
-  padding-right: 18px;
-  margin-right: -18px;
+   padding-right: 28px;
+  margin-right: -28px; */
 }
 
 .bottom {
