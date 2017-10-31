@@ -1,5 +1,5 @@
 /*!
- * zircle v0.1.0
+ * zircle v0.1.1
  * (c) 2017 zircleUI
  * Released under the MIT License.
  */
@@ -456,7 +456,7 @@ var zmixin = {
   }
 };
 
-var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui main",class:[_vm.classes, _vm.colors],staticStyle:{"overflow":"visible"},style:(_vm.styles.main),attrs:{"title":_vm.view,"type":"panel"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"plate",style:(_vm.styles.plate)}),_vm._v(" "),(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.scrollBar === true)?_c('z-scroll',{staticStyle:{"overflow":"visible"},attrs:{"scrollVal":_vm.scrollVal},on:{"update:scrollVal":function($event){_vm.scrollVal=$event;}}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed"},[_vm._t("picture"),_vm._v(" "),_c('div',{staticClass:"z-content maindisc",on:{"scroll":_vm.scroll}},[_c('section',{class:[_vm.classesContent]},[_vm._t("default"),_vm._v(" "),_c('span',{staticClass:"bottom"})],2)])],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
+var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui main",class:[_vm.classes, _vm.colors],staticStyle:{"overflow":"visible"},style:(_vm.styles.main),attrs:{"title":_vm.view,"type":"panel"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"plate",style:(_vm.styles.plate)}),_vm._v(" "),(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.scrollBar === true)?_c('z-scroll',{staticStyle:{"overflow":"visible"},attrs:{"scrollVal":_vm.scrollVal},on:{"update:scrollVal":function($event){_vm.scrollVal=$event;}}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed"},[_vm._t("picture"),_vm._v(" "),_c('div',{staticClass:"z-content maindisc",class:[_vm.classesContent],style:(_vm.styles.hideScroll),on:{"scroll":_vm.scroll}},[_c('section',[_vm._t("default"),_vm._v(" "),_c('span',{staticClass:"bottom"})],2)])],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
   mixins: [zmixin],
   props: {
     progress: {
@@ -504,6 +504,9 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
           width: W + 50 + 'px',
           height: W + 50 + 'px',
           margin: -((W + 50) / 2) + 'px 0 0 ' + -((W + 50) / 2) + 'px'
+        },
+        hideScroll: {
+          width: W - 10 + 'px'
         }
       }
     },
