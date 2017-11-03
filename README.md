@@ -11,6 +11,7 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/npm/v/zircle.svg"></a>
   <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-2.x-brightgreen.svg"></a>
+  <a href="https://travis-ci.org/zircleUI/zircleUI"><img alt="Build Status" src="https://travis-ci.org/zircleUI/zircleUI.svg?branch=master"></a>
 </p>
 
 > Zircle is in active development. Feedbacks and contributions are very welcome!
@@ -24,6 +25,9 @@
 -   It works well on mobile devices and big screens as it is responsive.
 -   It comes with a minimal set of UI components to build your app.
 -   It is possible to customize themes and styles to fit your needs. 
+
+## Documentation
+To check out live examples and docs, visit http://zircle.io
 
 ## Installation
 There are several ways to install zircle UI according your needs:
@@ -43,9 +47,6 @@ npm install zircle --save
 ```
 
 > **Note**: When you install Zircle in a fresh project, Vue will also be installed since is a dependency of Zircle. On the other hand, you can install Zircle after you have started a project based on Vue. 
-
-## Documentation
-To check out live examples and docs, visit http://zircle.io
 
 ## License
 [MIT](http://opensource.org/licenses/MIT)
