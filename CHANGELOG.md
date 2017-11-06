@@ -1,13 +1,19 @@
-# Contributing
-
-Contributions are **welcome** and will be fully **credited**.
-
-We accept contributions via Pull Requests on [Github](https://github.com/zircleui/zircleUI).
+# Changelog
+All notable changes to this project will be documented in this file.
 
 
-## Pull Requests
+## [0.1.5] - 2017-11-06
+### Enhancements
+- View names are case-insensitive [\#3](https://github.com/zircleUI/zircleUI/issues/3)
 
-- **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.
+### Changed
+- z-dotnav style [\#2](https://github.com/zircleUI/zircleUI/issues/2)
+- Zooming navigation to six levels of depth.
 
+## [0.1.1] - 2017-10-31
+### Enhancements
+- Fix visual scrollbars visual problem on Ffox [\#1](https://github.com/zircleUI/zircleUI/issues/1)
 
-**Happy coding**!
+### Changed
+- z-dotnav style [\#2](https://github.com/zircleUI/zircleUI/issues/2)
+- Zooming navigation to six levels of depth.
