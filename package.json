@@ -1,8 +1,8 @@
 {
   "name": "zircle",
-  "version": "0.1.1",
-  "description": "A circular zooming UI",
-  "author": "Martin Muda",
+  "version": "0.1.5",
+  "description": "A circular zooming UI Library",
+  "author": "Juan Martín Muda",
   "main": "dist/zircle.min.js",
   "unpkg": "dist/zircle.js",
   "style": "dist/zircle.min.css",

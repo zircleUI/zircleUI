@@ -1,5 +1,5 @@
 /*!
- * zircle v0.1.1
+ * zircle v0.1.5
  * (c) 2017 zircleUI
  * Released under the MIT License.
  */
@@ -312,10 +312,10 @@ var store = {
       var Yabs = parentPosition.Y + currentPosY * parentPosition.scalei;
     } else {
       var cacheView = store.state.cache.slice(0).reverse().find(function (cache) {
-        return cache.view === component.view
+        return cache.view === component.viewName
       });
       if (cacheView !== undefined) {
-        if (cacheView.view === component.view) {
+        if (cacheView.view === component.viewName) {
           X = cacheView.position.X;
           Xi = cacheView.position.Xi;
           Y = cacheView.position.Y;
@@ -351,8 +351,8 @@ var store = {
     }
   },
   setView: function setView (view) {
-    store.state.currentView = view;
-    store.setHistory(view);
+    store.state.currentView = view.toLowerCase();
+    store.setHistory(view.toLowerCase());
     if (store.state.history.length === 1) {
       store.state.previousView = '';
       store.state.pastView = '';
@@ -442,9 +442,9 @@ var zmixin = {
       // var colorp = this.color
       return {
         // previuos view settings
-        prevclass: this.view === this.state.previousView,
-        hidden: this.$parent.view === this.state.previousView,
-        pastclass: this.type === 'panel' && this.view === this.state.pastView,
+        prevclass: this.viewName === this.state.previousView,
+        hidden: this.$parent.viewName === this.state.previousView,
+        pastclass: this.type === 'panel' && this.viewName === this.state.pastView && this.viewName === this.state.pastView,
         zoom: this.type === 'scale' && this.gotoview !== undefined
         // responsive animation. solo para current view
         // animation: this.view === this.state.currentView || this.$parent.view === this.state.currentView
@@ -456,7 +456,7 @@ var zmixin = {
   }
 };
 
-var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui main",class:[_vm.classes, _vm.colors],staticStyle:{"overflow":"visible"},style:(_vm.styles.main),attrs:{"title":_vm.view,"type":"panel"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"plate",style:(_vm.styles.plate)}),_vm._v(" "),(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.scrollBar === true)?_c('z-scroll',{staticStyle:{"overflow":"visible"},attrs:{"scrollVal":_vm.scrollVal},on:{"update:scrollVal":function($event){_vm.scrollVal=$event;}}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed"},[_vm._t("picture"),_vm._v(" "),_c('div',{staticClass:"z-content maindisc",class:[_vm.classesContent],style:(_vm.styles.hideScroll),on:{"scroll":_vm.scroll}},[_c('section',[_vm._t("default"),_vm._v(" "),_c('span',{staticClass:"bottom"})],2)])],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
+var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui main",class:[_vm.classes, _vm.colors],staticStyle:{"overflow":"visible"},style:(_vm.styles.main),attrs:{"title":_vm.viewName,"type":"panel"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"plate",style:(_vm.styles.plate)}),_vm._v(" "),(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.scrollBar === true)?_c('z-scroll',{staticStyle:{"overflow":"visible"},attrs:{"scrollVal":_vm.scrollVal},on:{"update:scrollVal":function($event){_vm.scrollVal=$event;}}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed"},[_vm._t("picture"),_vm._v(" "),_c('div',{staticClass:"z-content maindisc",class:[_vm.classesContent],style:(_vm.styles.hideScroll),on:{"scroll":_vm.scroll}},[_c('section',[_vm._t("default"),_vm._v(" "),_c('span',{staticClass:"bottom"})],2)])],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
   mixins: [zmixin],
   props: {
     progress: {
@@ -487,8 +487,11 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     }
   },
   computed: {
+    viewName: function viewName () {
+      return this.view.toLowerCase()
+    },
     styles: function styles () {
-      if (this.view === this.state.previousView) {
+      if (this.viewName === this.state.previousView) {
         var W = this.state.zircleWidth.xl;
       } else {
         W = this.state.zircleWidth.xl;
@@ -498,7 +501,7 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
           width: W + 'px',
           height: W + 'px',
           margin: -(W / 2) + 'px 0 0 ' + -(W / 2) + 'px',
-          transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale3d(' + this.position.scalei + ', ' + this.position.scalei + ', ' + this.position.scalei + ')'
+          transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
           width: W + 50 + 'px',
@@ -522,14 +525,14 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       this.scrollVal = -45 + ((test1.scrollTop * 100 / (test1.scrollHeight - test1.clientHeight)) * 86 / 100);
     },
     move: function move () {
-      if (this.state.previousView === this.view) {
+      if (this.state.previousView === this.viewName) {
         if (this.state.router === true && this.state.previousView !== '') {
           this.$router.back();
         } else {
           this.store.goBack();
         }
       }
-      if (this.state.pastView === this.view) {
+      if (this.state.pastView === this.viewName) {
         if (this.state.router === true) {
           this.$router.back();
         } else {
@@ -590,6 +593,11 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     }
   },
   computed: {
+    gotoviewName: function gotoviewName () {
+      if (this.gotoview !== undefined) {
+        return this.gotoview.toLowerCase()
+      }
+    },
     style: function style () {
       switch (this.size) {
         case 'large':
@@ -623,7 +631,7 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   },
   methods: {
     move: function move () {
-      if (this.$parent.view === this.state.previousView) {
+      if (this.$parent.view.toLowerCase() === this.state.previousView) {
         if (this.state.router === true && this.state.previousView !== '') {
           this.$router.back();
         }
@@ -634,7 +642,7 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
         if (this.gotoview !== undefined) {
           // Apply moveApp & setNextView
           // seteo el gotoview aca, xq dsp se borra el "this". OJO ver si usar algun hook
-          var go = this.gotoview;
+          var go = this.gotoviewName;
           var position = {
             X: this.position.Xabs,
             Y: this.position.Yabs,
@@ -647,7 +655,7 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
           };
           // this.state.position = position
           // console.log('go: ' + go)
-          if (this.state.history.length < 9) {
+          if (this.state.history.length < 6) {
             if (this.state.router === true) {
               this.state.shadowPosition = position;
               // this.store.setAppPos(position)
@@ -678,6 +686,11 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     }
   },
   computed: {
+    gotoviewName: function gotoviewName () {
+      if (this.gotoview !== undefined) {
+        return this.gotoview.toLowerCase()
+      }
+    },
     styles: function styles () {
       switch (this.size) {
         case 'large':
@@ -717,7 +730,7 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     move: function move () {
       // se debe pasar el item seleccionado en el campo item
       if (this.gotoview !== undefined) {
-        var go = this.gotoview;
+        var go = this.gotoviewName;
         var item = this.item;
         if (item !== undefined) {
           this.state.selectedItem = item;
@@ -795,13 +808,31 @@ var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;va
   },
   computed: {
     current: function current () {
-      return this.list[this.$zircleStore.state.currentView]
+      var vm = this;
+      var key = Object.keys(this.list).find(function (k) {
+        if (k.toLowerCase() === vm.$zircleStore.state.currentView) {
+          return k
+        }
+      });
+      return this.list[key]
     },
     previous: function previous () {
-      return this.list[this.$zircleStore.state.previousView]
+      var vm = this;
+      var key = Object.keys(this.list).find(function (k) {
+        if (k.toLowerCase() === vm.$zircleStore.state.previousView) {
+          return k
+        }
+      });
+      return this.list[key]
     },
     past: function past () {
-      return this.list[this.$zircleStore.state.pastView]
+      var vm = this;
+      var key = Object.keys(this.list).find(function (k) {
+        if (k.toLowerCase() === vm.$zircleStore.state.pastView) {
+          return k
+        }
+      });
+      return this.list[key]
     }
   }
 };
@@ -1281,7 +1312,8 @@ var zdotnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   computed: {
     activated: function activated () {
       return {
-        'accent-secondary': this.active >= this.index
+        'accent-secondary': this.active === this.index,
+        'accent-secondary-border': this.active < this.index || this.active > this.index
       }
     },
     styles: function styles () {

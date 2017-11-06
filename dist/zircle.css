@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -13,7 +12,6 @@
 /* ::-moz-scrollbar {
   display: none;
 } */
-
 .color--light-blue {
   --background-color: #F1F1F1;
   --primary-color: #5FC9F3;
@@ -139,11 +137,12 @@
   color: var(--primary);
   transition: background-color 1s;
 }
-div[type="panel"], div[type="scale"],
+
+div[type="panel"],
+div[type="scale"],
 div[type="button"] {
   transition: background-color 1s;
 }
-
 
 #z-point {
   font-family: 'Source Sans Pro', sans-serif;
@@ -155,7 +154,7 @@ div[type="button"] {
   top: 50%;
   left: 50%;
   -webkit-perspective: 800px;
-          perspective: 800px;
+  perspective: 800px;
   text-decoration: none;
 }
 
@@ -275,20 +274,20 @@ div[type="button"] {
   background: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   overflow: hidden;
   border-radius: 50%;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   border: 1px solid transparent;
 }
 
@@ -299,12 +298,11 @@ div[type="button"] {
 .longtext {
   overflow-y: scroll;
   padding-right: 20px;
-  margin-right: -20px;
- /* padding-top: 100px;
-  height: 100%;
-  width: 105%;
-   padding-right: 28px;
-  margin-right: -28px; */
+  margin-right: -20px; /* padding-top: 100px;
+    height: 100%;
+    width: 105%;
+     padding-right: 28px;
+    margin-right: -28px; */
 }
 
 .bottom {
@@ -330,15 +328,15 @@ div[type="button"] {
 }
 
 .button:hover {
-  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="linear" slope="0.9" /><feFuncG type="linear" slope="0.9" /><feFuncB type="linear" slope="0.9" /></feComponentTransfer></filter></svg>#filter');
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feComponentTransfer color-interpolation-filters=!string!><feFuncR type=!string!slope=!string!/><feFuncG type=!string!slope=!string!/><feFuncB type=!string!slope=!string!/></feComponentTransfer></filter></svg>#filter');
   -webkit-filter: brightness(0.9);
-          filter: brightness(0.9);
+  filter: brightness(0.9);
 }
 
 .button:active {
-  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="linear" slope="0.4" /><feFuncG type="linear" slope="0.4" /><feFuncB type="linear" slope="0.4" /></feComponentTransfer></filter></svg>#filter');
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feComponentTransfer color-interpolation-filters=!string!><feFuncR type=!string!slope=!string!/><feFuncG type=!string!slope=!string!/><feFuncB type=!string!slope=!string!/></feComponentTransfer></filter></svg>#filter');
   -webkit-filter: brightness(0.4);
-          filter: brightness(0.4);
+  filter: brightness(0.4);
 }
 
 .hidden {
@@ -347,23 +345,23 @@ div[type="button"] {
 
 .prevclass {
   -webkit-animation: back .2s .3s forwards;
-          animation: back .2s .3s forwards;
+  animation: back .2s .3s forwards;
   cursor: zoom-out;
 }
 
 @-webkit-keyframes back {
   0% {
     opacity: 1;
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="0" /></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
     -webkit-filter: blur(0px);
-            filter: blur(0px);
+    filter: blur(0px);
   }
 
   100% {
     opacity: 0.7;
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="1.5" /></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
     -webkit-filter: blur(1.5px);
-            filter: blur(1.5px);
+    filter: blur(1.5px);
   }
 
 }
@@ -371,25 +369,25 @@ div[type="button"] {
 @keyframes back {
   0% {
     opacity: 1;
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="0" /></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
     -webkit-filter: blur(0px);
-            filter: blur(0px);
+    filter: blur(0px);
   }
 
   100% {
     opacity: 0.7;
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="1.5" /></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
     -webkit-filter: blur(1.5px);
-            filter: blur(1.5px);
+    filter: blur(1.5px);
   }
 
 }
 
 .pastclass {
   opacity: 0.7;
-  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="1.5" /></filter></svg>#filter');
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
   -webkit-filter: blur(1.5px);
-          filter: blur(1.5px);
+  filter: blur(1.5px);
   cursor: zoom-out;
 }
 
@@ -410,9 +408,17 @@ div[type="button"] {
 }
 
 .accent-secondary {
-  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="1 0" /><feFuncG type="table" tableValues="1 0" /><feFuncB type="table" tableValues="1 0" /></feComponentTransfer></filter></svg>#filter');
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feComponentTransfer color-interpolation-filters=!string!><feFuncR type=!string!tableValues=!string!/><feFuncG type=!string!tableValues=!string!/><feFuncB type=!string!tableValues=!string!/></feComponentTransfer></filter></svg>#filter');
   -webkit-filter: invert(100%);
-          filter: invert(100%);
+  filter: invert(100%);
+}
+
+.accent-secondary-border {
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feComponentTransfer color-interpolation-filters=!string!><feFuncR type=!string!tableValues=!string!/><feFuncG type=!string!tableValues=!string!/><feFuncB type=!string!tableValues=!string!/></feComponentTransfer></filter></svg>#filter');
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+  background-color: transparent;
+  border-width: 1px;
 }
 
 .primary,
@@ -535,22 +541,22 @@ div[type="button"] {
   border: 3px solid var(--background);
 }
 
-div[title="z-item"],
-div[title="z-dotnav"] {
+div[title="http://www.w3.org/2000/svg"],
+div[title="filter"] {
   cursor: zoom-in;
 }
 
-div[title="z-dotnav"]:hover {
+div[title="sRGB"]:hover {
   cursor: -webkit-grab;
   cursor: grab;
 }
 
-div[title="z-dotnav"]:active {
+div[title="linear"]:active {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-.prevclass section[title="z-list"] {
+.prevclass section[title="0.9"] {
   pointer-events: none;
 }
 
@@ -576,8 +582,8 @@ input {
   width: 100%;
   background: none;
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   box-shadow: none;
   border: none;
   color: inherit;
@@ -589,141 +595,49 @@ input {
   text-align: center;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @-webkit-keyframes appear {
-  0% {opacity: 0;}
-  80% {opacity: 0;}
-  100% {opacity: 1;}
+  0% {
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+
 }
+
 @keyframes appear {
-  0% {opacity: 0;}
-  80% {opacity: 0;}
-  100% {opacity: 1;}
+  0% {
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.z-alert-enter-active, .z-alert-leave-active {
+.z-alert-enter-active,
+.z-alert-leave-active {
   transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
   transition: transform 0.3s, -webkit-transform 0.3s;
   position: absolute;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   z-index: 500;
 }
-.z-alert-enter, .z-alert-leave-to {
+
+.z-alert-enter,
+.z-alert-leave-to {
   -webkit-transform: scale(0);
-          transform: scale(0);
+  transform: scale(0);
 }
