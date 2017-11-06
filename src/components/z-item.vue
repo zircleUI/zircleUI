@@ -22,6 +22,11 @@ export default {
     }
   },
   computed: {
+    gotoviewName () {
+      if (this.gotoview !== undefined) {
+        return this.gotoview.toLowerCase()
+      }
+    },
     styles () {
       switch (this.size) {
         case 'large':
@@ -61,7 +66,7 @@ export default {
     move () {
       // se debe pasar el item seleccionado en el campo item
       if (this.gotoview !== undefined) {
-        var go = this.gotoview
+        var go = this.gotoviewName
         var item = this.item
         if (item !== undefined) {
           this.state.selectedItem = item

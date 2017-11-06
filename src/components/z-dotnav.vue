@@ -31,7 +31,8 @@ export default {
   computed: {
     activated () {
       return {
-        'accent-secondary': this.active >= this.index
+        'accent-secondary': this.active === this.index,
+        'accent-secondary-border': this.active < this.index || this.active > this.index
       }
     },
     styles () {
