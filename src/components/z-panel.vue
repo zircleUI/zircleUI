@@ -1,7 +1,7 @@
 <template>
  
   <div 
-  :title="view" 
+  :title="viewName" 
   type="panel" 
   class="zui main" 
   :class="[classes, colors]" 
@@ -75,8 +75,11 @@ export default {
     }
   },
   computed: {
+    viewName () {
+      return this.view.toLowerCase()
+    },
     styles () {
-      if (this.view === this.state.previousView) {
+      if (this.viewName === this.state.previousView) {
         var W = this.state.zircleWidth.xl
       } else {
         W = this.state.zircleWidth.xl
@@ -86,7 +89,7 @@ export default {
           width: W + 'px',
           height: W + 'px',
           margin: -(W / 2) + 'px 0 0 ' + -(W / 2) + 'px',
-          transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale3d(' + this.position.scalei + ', ' + this.position.scalei + ', ' + this.position.scalei + ')'
+          transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
           width: W + 50 + 'px',
@@ -110,14 +113,14 @@ export default {
       this.scrollVal = -45 + ((test1.scrollTop * 100 / (test1.scrollHeight - test1.clientHeight)) * 86 / 100)
     },
     move () {
-      if (this.state.previousView === this.view) {
+      if (this.state.previousView === this.viewName) {
         if (this.state.router === true && this.state.previousView !== '') {
           this.$router.back()
         } else {
           this.store.goBack()
         }
       }
-      if (this.state.pastView === this.view) {
+      if (this.state.pastView === this.viewName) {
         if (this.state.router === true) {
           this.$router.back()
         } else {

@@ -63,6 +63,11 @@ export default {
     }
   },
   computed: {
+    gotoviewName () {
+      if (this.gotoview !== undefined) {
+        return this.gotoview.toLowerCase()
+      }
+    },
     style () {
       switch (this.size) {
         case 'large':
@@ -96,7 +101,7 @@ export default {
   },
   methods: {
     move () {
-      if (this.$parent.view === this.state.previousView) {
+      if (this.$parent.view.toLowerCase() === this.state.previousView) {
         if (this.state.router === true && this.state.previousView !== '') {
           this.$router.back()
         }
@@ -107,7 +112,7 @@ export default {
         if (this.gotoview !== undefined) {
           // Apply moveApp & setNextView
           // seteo el gotoview aca, xq dsp se borra el "this". OJO ver si usar algun hook
-          var go = this.gotoview
+          var go = this.gotoviewName
           var position = {
             X: this.position.Xabs,
             Y: this.position.Yabs,
@@ -120,7 +125,7 @@ export default {
           }
           // this.state.position = position
           // console.log('go: ' + go)
-          if (this.state.history.length < 9) {
+          if (this.state.history.length < 6) {
             if (this.state.router === true) {
               this.state.shadowPosition = position
               // this.store.setAppPos(position)

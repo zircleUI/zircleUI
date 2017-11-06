@@ -300,10 +300,10 @@ var store = {
       var Yabs = parentPosition.Y + currentPosY * parentPosition.scalei
     } else {
       var cacheView = store.state.cache.slice(0).reverse().find(function (cache) {
-        return cache.view === component.view
+        return cache.view === component.viewName
       })
       if (cacheView !== undefined) {
-        if (cacheView.view === component.view) {
+        if (cacheView.view === component.viewName) {
           X = cacheView.position.X
           Xi = cacheView.position.Xi
           Y = cacheView.position.Y
@@ -339,8 +339,8 @@ var store = {
     }
   },
   setView (view) {
-    store.state.currentView = view
-    store.setHistory(view)
+    store.state.currentView = view.toLowerCase()
+    store.setHistory(view.toLowerCase())
     if (store.state.history.length === 1) {
       store.state.previousView = ''
       store.state.pastView = ''

@@ -382,6 +382,12 @@ div[type="button"] {
   filter: invert(100%);
 }
 
+.accent-secondary-border {
+  filter: invert(100%);
+  background-color: transparent;
+  border-width: 1px;
+}
+
 .primary,
 .default {
   border: 3px solid var(--border-card);

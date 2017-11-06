@@ -36,9 +36,9 @@ export default {
       // var colorp = this.color
       return {
         // previuos view settings
-        prevclass: this.view === this.state.previousView,
-        hidden: this.$parent.view === this.state.previousView,
-        pastclass: this.type === 'panel' && this.view === this.state.pastView,
+        prevclass: this.viewName === this.state.previousView,
+        hidden: this.$parent.viewName === this.state.previousView,
+        pastclass: this.type === 'panel' && this.viewName === this.state.pastView && this.viewName === this.state.pastView,
         zoom: this.type === 'scale' && this.gotoview !== undefined
         // responsive animation. solo para current view
         // animation: this.view === this.state.currentView || this.$parent.view === this.state.currentView
