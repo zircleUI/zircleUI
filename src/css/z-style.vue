@@ -168,6 +168,8 @@ div[type="button"] {
   left: 50%;
   perspective: 800px;
   text-decoration: none;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .handlebar:hover {
@@ -270,7 +272,10 @@ div[type="button"] {
   background: none;
   overflow: hidden;
 }
-
+.z-contentbox > img {
+  border-radius: 50%;
+  overflow: hidden;
+}
 .z-content {
   position: absolute;
   z-index: 0;
@@ -337,31 +342,45 @@ div[type="button"] {
 .hidden {
   cursor: zoom-out;
 }
-
-.prevclass {
-  animation: back .2s .3s forwards;
-  cursor: zoom-out;
-}
-
-@keyframes back {
-  0% {
-    opacity: 1;
-    filter: blur(0px);
-  }
-
-  100% {
-    opacity: 0.7;
-    filter: blur(1.5px);
-  }
-
+.current {
+  will-change: opacity;
 }
 
 .pastclass {
-  opacity: 0.7;
-  filter: blur(1.5px);
   cursor: zoom-out;
+  filter: blur(1.5px);
+}
+.prevclass {
+  cursor: zoom-out;
+  filter: blur(1.5px);
+}
+.currclass {
+  animation: appear 800ms linear forwards;
+  will-change: opacity;
+}
+@keyframes appear {
+   0% {opacity: 0;}
+  20% {opacity: 0;}
+  80% {opacity: 1;}
+  100% {opacity: 1;}
+}
+.lastclass {
+  animation: disappear 800ms linear forwards;
+  will-change: opacity;
+}
+@keyframes disappear {
+   0% {opacity: 1;}
+  20% {opacity: 1;}
+  80% {opacity: 0;}
+  100% {opacity: 0;}
 }
 
+@keyframes blur {
+  0% {filter: blur(0px);}
+  20% {filter: blur(0px);}
+  60% {filter: blur(1.5px);}
+  100% {filter: blur(1.5px);}
+}
 .prevclass div {
   cursor: zoom-out;
 }

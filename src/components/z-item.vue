@@ -65,34 +65,55 @@ export default {
   methods: {
     move () {
       // se debe pasar el item seleccionado en el campo item
-      if (this.gotoview !== undefined) {
-        var go = this.gotoviewName
-        var item = this.item
-        if (item !== undefined) {
-          this.state.selectedItem = item
-        }
-        var position = {
-          X: this.position.Xabs,
-          Y: this.position.Yabs,
-          scale: this.position.scale,
-          Xi: this.position.Xi,
-          Yi: this.position.Yi,
-          scalei: this.position.scalei,
-          go: go,
-          next: true
-        }
-        if (this.state.router === true) {
-          this.state.shadowPosition = position
-          if (item !== undefined) {
-            this.$router.push({name: go, params: {id: item}})
-          } else {
-            this.$router.push({name: go})
-          }
+      if (this.state.previousView === this.$parent.$parent.viewName) {
+        if (this.state.router === true && this.state.previousView !== '') {
+          this.$router.back()
         } else {
-          this.store.setAppPos(position)
+          this.store.goBack()
+        }
+      } else if (this.state.previousView === 'item') {
+        if (this.state.router === true && this.state.previousView !== '') {
+          this.$router.back()
+        } else {
+          this.store.goBack()
         }
       } else {
-        // no action
+        if (this.gotoview !== undefined) {
+          var go = this.gotoviewName
+          var item = this.item
+          if (item !== undefined) {
+            this.state.selectedItem = item
+          }
+          var position = {
+            X: this.position.Xabs,
+            Y: this.position.Yabs,
+            scale: this.position.scale,
+            Xi: this.position.Xi,
+            Yi: this.position.Yi,
+            scalei: this.position.scalei,
+            go: go,
+            next: true
+          }
+          if (this.state.router === true) {
+            this.state.shadowPosition = position
+            if (item !== undefined) {
+              this.$router.push({name: go, params: {id: item}})
+            } else {
+              this.$router.push({name: go})
+            }
+          } else {
+            this.store.setAppPos(position)
+          }
+        } else {
+          // no action
+        }
+      }
+      if (this.state.pastView === this.$parent.$parent.viewName) {
+        if (this.state.router === true) {
+          this.$router.back()
+        } else {
+          this.store.goBack()
+        }
       }
     }
   }

@@ -8,6 +8,7 @@ var store = {
       Yi: 0,
       scalei: 1
     },
+    lastView: '',
     currentView: '',
     previousView: '',
     pastView: '',
@@ -75,6 +76,9 @@ var store = {
   },
   setScroll (angle) {
     store.state.scroll = angle
+  },
+  killLastView () {
+    store.state.lastView = ''
   },
   // no uso media query asi que seteo el ancho de cad circulo aca
   getDimensions (event) {
@@ -167,176 +171,145 @@ var store = {
     }
   },
   point (component) {
-    // var declarations
-    var total = component.total
-    var index = component.index
-    // var arc = component.arc
-    var type = component.type
-    var distance = component.distance
-    var angle = component.angle
-    var size = component.size
-    var attachedPosition = store.state.position
-    var X = ''
-    var Xi = ''
-    var Y = ''
-    var Yi = ''
-    var currentPosXi = ''
-    var currentPosYi = ''
-    var scale = ''
-    var scalei = ''
-    var currentPosX = ''
-    var currentPosY = ''
+    // VARIABLE DECLARATION
+    var scale = 1
+    var scalei = 1
+    var currentX = 0
+    var currentY = 0
+    var currentXi = 0
+    var currentYi = 0
+    var parentPosition = {}
+    var newPosition = {}
     // EJECUTA FUNCION
-    if (component.$parent.type === 'panel') { // pensar en provide/inject
-      var parentPosition = {
-        Xi: component.$parent.position.Xi,
-        Yi: component.$parent.position.Yi,
-        X: component.$parent.position.X,
-        Y: component.$parent.position.Y,
-        scalei: component.$parent.position.scalei,
-        scale: component.$parent.position.scale
+    if (component.type === 'panel') {
+      if (store.state.currentView === component.viewName) {
+        newPosition = {
+          X: store.state.cache[store.state.cache.length - 1].position.X,
+          Xi: store.state.cache[store.state.cache.length - 1].position.Xi,
+          Y: store.state.cache[store.state.cache.length - 1].position.Y,
+          Yi: store.state.cache[store.state.cache.length - 1].position.Yi,
+          scalei: store.state.cache[store.state.cache.length - 1].position.scalei,
+          scale: store.state.cache[store.state.cache.length - 1].position.scale
+        }
+      } else if (store.state.lastView === component.viewName) {
+        newPosition = {
+          X: store.state.lastViewCache.position.X,
+          Xi: store.state.lastViewCache.position.Xi,
+          Y: store.state.lastViewCache.position.Y,
+          Yi: store.state.lastViewCache.position.Yi,
+          scalei: store.state.lastViewCache.position.scalei,
+          scale: store.state.lastViewCache.position.scale
+        }
+      } else if (store.state.previousView === component.viewName) {
+        newPosition = {
+          X: store.state.cache[store.state.cache.length - 2].position.X,
+          Xi: store.state.cache[store.state.cache.length - 2].position.Xi,
+          Y: store.state.cache[store.state.cache.length - 2].position.Y,
+          Yi: store.state.cache[store.state.cache.length - 2].position.Yi,
+          scalei: store.state.cache[store.state.cache.length - 2].position.scalei,
+          scale: store.state.cache[store.state.cache.length - 2].position.scale
+        }
+      } else if (store.state.pastView === component.viewName) {
+        newPosition = {
+          X: store.state.cache[store.state.cache.length - 3].position.X,
+          Xi: store.state.cache[store.state.cache.length - 3].position.Xi,
+          Y: store.state.cache[store.state.cache.length - 3].position.Y,
+          Yi: store.state.cache[store.state.cache.length - 3].position.Yi,
+          scalei: store.state.cache[store.state.cache.length - 3].position.scalei,
+          scale: store.state.cache[store.state.cache.length - 3].position.scale
+        }
+      } else {
+        newPosition = {
+          X: store.state.position.X,
+          Xi: store.state.position.Xi,
+          Y: store.state.position.Y,
+          Yi: store.state.position.Yi,
+          scalei: store.state.position.scalei,
+          scale: store.state.position.scale
+        }
       }
     } else {
-      parentPosition = {
-        Xi: 0,
-        Yi: 0,
-        X: 0,
-        Y: 0,
-        scalei: 1,
-        scale: 1
-      }
-    }
-    if (type !== 'panel') {
-      // distance prop
-      // de 0 a 200%
-      // agarra la distancia base en % y la calcula con el diametro css del panel
-      // ver tema de valor cero -->
-      if (type === 'item' && component.layout === 'radial') {
-        angle = (360 / total * index) - 90
-        if (total === 1) {
+      var angle = component.angle
+      var distance = component.distance
+      if (component.type === 'item') {
+        angle = (360 / component.total * component.index) - 90
+        if (component.total === 1) {
           distance = 0
         }
       }
-      if (type === 'item' && component.layout === 'lineal') {
-        if (index === 0) {
-          angle = 180
-          distance = 90
-        } else if (index === 1) {
-          angle = 0
-          distance = 0
-        } else {
-          angle = 0
-          distance = 90
-        }
-        if (total === 1) {
-          distance = 0
-        }
+      if (component.type === 'pagination') {
+        let arcAngle = 180
+        let range = (arcAngle - (arcAngle - (component.total * 10)))
+        let offset = ((arcAngle - range) - (range / component.total)) / 2
+        angle = range / component.total * (component.total - component.index) + offset
       }
-      if (type === 'pagination') {
-        var arcAngle = 180
-        var range = (arcAngle - (arcAngle - (total * 10)))
-        var offset = ((arcAngle - range) - (range / total)) / 2
-        index = total - index
-       /* if (arc === 'quarter') {
-          arcAngle = 90
-        } else if (arc === 'half') {
-          arcAngle = 120
-        } else if (arc === 'threequarter') {
-          arcAngle = 270
-        } else if (arc === 'full') {
-          arcAngle = 360
-        } */
-        angle = range / total * index + offset
-      }
-      if (size === 'xxs') {
+      if (component.size === 'xxs') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.xxs
         scalei = store.state.zircleWidth.xxs / store.state.zircleWidth.xl
-      } else if (size === 'extrasmall') {
+      } else if (component.size === 'extrasmall') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.xs
         scalei = store.state.zircleWidth.xs / store.state.zircleWidth.xl
-      } else if (size === 'small') {
+      } else if (component.size === 'small') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.s
         scalei = store.state.zircleWidth.s / store.state.zircleWidth.xl
-      } else if (size === 'medium') {
+      } else if (component.size === 'medium') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.m
         scalei = store.state.zircleWidth.m / store.state.zircleWidth.xl
-      } else if (size === 'large') {
+      } else if (component.size === 'large') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.l
         scalei = store.state.zircleWidth.l / store.state.zircleWidth.xl
-      } else if (size === 'extralarge') {
+      } else if (component.size === 'extralarge') {
         scale = 1
         scalei = 1
       }
       if (distance === 0) {
-        currentPosX = 0
-        currentPosY = 0
+        currentX = 0
+        currentY = 0
       } else {
-        // 130 es el diametro del extralarge hay que ver como hacerlo dinamico por si el dev lo cambia
-        // quizas meterlo como stylo en zui. o que lo lea al montar
-        distance = ((store.state.zircleWidth.xl / 2) * distance / 100)
-        // test para hacer responsive
-        // tema anglulos : limitar de 0 a 360
-        // IMPORTANTE: OJO CON DISTANCIA Y ANGLULO CERO, RESULTADO ERRONEOS AL RESIZE
-        currentPosX = (distance) * Math.cos(angle * (Math.PI / 180))
-        currentPosY = (distance) * Math.sin(angle * (Math.PI / 180))
+        currentX = ((store.state.zircleWidth.xl / 2) * distance / 100) * Math.cos(angle * (Math.PI / 180))
+        currentY = ((store.state.zircleWidth.xl / 2) * distance / 100) * Math.sin(angle * (Math.PI / 180))
       }
-      if (currentPosX > 0) {
-        currentPosXi = -Math.abs(Number(currentPosX))
+      if (currentX > 0) {
+        currentXi = -Math.abs(Number(currentX))
       } else {
-        currentPosXi = Math.abs(Number(currentPosX))
+        currentXi = Math.abs(Number(currentX))
       }
-      if (currentPosY > 0) {
-        currentPosYi = -Math.abs(Number(currentPosY))
+      if (currentY > 0) {
+        currentYi = -Math.abs(Number(currentY))
       } else {
-        currentPosYi = Math.abs(Number(currentPosY))
+        currentYi = Math.abs(Number(currentY))
       }
-      X = currentPosX
-      Xi = parentPosition.Xi + currentPosXi * parentPosition.scalei
-      Y = currentPosY
-      Yi = parentPosition.Yi + currentPosYi * parentPosition.scalei
-      scalei = parentPosition.scalei * scalei
-      scale = parentPosition.scale * scale
-      var Xabs = parentPosition.X + currentPosX * parentPosition.scalei
-      var Yabs = parentPosition.Y + currentPosY * parentPosition.scalei
-    } else {
-      var cacheView = store.state.cache.slice(0).reverse().find(function (cache) {
-        return cache.view === component.viewName
-      })
-      if (cacheView !== undefined) {
-        if (cacheView.view === component.viewName) {
-          X = cacheView.position.X
-          Xi = cacheView.position.Xi
-          Y = cacheView.position.Y
-          Yi = cacheView.position.Yi
-          scalei = cacheView.position.scalei
-          scale = cacheView.position.scale
-        } else {
-          X = attachedPosition.X
-          Xi = attachedPosition.Xi
-          Y = attachedPosition.Y
-          Yi = attachedPosition.Yi
-          scalei = attachedPosition.scalei
-          scale = attachedPosition.scale
+      if (component.$parent.type === 'panel') {
+        parentPosition = {
+          Xi: component.$parent.position.Xi,
+          Yi: component.$parent.position.Yi,
+          X: component.$parent.position.X,
+          Y: component.$parent.position.Y,
+          scalei: component.$parent.position.scalei,
+          scale: component.$parent.position.scale
         }
       } else {
-        X = attachedPosition.X
-        Xi = attachedPosition.Xi
-        Y = attachedPosition.Y
-        Yi = attachedPosition.Yi
-        scalei = attachedPosition.scalei
-        scale = attachedPosition.scale
+        parentPosition = {
+          Xi: 0,
+          Yi: 0,
+          X: 0,
+          Y: 0,
+          scalei: 1,
+          scale: 1
+        }
+      }
+      newPosition = {
+        X: currentX,
+        Y: currentY,
+        Xi: parentPosition.Xi + currentXi * parentPosition.scalei,
+        Yi: parentPosition.Yi + currentYi * parentPosition.scalei,
+        scale: parentPosition.scale * scale,
+        scalei: parentPosition.scalei * scalei,
+        Xabs: parentPosition.X + currentX * parentPosition.scalei,
+        Yabs: parentPosition.Y + currentY * parentPosition.scalei
       }
     }
-    return {
-      X: X,
-      Y: Y,
-      Xi: Xi,
-      Yi: Yi,
-      scale: scale,
-      scalei: scalei,
-      Xabs: Xabs,
-      Yabs: Yabs
-    }
+    return newPosition
   },
   setView (view) {
     store.state.currentView = view.toLowerCase()
@@ -350,19 +323,16 @@ var store = {
     }
   },
   setAppPos (data) {
-    runView()
-    function runView () {
-      store.state.position = {
-        X: data.X,
-        Y: data.Y,
-        scale: data.scale,
-        Xi: data.Xi,
-        Yi: data.Yi,
-        scalei: data.scalei,
-        go: data.go
-      }
-      store.setView(data.go)
+    store.state.position = {
+      X: data.X,
+      Y: data.Y,
+      scale: data.scale,
+      Xi: data.Xi,
+      Yi: data.Yi,
+      scalei: data.scalei,
+      go: data.go
     }
+    store.setView(data.go)
   },
   setHistory (view) {
     // only component with viewName
@@ -377,10 +347,11 @@ var store = {
     }
   },
   goBack () {
-    if (store.state.history.length > 1) {
+    if (store.state.cache.length > 1) {
       store.state.history.pop()
       let current = store.state.history[store.state.history.length - 1]
       store.state.lastViewCache = store.state.cache[store.state.cache.length - 1]
+      store.state.lastView = store.state.lastViewCache.view
       store.state.cache.pop()
       let currentCache = store.state.cache[store.state.cache.length - 1]
       let position = currentCache.position

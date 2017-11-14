@@ -35,13 +35,12 @@ export default {
     classes () {
       // var colorp = this.color
       return {
-        // previuos view settings
-        prevclass: this.viewName === this.state.previousView,
+        // currclass: this.viewName === this.state.currentView,
+        // lastclass: this.viewName === this.state.lastView,
+        pastclass: this.type === 'panel' && this.viewName === this.state.pastView,
+        prevclass: this.type === 'panel' && this.viewName === this.state.previousView,
         hidden: this.$parent.viewName === this.state.previousView,
-        pastclass: this.type === 'panel' && this.viewName === this.state.pastView && this.viewName === this.state.pastView,
         zoom: this.type === 'scale' && this.gotoview !== undefined
-        // responsive animation. solo para current view
-        // animation: this.view === this.state.currentView || this.$parent.view === this.state.currentView
       }
     },
     colors () {

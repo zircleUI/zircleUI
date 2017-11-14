@@ -8,7 +8,6 @@
   :style="styles.main" 
   style="overflow: visible;" 
   @click.stop="move"> 
-    
     <div class="plate" :style="styles.plate"></div>
 
     <z-range :progress='progress' v-if="range === true"></z-range>
@@ -19,7 +18,7 @@
     
     
     
-    <div class="z-contentbox dashed">
+    <div class="z-contentbox dashed" :style="styles.background" >
 
      
          <slot name="picture"></slot>
@@ -27,7 +26,7 @@
       
       <div class="z-content maindisc" :class="[classesContent]" :style="styles.hideScroll" @scroll="scroll">
         
-        <section>
+        <section class="z-text">
            <slot></slot>
            <span class="bottom"></span>
         </section>
@@ -62,6 +61,10 @@ export default {
     slider: {
       type: [Boolean],
       default: false
+    },
+    imgSource: {
+      type: String,
+      default: ''
     }
   },
   name: 'z-panel',
@@ -71,7 +74,8 @@ export default {
       scrollBar: false,
       alertar: '',
       scrollVal: -45,
-      width: 0
+      width: 0,
+      img: {}
     }
   },
   computed: {
@@ -98,6 +102,9 @@ export default {
         },
         hideScroll: {
           width: W - 10 + 'px'
+        },
+        background: {
+          // backgroundImage: `url(${this.imgSource})`
         }
       }
     },
@@ -129,9 +136,15 @@ export default {
       }
     }
   },
+  watch: {
+    scrollVal () {
+      var test1 = this.$el.querySelector('.z-content')
+      test1.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (test1.scrollHeight - test1.clientHeight) / 100
+    }
+  },
   mounted () {
     this.width = this.state.zircleWidth.xl
-    var test = this.$el.querySelector('.z-content > section') // guarda con esto que no anda bien
+    var test = this.$el.querySelector('.z-content > .z-text') // guarda con esto que no anda bien
     if (test.clientHeight > this.state.zircleWidth.xl) {
       this.scrollBar = true
     } else {

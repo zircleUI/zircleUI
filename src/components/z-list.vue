@@ -38,7 +38,8 @@ export default {
     return {
       items: [],
       type: 'panel', // esto es para evitar que se compute mal position y escala,
-      resdata: this.collection
+      resdata: this.collection,
+      viewName: 'test'
     }
   },
   methods: {

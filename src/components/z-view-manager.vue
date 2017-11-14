@@ -1,24 +1,10 @@
 <template>
-  <section>
-
-        <component :is="past"></component>
-<component :is="previous"></component>
-
-    
-      <z-transition>
-
-          <component v-if="$zircleStore.state.router === false" :is="current" :key="$zircleStore.state.currentView"></component>
-
-          <router-view v-if="$zircleStore.state.router === true"> </router-view>
-
-      </z-transition>
-
-
-
-      
-
-  </section>
-
+   <z-transition>
+      <component :is="past" :key="$zircleStore.state.pastView"></component>
+      <component :is="previous" :key="$zircleStore.state.previousView"></component>
+      <component v-if="$zircleStore.state.router === false" :is="current" :key="$zircleStore.state.currentView"></component>
+      <router-view v-if="$zircleStore.state.router === true" :key="$zircleStore.state.currentView"> </router-view>
+  </z-transition>
 </template>
 
 <script>
@@ -32,6 +18,15 @@ export default {
     }
   },
   computed: {
+    last () {
+      let vm = this
+      let key = Object.keys(this.list).find(function (k) {
+        if (k.toLowerCase() === vm.$zircleStore.state.lastView) {
+          return k
+        }
+      })
+      return this.list[key]
+    },
     current () {
       let vm = this
       let key = Object.keys(this.list).find(function (k) {
