@@ -156,6 +156,9 @@ div[type="button"] {
   -webkit-perspective: 800px;
   perspective: 800px;
   text-decoration: none;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .handlebar:hover {
@@ -261,6 +264,11 @@ div[type="button"] {
   overflow: hidden;
 }
 
+.z-contentbox > img {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
 .z-content {
   position: absolute;
   z-index: 0;
@@ -343,52 +351,164 @@ div[type="button"] {
   cursor: zoom-out;
 }
 
-.prevclass {
-  -webkit-animation: back .2s .3s forwards;
-  animation: back .2s .3s forwards;
-  cursor: zoom-out;
-}
-
-@-webkit-keyframes back {
-  0% {
-    opacity: 1;
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
-    -webkit-filter: blur(0px);
-    filter: blur(0px);
-  }
-
-  100% {
-    opacity: 0.7;
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
-    -webkit-filter: blur(1.5px);
-    filter: blur(1.5px);
-  }
-
-}
-
-@keyframes back {
-  0% {
-    opacity: 1;
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
-    -webkit-filter: blur(0px);
-    filter: blur(0px);
-  }
-
-  100% {
-    opacity: 0.7;
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
-    -webkit-filter: blur(1.5px);
-    filter: blur(1.5px);
-  }
-
+.current {
+  will-change: opacity;
 }
 
 .pastclass {
-  opacity: 0.7;
+  cursor: zoom-out;
   filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
   -webkit-filter: blur(1.5px);
   filter: blur(1.5px);
+}
+
+.prevclass {
   cursor: zoom-out;
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+  -webkit-filter: blur(1.5px);
+  filter: blur(1.5px);
+}
+
+.currclass {
+  -webkit-animation: appear 800ms linear forwards;
+  animation: appear 800ms linear forwards;
+  will-change: opacity;
+}
+
+@-webkit-keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+
+}
+
+.lastclass {
+  -webkit-animation: disappear 800ms linear forwards;
+  animation: disappear 800ms linear forwards;
+  will-change: opacity;
+}
+
+@-webkit-keyframes disappear {
+  0% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+
+}
+
+@-webkit-keyframes blur {
+  0% {
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+  }
+
+  20% {
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+  }
+
+  60% {
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    -webkit-filter: blur(1.5px);
+    filter: blur(1.5px);
+  }
+
+  100% {
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    -webkit-filter: blur(1.5px);
+    filter: blur(1.5px);
+  }
+
+}
+
+@keyframes blur {
+  0% {
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+  }
+
+  20% {
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+  }
+
+  60% {
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    -webkit-filter: blur(1.5px);
+    filter: blur(1.5px);
+  }
+
+  100% {
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    -webkit-filter: blur(1.5px);
+    filter: blur(1.5px);
+  }
+
 }
 
 .prevclass div {
@@ -593,36 +713,6 @@ input {
   background: inherit;
   outline: none;
   text-align: center;
-}
-
-@-webkit-keyframes appear {
-  0% {
-    opacity: 0;
-  }
-
-  80% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-
-}
-
-@keyframes appear {
-  0% {
-    opacity: 0;
-  }
-
-  80% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-
 }
 
 .z-alert-enter-active,

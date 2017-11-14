@@ -1,7 +1,8 @@
 /*!
- * zircle v0.1.5
+ * zircle v0.1.9
  * (c) 2017 zircleUI
  * Released under the MIT License.
+ * Copyright (c) 2017-present, Juan Martín Muda
  */
 
 (function (global, factory) {
@@ -20,6 +21,7 @@ var store = {
       Yi: 0,
       scalei: 1
     },
+    lastView: '',
     currentView: '',
     previousView: '',
     pastView: '',
@@ -87,6 +89,9 @@ var store = {
   },
   setScroll: function setScroll (angle) {
     store.state.scroll = angle;
+  },
+  killLastView: function killLastView () {
+    store.state.lastView = '';
   },
   // no uso media query asi que seteo el ancho de cad circulo aca
   getDimensions: function getDimensions (event) {
@@ -179,176 +184,145 @@ var store = {
     }
   },
   point: function point (component) {
-    // var declarations
-    var total = component.total;
-    var index = component.index;
-    // var arc = component.arc
-    var type = component.type;
-    var distance = component.distance;
-    var angle = component.angle;
-    var size = component.size;
-    var attachedPosition = store.state.position;
-    var X = '';
-    var Xi = '';
-    var Y = '';
-    var Yi = '';
-    var currentPosXi = '';
-    var currentPosYi = '';
-    var scale = '';
-    var scalei = '';
-    var currentPosX = '';
-    var currentPosY = '';
+    // VARIABLE DECLARATION
+    var scale = 1;
+    var scalei = 1;
+    var currentX = 0;
+    var currentY = 0;
+    var currentXi = 0;
+    var currentYi = 0;
+    var parentPosition = {};
+    var newPosition = {};
     // EJECUTA FUNCION
-    if (component.$parent.type === 'panel') { // pensar en provide/inject
-      var parentPosition = {
-        Xi: component.$parent.position.Xi,
-        Yi: component.$parent.position.Yi,
-        X: component.$parent.position.X,
-        Y: component.$parent.position.Y,
-        scalei: component.$parent.position.scalei,
-        scale: component.$parent.position.scale
-      };
+    if (component.type === 'panel') {
+      if (store.state.currentView === component.viewName) {
+        newPosition = {
+          X: store.state.cache[store.state.cache.length - 1].position.X,
+          Xi: store.state.cache[store.state.cache.length - 1].position.Xi,
+          Y: store.state.cache[store.state.cache.length - 1].position.Y,
+          Yi: store.state.cache[store.state.cache.length - 1].position.Yi,
+          scalei: store.state.cache[store.state.cache.length - 1].position.scalei,
+          scale: store.state.cache[store.state.cache.length - 1].position.scale
+        };
+      } else if (store.state.lastView === component.viewName) {
+        newPosition = {
+          X: store.state.lastViewCache.position.X,
+          Xi: store.state.lastViewCache.position.Xi,
+          Y: store.state.lastViewCache.position.Y,
+          Yi: store.state.lastViewCache.position.Yi,
+          scalei: store.state.lastViewCache.position.scalei,
+          scale: store.state.lastViewCache.position.scale
+        };
+      } else if (store.state.previousView === component.viewName) {
+        newPosition = {
+          X: store.state.cache[store.state.cache.length - 2].position.X,
+          Xi: store.state.cache[store.state.cache.length - 2].position.Xi,
+          Y: store.state.cache[store.state.cache.length - 2].position.Y,
+          Yi: store.state.cache[store.state.cache.length - 2].position.Yi,
+          scalei: store.state.cache[store.state.cache.length - 2].position.scalei,
+          scale: store.state.cache[store.state.cache.length - 2].position.scale
+        };
+      } else if (store.state.pastView === component.viewName) {
+        newPosition = {
+          X: store.state.cache[store.state.cache.length - 3].position.X,
+          Xi: store.state.cache[store.state.cache.length - 3].position.Xi,
+          Y: store.state.cache[store.state.cache.length - 3].position.Y,
+          Yi: store.state.cache[store.state.cache.length - 3].position.Yi,
+          scalei: store.state.cache[store.state.cache.length - 3].position.scalei,
+          scale: store.state.cache[store.state.cache.length - 3].position.scale
+        };
+      } else {
+        newPosition = {
+          X: store.state.position.X,
+          Xi: store.state.position.Xi,
+          Y: store.state.position.Y,
+          Yi: store.state.position.Yi,
+          scalei: store.state.position.scalei,
+          scale: store.state.position.scale
+        };
+      }
     } else {
-      parentPosition = {
-        Xi: 0,
-        Yi: 0,
-        X: 0,
-        Y: 0,
-        scalei: 1,
-        scale: 1
-      };
-    }
-    if (type !== 'panel') {
-      // distance prop
-      // de 0 a 200%
-      // agarra la distancia base en % y la calcula con el diametro css del panel
-      // ver tema de valor cero -->
-      if (type === 'item' && component.layout === 'radial') {
-        angle = (360 / total * index) - 90;
-        if (total === 1) {
+      var angle = component.angle;
+      var distance = component.distance;
+      if (component.type === 'item') {
+        angle = (360 / component.total * component.index) - 90;
+        if (component.total === 1) {
           distance = 0;
         }
       }
-      if (type === 'item' && component.layout === 'lineal') {
-        if (index === 0) {
-          angle = 180;
-          distance = 90;
-        } else if (index === 1) {
-          angle = 0;
-          distance = 0;
-        } else {
-          angle = 0;
-          distance = 90;
-        }
-        if (total === 1) {
-          distance = 0;
-        }
-      }
-      if (type === 'pagination') {
+      if (component.type === 'pagination') {
         var arcAngle = 180;
-        var range = (arcAngle - (arcAngle - (total * 10)));
-        var offset = ((arcAngle - range) - (range / total)) / 2;
-        index = total - index;
-       /* if (arc === 'quarter') {
-          arcAngle = 90
-        } else if (arc === 'half') {
-          arcAngle = 120
-        } else if (arc === 'threequarter') {
-          arcAngle = 270
-        } else if (arc === 'full') {
-          arcAngle = 360
-        } */
-        angle = range / total * index + offset;
+        var range = (arcAngle - (arcAngle - (component.total * 10)));
+        var offset = ((arcAngle - range) - (range / component.total)) / 2;
+        angle = range / component.total * (component.total - component.index) + offset;
       }
-      if (size === 'xxs') {
+      if (component.size === 'xxs') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.xxs;
         scalei = store.state.zircleWidth.xxs / store.state.zircleWidth.xl;
-      } else if (size === 'extrasmall') {
+      } else if (component.size === 'extrasmall') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.xs;
         scalei = store.state.zircleWidth.xs / store.state.zircleWidth.xl;
-      } else if (size === 'small') {
+      } else if (component.size === 'small') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.s;
         scalei = store.state.zircleWidth.s / store.state.zircleWidth.xl;
-      } else if (size === 'medium') {
+      } else if (component.size === 'medium') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.m;
         scalei = store.state.zircleWidth.m / store.state.zircleWidth.xl;
-      } else if (size === 'large') {
+      } else if (component.size === 'large') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.l;
         scalei = store.state.zircleWidth.l / store.state.zircleWidth.xl;
-      } else if (size === 'extralarge') {
+      } else if (component.size === 'extralarge') {
         scale = 1;
         scalei = 1;
       }
       if (distance === 0) {
-        currentPosX = 0;
-        currentPosY = 0;
+        currentX = 0;
+        currentY = 0;
       } else {
-        // 130 es el diametro del extralarge hay que ver como hacerlo dinamico por si el dev lo cambia
-        // quizas meterlo como stylo en zui. o que lo lea al montar
-        distance = ((store.state.zircleWidth.xl / 2) * distance / 100);
-        // test para hacer responsive
-        // tema anglulos : limitar de 0 a 360
-        // IMPORTANTE: OJO CON DISTANCIA Y ANGLULO CERO, RESULTADO ERRONEOS AL RESIZE
-        currentPosX = (distance) * Math.cos(angle * (Math.PI / 180));
-        currentPosY = (distance) * Math.sin(angle * (Math.PI / 180));
+        currentX = ((store.state.zircleWidth.xl / 2) * distance / 100) * Math.cos(angle * (Math.PI / 180));
+        currentY = ((store.state.zircleWidth.xl / 2) * distance / 100) * Math.sin(angle * (Math.PI / 180));
       }
-      if (currentPosX > 0) {
-        currentPosXi = -Math.abs(Number(currentPosX));
+      if (currentX > 0) {
+        currentXi = -Math.abs(Number(currentX));
       } else {
-        currentPosXi = Math.abs(Number(currentPosX));
+        currentXi = Math.abs(Number(currentX));
       }
-      if (currentPosY > 0) {
-        currentPosYi = -Math.abs(Number(currentPosY));
+      if (currentY > 0) {
+        currentYi = -Math.abs(Number(currentY));
       } else {
-        currentPosYi = Math.abs(Number(currentPosY));
+        currentYi = Math.abs(Number(currentY));
       }
-      X = currentPosX;
-      Xi = parentPosition.Xi + currentPosXi * parentPosition.scalei;
-      Y = currentPosY;
-      Yi = parentPosition.Yi + currentPosYi * parentPosition.scalei;
-      scalei = parentPosition.scalei * scalei;
-      scale = parentPosition.scale * scale;
-      var Xabs = parentPosition.X + currentPosX * parentPosition.scalei;
-      var Yabs = parentPosition.Y + currentPosY * parentPosition.scalei;
-    } else {
-      var cacheView = store.state.cache.slice(0).reverse().find(function (cache) {
-        return cache.view === component.viewName
-      });
-      if (cacheView !== undefined) {
-        if (cacheView.view === component.viewName) {
-          X = cacheView.position.X;
-          Xi = cacheView.position.Xi;
-          Y = cacheView.position.Y;
-          Yi = cacheView.position.Yi;
-          scalei = cacheView.position.scalei;
-          scale = cacheView.position.scale;
-        } else {
-          X = attachedPosition.X;
-          Xi = attachedPosition.Xi;
-          Y = attachedPosition.Y;
-          Yi = attachedPosition.Yi;
-          scalei = attachedPosition.scalei;
-          scale = attachedPosition.scale;
-        }
+      if (component.$parent.type === 'panel') {
+        parentPosition = {
+          Xi: component.$parent.position.Xi,
+          Yi: component.$parent.position.Yi,
+          X: component.$parent.position.X,
+          Y: component.$parent.position.Y,
+          scalei: component.$parent.position.scalei,
+          scale: component.$parent.position.scale
+        };
       } else {
-        X = attachedPosition.X;
-        Xi = attachedPosition.Xi;
-        Y = attachedPosition.Y;
-        Yi = attachedPosition.Yi;
-        scalei = attachedPosition.scalei;
-        scale = attachedPosition.scale;
+        parentPosition = {
+          Xi: 0,
+          Yi: 0,
+          X: 0,
+          Y: 0,
+          scalei: 1,
+          scale: 1
+        };
       }
+      newPosition = {
+        X: currentX,
+        Y: currentY,
+        Xi: parentPosition.Xi + currentXi * parentPosition.scalei,
+        Yi: parentPosition.Yi + currentYi * parentPosition.scalei,
+        scale: parentPosition.scale * scale,
+        scalei: parentPosition.scalei * scalei,
+        Xabs: parentPosition.X + currentX * parentPosition.scalei,
+        Yabs: parentPosition.Y + currentY * parentPosition.scalei
+      };
     }
-    return {
-      X: X,
-      Y: Y,
-      Xi: Xi,
-      Yi: Yi,
-      scale: scale,
-      scalei: scalei,
-      Xabs: Xabs,
-      Yabs: Yabs
-    }
+    return newPosition
   },
   setView: function setView (view) {
     store.state.currentView = view.toLowerCase();
@@ -362,19 +336,16 @@ var store = {
     }
   },
   setAppPos: function setAppPos (data) {
-    runView();
-    function runView () {
-      store.state.position = {
-        X: data.X,
-        Y: data.Y,
-        scale: data.scale,
-        Xi: data.Xi,
-        Yi: data.Yi,
-        scalei: data.scalei,
-        go: data.go
-      };
-      store.setView(data.go);
-    }
+    store.state.position = {
+      X: data.X,
+      Y: data.Y,
+      scale: data.scale,
+      Xi: data.Xi,
+      Yi: data.Yi,
+      scalei: data.scalei,
+      go: data.go
+    };
+    store.setView(data.go);
   },
   setHistory: function setHistory (view) {
     // only component with viewName
@@ -389,10 +360,11 @@ var store = {
     }
   },
   goBack: function goBack () {
-    if (store.state.history.length > 1) {
+    if (store.state.cache.length > 1) {
       store.state.history.pop();
       var current = store.state.history[store.state.history.length - 1];
       store.state.lastViewCache = store.state.cache[store.state.cache.length - 1];
+      store.state.lastView = store.state.lastViewCache.view;
       store.state.cache.pop();
       var currentCache = store.state.cache[store.state.cache.length - 1];
       var position = currentCache.position;
@@ -441,13 +413,12 @@ var zmixin = {
     classes: function classes () {
       // var colorp = this.color
       return {
-        // previuos view settings
-        prevclass: this.viewName === this.state.previousView,
+        // currclass: this.viewName === this.state.currentView,
+        // lastclass: this.viewName === this.state.lastView,
+        pastclass: this.type === 'panel' && this.viewName === this.state.pastView,
+        prevclass: this.type === 'panel' && this.viewName === this.state.previousView,
         hidden: this.$parent.viewName === this.state.previousView,
-        pastclass: this.type === 'panel' && this.viewName === this.state.pastView && this.viewName === this.state.pastView,
         zoom: this.type === 'scale' && this.gotoview !== undefined
-        // responsive animation. solo para current view
-        // animation: this.view === this.state.currentView || this.$parent.view === this.state.currentView
       }
     },
     colors: function colors () {
@@ -456,7 +427,7 @@ var zmixin = {
   }
 };
 
-var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui main",class:[_vm.classes, _vm.colors],staticStyle:{"overflow":"visible"},style:(_vm.styles.main),attrs:{"title":_vm.viewName,"type":"panel"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"plate",style:(_vm.styles.plate)}),_vm._v(" "),(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.scrollBar === true)?_c('z-scroll',{staticStyle:{"overflow":"visible"},attrs:{"scrollVal":_vm.scrollVal},on:{"update:scrollVal":function($event){_vm.scrollVal=$event;}}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed"},[_vm._t("picture"),_vm._v(" "),_c('div',{staticClass:"z-content maindisc",class:[_vm.classesContent],style:(_vm.styles.hideScroll),on:{"scroll":_vm.scroll}},[_c('section',[_vm._t("default"),_vm._v(" "),_c('span',{staticClass:"bottom"})],2)])],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
+var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui main",class:[_vm.classes, _vm.colors],staticStyle:{"overflow":"visible"},style:(_vm.styles.main),attrs:{"title":_vm.viewName,"type":"panel"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"plate",style:(_vm.styles.plate)}),_vm._v(" "),(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.scrollBar === true)?_c('z-scroll',{staticStyle:{"overflow":"visible"},attrs:{"scrollVal":_vm.scrollVal},on:{"update:scrollVal":function($event){_vm.scrollVal=$event;}}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed",style:(_vm.styles.background)},[_vm._t("picture"),_vm._v(" "),_c('div',{staticClass:"z-content maindisc",class:[_vm.classesContent],style:(_vm.styles.hideScroll),on:{"scroll":_vm.scroll}},[_c('section',{staticClass:"z-text"},[_vm._t("default"),_vm._v(" "),_c('span',{staticClass:"bottom"})],2)])],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
   mixins: [zmixin],
   props: {
     progress: {
@@ -474,6 +445,10 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     slider: {
       type: [Boolean],
       default: false
+    },
+    imgSource: {
+      type: String,
+      default: ''
     }
   },
   name: 'z-panel',
@@ -483,7 +458,8 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       scrollBar: false,
       alertar: '',
       scrollVal: -45,
-      width: 0
+      width: 0,
+      img: {}
     }
   },
   computed: {
@@ -510,6 +486,9 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
         },
         hideScroll: {
           width: W - 10 + 'px'
+        },
+        background: {
+          // backgroundImage: `url(${this.imgSource})`
         }
       }
     },
@@ -541,9 +520,15 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       }
     }
   },
+  watch: {
+    scrollVal: function scrollVal () {
+      var test1 = this.$el.querySelector('.z-content');
+      test1.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (test1.scrollHeight - test1.clientHeight) / 100;
+    }
+  },
   mounted: function mounted () {
     this.width = this.state.zircleWidth.xl;
-    var test = this.$el.querySelector('.z-content > section'); // guarda con esto que no anda bien
+    var test = this.$el.querySelector('.z-content > .z-text'); // guarda con esto que no anda bien
     if (test.clientHeight > this.state.zircleWidth.xl) {
       this.scrollBar = true;
     } else {
@@ -729,34 +714,55 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   methods: {
     move: function move () {
       // se debe pasar el item seleccionado en el campo item
-      if (this.gotoview !== undefined) {
-        var go = this.gotoviewName;
-        var item = this.item;
-        if (item !== undefined) {
-          this.state.selectedItem = item;
-        }
-        var position = {
-          X: this.position.Xabs,
-          Y: this.position.Yabs,
-          scale: this.position.scale,
-          Xi: this.position.Xi,
-          Yi: this.position.Yi,
-          scalei: this.position.scalei,
-          go: go,
-          next: true
-        };
-        if (this.state.router === true) {
-          this.state.shadowPosition = position;
-          if (item !== undefined) {
-            this.$router.push({name: go, params: {id: item}});
-          } else {
-            this.$router.push({name: go});
-          }
+      if (this.state.previousView === this.$parent.$parent.viewName) {
+        if (this.state.router === true && this.state.previousView !== '') {
+          this.$router.back();
         } else {
-          this.store.setAppPos(position);
+          this.store.goBack();
+        }
+      } else if (this.state.previousView === 'item') {
+        if (this.state.router === true && this.state.previousView !== '') {
+          this.$router.back();
+        } else {
+          this.store.goBack();
         }
       } else {
-        // no action
+        if (this.gotoview !== undefined) {
+          var go = this.gotoviewName;
+          var item = this.item;
+          if (item !== undefined) {
+            this.state.selectedItem = item;
+          }
+          var position = {
+            X: this.position.Xabs,
+            Y: this.position.Yabs,
+            scale: this.position.scale,
+            Xi: this.position.Xi,
+            Yi: this.position.Yi,
+            scalei: this.position.scalei,
+            go: go,
+            next: true
+          };
+          if (this.state.router === true) {
+            this.state.shadowPosition = position;
+            if (item !== undefined) {
+              this.$router.push({name: go, params: {id: item}});
+            } else {
+              this.$router.push({name: go});
+            }
+          } else {
+            this.store.setAppPos(position);
+          }
+        } else {
+          // no action
+        }
+      }
+      if (this.state.pastView === this.$parent.$parent.viewName) {
+        if (this.state.router === true) {
+          this.$router.back();
+        } else {
+          this.store.goBack();
+        }
       }
     }
   }
@@ -798,7 +804,7 @@ var zcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
 };
 
 /* eslint-disable no-new */
-var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',[_c(_vm.past,{tag:"component"}),_vm._v(" "),_c(_vm.previous,{tag:"component"}),_vm._v(" "),_c('z-transition',[(_vm.$zircleStore.state.router === false)?_c(_vm.current,{key:_vm.$zircleStore.state.currentView,tag:"component"}):_vm._e(),_vm._v(" "),(_vm.$zircleStore.state.router === true)?_c('router-view'):_vm._e()],1)],1)},staticRenderFns: [],
+var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('z-transition',[_c(_vm.past,{key:_vm.$zircleStore.state.pastView,tag:"component"}),_vm._v(" "),_c(_vm.previous,{key:_vm.$zircleStore.state.previousView,tag:"component"}),_vm._v(" "),(_vm.$zircleStore.state.router === false)?_c(_vm.current,{key:_vm.$zircleStore.state.currentView,tag:"component"}):_vm._e(),_vm._v(" "),(_vm.$zircleStore.state.router === true)?_c('router-view',{key:_vm.$zircleStore.state.currentView}):_vm._e()],1)},staticRenderFns: [],
   name: 'z-view-manager',
   props: {
     list: {
@@ -807,6 +813,15 @@ var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;va
     }
   },
   computed: {
+    last: function last () {
+      var vm = this;
+      var key = Object.keys(this.list).find(function (k) {
+        if (k.toLowerCase() === vm.$zircleStore.state.lastView) {
+          return k
+        }
+      });
+      return this.list[key]
+    },
     current: function current () {
       var vm = this;
       var key = Object.keys(this.list).find(function (k) {
@@ -843,40 +858,41 @@ var ztransition = {
     var data = {
       props: {
         name: 'zuit',
-        css: false
+        css: false,
+        tag: 'section'
       },
       on: {
-        beforeEnter: function beforeEnter (el) {
-          el.style.opacity = 0;
-        },
         enter: function enter (el, done) {
-          var point = document.querySelector('#z-point');
+          var point = document.getElementById('z-point');
           if (context.parent.$zircleStore.state.mode === 'forward') {
-            el.style.animation = 'appear .5s forwards';
-            // point.style.transformStyle = 'preserve-3d'
             point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)';
-            point.style.transition = 'transform .5s cubic-bezier(1, .04, .94, .93)';
+            point.style.transition = 'transform 800ms ease-in-out';
+            el.classList.add('currclass');
+            // console.log(el)
             done();
-            //  PREVIOUS VIEW ==>
           } else {
             el.style.opacity = 1;
             done();
           }
         },
+        beforeLeave: function beforeLeave (el) {
+          el.classList.remove('currclass');
+        },
         leave: function leave (el, done) {
-          var point = document.querySelector('#z-point');
+          var point = document.getElementById('z-point');
           if (context.parent.$zircleStore.state.mode === 'forward') {
             done();
           } else {
-            // point.style.transformStyle = 'preserve-3d'
             point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)';
-            point.style.transition = 'transform .5s ease-in-out';
-            done();
+            el.classList.add('lastclass');
+            setTimeout(function () {
+              done();
+            }, 800);
           }
         }
       }
     };
-    return createElement('transition', data, context.children)
+    return createElement('transition-group', data, context.children)
   }
 };
 
@@ -1277,7 +1293,8 @@ var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     return {
       items: [],
       type: 'panel', // esto es para evitar que se compute mal position y escala,
-      resdata: this.collection
+      resdata: this.collection,
+      viewName: 'test'
     }
   },
   methods: {
