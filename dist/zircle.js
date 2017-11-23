@@ -1,8 +1,8 @@
 /*!
- * zircle v0.1.9
+ * zircle v0.2.0
  * (c) 2017 zircleUI
  * Released under the MIT License.
- * Copyright (c) 2017-present, Juan Martín Muda
+ * Copyright (c) 2017-present, Juan Martin Muda
  */
 
 (function (global, factory) {
@@ -94,7 +94,7 @@ var store = {
     store.state.lastView = '';
   },
   // no uso media query asi que seteo el ancho de cad circulo aca
-  getDimensions: function getDimensions (event) {
+  getDimensions: function getDimensions () {
     // small devices
     if (window.matchMedia('(max-width: 319px)').matches) {
       store.state.zircleWidth.xl = 200;
@@ -204,16 +204,7 @@ var store = {
           scalei: store.state.cache[store.state.cache.length - 1].position.scalei,
           scale: store.state.cache[store.state.cache.length - 1].position.scale
         };
-      } else if (store.state.lastView === component.viewName) {
-        newPosition = {
-          X: store.state.lastViewCache.position.X,
-          Xi: store.state.lastViewCache.position.Xi,
-          Y: store.state.lastViewCache.position.Y,
-          Yi: store.state.lastViewCache.position.Yi,
-          scalei: store.state.lastViewCache.position.scalei,
-          scale: store.state.lastViewCache.position.scale
-        };
-      } else if (store.state.previousView === component.viewName) {
+      } if (store.state.previousView === component.viewName) {
         newPosition = {
           X: store.state.cache[store.state.cache.length - 2].position.X,
           Xi: store.state.cache[store.state.cache.length - 2].position.Xi,
@@ -375,9 +366,6 @@ var store = {
   }
 };
 
-var zstyle = {
-};
-
 var zmixin = {
   props: {
     distance: {
@@ -467,25 +455,20 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       return this.view.toLowerCase()
     },
     styles: function styles () {
-      if (this.viewName === this.state.previousView) {
-        var W = this.state.zircleWidth.xl;
-      } else {
-        W = this.state.zircleWidth.xl;
-      }
       return {
         main: {
-          width: W + 'px',
-          height: W + 'px',
-          margin: -(W / 2) + 'px 0 0 ' + -(W / 2) + 'px',
+          width: this.state.zircleWidth.xl + 'px',
+          height: this.state.zircleWidth.xl + 'px',
+          margin: -(this.state.zircleWidth.xl / 2) + 'px 0 0 ' + -(this.state.zircleWidth.xl / 2) + 'px',
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
-          width: W + 50 + 'px',
-          height: W + 50 + 'px',
-          margin: -((W + 50) / 2) + 'px 0 0 ' + -((W + 50) / 2) + 'px'
+          width: this.state.zircleWidth.xl + 50 + 'px',
+          height: this.state.zircleWidth.xl + 50 + 'px',
+          margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
         },
         hideScroll: {
-          width: W - 10 + 'px'
+          width: this.state.zircleWidth.xl - 10 + 'px'
         },
         background: {
           // backgroundImage: `url(${this.imgSource})`
@@ -527,7 +510,6 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     }
   },
   mounted: function mounted () {
-    this.width = this.state.zircleWidth.xl;
     var test = this.$el.querySelector('.z-content > .z-text'); // guarda con esto que no anda bien
     if (test.clientHeight > this.state.zircleWidth.xl) {
       this.scrollBar = true;
@@ -571,10 +553,6 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     },
     id: {
       type: [Number, String]
-    }
-  },
-  data: function data () {
-    return {
     }
   },
   computed: {
@@ -751,6 +729,8 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
               this.$router.push({name: go});
             }
           } else {
+            console.log(this.$parent.$parent.viewName);
+            this.store.state.mode = 'forward';
             this.store.setAppPos(position);
           }
         } else {
@@ -798,7 +778,8 @@ var zcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
     this.store.getDimensions();
     // dynamic posiciom de circilos responsives
     window.addEventListener('resize', function (event) {
-      vue.store.getDimensions(event);
+      vue.store.state.viewport = {x: window.innerWidth, y: window.innerHeight};
+      vue.store.getDimensions();
     });
   }
 };
@@ -813,15 +794,6 @@ var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;va
     }
   },
   computed: {
-    last: function last () {
-      var vm = this;
-      var key = Object.keys(this.list).find(function (k) {
-        if (k.toLowerCase() === vm.$zircleStore.state.lastView) {
-          return k
-        }
-      });
-      return this.list[key]
-    },
     current: function current () {
       var vm = this;
       var key = Object.keys(this.list).find(function (k) {
@@ -884,10 +856,13 @@ var ztransition = {
             done();
           } else {
             point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)';
+            point.style.transition = 'transform 800ms ease-in-out';
             el.classList.add('lastclass');
             setTimeout(function () {
+              context.parent.$zircleStore.state.lastView = '';
+              context.parent.$zircleStore.state.lastViewCache = {};
               done();
-            }, 800);
+            }, 600);
           }
         }
       }
@@ -1247,7 +1222,7 @@ function chunk (myArray, chunkSize) {
 var zpagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticStyle:{"z-index":"9000"},attrs:{"title":"z-pagination"}},_vm._l((_vm.pages),function(page,index){return _c('z-dotnav',{key:index,attrs:{"color":"accent","total":_vm.pages.length,"index":index,"active":_vm.active,"size":"xxs","distance":112},nativeOn:{"click":function($event){_vm.changePage(index);}}})}))},staticRenderFns: [],
   name: 'z-pagination',
   mixins: [zmixin],
-  props: ['collect', 'per-page'],
+  props: ['collection', 'per-page'],
   data: function data () {
     return {
       type: 'pagination',
@@ -1270,7 +1245,7 @@ var zpagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var
   computed: {
     pages: function pages () {
       // console.log(this.collection)
-      return chunk(this.collect, this.perPage)
+      return chunk(this.collection, this.perPage)
     }
   },
   mounted: function mounted () {
@@ -1278,7 +1253,7 @@ var zpagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var
   }
 };
 
-var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"title":"z-list"}},[_vm._l((_vm.items),function(item,index){return _c('z-item',{key:index,attrs:{"color":_vm.color,"size":"small","distance":60,"total":_vm.items.length,"index":index,"layout":"radial","gotoview":"item","item":item}},[_vm._v(" "+_vm._s(item)+" ")])}),_vm._v(" "),_c('z-pagination',{attrs:{"collect":_vm.resdata,"per-page":_vm.perPage},on:{"updateItems":_vm.displayedItems}})],2)},staticRenderFns: [],
+var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"title":"z-list"}},[_vm._l((_vm.items),function(item,index){return _c('z-item',{key:index,attrs:{"color":_vm.color,"size":"small","distance":60,"total":_vm.items.length,"index":index,"layout":"radial","gotoview":"item","item":item}},[_vm._t("default",null,{item:item})],2)}),_vm._v(" "),_c('z-pagination',{attrs:{"collection":_vm.collection,"per-page":_vm.perPage},on:{"updateItems":_vm.displayedItems}})],2)},staticRenderFns: [],
   name: 'z-list',
   mixins: [zmixin],
   props: {
@@ -1287,13 +1262,15 @@ var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     },
     perPage: {
       type: [Number]
+    },
+    color: {
+      type: String
     }
   },
   data: function data () {
     return {
       items: [],
-      type: 'panel', // esto es para evitar que se compute mal position y escala,
-      resdata: this.collection,
+      type: 'panel',
       viewName: 'test'
     }
   },
@@ -1327,6 +1304,9 @@ var zdotnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
     }
   },
   computed: {
+    position: function position () {
+      return this.store.point(this)
+    },
     activated: function activated () {
       return {
         'accent-secondary': this.active === this.index,
@@ -1375,7 +1355,6 @@ var zircle = {
         return store
       }
     });
-    Vue.component('z-style', zstyle);
     Vue.component('z-canvas', zcanvas);
     Vue.component('z-view-manager', zviewmanager);
     Vue.component('z-panel', zpanel);

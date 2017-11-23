@@ -9,9 +9,6 @@
   display: none;
 }
 
-/* ::-moz-scrollbar {
-  display: none;
-} */
 .color--light-blue {
   --background-color: #F1F1F1;
   --primary-color: #5FC9F3;
@@ -153,12 +150,10 @@ div[type="button"] {
   position: fixed;
   top: 50%;
   left: 50%;
-  -webkit-perspective: 800px;
-  perspective: 800px;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
   text-decoration: none;
   will-change: transform;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 .handlebar:hover {
@@ -307,10 +302,10 @@ div[type="button"] {
   overflow-y: scroll;
   padding-right: 20px;
   margin-right: -20px; /* padding-top: 100px;
-    height: 100%;
-    width: 105%;
-     padding-right: 28px;
-    margin-right: -28px; */
+      height: 100%;
+      width: 105%;
+       padding-right: 28px;
+      margin-right: -28px; */
 }
 
 .bottom {
