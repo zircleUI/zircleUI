@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2017-11-23
+### Fixes
+- Fix `z-list`component to allows customize item template.
+- Remove lastView because is useless.
+
+### Changed
+- Minor optimizations
+- Remove z-style and embed css into `z-canvas`
+
 ## [0.1.9] - 2017-11-14
 ### Enhancements
 - Smoother transitions thanks to improve function for positioning elements `point()`
