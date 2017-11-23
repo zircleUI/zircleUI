@@ -3,7 +3,7 @@
     <div title="z-item" class="zui disc" :class="[classes, colors]" :style="styles.main" @click.stop="move"> 
       <div class="z-contentbox label" :style="styles.label" style="overflow: visible;">
         <div class="z-content" style="overflow: visible;">
-          <slot></slot>
+           <slot></slot>
         </div>
       </div>
     </div>
@@ -102,6 +102,8 @@ export default {
               this.$router.push({name: go})
             }
           } else {
+            console.log(this.$parent.$parent.viewName)
+            this.store.state.mode = 'forward'
             this.store.setAppPos(position)
           }
         } else {

@@ -1,4 +1,4 @@
-<template>
+<template >
   
  <section title="z-list">
    <z-item 
@@ -12,10 +12,10 @@
     layout='radial'
     gotoview="item"
     :item="item">
-      {{item}}
+      <slot :item="item"></slot>
     </z-item>
     <z-pagination  
-    :collect="resdata"
+    :collection="collection"
     :per-page="perPage"
     @updateItems="displayedItems" />
 </section>
@@ -32,13 +32,15 @@ export default {
     },
     perPage: {
       type: [Number]
+    },
+    color: {
+      type: String
     }
   },
   data () {
     return {
       items: [],
-      type: 'panel', // esto es para evitar que se compute mal position y escala,
-      resdata: this.collection,
+      type: 'panel',
       viewName: 'test'
     }
   },

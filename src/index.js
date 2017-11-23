@@ -1,5 +1,4 @@
 import store from './store/store'
-import zstyle from './css/z-style.vue'
 import zpanel from './components/z-panel.vue'
 import zscale from './components/z-scale.vue'
 import zitem from './components/z-item.vue'
@@ -21,7 +20,6 @@ const zircle = {
         return store
       }
     })
-    Vue.component('z-style', zstyle)
     Vue.component('z-canvas', zcanvas)
     Vue.component('z-view-manager', zviewmanager)
     Vue.component('z-panel', zpanel)

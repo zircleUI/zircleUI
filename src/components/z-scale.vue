@@ -58,10 +58,6 @@ export default {
       type: [Number, String]
     }
   },
-  data () {
-    return {
-    }
-  },
   computed: {
     gotoviewName () {
       if (this.gotoview !== undefined) {

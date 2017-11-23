@@ -31,10 +31,13 @@ export default {
             done()
           } else {
             point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)'
+            point.style.transition = 'transform 800ms ease-in-out'
             el.classList.add('lastclass')
             setTimeout(function () {
+              context.parent.$zircleStore.state.lastView = ''
+              context.parent.$zircleStore.state.lastViewCache = {}
               done()
-            }, 800)
+            }, 600)
           }
         }
       }
@@ -42,9 +45,4 @@ export default {
     return createElement('transition-group', data, context.children)
   }
 }
-</script> 
-<style>
-
-
-</style>
-
+</script>

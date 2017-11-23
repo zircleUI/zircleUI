@@ -16,8 +16,6 @@
     
     <z-slider v-if="slider === true" :progress='progress'></z-slider>
     
-    
-    
     <div class="z-contentbox dashed" :style="styles.background" >
 
      
@@ -83,25 +81,20 @@ export default {
       return this.view.toLowerCase()
     },
     styles () {
-      if (this.viewName === this.state.previousView) {
-        var W = this.state.zircleWidth.xl
-      } else {
-        W = this.state.zircleWidth.xl
-      }
       return {
         main: {
-          width: W + 'px',
-          height: W + 'px',
-          margin: -(W / 2) + 'px 0 0 ' + -(W / 2) + 'px',
+          width: this.state.zircleWidth.xl + 'px',
+          height: this.state.zircleWidth.xl + 'px',
+          margin: -(this.state.zircleWidth.xl / 2) + 'px 0 0 ' + -(this.state.zircleWidth.xl / 2) + 'px',
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
-          width: W + 50 + 'px',
-          height: W + 50 + 'px',
-          margin: -((W + 50) / 2) + 'px 0 0 ' + -((W + 50) / 2) + 'px'
+          width: this.state.zircleWidth.xl + 50 + 'px',
+          height: this.state.zircleWidth.xl + 50 + 'px',
+          margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
         },
         hideScroll: {
-          width: W - 10 + 'px'
+          width: this.state.zircleWidth.xl - 10 + 'px'
         },
         background: {
           // backgroundImage: `url(${this.imgSource})`
@@ -143,7 +136,6 @@ export default {
     }
   },
   mounted () {
-    this.width = this.state.zircleWidth.xl
     var test = this.$el.querySelector('.z-content > .z-text') // guarda con esto que no anda bien
     if (test.clientHeight > this.state.zircleWidth.xl) {
       this.scrollBar = true

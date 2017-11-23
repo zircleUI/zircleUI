@@ -25,7 +25,7 @@ import zmixin from '../mixins/zircle-mixin'
 export default {
   name: 'z-pagination',
   mixins: [zmixin],
-  props: ['collect', 'per-page'],
+  props: ['collection', 'per-page'],
   data () {
     return {
       type: 'pagination',
@@ -48,7 +48,7 @@ export default {
   computed: {
     pages () {
       // console.log(this.collection)
-      return chunk(this.collect, this.perPage)
+      return chunk(this.collection, this.perPage)
     }
   },
   mounted () {

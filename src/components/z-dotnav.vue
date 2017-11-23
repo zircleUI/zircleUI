@@ -29,6 +29,9 @@ export default {
     }
   },
   computed: {
+    position () {
+      return this.store.point(this)
+    },
     activated () {
       return {
         'accent-secondary': this.active === this.index,

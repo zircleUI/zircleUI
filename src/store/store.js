@@ -81,7 +81,7 @@ var store = {
     store.state.lastView = ''
   },
   // no uso media query asi que seteo el ancho de cad circulo aca
-  getDimensions (event) {
+  getDimensions () {
     // small devices
     if (window.matchMedia('(max-width: 319px)').matches) {
       store.state.zircleWidth.xl = 200
@@ -191,16 +191,7 @@ var store = {
           scalei: store.state.cache[store.state.cache.length - 1].position.scalei,
           scale: store.state.cache[store.state.cache.length - 1].position.scale
         }
-      } else if (store.state.lastView === component.viewName) {
-        newPosition = {
-          X: store.state.lastViewCache.position.X,
-          Xi: store.state.lastViewCache.position.Xi,
-          Y: store.state.lastViewCache.position.Y,
-          Yi: store.state.lastViewCache.position.Yi,
-          scalei: store.state.lastViewCache.position.scalei,
-          scale: store.state.lastViewCache.position.scale
-        }
-      } else if (store.state.previousView === component.viewName) {
+      } if (store.state.previousView === component.viewName) {
         newPosition = {
           X: store.state.cache[store.state.cache.length - 2].position.X,
           Xi: store.state.cache[store.state.cache.length - 2].position.Xi,

@@ -18,15 +18,6 @@ export default {
     }
   },
   computed: {
-    last () {
-      let vm = this
-      let key = Object.keys(this.list).find(function (k) {
-        if (k.toLowerCase() === vm.$zircleStore.state.lastView) {
-          return k
-        }
-      })
-      return this.list[key]
-    },
     current () {
       let vm = this
       let key = Object.keys(this.list).find(function (k) {
