@@ -772,9 +772,9 @@ check this example
   color="accent"
   :collection="['Apple', 'Banana', 'Orange', 'Kiwi', 'Melon', 'Watermelon', 'Lemon', 'Grapes']"
   :per-page="3">
-    <li slot-scope="props">
+    <span slot-scope="props">
         {{props.item}}
-      </li>
+      </span>
 </z-list>
 ```
 > **Note** In case you populate the `collection` prop with an external Array, first you have to create a copy of this Array to prevent mutation
