@@ -2,7 +2,7 @@
 <img src="_images/logo-bold.svg" width="200">
 
 
-# Zircle UI <small>0.2.0</small>
+# Zircle UI <small>0.2.1</small>
 
 > A circular zooming UI
 

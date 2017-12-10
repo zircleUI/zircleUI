@@ -1,9 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2017-12-10
+### Fixes
+- Fix again `z-list`component to allow customize item template. Now is it possible to add custom labels, background color and background images. Check docs # `z-list` and examples.
+
+### Changed
+- Zooming navigation to nine levels of depth.
+- Remove `z-pagination` 
+
 ## [0.2.0] - 2017-11-23
 ### Fixes
-- Fix `z-list`component to allows customize item template.
+- Fix `z-list`component to allow customize item template.
 - Remove lastView because is useless.
 
 ### Changed
