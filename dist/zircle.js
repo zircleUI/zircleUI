@@ -1,5 +1,5 @@
 /*!
- * zircle v0.2.0
+ * zircle v0.2.1
  * (c) 2017 zircleUI
  * Released under the MIT License.
  * Copyright (c) 2017-present, Juan Martin Muda
@@ -47,7 +47,9 @@ var store = {
     theme: 'theme--dark',
     // temporary for pagination
     selectedItem: '',
-    currentPage: 0
+    currentPage: 0,
+    items: [],
+    pages: []
   },
   routerHooks: function routerHooks (data) {
     var vm = data;
@@ -235,18 +237,6 @@ var store = {
     } else {
       var angle = component.angle;
       var distance = component.distance;
-      if (component.type === 'item') {
-        angle = (360 / component.total * component.index) - 90;
-        if (component.total === 1) {
-          distance = 0;
-        }
-      }
-      if (component.type === 'pagination') {
-        var arcAngle = 180;
-        var range = (arcAngle - (arcAngle - (component.total * 10)));
-        var offset = ((arcAngle - range) - (range / component.total)) / 2;
-        angle = range / component.total * (component.total - component.index) + offset;
-      }
       if (component.size === 'xxs') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.xxs;
         scalei = store.state.zircleWidth.xxs / store.state.zircleWidth.xl;
@@ -538,21 +528,6 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     type: {
       type: String,
       default: 'scale'
-    },
-    total: {
-      type: Number,
-      default: 0
-    },
-    index: {
-      type: Number,
-      default: 0
-    },
-    layout: {
-      type: String,
-      default: 'radial'
-    },
-    id: {
-      type: [Number, String]
     }
   },
   computed: {
@@ -618,7 +593,7 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
           };
           // this.state.position = position
           // console.log('go: ' + go)
-          if (this.state.history.length < 6) {
+          if (this.state.history.length < 9) {
             if (this.state.router === true) {
               this.state.shadowPosition = position;
               // this.store.setAppPos(position)
@@ -628,7 +603,7 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
               this.store.setAppPos(position);
             }
           } else {
-            console.log('Max level of deeph reached');
+            console.log('Max level of deep reached');
           }
           // this.$el.style.opacity = 0
         } else {
@@ -639,16 +614,51 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.styles.main),attrs:{"title":"z-item"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"z-contentbox label",staticStyle:{"overflow":"visible"},style:(_vm.styles.label)},[_c('div',{staticClass:"z-content",staticStyle:{"overflow":"visible"}},[_vm._t("default")],2)])])},staticRenderFns: [],
+var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.styles.main),attrs:{"title":"z-item"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('section',{staticClass:"z-content label",staticStyle:{"overflow":"visible"},style:(_vm.styles.label)},[_vm._t("label")],2),_vm._v(" "),_c('div',{staticClass:"z-content"},[_vm._t("image"),_vm._v(" "),_c('section')],2)])},staticRenderFns: [],
   name: 'z-item',
-  mixins: [zmixin],
-  props: ['total', 'index', 'layout', 'item'],
+  props: {
+    size: {
+      type: String,
+      default: 'medium'
+    },
+    color: {
+      default: 'blue'
+    },
+    gotoview: {
+      default: 'item'
+    },
+    angle: {
+      type: Number
+    }
+  },
   data: function data () {
     return {
-      type: 'item'
+      type: 'item',
+      state: store.state,
+      store: store
     }
   },
   computed: {
+    position: function position () {
+      return this.store.point(this)
+    },
+    classes: function classes () {
+      // var colorp = this.color
+      return {
+        // currclass: this.viewName === this.state.currentView,
+        // lastclass: this.viewName === this.state.lastView,
+        pastclass: this.type === 'panel' && this.viewName === this.state.pastView,
+        prevclass: this.type === 'panel' && this.viewName === this.state.previousView,
+        hidden: this.$parent.viewName === this.state.previousView,
+        zoom: this.type === 'scale' && this.gotoview !== undefined
+      }
+    },
+    colors: function colors () {
+      return this.color
+    },
+    distance: function distance () {
+      return this.state.pages[this.state.currentPage].length === 1 ? 0 : 60
+    },
     gotoviewName: function gotoviewName () {
       if (this.gotoview !== undefined) {
         return this.gotoview.toLowerCase()
@@ -663,11 +673,7 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
           zwidth = this.state.zircleWidth.m;
           break
         case 'small':
-          if (this.layout === 'lineal' && this.index === 1) {
-            zwidth = this.state.zircleWidth.l * 2;
-          } else {
-            zwidth = this.state.zircleWidth.s;
-          }
+          zwidth = this.state.zircleWidth.s;
           break
         case 'extrasmall':
           zwidth = this.state.zircleWidth.xs;
@@ -691,58 +697,35 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   },
   methods: {
     move: function move () {
-      // se debe pasar el item seleccionado en el campo item
-      if (this.state.previousView === this.$parent.$parent.viewName) {
-        if (this.state.router === true && this.state.previousView !== '') {
-          this.$router.back();
-        } else {
-          this.store.goBack();
+      if (this.gotoview !== undefined) {
+        var go = this.gotoviewName;
+        var item = this.item;
+        if (item !== undefined) {
+          this.state.selectedItem = item;
         }
-      } else if (this.state.previousView === 'item') {
-        if (this.state.router === true && this.state.previousView !== '') {
-          this.$router.back();
+        var position = {
+          X: this.position.Xabs,
+          Y: this.position.Yabs,
+          scale: this.position.scale,
+          Xi: this.position.Xi,
+          Yi: this.position.Yi,
+          scalei: this.position.scalei,
+          go: go,
+          next: true
+        };
+        if (this.state.router === true) {
+          this.state.shadowPosition = position;
+          if (item !== undefined) {
+            this.$router.push({name: go, params: {id: item}});
+          } else {
+            this.$router.push({name: go});
+          }
         } else {
-          this.store.goBack();
+          this.store.state.mode = 'forward';
+          this.store.setAppPos(position);
         }
       } else {
-        if (this.gotoview !== undefined) {
-          var go = this.gotoviewName;
-          var item = this.item;
-          if (item !== undefined) {
-            this.state.selectedItem = item;
-          }
-          var position = {
-            X: this.position.Xabs,
-            Y: this.position.Yabs,
-            scale: this.position.scale,
-            Xi: this.position.Xi,
-            Yi: this.position.Yi,
-            scalei: this.position.scalei,
-            go: go,
-            next: true
-          };
-          if (this.state.router === true) {
-            this.state.shadowPosition = position;
-            if (item !== undefined) {
-              this.$router.push({name: go, params: {id: item}});
-            } else {
-              this.$router.push({name: go});
-            }
-          } else {
-            console.log(this.$parent.$parent.viewName);
-            this.store.state.mode = 'forward';
-            this.store.setAppPos(position);
-          }
-        } else {
-          // no action
-        }
-      }
-      if (this.state.pastView === this.$parent.$parent.viewName) {
-        if (this.state.router === true) {
-          this.$router.back();
-        } else {
-          this.store.goBack();
-        }
+        // no action
       }
     }
   }
@@ -801,7 +784,13 @@ var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;va
           return k
         }
       });
-      return this.list[key]
+      if (this.$zircleStore.state.currentView === this.$zircleStore.state.previousView || this.$zircleStore.state.currentView === this.$zircleStore.state.pastView) {
+        this.$zircleStore.state.currentView = this.$zircleStore.state.currentView + ' 1';
+        console.log('repetidoa');
+        return this.list[key]
+      } else {
+        return this.list[key]
+      }
     },
     previous: function previous () {
       var vm = this;
@@ -837,6 +826,7 @@ var ztransition = {
         enter: function enter (el, done) {
           var point = document.getElementById('z-point');
           if (context.parent.$zircleStore.state.mode === 'forward') {
+            point.style.willChange = 'transform';
             point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)';
             point.style.transition = 'transform 800ms ease-in-out';
             el.classList.add('currclass');
@@ -847,6 +837,10 @@ var ztransition = {
             done();
           }
         },
+        afterEnter: function afterEnter (el) {
+          var point = document.getElementById('z-point');
+          point.style.willChange = '';
+        },
         beforeLeave: function beforeLeave (el) {
           el.classList.remove('currclass');
         },
@@ -855,6 +849,7 @@ var ztransition = {
           if (context.parent.$zircleStore.state.mode === 'forward') {
             done();
           } else {
+            point.style.willChange = 'transform';
             point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)';
             point.style.transition = 'transform 800ms ease-in-out';
             el.classList.add('lastclass');
@@ -864,6 +859,10 @@ var ztransition = {
               done();
             }, 600);
           }
+        },
+        afterLeave: function afterLeave (el) {
+          var point = document.getElementById('z-point');
+          point.style.willChange = '';
         }
       }
     };
@@ -1219,41 +1218,7 @@ function chunk (myArray, chunkSize) {
   }
   return res
 }
-var zpagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticStyle:{"z-index":"9000"},attrs:{"title":"z-pagination"}},_vm._l((_vm.pages),function(page,index){return _c('z-dotnav',{key:index,attrs:{"color":"accent","total":_vm.pages.length,"index":index,"active":_vm.active,"size":"xxs","distance":112},nativeOn:{"click":function($event){_vm.changePage(index);}}})}))},staticRenderFns: [],
-  name: 'z-pagination',
-  mixins: [zmixin],
-  props: ['collection', 'per-page'],
-  data: function data () {
-    return {
-      type: 'pagination',
-      arc: 'half',
-      active: 0
-    }
-  },
-  methods: {
-    changePage: function changePage (index) {
-      var data = this.pages[index];
-      var progress = (index + 1) / this.pages.length * 100;
-      this.state.currentPage = index;
-      this.active = this.state.currentPage;
-      this.$emit('updateItems', {
-        data: data,
-        progress: progress
-      });
-    }
-  },
-  computed: {
-    pages: function pages () {
-      // console.log(this.collection)
-      return chunk(this.collection, this.perPage)
-    }
-  },
-  mounted: function mounted () {
-    this.changePage(this.state.currentPage);
-  }
-};
-
-var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"title":"z-list"}},[_vm._l((_vm.items),function(item,index){return _c('z-item',{key:index,attrs:{"color":_vm.color,"size":"small","distance":60,"total":_vm.items.length,"index":index,"layout":"radial","gotoview":"item","item":item}},[_vm._t("default",null,{item:item})],2)}),_vm._v(" "),_c('z-pagination',{attrs:{"collection":_vm.collection,"per-page":_vm.perPage},on:{"updateItems":_vm.displayedItems}})],2)},staticRenderFns: [],
+var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"title":"z-list"}},[_vm._l((_vm.state.pages[_vm.state.currentPage]),function(item,index){return _vm._t("default",null,{item:item,angle:(360 / _vm.state.pages[_vm.state.currentPage].length * index) - 90})}),_vm._v(" "),_vm._l((_vm.state.pages),function(page,index){return _c('z-dotnav',{key:index,attrs:{"size":"xxs","color":"accent","index":index,"distance":112,"angle":(180 - (180 - (_vm.state.pages.length * 10))) / _vm.state.pages.length * (_vm.state.pages.length - index) + ((180 - (180 - (180 - (_vm.state.pages.length * 10)))) - ((180 - (180 - (_vm.state.pages.length * 10))) / _vm.state.pages.length)) / 2,"active":_vm.state.currentPage},nativeOn:{"click":function($event){_vm.state.currentPage = index;}}})})],2)},staticRenderFns: [],
   name: 'z-list',
   mixins: [zmixin],
   props: {
@@ -1269,30 +1234,24 @@ var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   },
   data: function data () {
     return {
-      items: [],
       type: 'panel',
       viewName: 'test'
     }
   },
-  methods: {
-    displayedItems: function displayedItems (data) {
-      this.items = data.data;
-      this.$emit('updateProgress', data.progress);
-    }
+  computed: {
+  },
+  mounted: function mounted () {
+    this.state.pages = chunk(this.collection, this.perPage);
   }
 };
 
 var zdotnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors, _vm.activated],style:(_vm.styles.main),attrs:{"title":"z-dotnav","type":_vm.type}},[_c('div',{staticClass:"navplate",style:(_vm.styles.plate)})])},staticRenderFns: [],
-  name: 'z-scale',
+  name: 'z-page',
   mixins: [zmixin],
   props: {
     type: {
       type: String,
       default: 'pagination'
-    },
-    total: {
-      type: Number,
-      default: 0
     },
     index: {
       type: Number,
@@ -1360,7 +1319,6 @@ var zircle = {
     Vue.component('z-panel', zpanel);
     Vue.component('z-scale', zscale);
     Vue.component('z-dotnav', zdotnav);
-    Vue.component('z-pagination', zpagination);
     Vue.component('z-list', zlist);
     Vue.component('z-slider', zslider);
     Vue.component('z-item', zitem);
