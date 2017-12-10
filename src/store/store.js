@@ -34,7 +34,9 @@ var store = {
     theme: 'theme--dark',
     // temporary for pagination
     selectedItem: '',
-    currentPage: 0
+    currentPage: 0,
+    items: [],
+    pages: []
   },
   routerHooks (data) {
     let vm = data
@@ -222,18 +224,6 @@ var store = {
     } else {
       var angle = component.angle
       var distance = component.distance
-      if (component.type === 'item') {
-        angle = (360 / component.total * component.index) - 90
-        if (component.total === 1) {
-          distance = 0
-        }
-      }
-      if (component.type === 'pagination') {
-        let arcAngle = 180
-        let range = (arcAngle - (arcAngle - (component.total * 10)))
-        let offset = ((arcAngle - range) - (range / component.total)) / 2
-        angle = range / component.total * (component.total - component.index) + offset
-      }
       if (component.size === 'xxs') {
         scale = store.state.zircleWidth.xl / store.state.zircleWidth.xxs
         scalei = store.state.zircleWidth.xxs / store.state.zircleWidth.xl

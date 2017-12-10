@@ -8,16 +8,12 @@
 <script>
 import zmixin from '../mixins/zircle-mixin'
 export default {
-  name: 'z-scale',
+  name: 'z-page',
   mixins: [zmixin],
   props: {
     type: {
       type: String,
       default: 'pagination'
-    },
-    total: {
-      type: Number,
-      default: 0
     },
     index: {
       type: Number,

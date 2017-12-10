@@ -1,27 +1,69 @@
 <template>
   
     <div title="z-item" class="zui disc" :class="[classes, colors]" :style="styles.main" @click.stop="move"> 
-      <div class="z-contentbox label" :style="styles.label" style="overflow: visible;">
-        <div class="z-content" style="overflow: visible;">
-           <slot></slot>
-        </div>
+      
+      <section class="z-content label" :style="styles.label" style="overflow: visible;" >
+        <slot name="label"></slot>
+      </section>
+      
+      <div class="z-content">
+        <slot name="image"></slot>
+        <section>
+          
+        </section>
       </div>
+
     </div>
   
 </template>
 
 <script>
-import zmixin from '../mixins/zircle-mixin'
+import store from '../store/store'
 export default {
   name: 'z-item',
-  mixins: [zmixin],
-  props: ['total', 'index', 'layout', 'item'],
+  props: {
+    size: {
+      type: String,
+      default: 'medium'
+    },
+    color: {
+      default: 'blue'
+    },
+    gotoview: {
+      default: 'item'
+    },
+    angle: {
+      type: Number
+    }
+  },
   data () {
     return {
-      type: 'item'
+      type: 'item',
+      state: store.state,
+      store: store
     }
   },
   computed: {
+    position () {
+      return this.store.point(this)
+    },
+    classes () {
+      // var colorp = this.color
+      return {
+        // currclass: this.viewName === this.state.currentView,
+        // lastclass: this.viewName === this.state.lastView,
+        pastclass: this.type === 'panel' && this.viewName === this.state.pastView,
+        prevclass: this.type === 'panel' && this.viewName === this.state.previousView,
+        hidden: this.$parent.viewName === this.state.previousView,
+        zoom: this.type === 'scale' && this.gotoview !== undefined
+      }
+    },
+    colors () {
+      return this.color
+    },
+    distance () {
+      return this.state.pages[this.state.currentPage].length === 1 ? 0 : 60
+    },
     gotoviewName () {
       if (this.gotoview !== undefined) {
         return this.gotoview.toLowerCase()
@@ -36,11 +78,7 @@ export default {
           zwidth = this.state.zircleWidth.m
           break
         case 'small':
-          if (this.layout === 'lineal' && this.index === 1) {
-            zwidth = this.state.zircleWidth.l * 2
-          } else {
-            zwidth = this.state.zircleWidth.s
-          }
+          zwidth = this.state.zircleWidth.s
           break
         case 'extrasmall':
           zwidth = this.state.zircleWidth.xs
@@ -64,58 +102,35 @@ export default {
   },
   methods: {
     move () {
-      // se debe pasar el item seleccionado en el campo item
-      if (this.state.previousView === this.$parent.$parent.viewName) {
-        if (this.state.router === true && this.state.previousView !== '') {
-          this.$router.back()
-        } else {
-          this.store.goBack()
+      if (this.gotoview !== undefined) {
+        var go = this.gotoviewName
+        var item = this.item
+        if (item !== undefined) {
+          this.state.selectedItem = item
         }
-      } else if (this.state.previousView === 'item') {
-        if (this.state.router === true && this.state.previousView !== '') {
-          this.$router.back()
+        var position = {
+          X: this.position.Xabs,
+          Y: this.position.Yabs,
+          scale: this.position.scale,
+          Xi: this.position.Xi,
+          Yi: this.position.Yi,
+          scalei: this.position.scalei,
+          go: go,
+          next: true
+        }
+        if (this.state.router === true) {
+          this.state.shadowPosition = position
+          if (item !== undefined) {
+            this.$router.push({name: go, params: {id: item}})
+          } else {
+            this.$router.push({name: go})
+          }
         } else {
-          this.store.goBack()
+          this.store.state.mode = 'forward'
+          this.store.setAppPos(position)
         }
       } else {
-        if (this.gotoview !== undefined) {
-          var go = this.gotoviewName
-          var item = this.item
-          if (item !== undefined) {
-            this.state.selectedItem = item
-          }
-          var position = {
-            X: this.position.Xabs,
-            Y: this.position.Yabs,
-            scale: this.position.scale,
-            Xi: this.position.Xi,
-            Yi: this.position.Yi,
-            scalei: this.position.scalei,
-            go: go,
-            next: true
-          }
-          if (this.state.router === true) {
-            this.state.shadowPosition = position
-            if (item !== undefined) {
-              this.$router.push({name: go, params: {id: item}})
-            } else {
-              this.$router.push({name: go})
-            }
-          } else {
-            console.log(this.$parent.$parent.viewName)
-            this.store.state.mode = 'forward'
-            this.store.setAppPos(position)
-          }
-        } else {
-          // no action
-        }
-      }
-      if (this.state.pastView === this.$parent.$parent.viewName) {
-        if (this.state.router === true) {
-          this.$router.back()
-        } else {
-          this.store.goBack()
-        }
+        // no action
       }
     }
   }

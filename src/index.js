@@ -10,7 +10,6 @@ import zbutton from './components/z-button.vue'
 import zslider from './components/z-slider.vue'
 import zrange from './components/z-range.vue'
 import zscroll from './components/z-scroll.vue'
-import zpagination from './components/z-pagination.vue'
 import zlist from './components/z-list.vue'
 import zdotnav from './components/z-dotnav.vue'
 const zircle = {
@@ -25,7 +24,6 @@ const zircle = {
     Vue.component('z-panel', zpanel)
     Vue.component('z-scale', zscale)
     Vue.component('z-dotnav', zdotnav)
-    Vue.component('z-pagination', zpagination)
     Vue.component('z-list', zlist)
     Vue.component('z-slider', zslider)
     Vue.component('z-item', zitem)

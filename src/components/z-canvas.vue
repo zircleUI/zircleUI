@@ -195,6 +195,7 @@ export default {
   background-color: var(--background);
   color: var(--primary);
   transition: background-color 1s;
+  overflow: hidden;
 }
 
 div[type="panel"],
@@ -209,12 +210,12 @@ div[type="button"] {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   perspective: 1000px;
   text-decoration: none;
-  will-change: transform;
+  
 }
 
 .handlebar:hover {
@@ -233,6 +234,7 @@ div[type="button"] {
   top: 50%;
   left: 50%;
   text-align: center;
+  
 }
 
 .main {

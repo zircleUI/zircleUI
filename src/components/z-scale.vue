@@ -41,21 +41,6 @@ export default {
     type: {
       type: String,
       default: 'scale'
-    },
-    total: {
-      type: Number,
-      default: 0
-    },
-    index: {
-      type: Number,
-      default: 0
-    },
-    layout: {
-      type: String,
-      default: 'radial'
-    },
-    id: {
-      type: [Number, String]
     }
   },
   computed: {
@@ -121,7 +106,7 @@ export default {
           }
           // this.state.position = position
           // console.log('go: ' + go)
-          if (this.state.history.length < 6) {
+          if (this.state.history.length < 9) {
             if (this.state.router === true) {
               this.state.shadowPosition = position
               // this.store.setAppPos(position)
@@ -131,7 +116,7 @@ export default {
               this.store.setAppPos(position)
             }
           } else {
-            console.log('Max level of deeph reached')
+            console.log('Max level of deep reached')
           }
           // this.$el.style.opacity = 0
         } else {
