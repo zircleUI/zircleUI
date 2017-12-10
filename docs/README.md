@@ -769,12 +769,15 @@ check this example
 <!-- MyList component -->
 <z-list
   slot="circles"
-  color="accent"
-  :collection="['Apple', 'Banana', 'Orange', 'Kiwi', 'Melon', 'Watermelon', 'Lemon', 'Grapes']"
+  :collection="[{name: 'Apple', color: 'red'}, {name: 'Banana', color: 'yellow'}, {name: 'Orange', color: 'orange'}, {name: 'Kiwi', color: 'green'}]"
   :per-page="3">
-    <span slot-scope="props">
-        {{props.item}}
-      </span>
+    <z-item <!-- It is necesary to include z-item component -->
+    slot-scope="props"
+    :angle="props.angle" <!-- angle is mandatory -->
+    :color="props.item.color"
+    > 
+        <span slot="label"> {{props.item.name}}</span>
+      </z-item>
 </z-list>
 ```
 > **Note** In case you populate the `collection` prop with an external Array, first you have to create a copy of this Array to prevent mutation
