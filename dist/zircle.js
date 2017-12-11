@@ -1,8 +1,7 @@
 /*!
- * zircle v0.2.1
- * (c) 2017 zircleUI
+ * zircle v0.2.2
+ * (c) 2017 Juan Martin Muda
  * Released under the MIT License.
- * Copyright (c) 2017-present, Juan Martin Muda
  */
 
 (function (global, factory) {
@@ -614,7 +613,7 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.styles.main),attrs:{"title":"z-item"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('section',{staticClass:"z-content label",staticStyle:{"overflow":"visible"},style:(_vm.styles.label)},[_vm._t("label")],2),_vm._v(" "),_c('div',{staticClass:"z-content"},[_vm._t("image"),_vm._v(" "),_c('section')],2)])},staticRenderFns: [],
+var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.styles.main),attrs:{"title":"z-item"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('section',{staticClass:"z-content label",staticStyle:{"overflow":"visible"},style:(_vm.styles.label)},[_c('span',[_vm._v(_vm._s(_vm.label)+" ...")])]),_vm._v(" "),_c('div',{staticClass:"z-content"},[_c('img',{attrs:{"src":_vm.image,"width":"100%","height":"100%"}}),_vm._v(" "),_c('section')])])},staticRenderFns: [],
   name: 'z-item',
   props: {
     size: {
@@ -622,13 +621,23 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
       default: 'medium'
     },
     color: {
-      default: 'blue'
+      default: 'accent'
+    },
+    label: {
+      default: ''
+    },
+    image: {
+      default: ''
+    },
+    item: {
+      default: ''
     },
     gotoview: {
       default: 'item'
     },
     angle: {
-      type: Number
+      type: Number,
+      required: true
     }
   },
   data: function data () {
@@ -784,13 +793,7 @@ var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;va
           return k
         }
       });
-      if (this.$zircleStore.state.currentView === this.$zircleStore.state.previousView || this.$zircleStore.state.currentView === this.$zircleStore.state.pastView) {
-        this.$zircleStore.state.currentView = this.$zircleStore.state.currentView + ' 1';
-        console.log('repetidoa');
-        return this.list[key]
-      } else {
-        return this.list[key]
-      }
+      return this.list[key]
     },
     previous: function previous () {
       var vm = this;
@@ -1218,7 +1221,7 @@ function chunk (myArray, chunkSize) {
   }
   return res
 }
-var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"title":"z-list"}},[_vm._l((_vm.state.pages[_vm.state.currentPage]),function(item,index){return _vm._t("default",null,{item:item,angle:(360 / _vm.state.pages[_vm.state.currentPage].length * index) - 90})}),_vm._v(" "),_vm._l((_vm.state.pages),function(page,index){return _c('z-dotnav',{key:index,attrs:{"size":"xxs","color":"accent","index":index,"distance":112,"angle":(180 - (180 - (_vm.state.pages.length * 10))) / _vm.state.pages.length * (_vm.state.pages.length - index) + ((180 - (180 - (180 - (_vm.state.pages.length * 10)))) - ((180 - (180 - (_vm.state.pages.length * 10))) / _vm.state.pages.length)) / 2,"active":_vm.state.currentPage},nativeOn:{"click":function($event){_vm.state.currentPage = index;}}})})],2)},staticRenderFns: [],
+var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"title":"z-list"}},[_vm._l((_vm.state.pages[_vm.state.currentPage]),function(item,index){return _vm._t("default",null,{item:item,angle:(360 / _vm.state.pages[_vm.state.currentPage].length * index) - 90})}),_vm._v(" "),_vm._l((_vm.$zircleStore.state.pages),function(page,index){return _c('z-dotnav',{key:index,attrs:{"size":"xxs","color":"accent","index":index,"distance":112,"angle":(180 - (180 - (_vm.$zircleStore.state.pages.length * 10))) / _vm.$zircleStore.state.pages.length * (_vm.$zircleStore.state.pages.length - index) + ((180 - (180 - (180 - (_vm.$zircleStore.state.pages.length * 10)))) - ((180 - (180 - (_vm.$zircleStore.state.pages.length * 10))) / _vm.$zircleStore.state.pages.length)) / 2,"active":_vm.$zircleStore.state.currentPage},nativeOn:{"click":function($event){_vm.$zircleStore.state.currentPage = index;}}})})],2)},staticRenderFns: [],
   name: 'z-list',
   mixins: [zmixin],
   props: {
@@ -1238,10 +1241,8 @@ var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
       viewName: 'test'
     }
   },
-  computed: {
-  },
   mounted: function mounted () {
-    this.state.pages = chunk(this.collection, this.perPage);
+    this.$zircleStore.state.pages = chunk(this.collection, this.perPage);
   }
 };
 
