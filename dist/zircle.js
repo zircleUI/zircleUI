@@ -1,5 +1,5 @@
 /*!
- * zircle v0.2.3
+ * zircle v0.2.4
  * (c) 2017 Juan Martin Muda
  * Released under the MIT License.
  */
