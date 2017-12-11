@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [0.2.2] - 2017-12-10
+## [0.2.3] - 2017-12-10
 ### Changed
 - Add props (label, image and color) to `z-item`.
 

@@ -769,15 +769,15 @@ check this example
 <!-- MyList component -->
 <z-list
   slot="circles"
-  :collection="[{name: 'Apple', color: 'red'}, {name: 'Banana', color: 'yellow'}, {name: 'Orange', color: 'orange'}, {name: 'Kiwi', color: 'green'}]"
+  :collection="[{name: 'Apple', color: 'red', image: 'http://img.com/apple'}, {name: 'Banana', color: 'yellow' , image: 'http://img.com/banana'}]"
   :per-page="3">
-    <z-item <!-- It is necesary to include z-item component -->
+    <z-item <!-- It is necesary to include z-item component-->
     slot-scope="props"
     :angle="props.angle" <!-- angle is mandatory -->
-    :color="props.item.color"
-    > 
-        <span slot="label"> {{props.item.name}}</span>
-      </z-item>
+    :color="props.item.color" <!-- color, label, image are optional -->
+    :label="props.item.label"
+    :image="props.item.image"> 
+    </z-item>
 </z-list>
 ```
 > **Note** In case you populate the `collection` prop with an external Array, first you have to create a copy of this Array to prevent mutation
@@ -819,13 +819,27 @@ const item = {
 
 **Mixing:**
 
-`<z-list>` uses mixing props
+`<z-item>` uses mixing props
+
+**`angle`**
+
+* **Type**: Number
+
+* **Required**: true
+
+**`label`**
+
+* **Type**: String
+
+**`image`**
+
+* **Type**: String
 
 **`color`**
 
 * **Type**: String
 
-* **Default**: 'primary'
+* **Default**: 'accent'
 
 check this [JSFiddle](http://jsfiddle.net/tinchox5/az5cf0rd/)
 
