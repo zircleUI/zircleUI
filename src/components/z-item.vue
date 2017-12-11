@@ -3,11 +3,11 @@
     <div title="z-item" class="zui disc" :class="[classes, colors]" :style="styles.main" @click.stop="move"> 
       
       <section class="z-content label" :style="styles.label" style="overflow: visible;" >
-        <slot name="label"></slot>
+        <span>{{label}} ...</span>
       </section>
       
       <div class="z-content">
-        <slot name="image"></slot>
+        <img :src="image" width="100%" height="100%" />
         <section>
           
         </section>
@@ -27,13 +27,23 @@ export default {
       default: 'medium'
     },
     color: {
-      default: 'blue'
+      default: 'accent'
+    },
+    label: {
+      default: ''
+    },
+    image: {
+      default: ''
+    },
+    item: {
+      default: ''
     },
     gotoview: {
       default: 'item'
     },
     angle: {
-      type: Number
+      type: Number,
+      required: true
     }
   },
   data () {

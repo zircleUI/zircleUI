@@ -25,13 +25,7 @@ export default {
           return k
         }
       })
-      if (this.$zircleStore.state.currentView === this.$zircleStore.state.previousView || this.$zircleStore.state.currentView === this.$zircleStore.state.pastView) {
-        this.$zircleStore.state.currentView = this.$zircleStore.state.currentView + ' 1'
-        console.log('repetidoa')
-        return this.list[key]
-      } else {
-        return this.list[key]
-      }
+      return this.list[key]
     },
     previous () {
       let vm = this
