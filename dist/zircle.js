@@ -1,5 +1,5 @@
 /*!
- * zircle v0.2.2
+ * zircle v0.2.3
  * (c) 2017 Juan Martin Muda
  * Released under the MIT License.
  */
@@ -613,7 +613,7 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.styles.main),attrs:{"title":"z-item"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('section',{staticClass:"z-content label",staticStyle:{"overflow":"visible"},style:(_vm.styles.label)},[_c('span',[_vm._v(_vm._s(_vm.label)+" ...")])]),_vm._v(" "),_c('div',{staticClass:"z-content"},[_c('img',{attrs:{"src":_vm.image,"width":"100%","height":"100%"}}),_vm._v(" "),_c('section')])])},staticRenderFns: [],
+var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.styles.main),attrs:{"title":"z-item"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('section',{staticClass:"z-content label",staticStyle:{"overflow":"visible"},style:(_vm.styles.label)},[_c('span',[_vm._v(_vm._s(_vm.label))])]),_vm._v(" "),_c('div',{staticClass:"z-content"},[_c('img',{attrs:{"src":_vm.image,"width":"100%","height":"100%"}}),_vm._v(" "),_c('section')])])},staticRenderFns: [],
   name: 'z-item',
   props: {
     size: {
