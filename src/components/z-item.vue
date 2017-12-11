@@ -3,7 +3,7 @@
     <div title="z-item" class="zui disc" :class="[classes, colors]" :style="styles.main" @click.stop="move"> 
       
       <section class="z-content label" :style="styles.label" style="overflow: visible;" >
-        <span>{{label}} ...</span>
+        <span>{{label}}</span>
       </section>
       
       <div class="z-content">
