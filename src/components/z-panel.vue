@@ -94,7 +94,8 @@ export default {
           margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
         },
         hideScroll: {
-          width: this.state.zircleWidth.xl - 10 + 'px'
+          width: this.state.zircleWidth.xl - 10 + 'px',
+          marginLeft: - this.state.zircleWidth.xl * .0392 + 3.08 + 'px' // (this.state.zircleWidth.xl - 10 - (this.state.zircleWidth.xl * .96 - 4) * .96) * .5
         },
         background: {
           // backgroundImage: `url(${this.imgSource})`

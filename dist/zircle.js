@@ -457,7 +457,8 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
           margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
         },
         hideScroll: {
-          width: this.state.zircleWidth.xl - 10 + 'px'
+          width: this.state.zircleWidth.xl - 10 + 'px',
+          marginLeft: - this.state.zircleWidth.xl * .0392 + 3.08 + 'px' 
         },
         background: {
           // backgroundImage: `url(${this.imgSource})`
