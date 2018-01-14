@@ -1,6 +1,6 @@
 /*!
- * zircle v0.2.4
- * (c) 2017 Juan Martin Muda
+ * zircle v0.3.0
+ * (c) 2018 Juan Martin Muda
  * Released under the MIT License.
  */
 
@@ -20,20 +20,19 @@ var store = {
       Yi: 0,
       scalei: 1
     },
-    lastView: '',
+    alert: false,
+    // navigation
+    mode: 'forward',
+    isRouterEnabled: false,
+    $router: {},
     currentView: '',
     previousView: '',
     pastView: '',
     history: [],
     cache: [],
-    lastViewCache: {
-      view: ''
-    },
-    alert: false,
-    mode: 'forward',
-    router: false,
-    shadowPosition: {
-    },
+    lastViewCache: {},
+    backwardNavigation: false,
+    // styles
     zircleWidth: {
       xl: 200,
       l: 70,
@@ -43,48 +42,76 @@ var store = {
       xxs: 20
     },
     color: 'color--black',
-    theme: 'theme--dark',
+    theme: 'theme--light',
     // temporary for pagination
     selectedItem: '',
     currentPage: 0,
     items: [],
     pages: []
   },
+  // routerHooks is deprecated and will be deleted on zircle 0.5.0. Use setRouter instead.
   routerHooks: function routerHooks (data) {
-    var vm = data;
-    data.$zircleStore.setView(vm.initialView);
-    data.$zircleStore.state.router = vm.enableRouter;
-    data.$router.onReady(function () {
-      if (vm.$zircleStore.state.previousView === '' && vm.$router.currentRoute.name !== vm.initialView) {
-        vm.$router.push({path: '/'});
-      }
+    store.setRouter(data);
+  },
+  setRouter: function setRouter (data) {
+    // Auto configuration for vue-router
+    store.state.$router = data.$router;
+    store.state.isRouterEnabled = true;
+    store.setView(data.initialView.toLowerCase());
+    // Add default redirect route to initialView and go to initialView
+    store.state.$router.onReady(function () {
+      var view = data.initialView.toLowerCase();
+      store.state.$router.addRoutes([{path: '/',
+        redirect: '/' + view + '--0'
+      }]);
+      store.state.$router.addRoutes([{path: '/' + view + '--0',
+        name: view + '--0',
+        component: data.$options.components[view]
+      }]);
+      store.state.$router.push({name: view + '--0'});
     });
-    data.$router.beforeEach(function (to, from, next) {
-      if (to.name === data.$zircleStore.state.previousView) {
-        // caso 1: si a la vista dnd se dirije el router es = a la previa > goback
-        // console.log('pa tras')
-        data.$zircleStore.state.mode = 'backward';
-        data.$zircleStore.goBack();
+    // Router hooks
+    store.state.$router.beforeEach(function (to, from, next) {
+      if (from.name === store.state.cache[store.state.cache.length - 1].id && to.name !== store.state.lastViewCache.id) {
+        // Go backward using both: browser navigation arrows or zircle UI
+        store.goBack();
         next();
-      } else if (to.name === data.$zircleStore.state.shadowPosition.go) {
-        // caso 2: si a la vista dnd voy es = a la ultima vista en cache
-        // navogacion con clicks
-        // console.log('pa lante')
-        data.$zircleStore.state.mode = 'forward';
-        data.$zircleStore.setAppPos(data.$zircleStore.state.shadowPosition);
-        data.$zircleStore.state.shadowPosition = {};
-        next();
-      } else if (to.name === data.$zircleStore.state.lastViewCache.view) {
-        // caso 3: si a la vista dnd no esta en cache futuro uso el shadow (vista nueva)
-        // navegacion con flechas
-        // console.log('pa lante cache')
-        data.$zircleStore.state.mode = 'forward';
-        data.$zircleStore.setAppPos(data.$zircleStore.state.lastViewCache.position);
-        data.$zircleStore.state.lastViewCache = {};
+      } else if (to.name === store.state.cache[store.state.cache.length - 1].id && to.name !== store.state.lastViewCache.id) {
+        // Check if the route exists
+        if (to.matched.length === 0) {
+          // If not, add route
+          var component = to.name.split('--');
+          var key = Object.keys(data.$options.components).find(function (k) {
+            if (k.toLowerCase() === component[0]) {
+              return k
+            }
+          });
+          if (to.params.id === undefined) {
+            store.state.$router.addRoutes([{path: '/' + to.name,
+              name: to.name,
+              component: data.$options.components[key]
+            }]);
+            store.state.$router.push({name: to.name});
+          } else {
+            store.state.$router.addRoutes([{path: '/' + to.name + '/:id',
+              name: to.name,
+              component: data.$options.components[key]
+            }]);
+            store.state.$router.push({name: to.name, params: to.params});
+          }
+        } else {
+          // If exists, go forward
+          store.state.lastViewCache = {};
+          next();
+        }
+      } else if (to.name === store.state.lastViewCache.id && to.name === store.state.cache[store.state.cache.length - 1].id) {
+        // Just in case browser navigation forward arrow is clicked
+        store.state.lastViewCache = {};
         next();
       } else {
-        console.log('error');
-        next(from.name);
+        console.log('Router Error');
+        console.log(to.name, from.name, store.state.lastViewCache.id, store.state.cache[store.state.cache.length - 1].id);
+        next(false);
       }
     });
   },
@@ -194,27 +221,9 @@ var store = {
     var currentYi = 0;
     var parentPosition = {};
     var newPosition = {};
-    // EJECUTA FUNCION
+    // EJECUTA FUNCI ON
     if (component.type === 'panel') {
-      if (store.state.currentView === component.viewName) {
-        newPosition = {
-          X: store.state.cache[store.state.cache.length - 1].position.X,
-          Xi: store.state.cache[store.state.cache.length - 1].position.Xi,
-          Y: store.state.cache[store.state.cache.length - 1].position.Y,
-          Yi: store.state.cache[store.state.cache.length - 1].position.Yi,
-          scalei: store.state.cache[store.state.cache.length - 1].position.scalei,
-          scale: store.state.cache[store.state.cache.length - 1].position.scale
-        };
-      } if (store.state.previousView === component.viewName) {
-        newPosition = {
-          X: store.state.cache[store.state.cache.length - 2].position.X,
-          Xi: store.state.cache[store.state.cache.length - 2].position.Xi,
-          Y: store.state.cache[store.state.cache.length - 2].position.Y,
-          Yi: store.state.cache[store.state.cache.length - 2].position.Yi,
-          scalei: store.state.cache[store.state.cache.length - 2].position.scalei,
-          scale: store.state.cache[store.state.cache.length - 2].position.scale
-        };
-      } else if (store.state.pastView === component.viewName) {
+      if (store.state.mode === 'backward' && store.state.cache.length >= 3 && store.state.cache[store.state.cache.length - 3].id === component.viewID) {
         newPosition = {
           X: store.state.cache[store.state.cache.length - 3].position.X,
           Xi: store.state.cache[store.state.cache.length - 3].position.Xi,
@@ -304,17 +313,6 @@ var store = {
     }
     return newPosition
   },
-  setView: function setView (view) {
-    store.state.currentView = view.toLowerCase();
-    store.setHistory(view.toLowerCase());
-    if (store.state.history.length === 1) {
-      store.state.previousView = '';
-      store.state.pastView = '';
-    } else if (store.state.history.length > 1) {
-      store.state.previousView = store.state.history[store.state.history.length - 2];
-      store.state.pastView = store.state.history[store.state.history.length - 3];
-    }
-  },
   setAppPos: function setAppPos (data) {
     store.state.position = {
       X: data.X,
@@ -323,34 +321,96 @@ var store = {
       Xi: data.Xi,
       Yi: data.Yi,
       scalei: data.scalei,
-      go: data.go
+      go: data.go,
+      itemID: data.itemID,
+      item: data.item
     };
     store.setView(data.go);
   },
+  setView: function setView (view) {
+    // check if viewname exists in previous or past and rename '_0' or '_1'
+    var viewName = view.toLowerCase();
+    store.setHistory(viewName);
+    if (store.state.history.length === 1) {
+      store.state.previousView = '';
+      store.state.pastView = '';
+    } else if (store.state.history.length === 2) {
+      store.state.previousView = store.state.history[store.state.history.length - 2];
+      store.state.pastView = '';
+    } else if (store.state.history.length >= 3) {
+      store.state.previousView = store.state.history[store.state.history.length - 2];
+      store.state.pastView = store.state.history[store.state.history.length - 3];
+    }
+    store.state.currentView = viewName;
+  },
   setHistory: function setHistory (view) {
     // only component with viewName
-    var lastView = store.state.history[store.state.history.length - 1];
-    if (view !== lastView) {
+    if (store.state.mode === 'forward') {
       store.state.history.push(view);
+      var prevViewName = '';
+      var pastViewName = '';
+      if (store.state.cache.length === 0) {
+        newID = view + '--0';
+      }
+      if (store.state.cache.length === 1) {
+        prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--');
+        if (view === prevViewName[0]) {
+          var newID = view + '--' + (Number(prevViewName[1]) + 1);
+        } else if (view !== prevViewName[0]) {
+          newID = view + '--0';
+        }
+      }
+      if (store.state.cache.length >= 2) {
+        prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--');
+        pastViewName = store.state.cache[store.state.cache.length - 2].id.split('--');
+        if (view === prevViewName[0] && view === pastViewName[0]) {
+          newID = view + '--' + (Number(prevViewName[1]) + 1);
+        } else if (view === prevViewName[0] && view !== pastViewName[0]) {
+          newID = view + '--' + (Number(prevViewName[1]) + 1);
+        } else if (view !== prevViewName[0] && view === pastViewName[0]) {
+          newID = view + '--' + (Number(pastViewName[1]) + 1);
+        } else if (view !== prevViewName[0] && view !== pastViewName[0]) {
+          newID = view + '--0';
+        }
+      }
+      if (store.state.cache.length >= 3) {
+        var lastViewName = store.state.cache[store.state.cache.length - 3].id.split('--');
+        if (view === lastViewName[0]) {
+          newID = view + '--' + (Number(prevViewName[1]) + 1);
+        } else {
+          newID = view + '--0';
+        }
+      }
       var cacheView = {
         view: view,
+        id: newID,
         position: store.state.position
       };
       store.state.cache.push(cacheView);
+      if (store.state.isRouterEnabled === true) {
+        if (store.state.position.itemID === undefined) {
+          store.state.$router.push({name: newID});
+        } else {
+          store.state.selectedItem = store.state.position.item;
+          var id = store.state.position.itemID.toLowerCase();
+          // trim spaces
+          store.state.$router.push({name: newID, params: {id: id}});
+        }
+      } else {
+        if (store.state.position.item !== undefined) {
+          store.state.selectedItem = store.state.position.item;
+        }
+      }
     }
   },
   goBack: function goBack () {
     if (store.state.cache.length > 1) {
       store.state.history.pop();
-      var current = store.state.history[store.state.history.length - 1];
       store.state.lastViewCache = store.state.cache[store.state.cache.length - 1];
-      store.state.lastView = store.state.lastViewCache.view;
       store.state.cache.pop();
-      var currentCache = store.state.cache[store.state.cache.length - 1];
-      var position = currentCache.position;
-      position.go = current;
+      store.state.cache[store.state.cache.length - 1].position.go = store.state.history[store.state.history.length - 1];
       store.state.mode = 'backward';
-      store.setAppPos(position);
+      store.setAppPos(store.state.cache[store.state.cache.length - 1].position);
     }
   }
 };
@@ -388,13 +448,12 @@ var zmixin = {
       return this.store.point(this)
     },
     classes: function classes () {
-      // var colorp = this.color
       return {
         // currclass: this.viewName === this.state.currentView,
         // lastclass: this.viewName === this.state.lastView,
-        pastclass: this.type === 'panel' && this.viewName === this.state.pastView,
-        prevclass: this.type === 'panel' && this.viewName === this.state.previousView,
-        hidden: this.$parent.viewName === this.state.previousView,
+        // pastclass: this.type === 'panel' && this.viewName === this.state.pastView && this.viewName !== this.state.previousView && this.viewName !== this.state.currentView,
+        // prevclass: this.type === 'panel' && this.viewName === this.state.previousView && this.viewName !== this.state.currentView && this.viewName !== this.state.pastView,
+        // hidden: this.$parent.viewName === this.state.previousView,
         zoom: this.type === 'scale' && this.gotoview !== undefined
       }
     },
@@ -404,7 +463,7 @@ var zmixin = {
   }
 };
 
-var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui main",class:[_vm.classes, _vm.colors],staticStyle:{"overflow":"visible"},style:(_vm.styles.main),attrs:{"title":_vm.viewName,"type":"panel"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('div',{staticClass:"plate",style:(_vm.styles.plate)}),_vm._v(" "),(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.scrollBar === true)?_c('z-scroll',{staticStyle:{"overflow":"visible"},attrs:{"scrollVal":_vm.scrollVal},on:{"update:scrollVal":function($event){_vm.scrollVal=$event;}}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed",style:(_vm.styles.background)},[_vm._t("picture"),_vm._v(" "),_c('div',{staticClass:"z-content maindisc",class:[_vm.classesContent],style:(_vm.styles.hideScroll),on:{"scroll":_vm.scroll}},[_c('section',{staticClass:"z-text"},[_vm._t("default"),_vm._v(" "),_c('span',{staticClass:"bottom"})],2)])],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
+var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui main",class:[_vm.classes, _vm.colors],staticStyle:{"overflow":"visible"},style:(_vm.resize === false ? _vm.styles.main : _vm.zpos.main),attrs:{"title":_vm.viewName,"type":"panel"},on:{"mouseover":function($event){_vm.state.backwardNavigation = true;},"mouseleave":function($event){_vm.state.backwardNavigation = false;}}},[_c('div',{staticClass:"plate",style:(_vm.resize === false ? _vm.styles.plate : _vm.zpos.plate)}),_vm._v(" "),(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.scrollBar === true)?_c('z-scroll',{staticStyle:{"overflow":"visible"},attrs:{"scrollVal":_vm.scrollVal},on:{"update:scrollVal":function($event){_vm.scrollVal=$event;}}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('div',{staticClass:"z-contentbox dashed",style:(_vm.styles.background)},[_vm._t("picture"),_vm._v(" "),_c('div',{staticClass:"z-content maindisc",class:[_vm.classesContent],style:(_vm.resize === false ? _vm.styles.hideScroll : _vm.zpos.hideScroll),on:{"scroll":_vm.scroll}},[_c('section',{staticClass:"z-text"},[_vm._t("default"),_vm._v(" "),_c('span',{staticClass:"bottom"})],2)])],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
   mixins: [zmixin],
   props: {
     progress: {
@@ -436,7 +495,10 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       alertar: '',
       scrollVal: -45,
       width: 0,
-      img: {}
+      img: {},
+      resize: false,
+      zpos: {},
+      viewID: ''
     }
   },
   computed: {
@@ -457,10 +519,8 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
           margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
         },
         hideScroll: {
-          width: this.state.zircleWidth.xl - 10 + 'px'
-        },
-        background: {
-          // backgroundImage: `url(${this.imgSource})`
+          width: this.state.zircleWidth.xl - 5 + 'px',
+          marginLeft: -this.state.zircleWidth.xl * 0.0392 + 3.08 + 'px'
         }
       }
     },
@@ -474,22 +534,6 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     scroll: function scroll () {
       var test1 = this.$el.querySelector('.z-content');
       this.scrollVal = -45 + ((test1.scrollTop * 100 / (test1.scrollHeight - test1.clientHeight)) * 86 / 100);
-    },
-    move: function move () {
-      if (this.state.previousView === this.viewName) {
-        if (this.state.router === true && this.state.previousView !== '') {
-          this.$router.back();
-        } else {
-          this.store.goBack();
-        }
-      }
-      if (this.state.pastView === this.viewName) {
-        if (this.state.router === true) {
-          this.$router.back();
-        } else {
-          this.store.goBack();
-        }
-      }
     }
   },
   watch: {
@@ -499,16 +543,51 @@ var zpanel = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     }
   },
   mounted: function mounted () {
+    if (this.$el.classList.contains('pastclass')) {
+      this.viewID = this.state.cache[this.state.cache.length - 3].id;
+    }
+    this.zpos = {
+      main: {
+        width: this.state.zircleWidth.xl + 'px',
+        height: this.state.zircleWidth.xl + 'px',
+        margin: -(this.state.zircleWidth.xl / 2) + 'px 0 0 ' + -(this.state.zircleWidth.xl / 2) + 'px',
+        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
+      },
+      plate: {
+        width: this.state.zircleWidth.xl + 50 + 'px',
+        height: this.state.zircleWidth.xl + 50 + 'px',
+        margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
+      },
+      hideScroll: {
+        width: this.state.zircleWidth.xl - 5 + 'px',
+        marginLeft: -this.state.zircleWidth.xl * 0.0392 + 3.08 + 'px'
+      }
+    };
     var test = this.$el.querySelector('.z-content > .z-text'); // guarda con esto que no anda bien
     if (test.clientHeight > this.state.zircleWidth.xl) {
       this.scrollBar = true;
     } else {
       this.scrollBar = false;
     }
+  },
+  beforeUpdate: function beforeUpdate () {
+    if (this.$el.classList.contains('prevclass') || this.$el.classList.contains('pastclass')) {
+    } else {
+      this.zpos = this.styles;
+    }
+  },
+  updated: function updated () {
+    this.$nextTick(function () {
+      if (this.$el.classList.contains('prevclass') || this.$el.classList.contains('pastclass')) {
+        this.resize = true;
+      } else {
+        this.resize = false;
+      }
+    });
   }
 };
 
-var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.style.main),attrs:{"title":"z-scale","type":_vm.type},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('section',{staticClass:"z-content label",staticStyle:{"overflow":"visible"},style:(_vm.style.label)},[_vm._t("label")],2),_vm._v(" "),_c('div',{staticClass:"z-content"},[_vm._t("picture"),_vm._v(" "),_c('section',[_vm._t("default")],2)],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
+var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hidden === false),expression:"hidden === false"}],staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.resize === false ? _vm.style.main : _vm.zpos.main),attrs:{"title":"z-scale","type":_vm.type},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[(_vm.range === true)?_c('z-range',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),_vm._v(" "),_c('section',{staticClass:"z-content label",staticStyle:{"overflow":"visible"},style:(_vm.resize === false ? _vm.style.label : _vm.zpos.label)},[_vm._t("label")],2),_vm._v(" "),_c('div',{staticClass:"z-content"},[_vm._t("picture"),_vm._v(" "),_c('section',[_vm._t("default")],2)],2),_vm._v(" "),_vm._t("circles")],2)},staticRenderFns: [],
   name: 'z-scale',
   mixins: [zmixin],
   props: {
@@ -527,6 +606,13 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     type: {
       type: String,
       default: 'scale'
+    }
+  },
+  data: function data () {
+    return {
+      resize: false,
+      zpos: {},
+      hidden: false
     }
   },
   computed: {
@@ -568,52 +654,83 @@ var zscale = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   },
   methods: {
     move: function move () {
-      if (this.$parent.view.toLowerCase() === this.state.previousView) {
-        if (this.state.router === true && this.state.previousView !== '') {
-          this.$router.back();
-        }
-        if (this.state.router === false) {
-          this.store.goBack();
+      if (this.gotoview !== undefined) {
+        // Apply moveApp & setNextView
+        // seteo el gotoview aca, xq dsp se borra el "this". OJO ver si usar algun hook
+        var go = this.gotoviewName;
+        var position = {
+          X: this.position.Xabs,
+          Y: this.position.Yabs,
+          scale: this.position.scale,
+          Xi: this.position.Xi,
+          Yi: this.position.Yi,
+          scalei: this.position.scalei,
+          go: go
+        };
+        if (this.state.history.length < 6) {
+          this.store.state.mode = 'forward';
+          this.store.setAppPos(position);
+          // var vm = this
+          setTimeout(function () {
+            // vm.hidden = true
+          }, 800);
+        } else {
+          console.log('Max level of deep reached');
         }
       } else {
-        if (this.gotoview !== undefined) {
-          // Apply moveApp & setNextView
-          // seteo el gotoview aca, xq dsp se borra el "this". OJO ver si usar algun hook
-          var go = this.gotoviewName;
-          var position = {
-            X: this.position.Xabs,
-            Y: this.position.Yabs,
-            scale: this.position.scale,
-            Xi: this.position.Xi,
-            Yi: this.position.Yi,
-            scalei: this.position.scalei,
-            go: go,
-            next: true
-          };
-          // this.state.position = position
-          // console.log('go: ' + go)
-          if (this.state.history.length < 9) {
-            if (this.state.router === true) {
-              this.state.shadowPosition = position;
-              // this.store.setAppPos(position)
-              this.$router.push({name: go});
-            } else {
-              this.store.state.mode = 'forward';
-              this.store.setAppPos(position);
-            }
-          } else {
-            console.log('Max level of deep reached');
-          }
-          // this.$el.style.opacity = 0
-        } else {
-          console.log('gotoview is not defined');
-        }
+        console.log('gotoview is not defined');
       }
     }
+  },
+  mounted: function mounted () {
+    switch (this.size) {
+      case 'large':
+        var zwidth = this.state.zircleWidth.l;
+        break
+      case 'medium':
+        zwidth = this.state.zircleWidth.m;
+        break
+      case 'small':
+        zwidth = this.state.zircleWidth.s;
+        break
+      case 'extrasmall':
+        zwidth = this.state.zircleWidth.xs;
+        break
+      case 'xxs':
+        zwidth = this.state.zircleWidth.xxs / 3;
+        break
+    }
+    this.zpos = {
+      main: {
+        width: zwidth + 'px',
+        height: zwidth + 'px',
+        margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
+        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+      },
+      label: {
+        top: zwidth / 2 + 10 + 'px'
+      }
+    };
+  },
+  beforeUpdate: function beforeUpdate () {
+    if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
+    } else {
+      this.zpos = this.style;
+    }
+  },
+  updated: function updated () {
+    this.$nextTick(function () {
+      if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
+        this.resize = true;
+      } else {
+        this.resize = false;
+        this.hidden = false;
+      }
+    });
   }
 };
 
-var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.styles.main),attrs:{"title":"z-item"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('section',{staticClass:"z-content label",staticStyle:{"overflow":"visible"},style:(_vm.styles.label)},[_c('span',[_vm._v(_vm._s(_vm.label))])]),_vm._v(" "),_c('div',{staticClass:"z-content"},[_c('img',{attrs:{"src":_vm.image,"width":"100%","height":"100%"}}),_vm._v(" "),_c('section')])])},staticRenderFns: [],
+var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors],style:(_vm.resize === false ? _vm.styles.main : _vm.zpos.main),attrs:{"title":"z-item"},on:{"click":function($event){$event.stopPropagation();_vm.move($event);}}},[_c('section',{staticClass:"z-content label",staticStyle:{"overflow":"visible"},style:(_vm.resize === false ? _vm.styles.label : _vm.zpos.label)},[_c('span',[_vm._v(_vm._s(_vm.label))])]),_vm._v(" "),_c('div',{staticClass:"z-content"},[_c('img',{attrs:{"src":_vm.image,"width":"100%","height":"100%"}}),_vm._v(" "),_c('section')])])},staticRenderFns: [],
   name: 'z-item',
   props: {
     size: {
@@ -632,6 +749,9 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     item: {
       default: ''
     },
+    id: {
+      default: ''
+    },
     gotoview: {
       default: 'item'
     },
@@ -644,7 +764,9 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     return {
       type: 'item',
       state: store.state,
-      store: store
+      store: store,
+      resize: false,
+      zpos: {}
     }
   },
   computed: {
@@ -654,11 +776,6 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     classes: function classes () {
       // var colorp = this.color
       return {
-        // currclass: this.viewName === this.state.currentView,
-        // lastclass: this.viewName === this.state.lastView,
-        pastclass: this.type === 'panel' && this.viewName === this.state.pastView,
-        prevclass: this.type === 'panel' && this.viewName === this.state.previousView,
-        hidden: this.$parent.viewName === this.state.previousView,
         zoom: this.type === 'scale' && this.gotoview !== undefined
       }
     },
@@ -708,10 +825,6 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     move: function move () {
       if (this.gotoview !== undefined) {
         var go = this.gotoviewName;
-        var item = this.item;
-        if (item !== undefined) {
-          this.state.selectedItem = item;
-        }
         var position = {
           X: this.position.Xabs,
           Y: this.position.Yabs,
@@ -720,23 +833,64 @@ var zitem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
           Yi: this.position.Yi,
           scalei: this.position.scalei,
           go: go,
-          next: true
+          itemID: this.id,
+          item: this.item
         };
-        if (this.state.router === true) {
-          this.state.shadowPosition = position;
-          if (item !== undefined) {
-            this.$router.push({name: go, params: {id: item}});
-          } else {
-            this.$router.push({name: go});
-          }
-        } else {
+        if (this.state.history.length < 6) {
           this.store.state.mode = 'forward';
           this.store.setAppPos(position);
+        } else {
+          console.log('Max level of deep reached');
         }
       } else {
         // no action
       }
     }
+  },
+  mounted: function mounted () {
+    switch (this.size) {
+      case 'large':
+        var zwidth = this.state.zircleWidth.l;
+        break
+      case 'medium':
+        zwidth = this.state.zircleWidth.m;
+        break
+      case 'small':
+        zwidth = this.state.zircleWidth.s;
+        break
+      case 'extrasmall':
+        zwidth = this.state.zircleWidth.xs;
+        break
+      case 'xxs':
+        zwidth = this.state.zircleWidth.xxs;
+        break
+    }
+    this.zpos = {
+      main: {
+        width: zwidth + 'px',
+        height: zwidth + 'px',
+        margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
+        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+      },
+      label: {
+        top: zwidth / 2 + 10 + 'px'
+      }
+    };
+  },
+  beforeUpdate: function beforeUpdate () {
+    if (this.$parent.$parent.$el.classList.contains('prevclass') || this.$parent.$parent.$el.classList.contains('pastclass')) {
+    } else {
+      this.zpos = this.styles;
+    }
+  },
+  updated: function updated () {
+    this.$nextTick(function () {
+      if (this.$parent.$parent.$el.classList.contains('prevclass') || this.$parent.$parent.$el.classList.contains('pastclass')) {
+        this.resize = false;
+      } else {
+        this.resize = true;
+      }
+    });
   }
 };
 
@@ -756,11 +910,12 @@ var zcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   },
   methods: {
     goback: function goback () {
-      if (this.store.state.router === true && this.store.state.previousView !== '') {
-        this.$router.back();
-      }
-      if (this.store.state.router === false) {
-        this.store.goBack();
+      if (this.state.previousView !== '' && this.state.backwardNavigation === false) {
+        if (this.state.isRouterEnabled === false) {
+          this.store.goBack();
+        } else {
+          this.$router.back();
+        }
       }
     }
   },
@@ -777,7 +932,7 @@ var zcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
 };
 
 /* eslint-disable no-new */
-var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('z-transition',[_c(_vm.past,{key:_vm.$zircleStore.state.pastView,tag:"component"}),_vm._v(" "),_c(_vm.previous,{key:_vm.$zircleStore.state.previousView,tag:"component"}),_vm._v(" "),(_vm.$zircleStore.state.router === false)?_c(_vm.current,{key:_vm.$zircleStore.state.currentView,tag:"component"}):_vm._e(),_vm._v(" "),(_vm.$zircleStore.state.router === true)?_c('router-view',{key:_vm.$zircleStore.state.currentView}):_vm._e()],1)},staticRenderFns: [],
+var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('z-transition',[(_vm.$zircleStore.state.cache.length >= 3)?_c(_vm.pastView,{key:_vm.$zircleStore.state.cache[_vm.$zircleStore.state.cache.length - 3].id,tag:"component",staticClass:"pastclass"},[(_vm.$zircleStore.state.cache.length >= 2)?_c(_vm.previousView,{key:_vm.$zircleStore.state.cache[_vm.$zircleStore.state.cache.length - 2].id,tag:"component",staticClass:"prevclass"},[(_vm.$zircleStore.state.isRouterEnabled === false && _vm.$zircleStore.state.cache.length >= 1)?_c(_vm.currentView,{key:_vm.$zircleStore.state.cache[_vm.$zircleStore.state.cache.length - 1].id,tag:"component",class:_vm.$zircleStore.state.mode === 'forward' ? 'currclass' : ''},[(_vm.$zircleStore.state.isRouterEnabled === true && _vm.$zircleStore.state.cache.length >= 1)?_c('router-view',{key:_vm.$zircleStore.state.cache[_vm.$zircleStore.state.cache.length - 1].id,class:_vm.$zircleStore.state.mode === 'forward' ? 'currclass' : ''}):_vm._e()],1):_vm._e()],1):_vm._e()],1):_vm._e()],1)},staticRenderFns: [],
   name: 'z-view-manager',
   props: {
     list: {
@@ -786,16 +941,18 @@ var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;va
     }
   },
   computed: {
-    current: function current () {
+    currentView: function currentView () {
       var vm = this;
       var key = Object.keys(this.list).find(function (k) {
         if (k.toLowerCase() === vm.$zircleStore.state.currentView) {
           return k
         }
       });
-      return this.list[key]
+      if (this.$zircleStore.state.isRouterEnabled === false) {
+        return this.list[key]
+      }
     },
-    previous: function previous () {
+    previousView: function previousView () {
       var vm = this;
       var key = Object.keys(this.list).find(function (k) {
         if (k.toLowerCase() === vm.$zircleStore.state.previousView) {
@@ -804,7 +961,7 @@ var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;va
       });
       return this.list[key]
     },
-    past: function past () {
+    pastView: function pastView () {
       var vm = this;
       var key = Object.keys(this.list).find(function (k) {
         if (k.toLowerCase() === vm.$zircleStore.state.pastView) {
@@ -813,6 +970,8 @@ var zviewmanager = {render: function(){var _vm=this;var _h=_vm.$createElement;va
       });
       return this.list[key]
     }
+  },
+  mounted: function mounted () {
   }
 };
 
@@ -832,8 +991,6 @@ var ztransition = {
             point.style.willChange = 'transform';
             point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)';
             point.style.transition = 'transform 800ms ease-in-out';
-            el.classList.add('currclass');
-            // console.log(el)
             done();
           } else {
             el.style.opacity = 1;
@@ -845,7 +1002,6 @@ var ztransition = {
           point.style.willChange = '';
         },
         beforeLeave: function beforeLeave (el) {
-          el.classList.remove('currclass');
         },
         leave: function leave (el, done) {
           var point = document.getElementById('z-point');
@@ -857,8 +1013,6 @@ var ztransition = {
             point.style.transition = 'transform 800ms ease-in-out';
             el.classList.add('lastclass');
             setTimeout(function () {
-              context.parent.$zircleStore.state.lastView = '';
-              context.parent.$zircleStore.state.lastViewCache = {};
               done();
             }, 600);
           }
@@ -1007,7 +1161,7 @@ var zslider = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   }
 };
 
-var zrange = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"type":_vm.type}},[_c('svg',{staticClass:"scroll",attrs:{"viewBox":"0 0 100 100","xmlns":"http://www.w3.org/2000/svg"},on:{"click":_vm.point}},[_c('circle',{style:([_vm.styles]),attrs:{"r":"50","cx":"50","cy":"50"}})]),_vm._v(" "),_c('svg',{staticClass:"scroll2",style:([_vm.classesContent3]),attrs:{"xmlns":"http://www.w3.org/2000/svg"},on:{"touchstart":function($event){_vm.drag = true;},"touchmove":function($event){$event.preventDefault();_vm.slide1($event);},"touchend":function($event){_vm.drag = false;},"mousedown":function($event){_vm.drag = true;},"mousemove":_vm.slide1,"mouseup":function($event){_vm.drag = false;}}},[_c('circle',{staticClass:"handlebar",attrs:{"r":"8","cx":"20","cy":"20"}})]),_vm._v(" "),_c('div',{staticClass:"z-content"},[_vm._v(" "+_vm._s(Math.round((_vm.anglex / 360) * 100, 0))+" ")])])},staticRenderFns: [],
+var zrange = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"type":_vm.type}},[_c('svg',{staticClass:"scroll",attrs:{"viewBox":"0 0 100 100","xmlns":"http://www.w3.org/2000/svg"},on:{"click":_vm.point}},[_c('circle',{style:([_vm.styles]),attrs:{"r":"50","cx":"50","cy":"50"}})]),_vm._v(" "),_c('svg',{directives:[{name:"show",rawName:"v-show",value:(_vm.hidden === false),expression:"hidden === false"}],staticClass:"scroll2",style:([_vm.classesContent3]),attrs:{"xmlns":"http://www.w3.org/2000/svg"},on:{"touchstart":function($event){_vm.drag = true;},"touchmove":function($event){$event.preventDefault();_vm.slide1($event);},"touchend":function($event){_vm.drag = false;},"mousedown":function($event){_vm.drag = true;},"mousemove":_vm.slide1,"mouseup":function($event){_vm.drag = false;}}},[_c('circle',{staticClass:"handlebar",attrs:{"r":"8","cx":"20","cy":"20"}})]),_vm._v(" "),_c('div',{staticClass:"z-content"},[_vm._v(" "+_vm._s(Math.round((_vm.anglex / 360) * 100, 0))+" ")])])},staticRenderFns: [],
   mixins: [zmixin],
   props: ['progress'],
   name: 'z-range',
@@ -1017,7 +1171,8 @@ var zrange = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       drag: false,
       anglex: (this.progress * 360) / 100,
       duration: '0s',
-      previousAngle: 0
+      previousAngle: 0,
+      hidden: false
     }
   },
   computed: {
@@ -1123,17 +1278,27 @@ var zrange = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
         this.anglex = tangle;
       }
     }
+  },
+  updated: function updated () {
+    this.$nextTick(function () {
+      if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
+        this.hidden = true;
+      } else {
+        this.hidden = false;
+      }
+    });
   }
 };
 
-var zscroll = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',[_c('svg',{staticClass:"scroll",attrs:{"viewBox":"0 0 100 100","xmlns":"http://www.w3.org/2000/svg"},on:{"click":_vm.point}},[_c('circle',{style:([_vm.styles2]),attrs:{"r":"50","cx":"50","cy":"50"}})]),_vm._v(" "),_c('svg',{staticClass:"scroll2",style:([_vm.classesContent3]),attrs:{"xmlns":"http://www.w3.org/2000/svg"},on:{"touchstart":function($event){_vm.drag = true;},"touchmove":function($event){$event.preventDefault();_vm.slide($event);},"touchend":function($event){_vm.drag = false;},"mousedown":function($event){_vm.drag = true;},"mousemove":_vm.slide,"mouseup":function($event){_vm.drag = false;}}},[_c('circle',{staticClass:"handlebar",attrs:{"r":"10","cx":"20","cy":"20"}})])])},staticRenderFns: [],
+var zscroll = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',[_c('svg',{staticClass:"scroll",attrs:{"viewBox":"0 0 100 100","xmlns":"http://www.w3.org/2000/svg"},on:{"click":_vm.point}},[_c('circle',{style:([_vm.styles2]),attrs:{"r":"50","cx":"50","cy":"50"}})]),_vm._v(" "),_c('svg',{directives:[{name:"show",rawName:"v-show",value:(_vm.hidden === false),expression:"hidden === false"}],staticClass:"scroll2",style:(_vm.classesContent3),attrs:{"xmlns":"http://www.w3.org/2000/svg"},on:{"touchstart":function($event){_vm.drag = true;},"touchmove":function($event){$event.preventDefault();_vm.slide($event);},"touchend":function($event){_vm.drag = false;},"mousedown":function($event){_vm.drag = true;},"mousemove":_vm.slide,"mouseup":function($event){_vm.drag = false;}}},[_c('circle',{staticClass:"handlebar",attrs:{"r":"10","cx":"20","cy":"20"}})])])},staticRenderFns: [],
   mixins: [zmixin],
   props: ['scrollVal'],
   name: 'z-scroll',
   data: function data () {
     return {
       type: 'scroll',
-      drag: false
+      drag: false,
+      hidden: false
     }
   },
   computed: {
@@ -1211,6 +1376,15 @@ var zscroll = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
         this.$emit('update:scrollVal', tangle);
       }
     }
+  },
+  updated: function updated () {
+    this.$nextTick(function () {
+      if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
+        this.hidden = true;
+      } else {
+        this.hidden = false;
+      }
+    });
   }
 };
 
@@ -1221,7 +1395,7 @@ function chunk (myArray, chunkSize) {
   }
   return res
 }
-var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"title":"z-list"}},[_vm._l((_vm.state.pages[_vm.state.currentPage]),function(item,index){return _vm._t("default",null,{item:item,angle:(360 / _vm.state.pages[_vm.state.currentPage].length * index) - 90})}),_vm._v(" "),_vm._l((_vm.$zircleStore.state.pages),function(page,index){return _c('z-dotnav',{key:index,attrs:{"size":"xxs","color":"accent","index":index,"distance":112,"angle":(180 - (180 - (_vm.$zircleStore.state.pages.length * 10))) / _vm.$zircleStore.state.pages.length * (_vm.$zircleStore.state.pages.length - index) + ((180 - (180 - (180 - (_vm.$zircleStore.state.pages.length * 10)))) - ((180 - (180 - (_vm.$zircleStore.state.pages.length * 10))) / _vm.$zircleStore.state.pages.length)) / 2,"active":_vm.$zircleStore.state.currentPage},nativeOn:{"click":function($event){_vm.$zircleStore.state.currentPage = index;}}})})],2)},staticRenderFns: [],
+var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{attrs:{"title":"z-list"}},[_vm._l((_vm.state.pages[_vm.state.currentPage]),function(item,index){return _vm._t("default",null,{item:item,angle:(360 / _vm.state.pages[_vm.state.currentPage].length * index) - 90})}),_vm._v(" "),_vm._l((_vm.$zircleStore.state.pages),function(page,index){return _c('z-dotnav',{key:index,attrs:{"size":"xxs","color":"accent","index":index,"distance":112,"angle":(180 - (180 - (_vm.$zircleStore.state.pages.length * 10))) / _vm.$zircleStore.state.pages.length * (_vm.$zircleStore.state.pages.length - index) + ((180 - (180 - (180 - (_vm.$zircleStore.state.pages.length * 10)))) - ((180 - (180 - (_vm.$zircleStore.state.pages.length * 10))) / _vm.$zircleStore.state.pages.length)) / 2,"active":_vm.$zircleStore.state.currentPage},nativeOn:{"mouseover":function($event){_vm.state.backwardNavigation = true;},"mouseleave":function($event){_vm.state.backwardNavigation = false;},"click":function($event){_vm.state.currentPage = index;}}})})],2)},staticRenderFns: [],
   name: 'z-list',
   mixins: [zmixin],
   props: {
@@ -1246,7 +1420,7 @@ var zlist = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   }
 };
 
-var zdotnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"zui disc",class:[_vm.classes, _vm.colors, _vm.activated],style:(_vm.styles.main),attrs:{"title":"z-dotnav","type":_vm.type}},[_c('div',{staticClass:"navplate",style:(_vm.styles.plate)})])},staticRenderFns: [],
+var zdotnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hidden === false),expression:"hidden === false"}],staticClass:"zui disc",class:[_vm.classes, _vm.colors, _vm.activated],style:(_vm.styles.main),attrs:{"title":"z-dotnav","type":_vm.type}},[_c('div',{staticClass:"navplate",style:(_vm.styles.plate)})])},staticRenderFns: [],
   name: 'z-page',
   mixins: [zmixin],
   props: {
@@ -1261,6 +1435,11 @@ var zdotnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
     active: {
       type: Number,
       default: 0
+    }
+  },
+  data: function data () {
+    return {
+      hidden: false
     }
   },
   computed: {
@@ -1305,6 +1484,15 @@ var zdotnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
         }
       }
     }
+  },
+  updated: function updated () {
+    this.$nextTick(function () {
+      if (this.$parent.$parent.$el.classList.contains('prevclass') || this.$parent.$parent.$el.classList.contains('pastclass')) {
+        this.hidden = true;
+      } else {
+        this.hidden = false;
+      }
+    });
   }
 };
 

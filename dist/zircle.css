@@ -1,3 +1,54 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -152,8 +203,9 @@ div[type="button"] {
   top: 50%;
   left: 50%;
   -webkit-perspective: 1000px;
-  perspective: 1000px;
+          perspective: 1000px;
   text-decoration: none;
+  
 }
 
 .handlebar:hover {
@@ -174,6 +226,7 @@ div[type="button"] {
   top: 50%;
   left: 50%;
   text-align: center;
+  
 }
 
 .main {
@@ -277,20 +330,20 @@ div[type="button"] {
   background: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   overflow: hidden;
   border-radius: 50%;
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   border: 1px solid transparent;
 }
 
@@ -302,10 +355,10 @@ div[type="button"] {
   overflow-y: scroll;
   padding-right: 20px;
   margin-right: -20px; /* padding-top: 100px;
-      height: 100%;
-      width: 105%;
-       padding-right: 28px;
-      margin-right: -28px; */
+    height: 100%;
+    width: 105%;
+     padding-right: 28px;
+    margin-right: -28px; */
 }
 
 .bottom {
@@ -331,15 +384,15 @@ div[type="button"] {
 }
 
 .button:hover {
-  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feComponentTransfer color-interpolation-filters=!string!><feFuncR type=!string!slope=!string!/><feFuncG type=!string!slope=!string!/><feFuncB type=!string!slope=!string!/></feComponentTransfer></filter></svg>#filter');
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="linear" slope="0.9" /><feFuncG type="linear" slope="0.9" /><feFuncB type="linear" slope="0.9" /></feComponentTransfer></filter></svg>#filter');
   -webkit-filter: brightness(0.9);
-  filter: brightness(0.9);
+          filter: brightness(0.9);
 }
 
 .button:active {
-  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feComponentTransfer color-interpolation-filters=!string!><feFuncR type=!string!slope=!string!/><feFuncG type=!string!slope=!string!/><feFuncB type=!string!slope=!string!/></feComponentTransfer></filter></svg>#filter');
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="linear" slope="0.4" /><feFuncG type="linear" slope="0.4" /><feFuncB type="linear" slope="0.4" /></feComponentTransfer></filter></svg>#filter');
   -webkit-filter: brightness(0.4);
-  filter: brightness(0.4);
+          filter: brightness(0.4);
 }
 
 .hidden {
@@ -351,22 +404,25 @@ div[type="button"] {
 }
 
 .pastclass {
+  pointer-events: none;
   cursor: zoom-out;
-  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="1.5" /></filter></svg>#filter');
   -webkit-filter: blur(1.5px);
-  filter: blur(1.5px);
+          filter: blur(1.5px);
 }
 
 .prevclass {
+  pointer-events: none;
   cursor: zoom-out;
-  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="1.5" /></filter></svg>#filter');
   -webkit-filter: blur(1.5px);
-  filter: blur(1.5px);
+          filter: blur(1.5px);
 }
 
 .currclass {
+  pointer-events: auto;
   -webkit-animation: appear 800ms linear forwards;
-  animation: appear 800ms linear forwards;
+          animation: appear 800ms linear forwards;
   will-change: opacity;
 }
 
@@ -410,7 +466,7 @@ div[type="button"] {
 
 .lastclass {
   -webkit-animation: disappear 800ms linear forwards;
-  animation: disappear 800ms linear forwards;
+          animation: disappear 800ms linear forwards;
   will-change: opacity;
 }
 
@@ -454,54 +510,54 @@ div[type="button"] {
 
 @-webkit-keyframes blur {
   0% {
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="0" /></filter></svg>#filter');
     -webkit-filter: blur(0px);
-    filter: blur(0px);
+            filter: blur(0px);
   }
 
   20% {
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="0" /></filter></svg>#filter');
     -webkit-filter: blur(0px);
-    filter: blur(0px);
+            filter: blur(0px);
   }
 
   60% {
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="1.5" /></filter></svg>#filter');
     -webkit-filter: blur(1.5px);
-    filter: blur(1.5px);
+            filter: blur(1.5px);
   }
 
   100% {
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="1.5" /></filter></svg>#filter');
     -webkit-filter: blur(1.5px);
-    filter: blur(1.5px);
+            filter: blur(1.5px);
   }
 
 }
 
 @keyframes blur {
   0% {
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="0" /></filter></svg>#filter');
     -webkit-filter: blur(0px);
-    filter: blur(0px);
+            filter: blur(0px);
   }
 
   20% {
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="0" /></filter></svg>#filter');
     -webkit-filter: blur(0px);
-    filter: blur(0px);
+            filter: blur(0px);
   }
 
   60% {
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="1.5" /></filter></svg>#filter');
     -webkit-filter: blur(1.5px);
-    filter: blur(1.5px);
+            filter: blur(1.5px);
   }
 
   100% {
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feGaussianBlur stdDeviation=!string!/></filter></svg>#filter');
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="1.5" /></filter></svg>#filter');
     -webkit-filter: blur(1.5px);
-    filter: blur(1.5px);
+            filter: blur(1.5px);
   }
 
 }
@@ -523,15 +579,15 @@ div[type="button"] {
 }
 
 .accent-secondary {
-  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feComponentTransfer color-interpolation-filters=!string!><feFuncR type=!string!tableValues=!string!/><feFuncG type=!string!tableValues=!string!/><feFuncB type=!string!tableValues=!string!/></feComponentTransfer></filter></svg>#filter');
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="1 0" /><feFuncG type="table" tableValues="1 0" /><feFuncB type="table" tableValues="1 0" /></feComponentTransfer></filter></svg>#filter');
   -webkit-filter: invert(100%);
-  filter: invert(100%);
+          filter: invert(100%);
 }
 
 .accent-secondary-border {
-  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns=!string!><filter id=!string!><feComponentTransfer color-interpolation-filters=!string!><feFuncR type=!string!tableValues=!string!/><feFuncG type=!string!tableValues=!string!/><feFuncB type=!string!tableValues=!string!/></feComponentTransfer></filter></svg>#filter');
+  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="1 0" /><feFuncG type="table" tableValues="1 0" /><feFuncB type="table" tableValues="1 0" /></feComponentTransfer></filter></svg>#filter');
   -webkit-filter: invert(100%);
-  filter: invert(100%);
+          filter: invert(100%);
   background-color: transparent;
   border-width: 1px;
 }
@@ -633,8 +689,7 @@ div[type="button"] {
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  background: transparent;
-  opacity: 0.3;
+  opacity: 1;
   overflow: hidden;
 }
 
@@ -656,22 +711,22 @@ div[type="button"] {
   border: 3px solid var(--background);
 }
 
-div[title="http://www.w3.org/2000/svg"],
-div[title="filter"] {
+div[title="z-item"],
+div[title="z-dotnav"] {
   cursor: zoom-in;
 }
 
-div[title="sRGB"]:hover {
+div[title="z-dotnav"]:hover {
   cursor: -webkit-grab;
   cursor: grab;
 }
 
-div[title="linear"]:active {
+div[title="z-dotnav"]:active {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-.prevclass section[title="0.9"] {
+.prevclass section[title="z-list"] {
   pointer-events: none;
 }
 
@@ -697,8 +752,8 @@ input {
   width: 100%;
   background: none;
   -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   box-shadow: none;
   border: none;
   color: inherit;
@@ -710,19 +765,85 @@ input {
   text-align: center;
 }
 
-.z-alert-enter-active,
-.z-alert-leave-active {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.z-alert-enter-active, .z-alert-leave-active {
   transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
   transition: transform 0.3s, -webkit-transform 0.3s;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   z-index: 500;
 }
-
-.z-alert-enter,
-.z-alert-leave-to {
+.z-alert-enter, .z-alert-leave-to {
   -webkit-transform: scale(0);
-  transform: scale(0);
+          transform: scale(0);
 }
