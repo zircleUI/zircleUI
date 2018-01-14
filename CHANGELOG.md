@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2018-01-14
+### Enhancements
+- Recursive navigation that allows reuse the same view again and again.
+- Better responsiveness when resize viewport.
+- Vue-router auto configuration. You don't need to define routes anymore.
+
+### Fixes
+- z-content position. Now it is centered. Thank you @zeratul1
+
+
 ## [0.2.2] to [0.2.4] - 2017-12-10
 ### Changed
 - Add props (label, image and color) to `z-item`.

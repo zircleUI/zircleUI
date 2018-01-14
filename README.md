@@ -14,15 +14,6 @@
   <a href="https://travis-ci.org/zircleUI/zircleUI"><img alt="Build Status" src="https://travis-ci.org/zircleUI/zircleUI.svg?branch=master"></a>
 </p>
 
-----------
-
-
-> **Estimated release date of Zircle 0.3.0**: *Sunday, January 14.
-**New features**: recursive navigation; auto configuration of the vue-router. **Improvements**: previous views are more responsive*
-
-
-----------
-
 > Zircle is in active development. Feedbacks and contributions are very welcome!
 
 ## What is Zircle UI?
