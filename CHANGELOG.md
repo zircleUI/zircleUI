@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.1] - 2018-01-14
+### Fixes
+- Fix build for producction error.
+
 ## [0.3.0] - 2018-01-14
 ### Enhancements
 - Recursive navigation that allows reuse the same view again and again.
@@ -9,7 +13,6 @@ All notable changes to this project will be documented in this file.
 
 ### Fixes
 - z-content position. Now it is centered. Thank you @zeratul1
-
 
 ## [0.2.2] to [0.2.4] - 2017-12-10
 ### Changed
