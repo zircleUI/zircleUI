@@ -7,7 +7,7 @@
   
   </svg>
 
-  <svg xmlns="http://www.w3.org/2000/svg" class="scroll2"  :style="[classesContent3]" 
+  <svg v-show="hidden === false" xmlns="http://www.w3.org/2000/svg" class="scroll2"  :style="classesContent3" 
   @touchstart="drag = true"
   @touchmove.prevent="slide" 
   @touchend="drag = false"
@@ -29,7 +29,8 @@ export default {
   data () {
     return {
       type: 'scroll',
-      drag: false
+      drag: false,
+      hidden: false
     }
   },
   computed: {
@@ -107,6 +108,15 @@ export default {
         this.$emit('update:scrollVal', tangle)
       }
     }
+  },
+  updated () {
+    this.$nextTick(function () {
+      if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
+        this.hidden = true
+      } else {
+        this.hidden = false
+      }
+    })
   }
 }
 </script>

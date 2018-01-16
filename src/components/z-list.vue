@@ -1,12 +1,12 @@
-<template >
+<template>
   
  <section title="z-list" >
  
-  <slot
+    <slot
     :item="item"
     v-for="(item, index) in state.pages[state.currentPage]"
-    :angle="(360 / state.pages[state.currentPage].length * index) - 90"
-  ></slot>
+    :angle="(360 / state.pages[state.currentPage].length * index) - 90">
+    </slot>
  
     <z-dotnav
     v-for="(page, index) in $zircleStore.state.pages"
@@ -17,8 +17,12 @@
     :distance="112"
     :angle="(180 - (180 - ($zircleStore.state.pages.length * 10))) / $zircleStore.state.pages.length * ($zircleStore.state.pages.length - index) + ((180 - (180 - (180 - ($zircleStore.state.pages.length * 10)))) - ((180 - (180 - ($zircleStore.state.pages.length * 10))) / $zircleStore.state.pages.length)) / 2"
     :active="$zircleStore.state.currentPage"
-    @click.native="$zircleStore.state.currentPage = index" />
+    @mouseover.native = "state.backwardNavigation = true"
+    @mouseleave.native = "state.backwardNavigation = false"
+    @click.native="state.currentPage = index" />
+
 </section>
+
 </template>
 
 <script>

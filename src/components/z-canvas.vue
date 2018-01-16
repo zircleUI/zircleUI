@@ -27,11 +27,12 @@ export default {
   },
   methods: {
     goback () {
-      if (this.store.state.router === true && this.store.state.previousView !== '') {
-        this.$router.back()
-      }
-      if (this.store.state.router === false) {
-        this.store.goBack()
+      if (this.state.previousView !== '' && this.state.backwardNavigation === false) {
+        if (this.state.isRouterEnabled === false) {
+          this.store.goBack()
+        } else {
+          this.$router.back()
+        }
       }
     }
   },
@@ -396,16 +397,19 @@ div[type="button"] {
 }
 
 .pastclass {
+  pointer-events: none;
   cursor: zoom-out;
   filter: blur(1.5px);
 }
 
 .prevclass {
+  pointer-events: none;
   cursor: zoom-out;
   filter: blur(1.5px);
 }
 
 .currclass {
+  pointer-events: auto;
   animation: appear 800ms linear forwards;
   will-change: opacity;
 }
@@ -595,8 +599,7 @@ div[type="button"] {
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  background: transparent;
-  opacity: 0.3;
+  opacity: 1;
   overflow: hidden;
 }
 

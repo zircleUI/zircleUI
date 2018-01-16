@@ -1,12 +1,12 @@
 <template>
 
-  <div title="z-scale" class="zui disc" :type="type" :class="[classes, colors]" :style="style.main"  @click.stop="move">
+  <div v-show="hidden === false" title="z-scale" class="zui disc" :type="type" :class="[classes, colors]" :style="resize === false ? style.main : zpos.main"  @click.stop="move">
     
     <z-range :progress='progress' v-if="range === true"></z-range>
 
     <z-slider v-if="slider === true" :progress='progress'></z-slider>
     
-    <section class="z-content label" :style="style.label" style="overflow: visible;" >
+    <section class="z-content label" :style="resize === false ? style.label : zpos.label" style="overflow: visible;" >
       <slot name="label" ></slot>
     </section>
     
@@ -41,6 +41,13 @@ export default {
     type: {
       type: String,
       default: 'scale'
+    }
+  },
+  data () {
+    return {
+      resize: false,
+      zpos: {},
+      hidden: false
     }
   },
   computed: {
@@ -82,48 +89,79 @@ export default {
   },
   methods: {
     move () {
-      if (this.$parent.view.toLowerCase() === this.state.previousView) {
-        if (this.state.router === true && this.state.previousView !== '') {
-          this.$router.back()
+      if (this.gotoview !== undefined) {
+        // Apply moveApp & setNextView
+        // seteo el gotoview aca, xq dsp se borra el "this". OJO ver si usar algun hook
+        var go = this.gotoviewName
+        var position = {
+          X: this.position.Xabs,
+          Y: this.position.Yabs,
+          scale: this.position.scale,
+          Xi: this.position.Xi,
+          Yi: this.position.Yi,
+          scalei: this.position.scalei,
+          go: go
         }
-        if (this.state.router === false) {
-          this.store.goBack()
+        if (this.state.history.length < 6) {
+          this.store.state.mode = 'forward'
+          this.store.setAppPos(position)
+          var vm = this
+          setTimeout(function () {
+            vm.hidden = true
+          }, 800)
+        } else {
+          console.log('Max level of deep reached')
         }
       } else {
-        if (this.gotoview !== undefined) {
-          // Apply moveApp & setNextView
-          // seteo el gotoview aca, xq dsp se borra el "this". OJO ver si usar algun hook
-          var go = this.gotoviewName
-          var position = {
-            X: this.position.Xabs,
-            Y: this.position.Yabs,
-            scale: this.position.scale,
-            Xi: this.position.Xi,
-            Yi: this.position.Yi,
-            scalei: this.position.scalei,
-            go: go,
-            next: true
-          }
-          // this.state.position = position
-          // console.log('go: ' + go)
-          if (this.state.history.length < 9) {
-            if (this.state.router === true) {
-              this.state.shadowPosition = position
-              // this.store.setAppPos(position)
-              this.$router.push({name: go})
-            } else {
-              this.store.state.mode = 'forward'
-              this.store.setAppPos(position)
-            }
-          } else {
-            console.log('Max level of deep reached')
-          }
-          // this.$el.style.opacity = 0
-        } else {
-          console.log('gotoview is not defined')
-        }
+        console.log('gotoview is not defined')
       }
     }
+  },
+  mounted () {
+    switch (this.size) {
+      case 'large':
+        var zwidth = this.state.zircleWidth.l
+        break
+      case 'medium':
+        zwidth = this.state.zircleWidth.m
+        break
+      case 'small':
+        zwidth = this.state.zircleWidth.s
+        break
+      case 'extrasmall':
+        zwidth = this.state.zircleWidth.xs
+        break
+      case 'xxs':
+        zwidth = this.state.zircleWidth.xxs / 3
+        break
+    }
+    this.zpos = {
+      main: {
+        width: zwidth + 'px',
+        height: zwidth + 'px',
+        margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
+        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+      },
+      label: {
+        top: zwidth / 2 + 10 + 'px'
+      }
+    }
+  },
+  beforeUpdate () {
+    if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
+    } else {
+      this.zpos = this.style
+    }
+  },
+  updated () {
+    this.$nextTick(function () {
+      if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
+        this.resize = true
+      } else {
+        this.resize = false
+        this.hidden = false
+      }
+    })
   }
 }
 </script>

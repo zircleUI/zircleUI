@@ -15,8 +15,6 @@ export default {
             point.style.willChange = 'transform'
             point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)'
             point.style.transition = 'transform 800ms ease-in-out'
-            el.classList.add('currclass')
-            // console.log(el)
             done()
           } else {
             el.style.opacity = 1
@@ -28,7 +26,6 @@ export default {
           point.style.willChange = ''
         },
         beforeLeave (el) {
-          el.classList.remove('currclass')
         },
         leave (el, done) {
           var point = document.getElementById('z-point')
@@ -40,8 +37,6 @@ export default {
             point.style.transition = 'transform 800ms ease-in-out'
             el.classList.add('lastclass')
             setTimeout(function () {
-              context.parent.$zircleStore.state.lastView = ''
-              context.parent.$zircleStore.state.lastViewCache = {}
               done()
             }, 600)
           }

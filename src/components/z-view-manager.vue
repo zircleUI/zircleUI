@@ -1,9 +1,29 @@
 <template>
    <z-transition>
-      <component :is="past" :key="$zircleStore.state.pastView"></component>
-      <component :is="previous" :key="$zircleStore.state.previousView"></component>
-      <component v-if="$zircleStore.state.router === false" :is="current" :key="$zircleStore.state.currentView"></component>
-      <router-view v-if="$zircleStore.state.router === true" :key="$zircleStore.state.currentView"> </router-view>
+      <component 
+      v-if="$zircleStore.state.cache.length >= 3" 
+      class="pastclass"
+      :is="pastView" 
+      :key="$zircleStore.state.cache[$zircleStore.state.cache.length - 3].id" />
+
+      <component 
+      v-if="$zircleStore.state.cache.length >= 2" 
+      :is="previousView" 
+      class="prevclass" 
+      :key="$zircleStore.state.cache[$zircleStore.state.cache.length - 2].id" />
+
+      <component 
+      v-if="$zircleStore.state.isRouterEnabled === false && $zircleStore.state.cache.length >= 1"
+      :is="currentView" 
+      :class="$zircleStore.state.mode === 'forward' ? 'currclass' : ''"  
+      :key="$zircleStore.state.cache[$zircleStore.state.cache.length - 1].id" />
+
+      <router-view 
+        v-if="$zircleStore.state.isRouterEnabled === true && $zircleStore.state.cache.length >= 1" 
+        :class="$zircleStore.state.mode === 'forward' ? 'currclass' : ''" 
+        :key="$zircleStore.state.cache[$zircleStore.state.cache.length - 1].id"> 
+      </router-view>
+
   </z-transition>
 </template>
 
@@ -18,16 +38,18 @@ export default {
     }
   },
   computed: {
-    current () {
+    currentView () {
       let vm = this
       let key = Object.keys(this.list).find(function (k) {
         if (k.toLowerCase() === vm.$zircleStore.state.currentView) {
           return k
         }
       })
-      return this.list[key]
+      if (this.$zircleStore.state.isRouterEnabled === false) {
+        return this.list[key]
+      }
     },
-    previous () {
+    previousView () {
       let vm = this
       let key = Object.keys(this.list).find(function (k) {
         if (k.toLowerCase() === vm.$zircleStore.state.previousView) {
@@ -36,7 +58,7 @@ export default {
       })
       return this.list[key]
     },
-    past () {
+    pastView () {
       let vm = this
       let key = Object.keys(this.list).find(function (k) {
         if (k.toLowerCase() === vm.$zircleStore.state.pastView) {
@@ -45,6 +67,8 @@ export default {
       })
       return this.list[key]
     }
+  },
+  mounted () {
   }
 }
 </script>

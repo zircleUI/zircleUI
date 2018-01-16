@@ -1,5 +1,4 @@
 <template>
-
  <transition name="z-alert">
   <div type="alert" class="zui pop" :class="[classes, colors]" :style="styles.main"> 
     <z-slider :progress="progress"></z-slider>

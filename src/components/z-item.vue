@@ -1,8 +1,8 @@
 <template>
   
-    <div title="z-item" class="zui disc" :class="[classes, colors]" :style="styles.main" @click.stop="move"> 
+    <div title="z-item" class="zui disc" :class="[classes, colors]" :style="resize === false ? styles.main : zpos.main" @click.stop="move"> 
       
-      <section class="z-content label" :style="styles.label" style="overflow: visible;" >
+      <section class="z-content label" :style="resize === false ? styles.label : zpos.label" style="overflow: visible;" >
         <span>{{label}}</span>
       </section>
       
@@ -38,6 +38,9 @@ export default {
     item: {
       default: ''
     },
+    id: {
+      default: ''
+    },
     gotoview: {
       default: 'item'
     },
@@ -50,7 +53,9 @@ export default {
     return {
       type: 'item',
       state: store.state,
-      store: store
+      store: store,
+      resize: false,
+      zpos: {}
     }
   },
   computed: {
@@ -60,11 +65,6 @@ export default {
     classes () {
       // var colorp = this.color
       return {
-        // currclass: this.viewName === this.state.currentView,
-        // lastclass: this.viewName === this.state.lastView,
-        pastclass: this.type === 'panel' && this.viewName === this.state.pastView,
-        prevclass: this.type === 'panel' && this.viewName === this.state.previousView,
-        hidden: this.$parent.viewName === this.state.previousView,
         zoom: this.type === 'scale' && this.gotoview !== undefined
       }
     },
@@ -114,10 +114,6 @@ export default {
     move () {
       if (this.gotoview !== undefined) {
         var go = this.gotoviewName
-        var item = this.item
-        if (item !== undefined) {
-          this.state.selectedItem = item
-        }
         var position = {
           X: this.position.Xabs,
           Y: this.position.Yabs,
@@ -126,23 +122,64 @@ export default {
           Yi: this.position.Yi,
           scalei: this.position.scalei,
           go: go,
-          next: true
+          itemID: this.id,
+          item: this.item
         }
-        if (this.state.router === true) {
-          this.state.shadowPosition = position
-          if (item !== undefined) {
-            this.$router.push({name: go, params: {id: item}})
-          } else {
-            this.$router.push({name: go})
-          }
-        } else {
+        if (this.state.history.length < 6) {
           this.store.state.mode = 'forward'
           this.store.setAppPos(position)
+        } else {
+          console.log('Max level of deep reached')
         }
       } else {
         // no action
       }
     }
+  },
+  mounted () {
+    switch (this.size) {
+      case 'large':
+        var zwidth = this.state.zircleWidth.l
+        break
+      case 'medium':
+        zwidth = this.state.zircleWidth.m
+        break
+      case 'small':
+        zwidth = this.state.zircleWidth.s
+        break
+      case 'extrasmall':
+        zwidth = this.state.zircleWidth.xs
+        break
+      case 'xxs':
+        zwidth = this.state.zircleWidth.xxs
+        break
+    }
+    this.zpos = {
+      main: {
+        width: zwidth + 'px',
+        height: zwidth + 'px',
+        margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
+        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+      },
+      label: {
+        top: zwidth / 2 + 10 + 'px'
+      }
+    }
+  },
+  beforeUpdate () {
+    if (this.$parent.$parent.$el.classList.contains('prevclass') || this.$parent.$parent.$el.classList.contains('pastclass')) {
+    } else {
+      this.zpos = this.styles
+    }
+  },
+  updated () {
+    this.$nextTick(function () {
+      if (this.$parent.$parent.$el.classList.contains('prevclass') || this.$parent.$parent.$el.classList.contains('pastclass')) {
+        this.resize = false
+      } else {
+        this.resize = true
+      }
+    })
   }
 }
 </script>

@@ -4,7 +4,7 @@
    
     <circle r="50" cx="50" cy="50"  :style="[styles]"  ></circle>
   </svg>
-  <svg xmlns="http://www.w3.org/2000/svg" class="scroll2" :style="[classesContent3]" 
+  <svg v-show="hidden === false" xmlns="http://www.w3.org/2000/svg" class="scroll2" :style="[classesContent3]" 
   @touchstart="drag = true"
   @touchmove.prevent="slide1" 
   @touchend="drag = false"
@@ -33,7 +33,8 @@ export default {
       drag: false,
       anglex: (this.progress * 360) / 100,
       duration: '0s',
-      previousAngle: 0
+      previousAngle: 0,
+      hidden: false
     }
   },
   computed: {
@@ -139,6 +140,15 @@ export default {
         this.anglex = tangle
       }
     }
+  },
+  updated () {
+    this.$nextTick(function () {
+      if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
+        this.hidden = true
+      } else {
+        this.hidden = false
+      }
+    })
   }
 }
 </script>

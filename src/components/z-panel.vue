@@ -5,10 +5,12 @@
   type="panel" 
   class="zui main" 
   :class="[classes, colors]" 
-  :style="styles.main" 
-  style="overflow: visible;" 
-  @click.stop="move"> 
-    <div class="plate" :style="styles.plate"></div>
+  :style="resize === false ? styles.main : zpos.main" 
+  style="overflow: visible;"
+  @mouseover = "state.backwardNavigation = true"
+  @mouseleave = "state.backwardNavigation = false"> 
+
+    <div class="plate" :style="resize === false ? styles.plate : zpos.plate"></div>
 
     <z-range :progress='progress' v-if="range === true"></z-range>
     
@@ -18,15 +20,16 @@
     
     <div class="z-contentbox dashed" :style="styles.background" >
 
-     
          <slot name="picture"></slot>
     
-      
-      <div class="z-content maindisc" :class="[classesContent]" :style="styles.hideScroll" @scroll="scroll">
+      <div class="z-content maindisc" :class="[classesContent]" :style="resize === false ? styles.hideScroll : zpos.hideScroll" @scroll="scroll">
         
         <section class="z-text">
+
            <slot></slot>
+
            <span class="bottom"></span>
+
         </section>
       
       </div>
@@ -73,7 +76,10 @@ export default {
       alertar: '',
       scrollVal: -45,
       width: 0,
-      img: {}
+      img: {},
+      resize: false,
+      zpos: {},
+      viewID: ''
     }
   },
   computed: {
@@ -94,10 +100,8 @@ export default {
           margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
         },
         hideScroll: {
-          width: this.state.zircleWidth.xl - 10 + 'px'
-        },
-        background: {
-          // backgroundImage: `url(${this.imgSource})`
+          width: this.state.zircleWidth.xl - 5 + 'px',
+          marginLeft: -this.state.zircleWidth.xl * 0.0392 + 3.08 + 'px'
         }
       }
     },
@@ -111,22 +115,6 @@ export default {
     scroll () {
       var test1 = this.$el.querySelector('.z-content')
       this.scrollVal = -45 + ((test1.scrollTop * 100 / (test1.scrollHeight - test1.clientHeight)) * 86 / 100)
-    },
-    move () {
-      if (this.state.previousView === this.viewName) {
-        if (this.state.router === true && this.state.previousView !== '') {
-          this.$router.back()
-        } else {
-          this.store.goBack()
-        }
-      }
-      if (this.state.pastView === this.viewName) {
-        if (this.state.router === true) {
-          this.$router.back()
-        } else {
-          this.store.goBack()
-        }
-      }
     }
   },
   watch: {
@@ -136,12 +124,47 @@ export default {
     }
   },
   mounted () {
+    if (this.$el.classList.contains('pastclass')) {
+      this.viewID = this.state.cache[this.state.cache.length - 3].id
+    }
+    this.zpos = {
+      main: {
+        width: this.state.zircleWidth.xl + 'px',
+        height: this.state.zircleWidth.xl + 'px',
+        margin: -(this.state.zircleWidth.xl / 2) + 'px 0 0 ' + -(this.state.zircleWidth.xl / 2) + 'px',
+        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
+      },
+      plate: {
+        width: this.state.zircleWidth.xl + 50 + 'px',
+        height: this.state.zircleWidth.xl + 50 + 'px',
+        margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
+      },
+      hideScroll: {
+        width: this.state.zircleWidth.xl - 5 + 'px',
+        marginLeft: -this.state.zircleWidth.xl * 0.0392 + 3.08 + 'px'
+      }
+    }
     var test = this.$el.querySelector('.z-content > .z-text') // guarda con esto que no anda bien
     if (test.clientHeight > this.state.zircleWidth.xl) {
       this.scrollBar = true
     } else {
       this.scrollBar = false
     }
+  },
+  beforeUpdate () {
+    if (this.$el.classList.contains('prevclass') || this.$el.classList.contains('pastclass')) {
+    } else {
+      this.zpos = this.styles
+    }
+  },
+  updated () {
+    this.$nextTick(function () {
+      if (this.$el.classList.contains('prevclass') || this.$el.classList.contains('pastclass')) {
+        this.resize = true
+      } else {
+        this.resize = false
+      }
+    })
   }
 }
 </script>

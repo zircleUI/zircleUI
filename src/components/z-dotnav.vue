@@ -1,6 +1,6 @@
 <template>
 
-  <div title="z-dotnav" class="zui disc" :type="type" :class="[classes, colors, activated]"  :style="styles.main"> 
+  <div v-show="hidden === false" title="z-dotnav" class="zui disc" :type="type" :class="[classes, colors, activated]"  :style="styles.main"> 
   <div class="navplate" :style="styles.plate"></div>
   </div>
 </template>
@@ -22,6 +22,11 @@ export default {
     active: {
       type: Number,
       default: 0
+    }
+  },
+  data () {
+    return {
+      hidden: false
     }
   },
   computed: {
@@ -66,6 +71,15 @@ export default {
         }
       }
     }
+  },
+  updated () {
+    this.$nextTick(function () {
+      if (this.$parent.$parent.$el.classList.contains('prevclass') || this.$parent.$parent.$el.classList.contains('pastclass')) {
+        this.hidden = true
+      } else {
+        this.hidden = false
+      }
+    })
   }
 }
 </script>

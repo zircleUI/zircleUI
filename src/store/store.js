@@ -8,20 +8,19 @@ var store = {
       Yi: 0,
       scalei: 1
     },
-    lastView: '',
+    alert: false,
+    // navigation
+    mode: 'forward',
+    isRouterEnabled: false,
+    $router: {},
     currentView: '',
     previousView: '',
     pastView: '',
     history: [],
     cache: [],
-    lastViewCache: {
-      view: ''
-    },
-    alert: false,
-    mode: 'forward',
-    router: false,
-    shadowPosition: {
-    },
+    lastViewCache: {},
+    backwardNavigation: false,
+    // styles
     zircleWidth: {
       xl: 200,
       l: 70,
@@ -31,48 +30,76 @@ var store = {
       xxs: 20
     },
     color: 'color--black',
-    theme: 'theme--dark',
+    theme: 'theme--light',
     // temporary for pagination
     selectedItem: '',
     currentPage: 0,
     items: [],
     pages: []
   },
+  // routerHooks is deprecated and will be deleted on zircle 0.5.0. Use setRouter instead.
   routerHooks (data) {
-    let vm = data
-    data.$zircleStore.setView(vm.initialView)
-    data.$zircleStore.state.router = vm.enableRouter
-    data.$router.onReady(function () {
-      if (vm.$zircleStore.state.previousView === '' && vm.$router.currentRoute.name !== vm.initialView) {
-        vm.$router.push({path: '/'})
-      }
+    store.setRouter(data)
+  },
+  setRouter (data) {
+    // Auto configuration for vue-router
+    store.state.$router = data.$router
+    store.state.isRouterEnabled = true
+    store.setView(data.initialView.toLowerCase())
+    // Add default redirect route to initialView and go to initialView
+    store.state.$router.onReady(function () {
+      var view = data.initialView.toLowerCase()
+      store.state.$router.addRoutes([{path: '/',
+        redirect: '/' + view + '--0'
+      }])
+      store.state.$router.addRoutes([{path: '/' + view + '--0',
+        name: view + '--0',
+        component: data.$options.components[view]
+      }])
+      store.state.$router.push({name: view + '--0'})
     })
-    data.$router.beforeEach((to, from, next) => {
-      if (to.name === data.$zircleStore.state.previousView) {
-        // caso 1: si a la vista dnd se dirije el router es = a la previa > goback
-        // console.log('pa tras')
-        data.$zircleStore.state.mode = 'backward'
-        data.$zircleStore.goBack()
+    // Router hooks
+    store.state.$router.beforeEach((to, from, next) => {
+      if (from.name === store.state.cache[store.state.cache.length - 1].id && to.name !== store.state.lastViewCache.id) {
+        // Go backward using both: browser navigation arrows or zircle UI
+        store.goBack()
         next()
-      } else if (to.name === data.$zircleStore.state.shadowPosition.go) {
-        // caso 2: si a la vista dnd voy es = a la ultima vista en cache
-        // navogacion con clicks
-        // console.log('pa lante')
-        data.$zircleStore.state.mode = 'forward'
-        data.$zircleStore.setAppPos(data.$zircleStore.state.shadowPosition)
-        data.$zircleStore.state.shadowPosition = {}
-        next()
-      } else if (to.name === data.$zircleStore.state.lastViewCache.view) {
-        // caso 3: si a la vista dnd no esta en cache futuro uso el shadow (vista nueva)
-        // navegacion con flechas
-        // console.log('pa lante cache')
-        data.$zircleStore.state.mode = 'forward'
-        data.$zircleStore.setAppPos(data.$zircleStore.state.lastViewCache.position)
-        data.$zircleStore.state.lastViewCache = {}
+      } else if (to.name === store.state.cache[store.state.cache.length - 1].id && to.name !== store.state.lastViewCache.id) {
+        // Check if the route exists
+        if (to.matched.length === 0) {
+          // If not, add route
+          var component = to.name.split('--')
+          let key = Object.keys(data.$options.components).find(function (k) {
+            if (k.toLowerCase() === component[0]) {
+              return k
+            }
+          })
+          if (to.params.id === undefined) {
+            store.state.$router.addRoutes([{path: '/' + to.name,
+              name: to.name,
+              component: data.$options.components[key]
+            }])
+            store.state.$router.push({name: to.name})
+          } else {
+            store.state.$router.addRoutes([{path: '/' + to.name + '/:id',
+              name: to.name,
+              component: data.$options.components[key]
+            }])
+            store.state.$router.push({name: to.name, params: to.params})
+          }
+        } else {
+          // If exists, go forward
+          store.state.lastViewCache = {}
+          next()
+        }
+      } else if (to.name === store.state.lastViewCache.id && to.name === store.state.cache[store.state.cache.length - 1].id) {
+        // Just in case browser navigation forward arrow is clicked
+        store.state.lastViewCache = {}
         next()
       } else {
-        console.log('error')
-        next(from.name)
+        console.log('Router Error')
+        console.log(to.name, from.name, store.state.lastViewCache.id, store.state.cache[store.state.cache.length - 1].id)
+        next(false)
       }
     })
   },
@@ -182,27 +209,9 @@ var store = {
     var currentYi = 0
     var parentPosition = {}
     var newPosition = {}
-    // EJECUTA FUNCION
+    // EJECUTA FUNCI ON
     if (component.type === 'panel') {
-      if (store.state.currentView === component.viewName) {
-        newPosition = {
-          X: store.state.cache[store.state.cache.length - 1].position.X,
-          Xi: store.state.cache[store.state.cache.length - 1].position.Xi,
-          Y: store.state.cache[store.state.cache.length - 1].position.Y,
-          Yi: store.state.cache[store.state.cache.length - 1].position.Yi,
-          scalei: store.state.cache[store.state.cache.length - 1].position.scalei,
-          scale: store.state.cache[store.state.cache.length - 1].position.scale
-        }
-      } if (store.state.previousView === component.viewName) {
-        newPosition = {
-          X: store.state.cache[store.state.cache.length - 2].position.X,
-          Xi: store.state.cache[store.state.cache.length - 2].position.Xi,
-          Y: store.state.cache[store.state.cache.length - 2].position.Y,
-          Yi: store.state.cache[store.state.cache.length - 2].position.Yi,
-          scalei: store.state.cache[store.state.cache.length - 2].position.scalei,
-          scale: store.state.cache[store.state.cache.length - 2].position.scale
-        }
-      } else if (store.state.pastView === component.viewName) {
+      if (store.state.mode === 'backward' && store.state.cache.length >= 3 && store.state.cache[store.state.cache.length - 3].id === component.viewID) {
         newPosition = {
           X: store.state.cache[store.state.cache.length - 3].position.X,
           Xi: store.state.cache[store.state.cache.length - 3].position.Xi,
@@ -292,17 +301,6 @@ var store = {
     }
     return newPosition
   },
-  setView (view) {
-    store.state.currentView = view.toLowerCase()
-    store.setHistory(view.toLowerCase())
-    if (store.state.history.length === 1) {
-      store.state.previousView = ''
-      store.state.pastView = ''
-    } else if (store.state.history.length > 1) {
-      store.state.previousView = store.state.history[store.state.history.length - 2]
-      store.state.pastView = store.state.history[store.state.history.length - 3]
-    }
-  },
   setAppPos (data) {
     store.state.position = {
       X: data.X,
@@ -311,34 +309,96 @@ var store = {
       Xi: data.Xi,
       Yi: data.Yi,
       scalei: data.scalei,
-      go: data.go
+      go: data.go,
+      itemID: data.itemID,
+      item: data.item
     }
     store.setView(data.go)
   },
+  setView (view) {
+    // check if viewname exists in previous or past and rename '_0' or '_1'
+    var viewName = view.toLowerCase()
+    store.setHistory(viewName)
+    if (store.state.history.length === 1) {
+      store.state.previousView = ''
+      store.state.pastView = ''
+    } else if (store.state.history.length === 2) {
+      store.state.previousView = store.state.history[store.state.history.length - 2]
+      store.state.pastView = ''
+    } else if (store.state.history.length >= 3) {
+      store.state.previousView = store.state.history[store.state.history.length - 2]
+      store.state.pastView = store.state.history[store.state.history.length - 3]
+    }
+    store.state.currentView = viewName
+  },
   setHistory (view) {
     // only component with viewName
-    var lastView = store.state.history[store.state.history.length - 1]
-    if (view !== lastView) {
+    if (store.state.mode === 'forward') {
       store.state.history.push(view)
+      var prevViewName = ''
+      var pastViewName = ''
+      if (store.state.cache.length === 0) {
+        newID = view + '--0'
+      }
+      if (store.state.cache.length === 1) {
+        prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
+        if (view === prevViewName[0]) {
+          var newID = view + '--' + (Number(prevViewName[1]) + 1)
+        } else if (view !== prevViewName[0]) {
+          newID = view + '--0'
+        }
+      }
+      if (store.state.cache.length >= 2) {
+        prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
+        pastViewName = store.state.cache[store.state.cache.length - 2].id.split('--')
+        if (view === prevViewName[0] && view === pastViewName[0]) {
+          newID = view + '--' + (Number(prevViewName[1]) + 1)
+        } else if (view === prevViewName[0] && view !== pastViewName[0]) {
+          newID = view + '--' + (Number(prevViewName[1]) + 1)
+        } else if (view !== prevViewName[0] && view === pastViewName[0]) {
+          newID = view + '--' + (Number(pastViewName[1]) + 1)
+        } else if (view !== prevViewName[0] && view !== pastViewName[0]) {
+          newID = view + '--0'
+        }
+      }
+      if (store.state.cache.length >= 3) {
+        var lastViewName = store.state.cache[store.state.cache.length - 3].id.split('--')
+        if (view === lastViewName[0]) {
+          newID = view + '--' + (Number(prevViewName[1]) + 1)
+        } else {
+          newID = view + '--0'
+        }
+      }
       var cacheView = {
         view: view,
+        id: newID,
         position: store.state.position
       }
       store.state.cache.push(cacheView)
+      if (store.state.isRouterEnabled === true) {
+        if (store.state.position.itemID === undefined) {
+          store.state.$router.push({name: newID})
+        } else {
+          store.state.selectedItem = store.state.position.item
+          var id = store.state.position.itemID.toLowerCase()
+          // trim spaces
+          store.state.$router.push({name: newID, params: {id: id}})
+        }
+      } else {
+        if (store.state.position.item !== undefined) {
+          store.state.selectedItem = store.state.position.item
+        }
+      }
     }
   },
   goBack () {
     if (store.state.cache.length > 1) {
       store.state.history.pop()
-      let current = store.state.history[store.state.history.length - 1]
       store.state.lastViewCache = store.state.cache[store.state.cache.length - 1]
-      store.state.lastView = store.state.lastViewCache.view
       store.state.cache.pop()
-      let currentCache = store.state.cache[store.state.cache.length - 1]
-      let position = currentCache.position
-      position.go = current
+      store.state.cache[store.state.cache.length - 1].position.go = store.state.history[store.state.history.length - 1]
       store.state.mode = 'backward'
-      store.setAppPos(position)
+      store.setAppPos(store.state.cache[store.state.cache.length - 1].position)
     }
   }
 }
