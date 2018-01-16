@@ -16,6 +16,10 @@ Zircle UI is a circular zooming user interface library based on Vue.js. It mixes
 
 ### Quick examples 
 
+* **Vue.js Ecosystem**
+
+<iframe width="450" height="500" src="//jsfiddle.net/tinchox5/z8b22b6h/embedded/result,html,js,css" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
 * **Zooming slider**
 
 <iframe width="450" height="500" src="//jsfiddle.net/tinchox5/Lc48vwm0/embedded/result,html,js,css" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
