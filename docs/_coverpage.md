@@ -7,6 +7,6 @@
 > A circular zooming UI
 
 [GitHub](https://github.com/zircleui/zircleUI)
-[Get Started](#introduction)
+[Get Started](#status)
 
 ![color](#283237)
