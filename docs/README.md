@@ -27,7 +27,7 @@
 
 <!--End mc_embed_signup-->
 
-- Follow Zircle in [Twitter](https://twitter.com/ZircleUI)
+- Follow Zircle on [Twitter](https://twitter.com/ZircleUI)
 
 # Guide
 
