@@ -21,7 +21,7 @@
 **Zircle UI** is a circular zooming user interface library based on Vue.js. It mixes two principles: **circular shapes** and **zooming navigation** in the aim of strengthening each other and create a good user experience.
 
 ### Main features
--   Zooming navigation up to 9 level depth.
+-   Zooming navigation up to 6 level of depth.
 -   It works well on mobile devices and big screens as it is responsive.
 -   It comes with a minimal set of UI components to build your app.
 -   It is possible to customize themes and styles to fit your needs. 
