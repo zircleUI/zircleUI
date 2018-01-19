@@ -107,13 +107,14 @@ kbd {
 }
 
 .app-nav li, .app-nav ul {
+	color: #5FC9F3;
 	display: inline-block;
 	list-style: none;
 	margin: 0
 }
 
 .app-nav a {
-	color: inherit;
+	color: #34495e;
 	font-size: 16px;
 	text-decoration: none;
 	transition: color .3s
@@ -219,7 +220,7 @@ main {
 }
 
 .anchor span {
-	color: #34495e
+	color: #5FC9F3
 }
 
 .anchor:hover {
