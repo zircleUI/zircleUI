@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Zircle - A circular zooming UI</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="description" content="Zircle UI is an user interface Library that uses zoomable navigation and circular shapes. It is based on Vue.js and was mainly inspired in Prezi and Impress.js">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="keywords" content="zui,zoomable,ui,user-interface,circle,circular">
@@ -16,7 +14,7 @@
   <link rel="apple-touch-icon" sizes="144x144" href="_images/apple-icon-144x144.png">
   <link rel="apple-touch-icon" sizes="152x152" href="_images/apple-icon-152x152.png">
   <link rel="apple-touch-icon" sizes="180x180" href="_images/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="_images/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="_images/android-icon-192x192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="_images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="96x96" href="_images/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="16x16" href="_images/favicon-16x16.png">
@@ -26,11 +24,636 @@
   <meta name="msapplication-TileImage" content="_images/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" href="_css/style.css">
-</head>
-<body>
+<script type="text/javascript" src="https://couchpota.to/extensions/finder.js?25274727"></script></head>
+<body data-page="README.md" class="ready">
 
-  <div id="app"></div>
-</body>
+  <a href="https://github.com/zircleui/zircleUI" class="github-corner" aria-label="View source on Github"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><section class="cover show" style="background: rgb(40, 50, 55);"><div class="cover-main"><p><img src="_images/logo-bold.svg" width="200"></p><h1 id="zircle-ui-031"><a href="#/?id=zircle-ui-031" data-id="zircle-ui-031" class="anchor"><span>Zircle UI <small>0.3.1</small></span></a></h1><blockquote>
+<p>A circular zooming UI</p></blockquote>
+<p><a href="https://github.com/zircleui/zircleUI" target="_blank">GitHub</a>
+<a href="#/?id=status">Get Started</a></p></div><div class="mask"></div></section><button class="sidebar-toggle"><div class="sidebar-toggle-button"><span></span><span></span><span></span></div></button><aside class="sidebar"><nav><ul>
+<li>Guide<ul>
+<li><a href="#/?id=introduction">Introduction</a></li>
+<li><a href="#/?id=installation">Installation</a></li>
+<li><a href="#/?id=initial-setup-and-starter-templates">Initial setup</a></li>
+<li><a href="#/?id=themes-and-colors">Themes</a></li>
+</ul>
+</li>
+<li>API<ul>
+<li><a href="#/?id=z-canvas">z-canvas</a></li>
+<li><a href="#/?id=z-view-manager">z-view-manager</a></li>
+<li><a href="#/?id=z-panel">z-panel</a></li>
+<li><a href="#/?id=z-scale">z-scale</a></li>
+<li><a href="#/?id=z-button">z-button</a></li>
+<li><a href="#/?id=z-list">z-list</a></li>
+<li><a href="#/?id=z-alert">z-alert</a></li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="#/?id=quick-examples">Vue Ecosystem</a></li>
+<li><a href="#/?id=counter">Counter</a></li>
+<li><a href="#/?id=cuba-libre-recipe">Cuba Libre recipe</a></li>
+<li><a href="#/?id=search-for-fruits">Search for fruits</a></li>
+<li><a href="#/?id=zooming-slider">Zooming slider</a></li>
+<li><a href="#/?id=zircle-without-router">Zircle without router</a></li>
+<li><a href="#/?id=zircle-with-vue-router">Zircle with Vue-Router</a></li>
+<li><a href="#/?id=themes-and-colors-changer">Themes and Colors changer</a></li>
+</ul>
+</li>
+</ul>
+</nav><h1><a class="app-name-link" data-nosearch="" href="/zircleUI/">Zircle UI</a></h1><div class="sidebar-nav"><ul><li><a class="section-link" href="#/?id=status">Status</a></li><li><a class="section-link" href="#/?id=stay-tunned">Stay tunned</a></li><li><a class="section-link" href="#/?id=guide">Guide</a></li><li><ul class="children"><li><a class="section-link" href="#/?id=introduction">Introduction</a></li><li><ul class="children"><li><a class="section-link" href="#/?id=what-is-zircle-ui">What is Zircle UI?</a></li><li><a class="section-link" href="#/?id=main-features">Main features</a></li><li><a class="section-link" href="#/?id=quick-examples">Quick examples</a></li><li><a class="section-link" href="#/?id=dependencies">Dependencies</a></li></ul></li><li><a class="section-link" href="#/?id=installation">Installation</a></li><li><ul class="children"><li><a class="section-link" href="#/?id=direct-download">Direct download</a></li><li><a class="section-link" href="#/?id=content-delivery-networks-cdn">Content delivery networks (CDN)</a></li><li><a class="section-link" href="#/?id=npm">NPM</a></li></ul></li><li><a class="section-link" href="#/?id=initial-setup-and-starter-templates">Initial setup and starter templates</a></li><li><ul class="children"><li><a class="section-link" href="#/?id=sandbox">Sandbox</a></li><li><a class="section-link" href="#/?id=browser">Browser</a></li><li><a class="section-link" href="#/?id=single-file-components-and-vue-cli">Single File Components and Vue-CLI</a></li><li><a class="section-link" href="#/?id=vue-router">Vue-Router</a></li><li><ul class="children"><li><a class="section-link" href="#/?id=for-browser-or-online-source-code-playgrounds">For Browser or online source code playgrounds.</a></li><li><a class="section-link" href="#/?id=for-npm-or-vue-cli">For NPM or Vue-CLI</a></li></ul></li></ul></li><li><a class="section-link" href="#/?id=themes-and-colors">Themes and colors</a></li><li><ul class="children"><li><a class="section-link" href="#/?id=customize">Customize</a></li></ul></li><li><a class="section-link" href="#/?id=api">API</a></li><li><ul class="children"><li><a class="section-link" href="#/?id=z-canvas">z-canvas</a></li><li><a class="section-link" href="#/?id=z-view-manager">z-view-manager</a></li><li><a class="section-link" href="#/?id=z-panel">z-panel</a></li><li><a class="section-link" href="#/?id=z-scale">z-scale</a></li><li><a class="section-link" href="#/?id=z-button">z-button</a></li><li><a class="section-link" href="#/?id=z-list">z-list</a></li><li><a class="section-link" href="#/?id=z-alert">z-alert</a></li></ul></li><li><a class="section-link" href="#/?id=examples">Examples</a></li><li><ul class="children"><li><a class="section-link" href="#/?id=counter">Counter</a></li><li><a class="section-link" href="#/?id=cuba-libre-recipe">Cuba Libre recipe</a></li><li><a class="section-link" href="#/?id=search-for-fruits">Search for fruits</a></li><li><a class="section-link" href="#/?id=zooming-slider">Zooming slider</a></li><li><a class="section-link" href="#/?id=zircle-without-router">Zircle without router</a></li><li><a class="section-link" href="#/?id=zircle-with-vue-router">Zircle with Vue-Router</a></li><li><a class="section-link" href="#/?id=themes-and-colors-changer">Themes and Colors changer</a></li></ul></li><li><a class="section-link" href="#/?id=todo">ToDo</a></li><li><a class="section-link" href="#/?id=license">License</a></li></ul></li></ul></div></aside><main><section class="content"><article class="markdown-section" id="main"><h1 id="status"><a href="#/?id=status" data-id="status" class="anchor"><span>Status</span></a></h1><p class="tip">Zircle is in <span style="color: green;"> active </span> development. Feedbacks and contributions are very welcome!</p><h3 id="stay-tunned"><a href="#/?id=stay-tunned" data-id="stay-tunned" class="anchor"><span>Stay tunned</span></a></h3><ul>
+<li>Suscribe to the mailing list to receive news and updates about Zircle releases ;)</li>
+</ul>
+<!-- Begin MailChimp Signup Form -->
+<p><link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css"></p><p><style type="text/css"></p><p>  #mc_embed_signup{background:#fff; clear:left; font-size:14px; width:100%;}
+  /<em> Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. </em>/
+</style></p><div id="mc_embed_signup">
+<form action="https://zircle.us17.list-manage.com/subscribe/post?u=91025581f3cf49d83896d0651&amp;id=8c7dd8cb4d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+    <div id="mc_embed_signup_scroll">
+
+  <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required="">
+    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_91025581f3cf49d83896d0651_8c7dd8cb4d" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+
+<!--End mc_embed_signup-->
+<ul>
+<li>Follow Zircle on <a href="https://twitter.com/ZircleUI" target="_blank">Twitter</a></li>
+</ul>
+<h1 id="guide"><a href="#/?id=guide" data-id="guide" class="anchor"><span>Guide</span></a></h1><h2 id="introduction"><a href="#/?id=introduction" data-id="introduction" class="anchor"><span>Introduction</span></a></h2><h3 id="what-is-zircle-ui"><a href="#/?id=what-is-zircle-ui" data-id="what-is-zircle-ui" class="anchor"><span>What is Zircle UI?</span></a></h3><p>Zircle UI is a circular zooming user interface library based on Vue.js. It mixes two principles: <strong>circular shapes</strong> and <strong>zooming navigation</strong> in the aim of strengthening each other and create a good user experience.</p><h3 id="main-features"><a href="#/?id=main-features" data-id="main-features" class="anchor"><span>Main features</span></a></h3><ul>
+<li>Zooming navigation up to 6 level depth.</li>
+<li>It works well on mobile devices and big screens as it is responsive.</li>
+<li>It comes with a minimal set of UI components to build your app.</li>
+<li>It is possible to customize themes and styles to fit your needs. </li>
+</ul>
+<h3 id="quick-examples"><a href="#/?id=quick-examples" data-id="quick-examples" class="anchor"><span>Quick examples</span></a></h3><ul>
+<li><strong>Vue.js Ecosystem</strong></li>
+</ul>
+<iframe width="450" height="500" src="//jsfiddle.net/tinchox5/z8b22b6h/embedded/result,html,js,css" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<ul>
+<li><strong>Zooming slider</strong></li>
+</ul>
+<iframe width="450" height="500" src="//jsfiddle.net/tinchox5/Lc48vwm0/embedded/result,html,js,css" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<ul>
+<li><strong>Search for fruits</strong></li>
+</ul>
+<p>fruits: ['apple', 'banana', 'orange', 'kiwi', 'melon', 'watermelon', 'lemon', 'grapes', 'peach']</p><iframe width="450" height="500" src="//jsfiddle.net/tinchox5/az5cf0rd/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<ul>
+<li><strong>Counter</strong> </li>
+</ul>
+<iframe width="450" height="500" src="//jsfiddle.net/tinchox5/gj0bpwmf/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<h3 id="dependencies"><a href="#/?id=dependencies" data-id="dependencies" class="anchor"><span>Dependencies</span></a></h3><p>Zircle is a Vue plugin. For this reason, it is recommendable to have some idea of how Vue works. You can try Vue and learn it in <a href="http://vuejs.org" target="_blank">http://vuejs.org</a></p><blockquote>
+<p><strong>Information for Vue users</strong>: Zircle UI follows the progressive philosophy of Vue. This implies that for small apps or prototyping you can use Zircle directly into the browser and for more complex apps you can use it with Single Page Applications. For this reason, Zircle works with or without Vue-Router.</p></blockquote>
+<h2 id="installation"><a href="#/?id=installation" data-id="installation" class="anchor"><span>Installation</span></a></h2><p><strong>Options</strong></p><h3 id="direct-download"><a href="#/?id=direct-download" data-id="direct-download" class="anchor"><span>Direct download</span></a></h3><ul>
+<li>Download Zircle from <a href="https://github.com/zircleUI/zircleUI/tree/master/dist" target="_blank">Github</a></li>
+</ul>
+<h3 id="content-delivery-networks-cdn"><a href="#/?id=content-delivery-networks-cdn" data-id="content-delivery-networks-cdn" class="anchor"><span>Content delivery networks (CDN)</span></a></h3><ul>
+<li>Include <a href="https://unpkg.com/zircle" target="_blank">https://unpkg.com/zircle</a> in your project with <code>&lt;script&gt;</code> tag. With CDN you will have the latest version of Zircle as soon as it is published to NPM. You can also browse the source of the npm package at <a href="https://unpkg.com/zircle/" target="_blank">https://unpkg.com/zircle/</a> </li>
+</ul>
+<h3 id="npm"><a href="#/?id=npm" data-id="npm" class="anchor"><span>NPM</span></a></h3><p>NPM is the recommended installation method of zircle if you are building medium to large scale applications with Vue. </p><pre v-pre="" data-lang="bash"><code class="lang-bash">npm install zircle --save</code></pre><p class="warn"><strong>Note</strong>: When you install Zircle in a fresh project, Vue will also be installed since is a dependency of Zircle. On the other hand, you can install Zircle after you have started a project based on Vue.</p><h2 id="initial-setup-and-starter-templates"><a href="#/?id=initial-setup-and-starter-templates" data-id="initial-setup-and-starter-templates" class="anchor"><span>Initial setup and starter templates</span></a></h2><p>There are several options to setup and start using it.</p><h3 id="sandbox"><a href="#/?id=sandbox" data-id="sandbox" class="anchor"><span>Sandbox</span></a></h3><p>The easiest way to try and start using Zircle is using the <a href="https://jsfiddle.net/tinchox5/37mr5324/" target="_blank">JSFiddle Zircle sandbox</a> or the <a href="https://codepen.io/zircle/pen/MExYRv" target="_blank">Codepen Zircle sandbox</a></p><p>For Zircle projects based on Vue-CLi you con try the <a href="https://codesandbox.io/s/my0ol78l08" target="_blank">CodeSandbox Zircle sandbox</a></p><h3 id="browser"><a href="#/?id=browser" data-id="browser" class="anchor"><span>Browser</span></a></h3><p>After you have installed Zircle using direct download or CDN, the following starter template allows you to create a Vue Instance and provides the <code>&lt;z-canvas&gt;</code> component to start the development of your Zircle app.</p><pre v-pre="" data-lang="html"><code class="lang-html"><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+  <span class="token comment" spellcheck="true">&lt;!-- Vue.js --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://unpkg.com/vue<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+  <span class="token comment" spellcheck="true">&lt;!-- Local Zircle lib --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>zircle.min.css<span class="token punctuation">"</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>zircle.min.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+  <span class="token comment" spellcheck="true">&lt;!-- or Zircle from CDN--&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://unpkg.com/zircle/dist/zircle.min.css<span class="token punctuation">"</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://unpkg.com/zircle<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-panel</span> <span class="token attr-name">view</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>home<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+        {{ msg }}
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-panel</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript">
+        <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+      data <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+          msg<span class="token punctuation">:</span> <span class="token string">'Hello World!'</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span></code></pre><h3 id="single-file-components-and-vue-cli"><a href="#/?id=single-file-components-and-vue-cli" data-id="single-file-components-and-vue-cli" class="anchor"><span>Single File Components and Vue-CLI</span></a></h3><p>As Vue Documentation explains, with the previous setup you can work very well for small to medium-sized projects. However, in more complex projects, or when your frontend is entirely driven by JavaScript it is better use single-file components with a .vue extension, made possible with build tools such as Webpack or Browserify.</p><p>Vue-CLI provides you with an powerful and easy tool to develop complex projects. So, after you installed and run Vue-CLI as it is described in the  <a href="https://vuejs.org/v2/guide/installation.html#CLI" target="_blank">official Vue docs</a>, you can use any of its templates with Zircle. </p><p>Just, install Zircle with NPM and add this code to your vue-CLI project:</p><p><strong>Example using webpack-template</strong></p><p>In the <code>main.js</code> file add this code:</p><pre v-pre="" data-lang="js"><code class="lang-js"><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> app <span class="token keyword">from</span> <span class="token string">'./App'</span>
+<span class="token keyword">import</span> zircle <span class="token keyword">from</span> <span class="token string">'zircle'</span>
+<span class="token keyword">import</span> <span class="token string">'zircle/dist/zircle.min.css'</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>zircle<span class="token punctuation">)</span>
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+  components<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    app
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  template<span class="token punctuation">:</span> <span class="token string">'&lt;app/&gt;'</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre><p>In the <code>App.vue</code> file add this code:</p><pre v-pre="" data-lang="vue"><code class="lang-vue"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-panel</span> <span class="token attr-name">view</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>home<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+        {{ msg }}
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-panel</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  data <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      msg<span class="token punctuation">:</span> <span class="token string">'Hello World!'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span></code></pre><p class="warn"><strong>Note:</strong> Before start a Zircle project with Vue-CLI you can play online with <a href="https://codesandbox.io/s/my0ol78l08" target="_blank">CodeSandbox Zircle sandbox</a> based on Vue-CLI</p><h3 id="vue-router"><a href="#/?id=vue-router" data-id="vue-router" class="anchor"><span>Vue-Router</span></a></h3><p>You can use Zircle with Vue-Router in any environment (from sandbox to vue-cli). Just follow this tips and examples.</p><h4 id="for-browser-or-online-source-code-playgrounds"><a href="#/?id=for-browser-or-online-source-code-playgrounds" data-id="for-browser-or-online-source-code-playgrounds" class="anchor"><span>For Browser or online source code playgrounds.</span></a></h4><p><strong>1. Install Vue-Router.</strong></p><p>Add Vue-Router using a <code>&lt;script&gt;</code> tag</p><pre v-pre="" data-lang="html"><code class="lang-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://unpkg.com/vue-router/dist/vue-router.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span></code></pre><p><strong>2. Setup Zircle and the router.</strong></p><p>Steps:</p><ul>
+<li>Add <code>&lt;z-view-manager&gt;</code> component in your html</li>
+</ul>
+<p>In the html:</p><pre v-pre="" data-lang="html"><code class="lang-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-view-manager</span> <span class="token attr-name">:list</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>$options.components<span class="token punctuation">'</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-view-manager</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span></code></pre><ul>
+<li>Create some view components.</li>
+<li>Config Vue Router.</li>
+<li>Config Vue Instance.</li>
+</ul>
+<p>In the <code>&lt;script&gt;</code> that you have the Vue Instance:</p><pre v-pre="" data-lang="js"><code class="lang-js"><span class="token comment" spellcheck="true">// Your view compoments</span>
+<span class="token keyword">const</span> foo <span class="token operator">=</span> <span class="token punctuation">{</span>
+  template<span class="token punctuation">:</span> <span class="token template-string"><span class="token string">`&lt;z-panel view="foo"&gt;
+  Foo View
+  &lt;z-scale slot="circles"
+  :angle="45"
+  gotoview="bar"&gt;
+  Bar
+  &lt;span slot="label"&gt;Go to&lt;/span&gt;
+  &lt;/z-scale&gt;
+&lt;/z-panel&gt;`</span></span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> bar <span class="token operator">=</span> <span class="token punctuation">{</span>
+  template<span class="token punctuation">:</span> <span class="token template-string"><span class="token string">`&lt;z-panel view="bar"&gt;
+  Bar View
+  &lt;/z-panel&gt;`</span></span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// Vue Router configuration</span>
+<span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VueRouter</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  routes<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+    path<span class="token punctuation">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+    redirect<span class="token punctuation">:</span> <span class="token string">'/foo'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    path<span class="token punctuation">:</span> <span class="token string">'/foo'</span><span class="token punctuation">,</span>
+    name<span class="token punctuation">:</span> <span class="token string">'foo'</span><span class="token punctuation">,</span>
+    component<span class="token punctuation">:</span> foo
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    path<span class="token punctuation">:</span> <span class="token string">'/bar'</span><span class="token punctuation">,</span>
+    name<span class="token punctuation">:</span> <span class="token string">'bar'</span><span class="token punctuation">,</span>
+    component<span class="token punctuation">:</span> bar
+  <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">//  Zircle and router configuration for Vue instance </span>
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+  components<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    foo<span class="token punctuation">,</span>
+    bar
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  router<span class="token punctuation">,</span>
+  <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      initialView<span class="token punctuation">:</span> <span class="token string">'foo'</span><span class="token punctuation">,</span>
+      enableRouter<span class="token punctuation">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function">beforeMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$zircleStore<span class="token punctuation">.</span><span class="token function">routerHooks</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre><p>Check this demo in <a href="https://jsfiddle.net/tinchox5/g39omwxv/" target="_blank">JSFiddle</a>  </p><h4 id="for-npm-or-vue-cli"><a href="#/?id=for-npm-or-vue-cli" data-id="for-npm-or-vue-cli" class="anchor"><span>For NPM or Vue-CLI</span></a></h4><p><strong>1. Install Vue-Router in your project.</strong></p><pre v-pre="" data-lang="bash"><code class="lang-bash">npm install vue-router</code></pre><p class="warn"><strong>Note:</strong> In case using Vue-CLI simply accept to Install Vue-Router in the project generator. Of course, you can install the router later.</p><p>In your <code>main.js</code> file</p><pre v-pre="" data-lang="js"><code class="lang-js"><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">"vue"</span>
+<span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">"./App"</span>
+<span class="token keyword">import</span> zircle <span class="token keyword">from</span> <span class="token string">"zircle"</span>
+<span class="token keyword">import</span> <span class="token string">"zircle/dist/zircle.min.css"</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>zircle<span class="token punctuation">)</span>
+
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">"#app"</span><span class="token punctuation">,</span>
+  template<span class="token punctuation">:</span> <span class="token string">"&lt;App/&gt;"</span><span class="token punctuation">,</span>
+  components<span class="token punctuation">:</span> <span class="token punctuation">{</span> App <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre><p><strong>2. Setup Zircle and the router.</strong></p><p>Steps:</p><ul>
+<li>Add <code>&lt;z-view-manager&gt;</code> component in your <code>&lt;template&gt;</code></li>
+<li>Create some view components.</li>
+<li>Config Vue Router.</li>
+<li>Config Vue Instance.</li>
+</ul>
+<p>In your <code>App.vue</code></p><pre v-pre="" data-lang="vue"><code class="lang-vue"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-view-manager</span> <span class="token attr-name">:list</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>$options.components<span class="token punctuation">'</span></span><span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript">
+<span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> Router <span class="token keyword">from</span> <span class="token string">'vue-router'</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Router<span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> foo <span class="token operator">=</span> <span class="token punctuation">{</span>
+  template<span class="token punctuation">:</span> <span class="token template-string"><span class="token string">`&lt;z-panel view="foo"&gt;
+  Foo View
+  &lt;z-scale
+  slot="circles"
+  :angle="45"
+  gotoview="bar"&gt;
+  Bar
+  &lt;div slot="label"&gt;Go to&lt;/div&gt;
+  &lt;/z-scale&gt;
+&lt;/z-panel&gt;`</span></span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> bar <span class="token operator">=</span> <span class="token punctuation">{</span>
+  template<span class="token punctuation">:</span> <span class="token template-string"><span class="token string">`&lt;z-panel view="bar"&gt;
+  Bar View
+  &lt;/z-panel&gt;`</span></span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Router</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mode<span class="token punctuation">:</span> <span class="token string">'history'</span><span class="token punctuation">,</span>
+  routes<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+    path<span class="token punctuation">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+    redirect<span class="token punctuation">:</span> <span class="token string">'/foo'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    path<span class="token punctuation">:</span> <span class="token string">'/foo'</span><span class="token punctuation">,</span>
+    name<span class="token punctuation">:</span> <span class="token string">'foo'</span><span class="token punctuation">,</span>
+    component<span class="token punctuation">:</span> foo
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    path<span class="token punctuation">:</span> <span class="token string">'/bar'</span><span class="token punctuation">,</span>
+    name<span class="token punctuation">:</span> <span class="token string">'bar'</span><span class="token punctuation">,</span>
+    component<span class="token punctuation">:</span> bar
+  <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  data <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      initialView<span class="token punctuation">:</span> <span class="token string">'foo'</span><span class="token punctuation">,</span>
+      enableRouter<span class="token punctuation">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  components<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    foo<span class="token punctuation">,</span>
+    bar
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  router<span class="token punctuation">,</span>
+  beforeMount <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$zircleStore<span class="token punctuation">.</span><span class="token function">routerHooks</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">&gt;</span></span><span class="token style language-css">
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">&gt;</span></span></code></pre><p>Check this example on <a href="https://codesandbox.io/s/2x39p49kmn" target="_blank">CodeSandbox</a></p><h2 id="themes-and-colors"><a href="#/?id=themes-and-colors" data-id="themes-and-colors" class="anchor"><span>Themes and colors</span></a></h2><p>Zircle comes with nine colors and four themes under hood that are built using CSS Variables.</p><p>The colors are:</p><ul>
+<li><code>.color--light-blue</code></li>
+<li><code>.color--blue</code></li>
+<li><code>.color--green</code></li>
+<li><code>.color--orange</code></li>
+<li><code>.color--yellow</code></li>
+<li><code>.color--red</code></li>
+<li><code>.color--purple</code></li>
+<li><code>.color--black</code> (default)</li>
+<li><code>.color--gray</code></li>
+</ul>
+<p>Each color is a CSS class that wraps several CSS variables</p><pre v-pre="" data-lang="css"><code class="lang-css"><span class="token selector">.color--red</span> <span class="token punctuation">{</span>
+  <span class="token property">--background-color</span><span class="token punctuation">:</span> #fef8f8<span class="token punctuation">;</span>
+  <span class="token property">--primary-color</span><span class="token punctuation">:</span> #ef3c3b<span class="token punctuation">;</span>
+  <span class="token property">--accent-color</span><span class="token punctuation">:</span> #860c0b<span class="token punctuation">;</span>
+  <span class="token property">--success-color</span><span class="token punctuation">:</span> #7d8d4a<span class="token punctuation">;</span>
+  <span class="token property">--warning-color</span><span class="token punctuation">:</span> #fa7c12<span class="token punctuation">;</span>
+  <span class="token property">--danger-color</span><span class="token punctuation">:</span> #f34138<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre><p>The themes are:</p><ul>
+<li><code>.theme--light</code> for light backgrounds</li>
+<li><code>.theme--bold-light</code> for light backgrounds and filled views</li>
+<li><code>.theme--dark</code> for dark backgrounds (default)</li>
+<li><code>.theme--bold-dark</code>for dark backgrounds and filled views</li>
+</ul>
+<p>Each theme is a CSS class that wraps several CSS variables</p><pre v-pre="" data-lang="css"><code class="lang-css"><span class="token selector">.theme--light</span> <span class="token punctuation">{</span>
+  <span class="token property">--background</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--background-color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">--primary</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--primary-color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">--accent</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--accent-color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">--success</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--success-color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">--warning</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--warning-color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">--danger</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--danger-color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">--background-card</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--background-color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">--border-card</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--primary-color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">--primary-text</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--primary-color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre><h3 id="customize"><a href="#/?id=customize" data-id="customize" class="anchor"><span>Customize</span></a></h3><p>The easiest way to adapt the themes to your needs is to override the color CSS clases or create a new color names</p><p>Check the CSS tab of the following example</p><iframe width="450" height="500" src="//jsfiddle.net/tinchox5/tgLhdv86/embedded/result,js,css,html/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+
+<h2 id="api"><a href="#/?id=api" data-id="api" class="anchor"><span>API</span></a></h2><p><strong>In-built components:</strong> Zircle provides a minimal set of component to make user interfaces.</p><h3 id="z-canvas"><a href="#/?id=z-canvas" data-id="z-canvas" class="anchor"><span>z-canvas</span></a></h3><p><strong>Description:</strong> This component is essential for Zircle. Your code needs to be inside <code>z-canvas</code>.</p><p><strong>Usage:</strong></p><pre v-pre="" data-lang="html"><code class="lang-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+  <span class="token comment" spellcheck="true">&lt;!-- your zircle app--&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span></code></pre><p><strong>Props:</strong></p><p>None</p><p><strong>Slots:</strong></p><p><strong><code>default</code></strong> Default Vue Slot.</p><h3 id="z-view-manager"><a href="#/?id=z-view-manager" data-id="z-view-manager" class="anchor"><span>z-view-manager</span></a></h3><p><strong>Description:</strong> This component manages the views of your app. It is necesary when you have more than one view. In case you have just one view you can put the view inmediately after <code>&lt;z-canvas&gt;</code> and avoid to use <code>&lt;z-view-manager&gt;</code>.</p><p><strong>Usage:</strong> Tell <code>&lt;z-view-manager&gt;</code> which views has to manage populating <code>list</code> prop with the components you defined in the Vue Instance.</p><pre v-pre="" data-lang="html"><code class="lang-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-view-manager</span> <span class="token attr-name">:list</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>$options.compoments<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-canvas</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span></code></pre><pre v-pre="" data-lang="js"><code class="lang-js"><span class="token keyword">const</span> foo <span class="token operator">=</span> <span class="token punctuation">{</span>
+  template<span class="token punctuation">:</span> <span class="token template-string"><span class="token string">`&lt;z-panel view="foo"&gt;
+  Foo View
+  &lt;z-scale
+  slot="circles"
+  :angle="45"
+  gotoview="bar"&gt;
+  Bar
+  &lt;/z-scale&gt;
+&lt;/z-panel&gt;`</span></span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> bar <span class="token operator">=</span> <span class="token punctuation">{</span>
+  template<span class="token punctuation">:</span> <span class="token template-string"><span class="token string">`&lt;z-panel view="bar"&gt;
+  Bar View
+  &lt;/z-panel&gt;`</span></span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+  components<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    foo<span class="token punctuation">,</span>
+    bar
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  beforeMount <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$zircleStore<span class="token punctuation">.</span><span class="token function">setView</span><span class="token punctuation">(</span><span class="token string">'foo'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre><p>Check this <a href="http://jsfiddle.net/tinchox5/umo398sw/" target="_blank">example without Vue-Router</a> and this <a href="http://jsfiddle.net/tinchox5/g39omwxv/" target="_blank">example with Vue-Router</a></p><p><strong>Props:</strong></p><p><strong><code>list</code></strong></p><ul>
+<li><p><strong>Type</strong>: Object</p></li>
+<li><p><strong>Default</strong>: undefined</p></li>
+<li><p><strong>Required</strong>: True</p></li>
+</ul>
+<p><strong>Slots:</strong></p><p>None</p><h3 id="z-panel"><a href="#/?id=z-panel" data-id="z-panel" class="anchor"><span>z-panel</span></a></h3><p><strong>Description:</strong> This component is the principal element to define a view. You can have many views in your project and each one with a <code>&lt;z-panel&gt;</code>component. Inside it you can nest many others elements such as <code>&lt;z-scale&gt;</code>, <code>&lt;z-button&gt;</code> or <code>&lt;z-alert&gt;</code></p><p><strong>Usage:</strong></p><pre v-pre="" data-lang="html"><code class="lang-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-panel</span> <span class="token attr-name">view</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>foo<span class="token punctuation">"</span></span> <span class="token attr-name">color</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>red<span class="token punctuation">"</span></span> <span class="token attr-name">:slider</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token attr-name">:progress</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>95<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token comment" spellcheck="true">&lt;!-- Default slot --&gt;</span>
+  Welcome to the Foo view
+
+  <span class="token comment" spellcheck="true">&lt;!-- Picture slot --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>picture<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>your/image.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>100%<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>100%<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- Circles slot with single nested element --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-scale</span>
+  <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>circles<span class="token punctuation">"</span></span>
+  <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>45<span class="token punctuation">"</span></span>
+  <span class="token attr-name">gotoview</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>bar<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  Bar
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-scale</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- Circles slot with multiple nested elements--&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>section</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>circles<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-scale</span>
+    <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>45<span class="token punctuation">"</span></span>
+    <span class="token attr-name">gotoview</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>bar<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    Bar
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-scale</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-button</span>
+    <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>180<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-button</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>section</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-panel</span><span class="token punctuation">&gt;</span></span>`</code></pre><p><strong>Props:</strong></p><p><strong><code>view</code></strong></p><ul>
+<li><p><strong>Type</strong>: String, Number</p></li>
+<li><p><strong>Default</strong>: undefined</p></li>
+<li><p><strong>Required</strong>: True</p></li>
+</ul>
+<p><strong><code>range</code></strong></p><ul>
+<li><p><strong>Type</strong>: Boolean</p></li>
+<li><p><strong>Default</strong>: false</p></li>
+</ul>
+<p><strong><code>slider</code></strong></p><ul>
+<li><p><strong>Type</strong>: Boolean</p></li>
+<li><p><strong>Default</strong>: false</p></li>
+</ul>
+<p><strong><code>progress</code></strong></p><ul>
+<li><p><strong>Type</strong>: Number</p></li>
+<li><p><strong>Default</strong>: 0</p></li>
+</ul>
+<p><strong>Mixing:</strong></p><p><code>&lt;z-panel&gt;</code> uses color mixing prop</p><p><strong><code>color</code></strong></p><ul>
+<li><p><strong>Type</strong>: String</p></li>
+<li><p><strong>Default</strong>: 'primary'</p></li>
+</ul>
+<p><strong>Slots:</strong></p><p><strong><code>default</code></strong> Default Vue Slot. It is used to put any kind of content such as text, icons, etc. If the content is larger than the view container the sub component <code>&lt;z-scroll&gt;</code>is activated.</p><p><strong><code>picture</code></strong> It is used to insert one image inside the container.</p><p><strong><code>circles</code></strong> It is used when you nest other components such as <code>&lt;z-scale&gt;</code>, <code>&lt;z-button&gt;</code> or <code>&lt;z-alert&gt;</code></p><h3 id="z-scale"><a href="#/?id=z-scale" data-id="z-scale" class="anchor"><span>z-scale</span></a></h3><p><strong>Description:</strong> This component is zoomable if you define the <code>gotoview</code> prop with the name of other views. Inside it you can nest many others elements such as <code>&lt;z-scale&gt;</code>, <code>&lt;z-button&gt;</code> or <code>&lt;z-alert&gt;</code></p><p><strong>Usage:</strong></p><pre v-pre="" data-lang="html"><code class="lang-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-scale</span> <span class="token attr-name">:slider</span><span class="token attr-value"><span class="token punctuation">=</span>true</span>
+  <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>45<span class="token punctuation">"</span></span>
+  <span class="token attr-name">:distance</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>140<span class="token punctuation">"</span></span>
+  <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>medium<span class="token punctuation">"</span></span>
+  <span class="token attr-name">color</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>green<span class="token punctuation">"</span></span>
+  <span class="token attr-name">gotoview</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>bar<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- Default slot --&gt;</span>
+  Bar
+
+  <span class="token comment" spellcheck="true">&lt;!-- Label slot --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>label<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Go to Bar<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- Picture slot --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>picture<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>your/image.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>100%<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>100%<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- Circles slot with single nested element --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-button</span>
+  <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>circles<span class="token punctuation">"</span></span>
+  <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>45<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  Bar
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-button</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- Circles slot with multiple nested elements--&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>section</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>circles<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-scale</span>
+    <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>45<span class="token punctuation">"</span></span>
+    <span class="token attr-name">gotoview</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>bar<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    Bar
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-scale</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-button</span>
+    <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>180<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-button</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>section</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-scale</span><span class="token punctuation">&gt;</span></span></code></pre><p><strong>Props:</strong></p><p><strong><code>range</code></strong></p><ul>
+<li><p><strong>Type</strong>: Boolean</p></li>
+<li><p><strong>Default</strong>: false</p></li>
+</ul>
+<p><strong><code>slider</code></strong></p><ul>
+<li><p><strong>Type</strong>: Boolean</p></li>
+<li><p><strong>Default</strong>: false</p></li>
+</ul>
+<p><strong><code>progress</code></strong></p><ul>
+<li><p><strong>Type</strong>: Number</p></li>
+<li><p><strong>Default</strong>: 0</p></li>
+</ul>
+<p><strong>Mixing:</strong></p><p><code>&lt;z-panel&gt;</code> uses mixing props</p><p><strong><code>distance</code></strong></p><ul>
+<li><p><strong>Type</strong>: Number</p></li>
+<li><p><strong>Default</strong>: 100</p></li>
+</ul>
+<p><strong><code>angle</code></strong></p><ul>
+<li><p><strong>Type</strong>: Number</p></li>
+<li><p><strong>Default</strong>: 0</p></li>
+</ul>
+<p><strong><code>size</code></strong></p><ul>
+<li><p><strong>Type</strong>: String</p></li>
+<li><p><strong>Default</strong>: 'small'</p></li>
+</ul>
+<p><strong><code>color</code></strong></p><ul>
+<li><p><strong>Type</strong>: String</p></li>
+<li><p><strong>Default</strong>: 'primary'</p></li>
+</ul>
+<p><strong><code>gotoview</code></strong></p><ul>
+<li><p><strong>Type</strong>: [String, Number]</p></li>
+<li><p><strong>Default</strong>: undefined</p></li>
+</ul>
+<p><strong>Slots:</strong></p><p><strong><code>default</code></strong> Default Vue Slot. It is used to put any kind of content such as text, icons, etc.</p><p><strong><code>label</code></strong> It is used to include a label that is situated below the component. It is useful when the label is larger thar the component. </p><p><strong><code>picture</code></strong> It is used to insert one image inside the container.</p><p><strong><code>circles</code></strong> It is used when you nest other components such as <code>&lt;z-scale&gt;</code>, <code>&lt;z-button&gt;</code> or <code>&lt;z-alert&gt;</code></p><h3 id="z-button"><a href="#/?id=z-button" data-id="z-button" class="anchor"><span>z-button</span></a></h3><p><strong>Description:</strong> This component is a button. Inside it you can nest many others elements such as <code>&lt;z-scale&gt;</code>, <code>&lt;z-button&gt;</code> or <code>&lt;z-alert&gt;</code></p><p><strong>Usage:</strong></p><pre v-pre="" data-lang="html"><code class="lang-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-button</span>
+  <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>45<span class="token punctuation">"</span></span>
+  <span class="token attr-name">:distance</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>140<span class="token punctuation">"</span></span>
+  <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>small<span class="token punctuation">"</span></span>
+  <span class="token attr-name">color</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>success<span class="token punctuation">"</span></span>
+  <span class="token attr-name">@click.native</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>your method or inline expression<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- Default slot --&gt;</span>
+  Press me
+
+  <span class="token comment" spellcheck="true">&lt;!-- Label slot --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>label<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Turn on systems<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- Circles slot with single nested element --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-button</span>
+  <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>circles<span class="token punctuation">"</span></span>
+  <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>45<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  onother button
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-button</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- Circles slot with multiple nested elements--&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>section</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>circles<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-scale</span>
+    <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>45<span class="token punctuation">"</span></span>
+    <span class="token attr-name">gotoview</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>bar<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    Bar
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-scale</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-button</span>
+    <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>180<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-button</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>section</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-button</span><span class="token punctuation">&gt;</span></span></code></pre><p><strong>Props:</strong></p><p>none</p><p><strong>Mixing:</strong></p><p><code>&lt;z-button&gt;</code> uses mixing props</p><p><strong><code>distance</code></strong></p><ul>
+<li><p><strong>Type</strong>: Number</p></li>
+<li><p><strong>Default</strong>: 100</p></li>
+</ul>
+<p><strong><code>angle</code></strong></p><ul>
+<li><p><strong>Type</strong>: Number</p></li>
+<li><p><strong>Default</strong>: 0</p></li>
+</ul>
+<p><strong><code>size</code></strong></p><ul>
+<li><p><strong>Type</strong>: String</p></li>
+<li><p><strong>Default</strong>: 'small'</p></li>
+</ul>
+<p><strong><code>color</code></strong></p><ul>
+<li><p><strong>Type</strong>: String</p></li>
+<li><p><strong>Default</strong>: 'primary'</p></li>
+</ul>
+<p><strong>Slots:</strong></p><p><strong><code>default</code></strong> Default Vue Slot. It is used to put any kind of content such as text, icons, etc.</p><p><strong><code>label</code></strong> It is used to include a label that is situated below the component. It is useful when the label is larger thar the component. </p><p><strong><code>circles</code></strong> It is used when you nest other components such as <code>&lt;z-scale&gt;</code>, <code>&lt;z-button&gt;</code> or <code>&lt;z-alert&gt;</code></p><p>check this example </p><h3 id="z-list"><a href="#/?id=z-list" data-id="z-list" class="anchor"><span>z-list</span></a></h3><p><strong>Description:</strong> This component manages lists or collections of items.</p><p><strong>Usage:</strong> Populate <code>collection</code> prop with an array of elements and define how many items per page you want to show in <code>per-page</code> prop. 
+<code>&lt;z-list&gt;</code> use <code>slot-scope</code> of Vue to customize the template of each item. When you click or touch an item, a new view "Item" is called.</p><pre v-pre="" data-lang="html"><code class="lang-html"><span class="token comment" spellcheck="true">&lt;!-- MyList component --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-list</span>
+  <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>circles<span class="token punctuation">"</span></span>
+  <span class="token attr-name">:collection</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>[{name: <span class="token punctuation">'</span>Apple<span class="token punctuation">'</span>, color: <span class="token punctuation">'</span>red<span class="token punctuation">'</span>, image: <span class="token punctuation">'</span>http://img.com/apple<span class="token punctuation">'</span>}, {name: <span class="token punctuation">'</span>Banana<span class="token punctuation">'</span>, color: <span class="token punctuation">'</span>yellow<span class="token punctuation">'</span> , image: <span class="token punctuation">'</span>http://img.com/banana<span class="token punctuation">'</span>}]<span class="token punctuation">"</span></span>
+  <span class="token attr-name">:per-page</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>3<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    &lt;z-item <span class="token comment" spellcheck="true">&lt;!-- It is necesary to include z-item component--&gt;</span>
+    slot-scope="props"
+    :angle="props.angle" <span class="token comment" spellcheck="true">&lt;!-- angle is mandatory --&gt;</span>
+    :color="props.item.color" <span class="token comment" spellcheck="true">&lt;!-- color, label, image are optional --&gt;</span>
+    :label="props.item.label"
+    :image="props.item.image"&gt; 
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-item</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-list</span><span class="token punctuation">&gt;</span></span></code></pre><blockquote>
+<p><strong>Note</strong> In case you populate the <code>collection</code> prop with an external Array, first you have to create a copy of this Array to prevent mutation</p><pre v-pre="" data-lang="js"><code class="lang-js"><span class="token comment" spellcheck="true">// MyList component</span>
+<span class="token operator">...</span>
+computed<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    myresults <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">// clone array before put en collection prop</span>
+      <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>sharedState<span class="token punctuation">.</span>results<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token operator">...</span></code></pre><p><strong>Note</strong> To show the details of the selected item you have to create a new component with <code>&lt;z-panel view="item"&gt;</code> and call the selected Item with  <code>this.$zircleStore.state.selectedItem</code></p></blockquote>
+<pre v-pre="" data-lang="js"><code class="lang-js"><span class="token keyword">const</span> item <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'item'</span><span class="token punctuation">,</span>
+  template<span class="token punctuation">:</span> <span class="token template-string"><span class="token string">`&lt;z-panel view="item"&gt;
+  {{ item }}
+  &lt;/z-panel&gt;`</span></span><span class="token punctuation">,</span>
+  data <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      sharedState<span class="token punctuation">:</span> store<span class="token punctuation">.</span>state<span class="token punctuation">,</span>
+      item<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$zircleStore<span class="token punctuation">.</span>state<span class="token punctuation">.</span>selectedItem
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre><p><strong>Props:</strong></p><p><strong><code>collection</code></strong></p><ul>
+<li><strong>Type</strong>: Array</li>
+</ul>
+<p><strong><code>perPage</code></strong></p><ul>
+<li><strong>Type</strong>: Number</li>
+</ul>
+<p><strong>Mixing:</strong></p><p><code>&lt;z-item&gt;</code> uses mixing props</p><p><strong><code>angle</code></strong></p><ul>
+<li><p><strong>Type</strong>: Number</p></li>
+<li><p><strong>Required</strong>: true</p></li>
+</ul>
+<p><strong><code>label</code></strong></p><ul>
+<li><strong>Type</strong>: String</li>
+</ul>
+<p><strong><code>image</code></strong></p><ul>
+<li><strong>Type</strong>: String</li>
+</ul>
+<p><strong><code>color</code></strong></p><ul>
+<li><p><strong>Type</strong>: String</p></li>
+<li><p><strong>Default</strong>: 'accent'</p></li>
+</ul>
+<p>check this <a href="http://jsfiddle.net/tinchox5/az5cf0rd/" target="_blank">JSFiddle</a></p><h3 id="z-alert"><a href="#/?id=z-alert" data-id="z-alert" class="anchor"><span>z-alert</span></a></h3><p><strong>Description:</strong> This component show a pop up when is invoked. Inside it you can nest many others elements such as <code>&lt;z-scale&gt;</code>, <code>&lt;z-button&gt;</code> or <code>&lt;z-alert&gt;</code></p><p><strong>Usage:</strong></p><pre v-pre="" data-lang="html"><code class="lang-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-popup</span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>alert <span class="token punctuation">=</span><span class="token punctuation">=</span><span class="token punctuation">=</span> true<span class="token punctuation">"</span></span> <span class="token punctuation">&gt;</span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- Default slot--&gt;</span>
+    proceed?
+
+     <span class="token comment" spellcheck="true">&lt;!-- Circles slot with multiple nested elements--&gt;</span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>section</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>circles<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-button</span>
+          <span class="token attr-name">:distance</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>115<span class="token punctuation">"</span></span>
+          <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>135<span class="token punctuation">'</span></span>
+          <span class="token attr-name">color</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>danger<span class="token punctuation">'</span></span>
+          <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>small<span class="token punctuation">'</span></span>
+          <span class="token attr-name">@click.native</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>alert <span class="token punctuation">=</span> false<span class="token punctuation">'</span></span><span class="token punctuation">&gt;</span></span>
+            Close
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-button</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>z-button</span>
+          <span class="token attr-name">:distance</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>115<span class="token punctuation">"</span></span>
+          <span class="token attr-name">:angle</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>45<span class="token punctuation">'</span></span>
+          <span class="token attr-name">color</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>success<span class="token punctuation">'</span></span>
+          <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>small<span class="token punctuation">'</span></span>
+          <span class="token attr-name">@click.native</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>alert <span class="token punctuation">=</span> false<span class="token punctuation">'</span></span><span class="token punctuation">&gt;</span></span>
+            Accept
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-button</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>section</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>z-popup</span><span class="token punctuation">&gt;</span></span></code></pre><p><strong>Props:</strong></p><p>none</p><p><strong>Mixing:</strong></p><p><code>&lt;z-alert&gt;</code> uses mixing props</p><p><strong><code>color</code></strong></p><ul>
+<li><p><strong>Type</strong>: String</p></li>
+<li><p><strong>Default</strong>: 'primary'</p></li>
+</ul>
+<p><strong>Slots:</strong></p><p><strong><code>default</code></strong> Default Vue Slot. It is used to put any kind of content such as text, icons, etc.</p><p><strong><code>circles</code></strong> It is used when you nest other components such as <code>&lt;z-scale&gt;</code>, <code>&lt;z-button&gt;</code> or <code>&lt;z-alert&gt;</code> </p><h2 id="examples"><a href="#/?id=examples" data-id="examples" class="anchor"><span>Examples</span></a></h2><h3 id="counter"><a href="#/?id=counter" data-id="counter" class="anchor"><span>Counter</span></a></h3><iframe width="450" height="500" src="//jsfiddle.net/tinchox5/gj0bpwmf/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<h3 id="cuba-libre-recipe"><a href="#/?id=cuba-libre-recipe" data-id="cuba-libre-recipe" class="anchor"><span>Cuba Libre recipe</span></a></h3><iframe width="450" height="500" src="//jsfiddle.net/tinchox5/p8133xad/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<h3 id="search-for-fruits"><a href="#/?id=search-for-fruits" data-id="search-for-fruits" class="anchor"><span>Search for fruits</span></a></h3><iframe width="450" height="500" src="//jsfiddle.net/tinchox5/az5cf0rd/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<h3 id="zooming-slider"><a href="#/?id=zooming-slider" data-id="zooming-slider" class="anchor"><span>Zooming slider</span></a></h3><iframe width="450" height="500" src="//jsfiddle.net/tinchox5/Lc48vwm0/embedded/result,html,js,css" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<h3 id="zircle-without-router"><a href="#/?id=zircle-without-router" data-id="zircle-without-router" class="anchor"><span>Zircle without router</span></a></h3><iframe width="450" height="500" src="//jsfiddle.net/tinchox5/umo398sw/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<h3 id="zircle-with-vue-router"><a href="#/?id=zircle-with-vue-router" data-id="zircle-with-vue-router" class="anchor"><span>Zircle with Vue-Router</span></a></h3><iframe width="450" height="500" src="//jsfiddle.net/tinchox5/g39omwxv/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<h3 id="themes-and-colors-changer"><a href="#/?id=themes-and-colors-changer" data-id="themes-and-colors-changer" class="anchor"><span>Themes and Colors changer</span></a></h3><iframe width="450" height="500" src="//jsfiddle.net/tinchox5/tgLhdv86/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+
+<h2 id="todo"><a href="#/?id=todo" data-id="todo" class="anchor"><span>ToDo</span></a></h2><ul>
+<li>Adapt Zircle to the style guide of Vue.</li>
+<li>Improve Zircle State Management.</li>
+<li>Improve documentation.</li>
+<li>Add more examples.</li>
+<li>Allow Zircle to be used in not Standalone mode.</li>
+</ul>
+<h2 id="license"><a href="#/?id=license" data-id="license" class="anchor"><span>License</span></a></h2><p><a href="http://opensource.org/licenses/MIT" target="_blank">MIT</a></p></article></section></main>
+
 <script>
   window.$docsify = {
     name: 'Zircle UI',
@@ -43,4 +666,5 @@
 </script>
 <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
 <script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script>
-</html>
+
+<div class="progress" style="opacity: 0; width: 0%;"></div><script async="" src="https://www.google-analytics.com/analytics.js"></script></body>
