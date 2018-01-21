@@ -15,7 +15,7 @@
     "ui",
     "zooming",
     "zoomable",
-    "circle"  
+    "circle"
   ],
   "dependencies": {
     "vue": "^2.5.0"

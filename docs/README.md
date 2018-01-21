@@ -121,17 +121,17 @@ After you have installed Zircle using direct download or CDN, the following star
         {{ msg }}
       </z-panel>
     </z-canvas>
-	</div>
-	<script>
-		new Vue({
-			el: '#app',
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
       data () {
         return {
           msg: 'Hello World!'
         }
       }
-		})
-	</script>
+    })
+  </script>
   </body>
 </html>
 ```

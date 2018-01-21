@@ -9,11 +9,28 @@
 	box-sizing: border-box
 }
 
+#mc_embed_signup {
+	background: #fff;
+	clear: left;
+	font-size: 14px;
+	width: 100%;
+}
+
+#mc-embedded-subscribe {
+	background: #5FC9F3 !important;
+}
+
+#mc-embedded-subscribe:hover {
+	background: #34495e !important;
+}
+
 body:not(.ready) {
 	overflow: hidden
 }
 
-body:not(.ready) .app-nav, body:not(.ready)>nav, body:not(.ready) [data-cloak] {
+body:not(.ready) .app-nav,
+body:not(.ready)>nav,
+body:not(.ready) [data-cloak] {
 	display: none
 }
 
@@ -47,7 +64,8 @@ div#app:empty:before {
 	z-index: 5
 }
 
-.search .search-keyword, .search a:hover {
+.search .search-keyword,
+.search a:hover {
 	color: #5FC9F3;
 	color: var(--theme-color, #5FC9F3)
 }
@@ -57,7 +75,8 @@ div#app:empty:before {
 	font-weight: 700
 }
 
-body, html {
+body,
+html {
 	height: 100%
 }
 
@@ -106,7 +125,8 @@ kbd {
 	padding: 5px 0
 }
 
-.app-nav li, .app-nav ul {
+.app-nav li,
+.app-nav ul {
 	color: #5FC9F3;
 	display: inline-block;
 	list-style: none;
@@ -120,7 +140,8 @@ kbd {
 	transition: color .3s
 }
 
-.app-nav a.active, .app-nav a:hover {
+.app-nav a.active,
+.app-nav a:hover {
 	color: #5FC9F3;
 	color: var(--theme-color, #5FC9F3)
 }
@@ -275,7 +296,8 @@ main {
 	margin: 0
 }
 
-.sidebar ul, .sidebar ul li {
+.sidebar ul,
+.sidebar ul li {
 	list-style: none
 }
 
@@ -334,7 +356,8 @@ main {
 	height: 2px
 }
 
-body.sticky .sidebar, body.sticky .sidebar-toggle {
+body.sticky .sidebar,
+body.sticky .sidebar-toggle {
 	position: fixed
 }
 
@@ -384,7 +407,8 @@ body.sticky .sidebar, body.sticky .sidebar-toggle {
 	font-weight: 700
 }
 
-.markdown-section td, .markdown-section th {
+.markdown-section td,
+.markdown-section th {
 	border: 1px solid #ddd;
 	padding: 6px 13px
 }
@@ -393,7 +417,8 @@ body.sticky .sidebar, body.sticky .sidebar-toggle {
 	border-top: 1px solid #ccc
 }
 
-.markdown-section p.tip, .markdown-section tr:nth-child(2n) {
+.markdown-section p.tip,
+.markdown-section tr:nth-child(2n) {
 	background-color: #f8f8f8
 }
 
@@ -452,14 +477,19 @@ body.close .content {
 }
 
 @media print {
-	.app-nav, .github-corner, .sidebar, .sidebar-toggle {
+	.app-nav,
+	.github-corner,
+	.sidebar,
+	.sidebar-toggle {
 		display: none
 	}
 
 }
 
 @media screen and (max-width:768px) {
-	.github-corner, .sidebar, .sidebar-toggle {
+	.github-corner,
+	.sidebar,
+	.sidebar-toggle {
 		position: fixed
 	}
 
@@ -493,7 +523,8 @@ body.close .content {
 		transition: transform .25s ease, -webkit-transform .25s ease
 	}
 
-	.app-nav, .github-corner {
+	.app-nav,
+	.github-corner {
 		transition: -webkit-transform .25s ease-out;
 		transition: transform .25s ease-out;
 		transition: transform .25s ease-out, -webkit-transform .25s ease-out
@@ -520,7 +551,8 @@ body.close .content {
 		transform: translateX(300px)
 	}
 
-	body.close .app-nav, body.close .github-corner {
+	body.close .app-nav,
+	body.close .github-corner {
 		display: none
 	}
 
@@ -537,17 +569,20 @@ body.close .content {
 }
 
 @-webkit-keyframes a {
-	0%, to {
+	0%,
+	to {
 		-webkit-transform: rotate(0);
 		transform: rotate(0)
 	}
 
-	20%, 60% {
+	20%,
+	60% {
 		-webkit-transform: rotate(-25deg);
 		transform: rotate(-25deg)
 	}
 
-	40%, 80% {
+	40%,
+	80% {
 		-webkit-transform: rotate(10deg);
 		transform: rotate(10deg)
 	}
@@ -555,25 +590,28 @@ body.close .content {
 }
 
 @keyframes a {
-	0%, to {
+	0%,
+	to {
 		-webkit-transform: rotate(0);
 		transform: rotate(0)
 	}
 
-	20%, 60% {
+	20%,
+	60% {
 		-webkit-transform: rotate(-25deg);
 		transform: rotate(-25deg)
 	}
 
-	40%, 80% {
+	40%,
+	80% {
 		-webkit-transform: rotate(10deg);
 		transform: rotate(10deg)
 	}
 
 }
 
-.zircle-cover{
-color: #5FC9F3;
+.zircle-cover {
+	color: #5FC9F3;
 }
 
 .zircle-cover h1 {
@@ -586,7 +624,6 @@ color: #5FC9F3;
 	position: relative;
 	text-align: center
 }
-
 
 .zircle-cover h1 small {
 	color: #5FC9F3;
@@ -621,7 +658,8 @@ section.cover a {
 	color: inherit
 }
 
-section.cover a, section.cover a:hover {
+section.cover a,
+section.cover a:hover {
 	text-decoration: none
 }
 
@@ -729,7 +767,8 @@ section.cover.has-mask .mask {
 	height: 100%
 }
 
-.sidebar, body {
+.sidebar,
+body {
 	background-color: #fff
 }
 
@@ -771,7 +810,11 @@ section.cover.has-mask .mask {
 	padding-right: 4px
 }
 
-.markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4, .markdown-section strong {
+.markdown-section h1,
+.markdown-section h2,
+.markdown-section h3,
+.markdown-section h4,
+.markdown-section strong {
 	color: #2c3e50;
 	font-weight: 600
 }
@@ -808,7 +851,8 @@ section.cover.has-mask .mask {
 	font-size: 1.25rem
 }
 
-.markdown-section h5, .markdown-section h6 {
+.markdown-section h5,
+.markdown-section h6 {
 	font-size: 16px;
 	font-size: 1rem
 }
@@ -817,18 +861,24 @@ section.cover.has-mask .mask {
 	color: #777
 }
 
-.markdown-section figure, .markdown-section ol, .markdown-section p, .markdown-section ul {
+.markdown-section figure,
+.markdown-section ol,
+.markdown-section p,
+.markdown-section ul {
 	margin: 1.2em 0
 }
 
-.markdown-section ol, .markdown-section p, .markdown-section ul {
+.markdown-section ol,
+.markdown-section p,
+.markdown-section ul {
 	line-height: 25.6px;
 	line-height: 1.6rem;
 	word-spacing: .8px;
 	word-spacing: .05rem
 }
 
-.markdown-section ol, .markdown-section ul {
+.markdown-section ol,
+.markdown-section ul {
 	padding-left: 24px;
 	padding-left: 1.5rem
 }
@@ -864,7 +914,8 @@ section.cover.has-mask .mask {
 	white-space: pre-wrap
 }
 
-.markdown-section code, .markdown-section pre {
+.markdown-section code,
+.markdown-section pre {
 	background-color: #f8f8f8;
 	font-family: Roboto Mono, Monaco, courier, monospace
 }
@@ -882,7 +933,10 @@ section.cover.has-mask .mask {
 	word-wrap: normal
 }
 
-.token.cdata, .token.comment, .token.doctype, .token.prolog {
+.token.cdata,
+.token.comment,
+.token.doctype,
+.token.prolog {
 	color: #8e908c
 }
 
@@ -890,7 +944,8 @@ section.cover.has-mask .mask {
 	opacity: .7
 }
 
-.token.boolean, .token.number {
+.token.boolean,
+.token.number {
 	color: #c76b29
 }
 
@@ -919,11 +974,17 @@ section.cover.has-mask .mask {
 	color: #2973b7
 }
 
-.language-css .token.string, .style .token.string, .token.entity, .token.url {
+.language-css .token.string,
+.style .token.string,
+.token.entity,
+.token.url {
 	color: #22a2c9
 }
 
-.token.attr-value, .token.control, .token.directive, .token.unit {
+.token.attr-value,
+.token.control,
+.token.directive,
+.token.unit {
 	color: #5FC9F3;
 	color: var(--theme-color, #5FC9F3)
 }
@@ -932,11 +993,14 @@ section.cover.has-mask .mask {
 	color: #e96900
 }
 
-.token.atrule, .token.regex, .token.statement {
+.token.atrule,
+.token.regex,
+.token.statement {
 	color: #22a2c9
 }
 
-.token.placeholder, .token.variable {
+.token.placeholder,
+.token.variable {
 	color: #3d8fd1
 }
 
@@ -953,7 +1017,8 @@ section.cover.has-mask .mask {
 	font-style: italic
 }
 
-.token.bold, .token.important {
+.token.bold,
+.token.important {
 	font-weight: 700
 }
 
@@ -983,7 +1048,8 @@ section.cover.has-mask .mask {
 	white-space: inherit
 }
 
-.markdown-section code:after, .markdown-section code:before {
+.markdown-section code:after,
+.markdown-section code:before {
 	letter-spacing: .8px;
 	letter-spacing: .05rem
 }
