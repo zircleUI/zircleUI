@@ -11,12 +11,6 @@
 - Suscribe to the mailing list to receive news and updates about Zircle releases ;)
 
 <!-- Begin MailChimp Signup Form -->
-<link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-  #mc_embed_signup{background:#fff; clear:left; font-size:14px; width:100%;}
-  /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
-     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-</style>
 <div id="mc_embed_signup">
 <form action="https://zircle.us17.list-manage.com/subscribe/post?u=91025581f3cf49d83896d0651&amp;id=8c7dd8cb4d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
     <div id="mc_embed_signup_scroll">
@@ -49,23 +43,19 @@ Zircle UI is a circular zooming user interface library based on Vue.js. It mixes
 
 ### Quick examples 
 
-* **Vue.js Ecosystem**
+#### Vue.js Ecosystem
 
-<iframe width="450" height="500" src="//jsfiddle.net/tinchox5/z8b22b6h/embedded/result,html,js,css" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='600' scrolling='no' title='Vue.js Ecosystem by Zircle' src='//codepen.io/zircle/embed/LeqKGK/?height=600&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/LeqKGK/'>Vue.js Ecosystem by Zircle</a>
+</iframe>
 
-* **Zooming slider**
+#### Counter 
+<iframe height='450' scrolling='no' title='Counter by Zircle' src='//codepen.io/zircle/embed/qpgzqz/?height=450&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/qpgzqz/'>Counter by Zircle</a>
+</iframe>
 
-<iframe width="450" height="500" src="//jsfiddle.net/tinchox5/Lc48vwm0/embedded/result,html,js,css" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+#### Zooming slider
 
-* **Search for fruits**
-
-fruits: ['apple', 'banana', 'orange', 'kiwi', 'melon', 'watermelon', 'lemon', 'grapes', 'peach']
-
-<iframe width="450" height="500" src="//jsfiddle.net/tinchox5/az5cf0rd/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-
-* **Counter** 
-
-<iframe width="450" height="500"  src="//jsfiddle.net/tinchox5/gj0bpwmf/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='450' scrolling='no' title='Zooming Slider by Zircle' src='//codepen.io/zircle/embed/VygJKw/?height=450&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/VygJKw/'>Zooming Slider by Zircle</a>
+</iframe>
 
 ### Dependencies
 Zircle is a Vue plugin. For this reason, it is recommendable to have some idea of how Vue works. You can try Vue and learn it in http://vuejs.org
@@ -426,7 +416,8 @@ Each theme is a CSS class that wraps several CSS variables
 The easiest way to adapt the themes to your needs is to override the color CSS clases or create a new color names
 
 Check the CSS tab of the following example
-<iframe width="450" height="500" src="//jsfiddle.net/tinchox5/tgLhdv86/embedded/result,js,css,html/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='600' scrolling='no' title='Themes and Colors Selector by Zircle' src='//codepen.io/zircle/embed/MrLMvB/?height=600&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/MrLMvB/'>Themes and Colors Selector by Zircle</a>
+</iframe>
 
 
 ## API
@@ -937,39 +928,56 @@ none
 
 ## Examples
 
+### Vue.js Ecosystem
+
+<iframe height='600' scrolling='no' title='Vue.js Ecosystem by Zircle' src='//codepen.io/zircle/embed/preview/LeqKGK/?height=600&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/LeqKGK/'>Vue.js Ecosystem by Zircle</a>
+</iframe>
+
 ### Counter 
-<iframe width="450" height="500"  src="//jsfiddle.net/tinchox5/gj0bpwmf/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='450' scrolling='no' title='Counter by Zircle' src='//codepen.io/zircle/embed/preview/qpgzqz/?height=450&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/qpgzqz/'>Counter by Zircle</a>
+</iframe>
 
 ### Cuba Libre recipe
 
-<iframe width="450" height="500"  src="//jsfiddle.net/tinchox5/p8133xad/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='450' scrolling='no' title='Cuba Libre Recipe by Zircle' src='//codepen.io/zircle/embed/preview/VygJpY/?height=450&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/VygJpY/'>Cuba Libre Recipe by Zircle</a>
+</iframe>
 
-### Search for fruits
-<iframe width="450" height="500" src="//jsfiddle.net/tinchox5/az5cf0rd/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+### Fruit basquet
+<iframe height='450' scrolling='no' title='Fruit Basquet by Zircle' src='//codepen.io/zircle/embed/preview/xpMoRe/?height=450&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/xpMoRe/'>Fruit Basquet by Zircle</a>
+</iframe>
 
 ### Zooming slider
 
-<iframe width="450" height="500" src="//jsfiddle.net/tinchox5/Lc48vwm0/embedded/result,html,js,css" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='450' scrolling='no' title='Zooming Slider by Zircle' src='//codepen.io/zircle/embed/preview/VygJKw/?height=450&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/VygJKw/'>Zooming Slider by Zircle</a>
+</iframe>
 
 ### Zircle without router
 
-<iframe width="450" height="500"  src="//jsfiddle.net/tinchox5/umo398sw/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='450' scrolling='no' title='Without Router Zircle' src='//codepen.io/zircle/embed/preview/ypZdWZ/?height=450&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/ypZdWZ/'>Without Router Zircle</a>
+</iframe>
 
 ### Zircle with Vue-Router
 
-<iframe width="450" height="500"  src="//jsfiddle.net/tinchox5/g39omwxv/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='450' scrolling='no' title='With Router Zircle' src='//codepen.io/zircle/embed/preview/RxvzVa/?height=450&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/RxvzVa/'>With Router Zircle</a>
+</iframe>
 
-### Themes and Colors changer
-<iframe width="450" height="500"  src="//jsfiddle.net/tinchox5/tgLhdv86/embedded/result,js,css,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+### Themes and Colors selector
+<iframe height='500' scrolling='no' title='Themes and Colors Selector by Zircle' src='//codepen.io/zircle/embed/preview/MrLMvB/?height=500&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/MrLMvB/'>Themes and Colors Selector by Zircle</a>
+</iframe>
 
 
-## ToDo
 
-* Adapt Zircle to the style guide of Vue.
-* Improve Zircle State Management.
-* Improve documentation.
-* Add more examples.
-* Allow Zircle to be used in not Standalone mode.
+## To-Do
+
+[ ] Adapt Zircle to the style guide of Vue.
+
+[ ] Improve Zircle State Management.
+
+[ ] Improve documentation.
+
+[ ] Add more examples.
+
+[ ] Allow Zircle to be used in not Standalone mode.
 
 ## License
 
