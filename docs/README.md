@@ -1,4 +1,8 @@
-# Status
+<center class="zircle-cover">
+  <img src="_images/logo-bold.svg" width="200">
+  <h1 style="color: #5FC9F3;">Zircle UI <small>v. 0.3.1</small></h1>
+  <p>A circular zooming UI</p>
+</center>
 
 !> Zircle is in <span style="color: green;"> active </span> development. Feedbacks and contributions are very welcome!
 

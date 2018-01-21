@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto+Mono|Source+Sans+Pro:300,400,600");
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400");
 
 * {
 	-webkit-font-smoothing: antialiased;
@@ -220,7 +220,7 @@ main {
 }
 
 .anchor span {
-	color: #5FC9F3
+	color: #2c3e50
 }
 
 .anchor:hover {
@@ -570,6 +570,31 @@ body.close .content {
 		transform: rotate(10deg)
 	}
 
+}
+
+.zircle-cover{
+color: #5FC9F3;
+}
+
+.zircle-cover h1 {
+	color: #5FC9F3;
+	font-size: 40px;
+	font-size: 2.5rem;
+	font-weight: 300;
+	margin: 10px 0 40px;
+	margin: .625rem 0 2.5rem;
+	position: relative;
+	text-align: center
+}
+
+
+.zircle-cover h1 small {
+	color: #5FC9F3;
+	bottom: -7px;
+	bottom: -.4375rem;
+	font-size: 16px;
+	font-size: 1rem;
+	position: absolute
 }
 
 section.cover {
