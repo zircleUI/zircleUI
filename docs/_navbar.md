@@ -20,3 +20,6 @@
   - [Zircle without router](?id=zircle-without-router)
   - [Zircle with Vue-Router](?id=zircle-with-vue-router)
   - [Themes and Colors selector](?id=themes-and-colors-selector)
+- Stay Tunned
+  - [Twitter](?id=stay-tunned)
+  - [Mailing list](?id=stay-tunned)

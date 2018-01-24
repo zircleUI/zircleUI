@@ -17,7 +17,7 @@
 }
 
 #mc-embedded-subscribe {
-	background: #5FC9F3 !important;
+	background: #179CDE !important;
 }
 
 #mc-embedded-subscribe:hover {
@@ -52,8 +52,8 @@ div#app:empty:before {
 }
 
 .progress {
-	background-color: #5FC9F3;
-	background-color: var(--theme-color, #5FC9F3);
+	background-color: #179CDE;
+	background-color: var(--theme-color, #179CDE);
 	height: 2px;
 	left: 0;
 	position: fixed;
@@ -66,8 +66,8 @@ div#app:empty:before {
 
 .search .search-keyword,
 .search a:hover {
-	color: #5FC9F3;
-	color: var(--theme-color, #5FC9F3)
+	color: #179CDE;
+	color: var(--theme-color, #179CDE)
 }
 
 .search .search-keyword {
@@ -83,7 +83,7 @@ html {
 body {
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	color: #34495e;
+	color: #364149;
 	font-family: Source Sans Pro, Helvetica Neue, Arial, sans-serif;
 	font-size: 15px;
 	letter-spacing: 0;
@@ -127,14 +127,14 @@ kbd {
 
 .app-nav li,
 .app-nav ul {
-	color: #5FC9F3;
+	color: #fff;
 	display: inline-block;
 	list-style: none;
 	margin: 0
 }
 
 .app-nav a {
-	color: #34495e;
+	color: #179CDE;
 	font-size: 16px;
 	text-decoration: none;
 	transition: color .3s
@@ -142,13 +142,13 @@ kbd {
 
 .app-nav a.active,
 .app-nav a:hover {
-	color: #5FC9F3;
-	color: var(--theme-color, #5FC9F3)
+	color: #179CDE;
+	color: var(--theme-color, #179CDE)
 }
 
 .app-nav a.active {
-	border-bottom: 2px solid #5FC9F3;
-	border-bottom: 2px solid var(--theme-color, #5FC9F3)
+	border-bottom: 2px solid #179CDE;
+	border-bottom: 2px solid var(--theme-color, #179CDE)
 }
 
 .app-nav li {
@@ -215,11 +215,11 @@ kbd {
 }
 
 .github-corner svg {
-	color: #fff;
-	fill: #5FC9F3;
-	fill: var(--theme-color, #5FC9F3);
+	color: #179CDE;
+	fill: #bae3f8;
+	fill: var(--theme-color, #bae3f8);
 	height: 80px;
-	width: 80px
+	width: 80px;
 }
 
 .github-corner:hover .octo-arm {
@@ -241,7 +241,11 @@ main {
 }
 
 .anchor span {
-	color: #2c3e50
+	color: #179CDE
+}
+
+.cover .anchor span {
+	color: #fff
 }
 
 .anchor:hover {
@@ -348,8 +352,8 @@ main {
 }
 
 .sidebar-toggle span {
-	background-color: #5FC9F3;
-	background-color: var(--theme-color, #5FC9F3);
+	background-color: #179CDE;
+	background-color: var(--theme-color, #179CDE);
 	display: block;
 	margin-bottom: 4px;
 	width: 16px;
@@ -610,30 +614,6 @@ body.close .content {
 
 }
 
-.zircle-cover {
-	color: #5FC9F3;
-}
-
-.zircle-cover h1 {
-	color: #5FC9F3;
-	font-size: 40px;
-	font-size: 2.5rem;
-	font-weight: 300;
-	margin: 10px 0 40px;
-	margin: .625rem 0 2.5rem;
-	position: relative;
-	text-align: center
-}
-
-.zircle-cover h1 small {
-	color: #5FC9F3;
-	bottom: -7px;
-	bottom: -.4375rem;
-	font-size: 16px;
-	font-size: 1rem;
-	position: absolute
-}
-
 section.cover {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
@@ -655,7 +635,7 @@ section.cover .cover-main {
 }
 
 section.cover a {
-	color: inherit
+	color: #fff;
 }
 
 section.cover a,
@@ -670,7 +650,7 @@ section.cover p {
 }
 
 section.cover h1 {
-	color: inherit;
+	color: #fff;
 	font-size: 40px;
 	font-size: 2.5rem;
 	font-weight: 300;
@@ -681,7 +661,8 @@ section.cover h1 {
 }
 
 section.cover h1 a {
-	display: block
+	display: block;
+	color: #fff;
 }
 
 section.cover h1 small {
@@ -693,9 +674,11 @@ section.cover h1 small {
 }
 
 section.cover blockquote {
+	font-weight: 300;
 	font-size: 24px;
 	font-size: 1.5rem;
-	text-align: center
+	text-align: center;
+	color: #fff;
 }
 
 section.cover ul {
@@ -707,12 +690,12 @@ section.cover ul {
 }
 
 section.cover .cover-main>p:last-child a {
-	border-color: #5FC9F3;
-	border: 1px solid var(--theme-color, #5FC9F3);
+	border-color: #fff;
+	border: 1px solid var(--theme-color, #fff);
 	border-radius: 2rem;
 	box-sizing: border-box;
-	color: #5FC9F3;
-	color: var(--theme-color, #5FC9F3);
+	color: #fff;
+	color: var(--theme-color, #fff);
 	display: inline-block;
 	font-size: 16.8px;
 	font-size: 1.05rem;
@@ -727,9 +710,9 @@ section.cover .cover-main>p:last-child a {
 }
 
 section.cover .cover-main>p:last-child a:last-child {
-	background-color: #5FC9F3;
-	background-color: var(--theme-color, #5FC9F3);
-	color: #fff;
+	background-color: #fff;
+	background-color: var(--theme-color, #fff);
+	color: #179CDE;
 	margin-right: 0
 }
 
@@ -743,14 +726,14 @@ section.cover .cover-main>p:last-child a:hover {
 }
 
 section.cover blockquote>p>a {
-	border-bottom: 2px solid #5FC9F3;
-	border-bottom: 2px solid var(--theme-color, #5FC9F3);
+	border-bottom: 2px solid #fff;
+	border-bottom: 2px solid var(--theme-color, #fff);
 	transition: color .3s
 }
 
 section.cover blockquote>p>a:hover {
-	color: #5FC9F3;
-	color: var(--theme-color, #5FC9F3)
+	color: #fff;
+	color: var(--theme-color, #fff)
 }
 
 section.cover.show {
@@ -800,8 +783,8 @@ body {
 
 .sidebar ul li.active>a {
 	border-right: 2px solid;
-	color: #5FC9F3;
-	color: var(--theme-color, #5FC9F3);
+	color: #179CDE;
+	color: var(--theme-color, #179CDE);
 	font-weight: 600
 }
 
@@ -820,8 +803,8 @@ body {
 }
 
 .markdown-section a {
-	color: #5FC9F3;
-	color: var(--theme-color, #5FC9F3);
+	color: #505d6b;;
+	color: var(--theme-color, #179CDE);
 	font-weight: 600
 }
 
@@ -884,8 +867,8 @@ body {
 }
 
 .markdown-section blockquote {
-	border-left: 4px solid #5FC9F3;
-	border-left: 4px solid var(--theme-color, #5FC9F3);
+	border-left: 4px solid #179CDE;
+	border-left: 4px solid var(--theme-color, #179CDE);
 	color: #858585;
 	margin: 2em 0;
 	padding-left: 20px
@@ -962,8 +945,8 @@ body {
 }
 
 .token.string {
-	color: #5FC9F3;
-	color: var(--theme-color, #5FC9F3)
+	color: #179CDE;
+	color: var(--theme-color, #179CDE)
 }
 
 .token.selector {
@@ -985,8 +968,8 @@ body {
 .token.control,
 .token.directive,
 .token.unit {
-	color: #5FC9F3;
-	color: var(--theme-color, #5FC9F3)
+	color: #179CDE;
+	color: var(--theme-color, #179CDE)
 }
 
 .token.keyword {

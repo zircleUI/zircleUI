@@ -1,66 +1,39 @@
-<center class="zircle-cover">
-  <img src="_images/logo-bold.svg" width="200">
-  <h1 style="color: #5FC9F3;">Zircle UI <small>v. 0.3.1</small></h1>
-  <p>A circular zooming UI</p>
-</center>
 
-!> Zircle is in <span style="color: green;"> active </span> development. Feedbacks and contributions are very welcome!
+# Introduction 
 
-### Stay tunned
+## What is Zircle UI?
 
-- Suscribe to the mailing list to receive news and updates about Zircle releases ;)
+Zircle UI is a lightweight front-end library for developing zoomable user interfaces. It mixes two principles: **circular shapes** and **zooming navigation** in the aim of strengthening each other and create a good user experience. It is an Open Source project based on Vue.js. 
 
-<!-- Begin MailChimp Signup Form -->
-<div id="mc_embed_signup">
-<form action="https://zircle.us17.list-manage.com/subscribe/post?u=91025581f3cf49d83896d0651&amp;id=8c7dd8cb4d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-    <div id="mc_embed_signup_scroll">
-  
-  <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
-    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_91025581f3cf49d83896d0651_8c7dd8cb4d" tabindex="-1" value=""></div>
-    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-    </div>
-</form>
-</div>
 
-<!--End mc_embed_signup-->
-
-- Follow Zircle on [Twitter](https://twitter.com/ZircleUI)
-
-# Guide
-
-## Introduction 
-
-### What is Zircle UI?
-
-Zircle UI is a circular zooming user interface library based on Vue.js. It mixes two principles: **circular shapes** and **zooming navigation** in the aim of strengthening each other and create a good user experience.
-
-### Main features
--   Zooming navigation up to 6 level depth.
+## Main features
+-   Zoomable navigation up to 6 level depth.
 -   It works well on mobile devices and big screens as it is responsive.
 -   It comes with a minimal set of UI components to build your app.
 -   It is possible to customize themes and styles to fit your needs. 
 
-### Quick examples 
+## Quick examples 
 
-#### Vue.js Ecosystem
+### Vue.js Ecosystem
 
 <iframe height='600' scrolling='no' title='Vue.js Ecosystem by Zircle' src='//codepen.io/zircle/embed/LeqKGK/?height=600&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/LeqKGK/'>Vue.js Ecosystem by Zircle</a>
 </iframe>
 
-#### Counter 
+### Counter 
 <iframe height='450' scrolling='no' title='Counter by Zircle' src='//codepen.io/zircle/embed/qpgzqz/?height=450&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/qpgzqz/'>Counter by Zircle</a>
 </iframe>
 
-#### Zooming slider
+### Zooming slider
 
 <iframe height='450' scrolling='no' title='Zooming Slider by Zircle' src='//codepen.io/zircle/embed/VygJKw/?height=450&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/VygJKw/'>Zooming Slider by Zircle</a>
 </iframe>
 
-### Dependencies
+## Dependencies
 Zircle is a Vue plugin. For this reason, it is recommendable to have some idea of how Vue works. You can try Vue and learn it in http://vuejs.org
 
 > **Information for Vue users**: Zircle UI follows the progressive philosophy of Vue. This implies that for small apps or prototyping you can use Zircle directly into the browser and for more complex apps you can use it with Single Page Applications. For this reason, Zircle works with or without Vue-Router.
+
+# Guide
 
 ## Installation
 **Options**
@@ -965,19 +938,36 @@ none
 <iframe height='500' scrolling='no' title='Themes and Colors Selector by Zircle' src='//codepen.io/zircle/embed/preview/MrLMvB/?height=500&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/zircle/pen/MrLMvB/'>Themes and Colors Selector by Zircle</a>
 </iframe>
 
+## Stay tunned
 
+!> Zircle is in <span style="color: green;"> active </span> development. Feedbacks and contributions are very welcome!
+
+- Suscribe to the mailing list to receive news and updates about Zircle releases.
+
+<!-- Begin MailChimp Signup Form -->
+<div id="mc_embed_signup">
+<form action="https://zircle.us17.list-manage.com/subscribe/post?u=91025581f3cf49d83896d0651&amp;id=8c7dd8cb4d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+  
+  <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_91025581f3cf49d83896d0651_8c7dd8cb4d" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+
+<!--End mc_embed_signup-->
+
+- Follow Zircle on [Twitter](https://twitter.com/ZircleUI)
 
 ## To-Do
 
-[ ] Adapt Zircle to the style guide of Vue.
-
-[ ] Improve Zircle State Management.
-
-[ ] Improve documentation.
-
-[ ] Add more examples.
-
-[ ] Allow Zircle to be used in not Standalone mode.
+- [ ] Adapt Zircle to the style guide of Vue
+- [ ] Improve Zircle State Management
+- [ ] Improve documentation.
+- [ ] Add more examples.
+- [ ] Allow Zircle to be used in not Standalone mode.
 
 ## License
 
