@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  A circular zooming UI.
+  A lightweight front-end library for developing zoomable user interfaces.
 </p>
 
 <p align="center">
@@ -13,8 +13,6 @@
   <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-2.x-brightgreen.svg"></a>
   <a href="https://travis-ci.org/zircleUI/zircleUI"><img alt="Build Status" src="https://travis-ci.org/zircleUI/zircleUI.svg?branch=master"></a>
 </p>
-
-> Zircle is in active development. Feedbacks and contributions are very welcome!
 
 ## What is Zircle UI?
 
