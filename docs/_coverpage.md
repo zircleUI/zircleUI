@@ -3,7 +3,7 @@
 
 # Zircle UI <small>0.3.1</small>
 
-> A lightweight front-end library for <br> developing zoomable user interfaces
+> A lightweight front-end library for developing <br> zoomable user interfaces
 
 [GitHub](https://github.com/zircleui/zircleUI)
 [Get Started](?id=introduction)
