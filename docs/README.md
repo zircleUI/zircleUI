@@ -148,6 +148,10 @@ export default {
 ### Vue-Router
 You can use Zircle with Vue-Router in any environment (from sandbox to vue-cli). Just follow this tips and examples.
 
+?> Since Zircle 0.3.0 using Vue-Router is simplier and straight forward because Zircle creates the routes automatically.
+
+> When Zircle 0.5.0 arrives `routerHooks()` will be deprecated in favour if `setRouter()`
+
 #### For Browser or online source code playgrounds.
 
 **1. Install Vue-Router.**
@@ -227,13 +231,57 @@ new Vue({
       enableRouter: true
     }
   },
-  beforeMount() {
+  mounted() {
     this.$zircleStore.routerHooks(this)
   }
 })
 ```
 
-Check this demo in [JSFiddle](https://jsfiddle.net/tinchox5/g39omwxv/)  
+Check this demo in [JSFiddle](https://jsfiddle.net/tinchox5/g39omwxv/)
+
+?> Since version 0.3.0 Zircle can manage automatically the routes, so the router set up is simplier:
+
+In the `<script>` that you have the Vue Instance:
+
+```js
+// Your view compoments
+const foo = {
+  template: `<z-panel view="foo">
+  Foo View
+  <z-scale slot="circles"
+  :angle="45"
+  gotoview="bar">
+  Bar
+  <span slot="label">Go to</span>
+  </z-scale>
+</z-panel>`
+}
+const bar = {
+  template: `<z-panel view="bar">
+  Bar View
+  </z-panel>`
+}
+// Vue Router configuration
+const router = new VueRouter({
+})
+//  Zircle and router configuration for Vue instance 
+new Vue({
+  el: '#app',
+  components: {
+    foo,
+    bar
+  },
+  router,
+  data() {
+    return {
+      initialView: 'foo'
+    }
+  },
+  mounted() {
+    this.$zircleStore.setRouter(this)
+  }
+})
+```  
 
 #### For NPM or Vue-CLI
 
@@ -325,8 +373,8 @@ export default {
     bar
   },
   router,
-  beforeMount () {
-    this.$zircleStore.routerHooks(this)
+  mounted () {
+    this.$zircleStore.routerHooks(this) // routerHooks will be deprecated in favour of setRouter()
   }
 }
 </script>
@@ -336,6 +384,62 @@ export default {
 
 
 Check this example on [CodeSandbox](https://codesandbox.io/s/2x39p49kmn)
+
+?> Since Zircle 0.3.0 using Vue-Router is simplier and straight forward because Zircle creates the routes automatically.
+
+In your `App.vue`
+```vue
+<template>
+    <z-canvas>
+          <z-view-manager :list='$options.components'/>
+    </z-canvas>
+</template>
+<script>
+import Vue from 'vue'
+import Router from 'vue-router'
+Vue.use(Router)
+
+const foo = {
+  template: `<z-panel view="foo">
+  Foo View
+  <z-scale
+  slot="circles"
+  :angle="45"
+  gotoview="bar">
+  Bar
+  <div slot="label">Go to</div>
+  </z-scale>
+</z-panel>`
+}
+const bar = {
+  template: `<z-panel view="bar">
+  Bar View
+  </z-panel>`
+}
+const router = new Router({
+  mode: 'history'
+})
+
+export default {
+  data () {
+    return {
+      initialView: 'foo'
+    }
+  },
+  components: {
+    foo,
+    bar
+  },
+  router,
+  mounted () {
+    this.$zircleStore.setRouter(this)
+  }
+}
+</script>
+<style>
+</style>
+```
+
 
 ## Themes and colors
 Zircle comes with nine colors and four themes under hood that are built using CSS Variables.
@@ -385,6 +489,34 @@ Each theme is a CSS class that wraps several CSS variables
 }
 ```
 
+
+### Setting up Themes ands Colors
+
+One way to set up you prefered theme and color is to put them in `mounted()` 
+
+```js
+new Vue({
+  el: '#app',
+  components: {
+    foo,
+    bar
+  },
+  router,
+  data() {
+    return {
+      sharedState: this.$zircleStore.state,
+      initialView: 'foo'
+    }
+  },
+  mounted () {
+    this.sharedState.theme = 'theme--bold-light'
+    this.sharedState.color = 'color--blue'
+  }
+})
+```
+
+
+
 ### Customize
 The easiest way to adapt the themes to your needs is to override the color CSS clases or create a new color names
 
@@ -411,13 +543,11 @@ Check the CSS tab of the following example
 ```
 
 **Props:**
-
 None
 
-**Slots:**
-
-**`default`** Default Vue Slot.
-
+| Slot | Description
+| :--- | :--- |
+| `default` | Default Vue Slot.
 
 ### z-view-manager
 
@@ -458,7 +588,7 @@ new Vue({
     foo,
     bar
   },
-  beforeMount () {
+  mounted () {
     this.$zircleStore.setView('foo')
   }
 })
@@ -466,18 +596,13 @@ new Vue({
 
 Check this [example without Vue-Router](http://jsfiddle.net/tinchox5/umo398sw/) and this [example with Vue-Router](http://jsfiddle.net/tinchox5/g39omwxv/)
 
-**Props:**
+**Props**
 
-**`list`**
-
-* **Type**: Object
-
-* **Default**: undefined
-
-* **Required**: True
+| Prop | Type | Default value | Required | Description
+| :--- | :--- | :--- | :--- | :--- |
+| `list` | Object | undefined | True | Is the list of components defined in the Vue instance: `$options.components`
 
 **Slots:**
-
 None
 
 ### z-panel
@@ -516,52 +641,28 @@ None
 </z-panel>`
 ```
 
+**Props**
 
-**Props:**
+| Prop | Type | Default value | Required | Description
+| :--- | :--- | :--- | :--- | :--- |
+| `view` | String, Number | undefined | True | Is the View Name. It needs be the same name of you view component. It is not case sensitive
+| `range` | Boolean | False | No | When it is `true` an interactive circular progress range is shown. Usefull to build controls like volume, dimmer, etc
+| `slider` | Boolean | False | No | When it is `true` a circular progress bar is shown.
+| `progress` | Number | 0 | No | progress works when range or slider are enabled and gives them the initial value
 
-**`view`**
+**Mixin**
 
-* **Type**: String, Number
-
-* **Default**: undefined
-
-* **Required**: True
-
-**`range`**
-
-* **Type**: Boolean
-
-* **Default**: false
-
-**`slider`**
-
-* **Type**: Boolean
-
-* **Default**: false
-
-**`progress`**
-
-* **Type**: Number
-
-* **Default**: 0
-
-**Mixing:**
-
-`<z-panel>` uses color mixing prop
-  
-**`color`**
-
-* **Type**: String
-
-* **Default**: 'primary'
+| Mixin | Type | Default value | Required | Description
+| :--- | :--- | :--- | :--- | :--- |
+| `color` | String | primary | False | This mixin gives the color of the `z-panel`. Probably it will be deprecated since you can use style attributes to set you color.
 
 **Slots:**
 
-**`default`** Default Vue Slot. It is used to put any kind of content such as text, icons, etc. If the content is larger than the view container the sub component `<z-scroll>`is activated.
-
-**`picture`** It is used to insert one image inside the container.
-
-**`circles`** It is used when you nest other components such as `<z-scale>`, `<z-button>` or `<z-alert>`
+| Slot | Description
+| :--- | :--- |
+| `default` | Default Vue Slot. It is used to put any kind of content such as text, icons, etc. If its content is larger than the view container the sub component `<z-scroll>`, that is a circular scrollbar, is activated.
+| `picture` | It is used to insert one image as background inside the view container.
+| `circles` | It is used when you nest other components such as `<z-scale>`, `<z-button>` or `<z-alert>` inside the view container.
 
 
 ### z-scale
@@ -608,71 +709,32 @@ None
 </z-scale>
 ```
 
+**Props**
 
-**Props:**
+| Prop | Type | Default value | Required | Description
+| :--- | :--- | :--- | :--- | :--- |
+| `range` | Boolean | False | No | When it is `true` an interactive circular progress range is shown. Usefull to build controls like volume, dimmer, etc
+| `slider` | Boolean | False | No | When it is `true` a circular progress bar is shown.
+| `progress` | Number | 0 | No | progress works when range or slider are enabled and gives them the initial value
 
-**`range`**
+**Mixin**
 
-* **Type**: Boolean
-
-* **Default**: false
-
-**`slider`**
-
-* **Type**: Boolean
-
-* **Default**: false
-
-**`progress`**
-
-* **Type**: Number
-
-* **Default**: 0
-
-**Mixing:**
-
-`<z-panel>` uses mixing props
-  
-**`distance`**
-
-* **Type**: Number
-
-* **Default**: 100
-
-**`angle`**
-
-* **Type**: Number
-
-* **Default**: 0
-
-**`size`**
-
-* **Type**: String
-
-* **Default**: 'small'
-
-**`color`**
-
-* **Type**: String
-
-* **Default**: 'primary'
-
-**`gotoview`**
-
-* **Type**: [String, Number]
-
-* **Default**: undefined
+| Mixin | Type | Default value | Required | Description
+| :--- | :--- | :--- | :--- | :--- |
+| `distance` | Number | 100 | False | Is the distance from the center of the `z-panel`. 100 means 100%.
+| `angle` | Number | 0 | False | Is the angle of the `z-scale`. Accepts any number value positive or negative (ej: 345, -567)
+| `size` | String | small | False | Represent the diameter of the `z-scale`component. Values: 'large', 'medium', 'small', 'extrasmall'
+| `color` | String | primary | False | This mixin gives the color of the `z-scale`. Probably it will be deprecated since you can use style attributes to set you color.
+| `gotoview` | String, Number | undefined | False | This works as a href. When put a View Name (ej: home) it goes to view Home.
 
 **Slots:**
 
-**`default`** Default Vue Slot. It is used to put any kind of content such as text, icons, etc.
-
-**`label`** It is used to include a label that is situated below the component. It is useful when the label is larger thar the component. 
-
-**`picture`** It is used to insert one image inside the container.
-
-**`circles`** It is used when you nest other components such as `<z-scale>`, `<z-button>` or `<z-alert>`
- 
+| Slot | Description
+| :--- | :--- |
+| `default` | Default Vue Slot. It is used to put any kind of content such as text, icons, etc. 
+| `label` | It is used to include a label that is situated below the component. It is useful when the label is larger that the component.
+| `picture` | It is used to insert one image as background inside the view container.
+| `circles` | It is used when you nest other components such as `<z-scale>`, `<z-button>` or `<z-alert>` inside the view container.
 
 ### z-button
 
@@ -715,49 +777,26 @@ None
 </z-button>
 ```
 
-
 **Props:**
 
 none
 
-**Mixing:**
+**Mixin**
 
-`<z-button>` uses mixing props
-  
-**`distance`**
-
-* **Type**: Number
-
-* **Default**: 100
-
-**`angle`**
-
-* **Type**: Number
-
-* **Default**: 0
-
-**`size`**
-
-* **Type**: String
-
-* **Default**: 'small'
-
-**`color`**
-
-* **Type**: String
-
-* **Default**: 'primary'
+| Mixin | Type | Default value | Required | Description
+| :--- | :--- | :--- | :--- | :--- |
+| `distance` | Number | 100 | False | Is the distance from the center of the `z-panel`. 100 means 100%.
+| `angle` | Number | 0 | False | Is the angle of the `z-button`. Accepts any number value positive or negative (ej: 345, -567)
+| `size` | String | small | False | Represent the diameter of the `z-button`component. Values: 'large', 'medium', 'small', 'extrasmall'
+| `color` | String | primary | False | This mixin gives the color of the `z-button`. Probably it will be deprecated since you can use style attributes to set you color.
 
 **Slots:**
 
-**`default`** Default Vue Slot. It is used to put any kind of content such as text, icons, etc.
-
-**`label`** It is used to include a label that is situated below the component. It is useful when the label is larger thar the component. 
-
-**`circles`** It is used when you nest other components such as `<z-scale>`, `<z-button>` or `<z-alert>`
-
-check this example 
-
+| Slot | Description
+| :--- | :--- |
+| `default` | Default Vue Slot. It is used to put any kind of content such as text, icons, etc. 
+| `label` | It is used to include a label that is situated below the component. It is useful when the label is larger that the component.
+| `circles` | It is used when you nest other components such as `<z-scale>`, `<z-button>` or `<z-alert>` inside the view container.
 
 ### z-list
 
@@ -774,9 +813,9 @@ check this example
   :per-page="3">
     <z-item <!-- It is necesary to include z-item component-->
     slot-scope="props"
-    :angle="props.angle" <!-- angle is mandatory -->
+    :angle="props.angle" <!-- angle is currently mandatory -->
     :color="props.item.color" <!-- color, label, image are optional -->
-    :label="props.item.label"
+    :label="props.item.name"
     :image="props.item.image"> 
     </z-item>
 </z-list>
@@ -810,37 +849,38 @@ const item = {
   }
 }
 ```
-**Props:**
 
-**`collection`**
-* **Type**: Array
+**Props**
 
-**`perPage`**
-* **Type**: Number
+| Prop | Type | Default value | Required | Description
+| :--- | :--- | :--- | :--- | :--- |
+| `collection` | Array | undefined | True | An array with items.
+| `perPage` | Number | undefined | True | The number of items per page.
 
-**Mixing:**
+**Mixin**
 
-`<z-item>` uses mixing props
+| Mixin | Type | Default value | Required | Description
+| :--- | :--- | :--- | :--- | :--- |
+| `color` | String | accent | False | This mixin gives the color of the `z-list`. Probably it will be deprecated since you can use style attributes to set you color.
 
-**`angle`**
 
-* **Type**: Number
+### z-item
 
-* **Required**: true
+**Description:** This component works as a sub-component of `z-list` and represent each item displayed.
 
-**`label`**
+**Props**
 
-* **Type**: String
+| Prop | Type | Default value | Required | Description
+| :--- | :--- | :--- | :--- | :--- |
+| `size` | String | medium | True | The size of each item.
+| `color` | String | accent | True | This mixin gives the color of the `z-item`. Probably it will be deprecated since you can use style attributes to set you color.
+| `label` | String | '' | False | It is used to include a label that is situated below the component. 
+| `image` | String | '' | No | It is used to include a url of an image that is situated as background of each item
+| `item` | String, Object | '' | True | Is the prop that contains all current item data.
+| `id` | String, Object | '' | False | Is id of the current item.
+| `gotoview` | String | item | False | It the view name that Zircle opens when an item is clicked. You can put any other name, but you have to create an 'item' or 'your-view-name' component to show the details of the selected item.
+| `angle` | Number | automatic | True | Is the angle of the `z-item`. Currently you don't need to edit this prop.
 
-**`image`**
-
-* **Type**: String
-
-**`color`**
-
-* **Type**: String
-
-* **Default**: 'accent'
 
 check this [JSFiddle](http://jsfiddle.net/tinchox5/az5cf0rd/)
 
@@ -879,24 +919,21 @@ check this [JSFiddle](http://jsfiddle.net/tinchox5/az5cf0rd/)
 
 
 **Props:**
-
 none
 
-**Mixing:**
+***Mixin***
 
-`<z-alert>` uses mixing props
-
-**`color`**
-
-* **Type**: String
-
-* **Default**: 'primary'
+| Mixin | Type | Default value | Required | Description
+| :--- | :--- | :--- | :--- | :--- |
+| `color` | String | primary | False | This mixin gives the color of the `z-alert`. Probably it will be deprecated since you can use style attributes to set you color.
 
 **Slots:**
 
-**`default`** Default Vue Slot. It is used to put any kind of content such as text, icons, etc.
-
-**`circles`** It is used when you nest other components such as `<z-scale>`, `<z-button>` or `<z-alert>` 
+| Slot | Description
+| :--- | :--- |
+| `default` | Default Vue Slot. It is used to put any kind of content such as text, icons, etc.
+| `label` | It is used to include a label that is situated below the component. It is useful when the label is larger that the component.
+| `circles` | It is used when you nest other components such as `<z-scale>`, `<z-button>` or `<z-alert>` inside the view container.
 
 
 ## Examples
@@ -965,8 +1002,8 @@ none
 
 - [ ] Adapt Zircle to the style guide of Vue
 - [ ] Improve Zircle State Management
-- [ ] Improve documentation.
-- [ ] Add more examples.
+- [x] Improve documentation.
+- [x] Add more examples.
 - [ ] Allow Zircle to be used in not Standalone mode.
 
 ## License
