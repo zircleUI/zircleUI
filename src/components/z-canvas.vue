@@ -662,5 +662,4 @@ input {
   outline: none;
   text-align: center;
 }
-
 </style>
