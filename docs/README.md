@@ -71,9 +71,11 @@ After you have installed Zircle using direct download or CDN, the following star
   <!-- Vue.js -->
   <script type="text/javascript" src="https://unpkg.com/vue"></script>
   <!-- Local Zircle lib -->
+  <!-- Note: from Zircle 0.3.2 css is embedded into js file. So, it is no longer necesary to include css file -->
   <link href="zircle.min.css" rel="stylesheet">
   <script type="text/javascript" src="zircle.min.js"></script>
   <!-- or Zircle from CDN-->
+  <!-- Note: from Zircle 0.3.2 css is embedded into js file. So, it is no longer necesary to include css file -->
   <link href="https://unpkg.com/zircle/dist/zircle.min.css" rel="stylesheet">
   <script type="text/javascript" src="https://unpkg.com/zircle"></script>
   </head>
@@ -113,6 +115,7 @@ In the `main.js` file add this code:
 import Vue from 'vue'
 import app from './App'
 import zircle from 'zircle'
+<!-- Note: from Zircle 0.3.2 css is embedded into js file. So, it is no longer necesary to import css file -->
 import 'zircle/dist/zircle.min.css'
 Vue.use(zircle)
 new Vue({
@@ -297,6 +300,7 @@ In your `main.js` file
 import Vue from "vue"
 import App from "./App"
 import zircle from "zircle"
+<!-- Note: from Zircle 0.3.2 css is embedded into js file. So, it is no longer necesary to include css file -->
 import "zircle/dist/zircle.min.css"
 Vue.use(zircle)
 
