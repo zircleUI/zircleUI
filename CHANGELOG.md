@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.2] - 2018-01-25
+### Enhancement
+- Now zircle is using https://github.com/julon/vue-cli-template-library that allows embed CSS in the JS by default. So, there is just one file to use zircle.js or zircle.min.js. Thanks https://github.com/julon
+- Improved documentation. 
+
+### Fixes
+- Include latest src code into @npm release.
+
 ## [0.3.1] - 2018-01-14
 ### Fixes
 - Fix build for producction error.
