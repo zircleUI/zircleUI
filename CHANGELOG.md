@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.3] - 2018-01-31
+### Fixes
+- When using using vue-router, the initial configuration of the automatic routes are now case insensitive to avoid case errors.
+
 ## [0.3.2] - 2018-01-25
 ### Enhancement
 - Now zircle is using https://github.com/julon/vue-cli-template-library that allows embed CSS in the JS by default. So, there is just one file to use zircle.js or zircle.min.js. Thanks https://github.com/julon
