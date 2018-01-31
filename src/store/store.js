@@ -49,12 +49,17 @@ var store = {
     // Add default redirect route to initialView and go to initialView
     store.state.$router.onReady(function () {
       var view = data.initialView.toLowerCase()
+      let key = Object.keys(data.$options.components).find(function (k) {
+        if (k.toLowerCase() === view) {
+          return k
+        }
+      })
       store.state.$router.addRoutes([{path: '/',
         redirect: '/' + view + '--0'
       }])
       store.state.$router.addRoutes([{path: '/' + view + '--0',
         name: view + '--0',
-        component: data.$options.components[view]
+        component: data.$options.components[key]
       }])
       store.state.$router.push({name: view + '--0'})
     })
