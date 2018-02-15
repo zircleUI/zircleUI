@@ -8,7 +8,7 @@
   A lightweight front-end library for developing zoomable user interfaces.
 </p>
 
-> This is the development branch for Zircle
+> This is the development branch for the next version of Zircle
 
 ## Documentation
 To check out live examples and docs, visit http://zircle.io
