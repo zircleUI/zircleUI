@@ -1,6 +1,6 @@
 <p align="center">
   <a href="http://zircle.io">
-    <img src="docs/_images/zircle-dev.png" width="250">
+    <img src="docs/_images/zircle-dev.png" width="350">
   </a>
 </p>
 
