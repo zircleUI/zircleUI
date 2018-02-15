@@ -10,27 +10,28 @@
 
 > This is the development branch for the next version of Zircle
 
-## Documentation
-To check out live examples and docs, visit http://zircle.io
+## Status Beta
+This is the first commit, many things may change in the near future. Check [Changelog](https://github.com/zircleUI/zircleUI/tree/dev/CHANGELOG.md)
 
 ## Installation
-There are several ways to install zircle UI according your needs:
 
 ### Direct download 
-* Download Zircle from [Github](https://github.com/zircleUI/zircleUI/tree/master/dist)
+* Download Zircle@next from [Github](https://github.com/zircleUI/zircleUI/tree/dev/dist)
 
 ### Content delivery networks (CDN)
 
-* Include https://unpkg.com/zircle in your project with ```<script>``` tag. With CDN you will have the latest version of Zircle as soon as it is published to npm. You can also browse the source of the npm package at https://unpkg.com/zircle/ 
+* Include https://unpkg.com/zircle@next in your project with ```<script>``` tag. With CDN you will have the latest version of Zircle as soon as it is published to npm.
 
 ### NPM
-NPM is the recommended installation method of zircle if you are building medium to large scale applications with Vue. 
 
 ```bash 
-npm install zircle --save
+npm install zircle@next --save
 ```
 
-> **Note**: When you install Zircle in a fresh project, Vue will also be installed since is a dependency of Zircle. On the other hand, you can install Zircle after you have started a project based on Vue. 
+## To-Do
+
+- [ ] Add Unit testing
+- [ ] Add E2E testing
 
 ## License
 [MIT](http://opensource.org/licenses/MIT)
