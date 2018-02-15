@@ -8,21 +8,7 @@
   A lightweight front-end library for developing zoomable user interfaces.
 </p>
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/npm/v/zircle.svg"></a>
-  <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-2.x-brightgreen.svg"></a>
-  <a href="https://travis-ci.org/zircleUI/zircleUI"><img alt="Build Status" src="https://travis-ci.org/zircleUI/zircleUI.svg?branch=master"></a>
-</p>
-
-## What is Zircle UI?
-
-**Zircle UI** is a circular zooming user interface library based on Vue.js. It mixes two principles: **circular shapes** and **zooming navigation** in the aim of strengthening each other and create a good user experience.
-
-### Main features
--   Zooming navigation up to 6 level of depth.
--   It works well on mobile devices and big screens as it is responsive.
--   It comes with a minimal set of UI components to build your app.
--   It is possible to customize themes and styles to fit your needs. 
+> This is the development branch for Zircle
 
 ## Documentation
 To check out live examples and docs, visit http://zircle.io
