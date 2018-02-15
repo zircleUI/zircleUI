@@ -1,5 +1,4 @@
 <script>
-import store from '../store/store'
 export default {
   props: {
     distance: {
@@ -22,23 +21,12 @@ export default {
       type: [String, Number]
     }
   },
-  data () {
-    return {
-      state: store.state,
-      store: store
-    }
-  },
   computed: {
     position () {
-      return this.store.point(this)
+      return this.$zircle.calcPosition(this)
     },
     classes () {
       return {
-        // currclass: this.viewName === this.state.currentView,
-        // lastclass: this.viewName === this.state.lastView,
-        // pastclass: this.type === 'panel' && this.viewName === this.state.pastView && this.viewName !== this.state.previousView && this.viewName !== this.state.currentView,
-        // prevclass: this.type === 'panel' && this.viewName === this.state.previousView && this.viewName !== this.state.currentView && this.viewName !== this.state.pastView,
-        // hidden: this.$parent.viewName === this.state.previousView,
         zoom: this.type === 'scale' && this.gotoview !== undefined
       }
     },

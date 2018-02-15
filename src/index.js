@@ -14,9 +14,9 @@ import zlist from './components/z-list.vue'
 import zdotnav from './components/z-dotnav.vue'
 const zircle = {
   install (Vue, options) {
-    Object.defineProperty(Vue.prototype, '$zircleStore', {
+    Object.defineProperty(Vue.prototype, '$zircle', {
       get () {
-        return store
+        return store.actions
       }
     })
     Vue.component('z-canvas', zcanvas)

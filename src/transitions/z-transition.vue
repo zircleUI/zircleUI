@@ -11,9 +11,9 @@ export default {
       on: {
         enter (el, done) {
           var point = document.getElementById('z-point')
-          if (context.parent.$zircleStore.state.mode === 'forward') {
+          if (context.parent.$zircle.getNavigationMode() === 'forward') {
             point.style.willChange = 'transform'
-            point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)'
+            point.style.transform = 'scale(' + context.parent.$zircle.getCurrentPosition().scale + ') translate3d(' + context.parent.$zircle.getCurrentPosition().Xi + 'px, ' + context.parent.$zircle.getCurrentPosition().Yi + 'px, 0px)'
             point.style.transition = 'transform 800ms ease-in-out'
             done()
           } else {
@@ -29,11 +29,11 @@ export default {
         },
         leave (el, done) {
           var point = document.getElementById('z-point')
-          if (context.parent.$zircleStore.state.mode === 'forward') {
+          if (context.parent.$zircle.getNavigationMode() === 'forward') {
             done()
           } else {
             point.style.willChange = 'transform'
-            point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)'
+            point.style.transform = 'scale(' + context.parent.$zircle.getCurrentPosition().scale + ') translate3d(' + context.parent.$zircle.getCurrentPosition().Xi + 'px, ' + context.parent.$zircle.getCurrentPosition().Yi + 'px, 0px)'
             point.style.transition = 'transform 800ms ease-in-out'
             el.classList.add('lastclass')
             setTimeout(function () {
