@@ -1,7 +1,7 @@
 
 <img src="_images/logo-light.svg" width="200" >
 
-# Zircle UI <small>0.3.3</small>
+# Zircle UI @ next <small>0.5.0</small>
 
 > A lightweight front-end library for developing <br> zoomable user interfaces
 

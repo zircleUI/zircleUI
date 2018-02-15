@@ -32,6 +32,10 @@ npm install zircle@next --save
 
 - [ ] Add Unit testing
 - [ ] Add E2E testing
+- [ ] Optimize code
+- [ ] Add examples
+- [ ] Update documentation
+
 
 ## License
 [MIT](http://opensource.org/licenses/MIT)
