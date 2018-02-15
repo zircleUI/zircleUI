@@ -12,6 +12,46 @@
 	(factory((global.zircle = {})));
 }(this, (function (exports) { 'use strict';
 
+var state = {
+  position: {
+    X: 0,
+    Y: 0,
+    scale: 1,
+    Xi: 0,
+    Yi: 0,
+    scalei: 1
+  },
+  // Navigation
+  mode: 'forward',
+  isRouterEnabled: false,
+  $router: {},
+  currentView: '',
+  previousView: '',
+  pastView: '',
+  history: [],
+  cache: [],
+  lastViewCache: {},
+  goBackNav: false,
+  // Styles
+  zircleWidth: {
+    xl: 200,
+    l: 70,
+    m: 50,
+    s: 30,
+    xs: 20,
+    xxs: 20
+  },
+  color: 'color--black',
+  theme: 'theme--dark',
+  // Pagination components
+  selectedItem: '',
+  currentPage: 0,
+  items: [],
+  pages: [],
+  // z-alert component
+  alert: false
+};
+
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
@@ -19,88 +59,6 @@ function unwrapExports (x) {
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
-
-// 7.2.1 RequireObjectCoercible(argument)
-var _defined = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-// 7.1.13 ToObject(argument)
-
-var _toObject = function (it) {
-  return Object(_defined(it));
-};
-
-var hasOwnProperty = {}.hasOwnProperty;
-var _has = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-var toString = {}.toString;
-
-var _cof = function (it) {
-  return toString.call(it).slice(8, -1);
-};
-
-// fallback for non-array-like ES3 and non-enumerable old V8 strings
-
-// eslint-disable-next-line no-prototype-builtins
-var _iobject = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
-  return _cof(it) == 'String' ? it.split('') : Object(it);
-};
-
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-
-
-var _toIobject = function (it) {
-  return _iobject(_defined(it));
-};
-
-// 7.1.4 ToInteger
-var ceil = Math.ceil;
-var floor = Math.floor;
-var _toInteger = function (it) {
-  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-};
-
-// 7.1.15 ToLength
-
-var min = Math.min;
-var _toLength = function (it) {
-  return it > 0 ? min(_toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
-};
-
-var max = Math.max;
-var min$1 = Math.min;
-var _toAbsoluteIndex = function (index, length) {
-  index = _toInteger(index);
-  return index < 0 ? max(index + length, 0) : min$1(index, length);
-};
-
-// false -> Array#indexOf
-// true  -> Array#includes
-
-
-
-var _arrayIncludes = function (IS_INCLUDES) {
-  return function ($this, el, fromIndex) {
-    var O = _toIobject($this);
-    var length = _toLength(O.length);
-    var index = _toAbsoluteIndex(fromIndex, length);
-    var value;
-    // Array#includes uses SameValueZero equality algorithm
-    // eslint-disable-next-line no-self-compare
-    if (IS_INCLUDES && el != el) while (length > index) {
-      value = O[index++];
-      // eslint-disable-next-line no-self-compare
-      if (value != value) return true;
-    // Array#indexOf ignores holes, Array#includes - not
-    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
-      if (O[index] === el) return IS_INCLUDES || index || 0;
-    } return !IS_INCLUDES && -1;
-  };
-};
 
 var _global = createCommonjsModule(function (module) {
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -110,53 +68,6 @@ var global = module.exports = typeof window != 'undefined' && window.Math == Mat
   : Function('return this')();
 if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 });
-
-var SHARED = '__core-js_shared__';
-var store = _global[SHARED] || (_global[SHARED] = {});
-var _shared = function (key) {
-  return store[key] || (store[key] = {});
-};
-
-var id = 0;
-var px = Math.random();
-var _uid = function (key) {
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
-
-var shared = _shared('keys');
-
-var _sharedKey = function (key) {
-  return shared[key] || (shared[key] = _uid(key));
-};
-
-var arrayIndexOf = _arrayIncludes(false);
-var IE_PROTO = _sharedKey('IE_PROTO');
-
-var _objectKeysInternal = function (object, names) {
-  var O = _toIobject(object);
-  var i = 0;
-  var result = [];
-  var key;
-  for (key in O) if (key != IE_PROTO) _has(O, key) && result.push(key);
-  // Don't enum bug & hidden keys
-  while (names.length > i) if (_has(O, key = names[i++])) {
-    ~arrayIndexOf(result, key) || result.push(key);
-  }
-  return result;
-};
-
-// IE 8- don't enum bug keys
-var _enumBugKeys = (
-  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-).split(',');
-
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-
-
-
-var _objectKeys = Object.keys || function keys(O) {
-  return _objectKeysInternal(O, _enumBugKeys);
-};
 
 var _core = createCommonjsModule(function (module) {
 var core = module.exports = { version: '2.5.3' };
@@ -329,6 +240,194 @@ $export.U = 64;  // safe
 $export.R = 128; // real proto method for `library`
 var _export = $export;
 
+var hasOwnProperty = {}.hasOwnProperty;
+var _has = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+var toString = {}.toString;
+
+var _cof = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
+
+// eslint-disable-next-line no-prototype-builtins
+var _iobject = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
+  return _cof(it) == 'String' ? it.split('') : Object(it);
+};
+
+// 7.2.1 RequireObjectCoercible(argument)
+var _defined = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on  " + it);
+  return it;
+};
+
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+
+
+var _toIobject = function (it) {
+  return _iobject(_defined(it));
+};
+
+// 7.1.4 ToInteger
+var ceil = Math.ceil;
+var floor = Math.floor;
+var _toInteger = function (it) {
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+};
+
+// 7.1.15 ToLength
+
+var min = Math.min;
+var _toLength = function (it) {
+  return it > 0 ? min(_toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+};
+
+var max = Math.max;
+var min$1 = Math.min;
+var _toAbsoluteIndex = function (index, length) {
+  index = _toInteger(index);
+  return index < 0 ? max(index + length, 0) : min$1(index, length);
+};
+
+// false -> Array#indexOf
+// true  -> Array#includes
+
+
+
+var _arrayIncludes = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = _toIobject($this);
+    var length = _toLength(O.length);
+    var index = _toAbsoluteIndex(fromIndex, length);
+    var value;
+    // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      // eslint-disable-next-line no-self-compare
+      if (value != value) return true;
+    // Array#indexOf ignores holes, Array#includes - not
+    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
+      if (O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+
+var SHARED = '__core-js_shared__';
+var store = _global[SHARED] || (_global[SHARED] = {});
+var _shared = function (key) {
+  return store[key] || (store[key] = {});
+};
+
+var id = 0;
+var px = Math.random();
+var _uid = function (key) {
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+
+var shared = _shared('keys');
+
+var _sharedKey = function (key) {
+  return shared[key] || (shared[key] = _uid(key));
+};
+
+var arrayIndexOf = _arrayIncludes(false);
+var IE_PROTO = _sharedKey('IE_PROTO');
+
+var _objectKeysInternal = function (object, names) {
+  var O = _toIobject(object);
+  var i = 0;
+  var result = [];
+  var key;
+  for (key in O) if (key != IE_PROTO) _has(O, key) && result.push(key);
+  // Don't enum bug & hidden keys
+  while (names.length > i) if (_has(O, key = names[i++])) {
+    ~arrayIndexOf(result, key) || result.push(key);
+  }
+  return result;
+};
+
+// IE 8- don't enum bug keys
+var _enumBugKeys = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+
+
+
+var _objectKeys = Object.keys || function keys(O) {
+  return _objectKeysInternal(O, _enumBugKeys);
+};
+
+var f$1 = Object.getOwnPropertySymbols;
+
+var _objectGops = {
+	f: f$1
+};
+
+var f$2 = {}.propertyIsEnumerable;
+
+var _objectPie = {
+	f: f$2
+};
+
+// 7.1.13 ToObject(argument)
+
+var _toObject = function (it) {
+  return Object(_defined(it));
+};
+
+// 19.1.2.1 Object.assign(target, source, ...)
+
+
+
+
+
+var $assign = Object.assign;
+
+// should work with symbols and should have deterministic property order (V8 bug)
+var _objectAssign = !$assign || _fails(function () {
+  var A = {};
+  var B = {};
+  // eslint-disable-next-line no-undef
+  var S = Symbol();
+  var K = 'abcdefghijklmnopqrst';
+  A[S] = 7;
+  K.split('').forEach(function (k) { B[k] = k; });
+  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
+  var T = _toObject(target);
+  var aLen = arguments.length;
+  var index = 1;
+  var getSymbols = _objectGops.f;
+  var isEnum = _objectPie.f;
+  while (aLen > index) {
+    var S = _iobject(arguments[index++]);
+    var keys = getSymbols ? _objectKeys(S).concat(getSymbols(S)) : _objectKeys(S);
+    var length = keys.length;
+    var j = 0;
+    var key;
+    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
+  } return T;
+} : $assign;
+
+// 19.1.3.1 Object.assign(target, source)
+
+
+_export(_export.S + _export.F, 'Object', { assign: _objectAssign });
+
+var assign = _core.Object.assign;
+
+var assign$2 = createCommonjsModule(function (module) {
+module.exports = { "default": assign, __esModule: true };
+});
+
+var _Object$assign = unwrapExports(assign$2);
+
 // most Object methods by ES6 should accept primitives
 
 
@@ -358,316 +457,145 @@ module.exports = { "default": keys, __esModule: true };
 
 var _Object$keys = unwrapExports(keys$2);
 
-var store$1 = {
-  state: {
-    position: {
-      X: 0,
-      Y: 0,
-      scale: 1,
-      Xi: 0,
-      Yi: 0,
-      scalei: 1
-    },
-    alert: false,
-    // navigation
-    mode: 'forward',
-    isRouterEnabled: false,
-    $router: {},
-    currentView: '',
-    previousView: '',
-    pastView: '',
-    history: [],
-    cache: [],
-    lastViewCache: {},
-    backwardNavigation: false,
-    // styles
-    zircleWidth: {
-      xl: 200,
-      l: 70,
-      m: 50,
-      s: 30,
-      xs: 20,
-      xxs: 20
-    },
-    color: 'color--black',
-    theme: 'theme--light',
-    // temporary for pagination
-    selectedItem: '',
-    currentPage: 0,
-    items: [],
-    pages: []
+function createRoute(path, name, component, params) {
+  store$1.state.$router.addRoutes([{ path: path,
+    name: name,
+    component: component
+  }]);
+  store$1.actions.setLog('vue-router: route added: ' + name);
+  params !== undefined ? store$1.state.$router.push({ name: name, params: params }) : store$1.state.$router.push({ name: name });
+}
+function findComponent(list, view) {
+  return _Object$keys(list).find(function (k) {
+    if (k.toLowerCase() === view) {
+      return k;
+    }
+  });
+}
+var router = {
+  getRouterState: function getRouterState() {
+    return store$1.state.isRouterEnabled;
   },
-  // routerHooks is deprecated and will be deleted on zircle 0.5.0. Use setRouter instead.
+
+  // RouterHooks() is deprecated and will be deleted on zircle 0.5.0. Use setRouter() instead.
   routerHooks: function routerHooks(data) {
-    store$1.setRouter(data);
+    store$1.actions.setLog('Consider use setRouter() instead', 'warn');
+    store$1.actions.setRouter(data);
   },
   setRouter: function setRouter(data) {
+    store$1.actions.setLog('vue-router enabled');
     // Auto configuration for vue-router
     store$1.state.$router = data.$router;
     store$1.state.isRouterEnabled = true;
-    store$1.setView(data.initialView.toLowerCase());
+    store$1.actions.setViewName(data.initialView.toLowerCase());
     // Add default redirect route to initialView and go to initialView
     store$1.state.$router.onReady(function () {
       var view = data.initialView.toLowerCase();
-      var key = _Object$keys(data.$options.components).find(function (k) {
-        if (k.toLowerCase() === view) {
-          return k;
-        }
-      });
-      store$1.state.$router.addRoutes([{ path: '/',
-        redirect: '/' + view + '--0'
-      }]);
-      store$1.state.$router.addRoutes([{ path: '/' + view + '--0',
-        name: view + '--0',
-        component: data.$options.components[key]
-      }]);
-      store$1.state.$router.push({ name: view + '--0' });
+      store$1.state.$router.addRoutes([{ path: '/', redirect: '/' + view + '--0' }]);
+      // 0.3.3 (fix bug init)
+      var key = findComponent(data.$options.components, view);
+      createRoute('/' + view + '--0', view + '--0', data.$options.components[key]);
     });
     // Router hooks
     store$1.state.$router.beforeEach(function (to, from, next) {
       if (from.name === store$1.state.cache[store$1.state.cache.length - 1].id && to.name !== store$1.state.lastViewCache.id) {
         // Go backward using both: browser navigation arrows or zircle UI
-        store$1.goBack();
+        store$1.actions.setLog('vue-router: Go backward' + to.name);
+        store$1.actions.goBack();
         next();
       } else if (to.name === store$1.state.cache[store$1.state.cache.length - 1].id && to.name !== store$1.state.lastViewCache.id) {
         // Check if the route exists
         if (to.matched.length === 0) {
           // If not, add route
           var component = to.name.split('--');
-          var key = _Object$keys(data.$options.components).find(function (k) {
-            if (k.toLowerCase() === component[0]) {
-              return k;
-            }
-          });
+          var key = findComponent(data.$options.components, component[0]);
           if (to.params.id === undefined) {
-            store$1.state.$router.addRoutes([{ path: '/' + to.name,
-              name: to.name,
-              component: data.$options.components[key]
-            }]);
-            store$1.state.$router.push({ name: to.name });
+            createRoute('/' + to.name, to.name, data.$options.components[key]);
           } else {
-            store$1.state.$router.addRoutes([{ path: '/' + to.name + '/:id',
-              name: to.name,
-              component: data.$options.components[key]
-            }]);
-            store$1.state.$router.push({ name: to.name, params: to.params });
+            createRoute('/' + to.name + '/:id', to.name, data.$options.components[key], to.params);
           }
         } else {
           // If exists, go forward
+          store$1.actions.setLog('vue-router: Go forward: ' + to.name);
           store$1.state.lastViewCache = {};
           next();
         }
       } else if (to.name === store$1.state.lastViewCache.id && to.name === store$1.state.cache[store$1.state.cache.length - 1].id) {
         // Just in case browser navigation forward arrow is clicked
+        store$1.actions.setLog('vue-router: browser forward arrow was clicked: ' + to.name);
         store$1.state.lastViewCache = {};
         next();
       } else {
-        console.log('Router Error');
-        console.log(to.name, from.name, store$1.state.lastViewCache.id, store$1.state.cache[store$1.state.cache.length - 1].id);
+        store$1.actions.setLog('Router Error: unable to resolve routes :(', 'error');
         next(false);
       }
     });
-  },
-  setScroll: function setScroll(angle) {
-    store$1.state.scroll = angle;
-  },
-  killLastView: function killLastView() {
-    store$1.state.lastView = '';
-  },
+  }
+};
 
-  // no uso media query asi que seteo el ancho de cad circulo aca
-  getDimensions: function getDimensions() {
-    // small devices
-    if (window.matchMedia('(max-width: 319px)').matches) {
-      store$1.state.zircleWidth.xl = 200;
-      store$1.state.zircleWidth.l = 70;
-      store$1.state.zircleWidth.m = 50;
-      store$1.state.zircleWidth.s = 30;
-      store$1.state.zircleWidth.xs = 20;
-      store$1.state.zircleWidth.xxs = 20;
-    }
-    // medium
-    if (window.matchMedia('(min-width: 320px)').matches) {
-      store$1.state.zircleWidth.xl = 230;
-      store$1.state.zircleWidth.l = 85;
-      store$1.state.zircleWidth.m = 65;
-      store$1.state.zircleWidth.s = 45;
-      store$1.state.zircleWidth.xs = 30;
-      store$1.state.zircleWidth.xxs = 20;
-    }
-    // medium - large devices
-    if (window.matchMedia('(min-width: 375px) and (orientation: portrait)').matches) {
-      store$1.state.zircleWidth.xl = 260;
-      store$1.state.zircleWidth.l = 90;
-      store$1.state.zircleWidth.m = 70;
-      store$1.state.zircleWidth.s = 50;
-      store$1.state.zircleWidth.xs = 40;
-      store$1.state.zircleWidth.xxs = 30;
-    }
-    if (window.matchMedia('(min-width: 375px) and (orientation: landscape)').matches) {
-      store$1.state.zircleWidth.xl = 270;
-      store$1.state.zircleWidth.l = 90;
-      store$1.state.zircleWidth.m = 70;
-      store$1.state.zircleWidth.s = 50;
-      store$1.state.zircleWidth.xs = 40;
-      store$1.state.zircleWidth.xxs = 30;
-    }
-    // tablets
-    if (window.matchMedia('(min-width: 768px) and (orientation: portrait) and (min-pixel-ratio: 2)').matches) {
-      store$1.state.zircleWidth.xl = 340;
-      store$1.state.zircleWidth.l = 120;
-      store$1.state.zircleWidth.m = 100;
-      store$1.state.zircleWidth.s = 80;
-      store$1.state.zircleWidth.xs = 60;
-      store$1.state.zircleWidth.xxs = 40;
-    }
-    if (window.matchMedia('(min-width: 768px) and (orientation: landscape)').matches) {
-      store$1.state.zircleWidth.xl = 360;
-      store$1.state.zircleWidth.l = 120;
-      store$1.state.zircleWidth.m = 100;
-      store$1.state.zircleWidth.s = 80;
-      store$1.state.zircleWidth.xs = 60;
-      store$1.state.zircleWidth.xxs = 40;
-    }
-    // desktop or large tablets
-    if (window.matchMedia('(min-width: 992px) and (orientation: portrait)').matches) {
-      store$1.state.zircleWidth.xl = 420;
-      store$1.state.zircleWidth.l = 120;
-      store$1.state.zircleWidth.m = 100;
-      store$1.state.zircleWidth.s = 80;
-      store$1.state.zircleWidth.xs = 60;
-      store$1.state.zircleWidth.xxs = 40;
-    }
-    if (window.matchMedia('(min-width: 992px) and (orientation: landscape)').matches) {
-      store$1.state.zircleWidth.xl = 420;
-      store$1.state.zircleWidth.l = 120;
-      store$1.state.zircleWidth.m = 100;
-      store$1.state.zircleWidth.s = 80;
-      store$1.state.zircleWidth.xs = 60;
-      store$1.state.zircleWidth.xxs = 40;
-    }
-    // large desktop
-    if (window.matchMedia('(min-width: 1200px) and (orientation: portrait)').matches) {
-      store$1.state.zircleWidth.xl = 430;
-      store$1.state.zircleWidth.l = 130;
-      store$1.state.zircleWidth.m = 110;
-      store$1.state.zircleWidth.s = 90;
-      store$1.state.zircleWidth.xs = 70;
-      store$1.state.zircleWidth.xxs = 50;
-    }
-    // xl desktop
-    if (window.matchMedia('(min-width: 1800px)').matches) {
-      store$1.state.zircleWidth.xl = 650;
-      store$1.state.zircleWidth.l = 130;
-      store$1.state.zircleWidth.m = 110;
-      store$1.state.zircleWidth.s = 90;
-      store$1.state.zircleWidth.xs = 70;
-      store$1.state.zircleWidth.xxs = 50;
-    }
+var position = {
+  getCurrentPosition: function getCurrentPosition() {
+    return store$1.state.position;
   },
-  point: function point(component) {
-    // VARIABLE DECLARATION
+  calcPosition: function calcPosition(component) {
+    store$1.actions.setLog('calcPosition() => ' + component.type);
+    // Variable declaration
     var scale = 1;
     var scalei = 1;
     var currentX = 0;
     var currentY = 0;
     var currentXi = 0;
     var currentYi = 0;
-    var parentPosition = {};
-    var newPosition = {};
-    // EJECUTA FUNCI ON
-    if (component.type === 'panel') {
-      if (store$1.state.mode === 'backward' && store$1.state.cache.length >= 3 && store$1.state.cache[store$1.state.cache.length - 3].id === component.viewID) {
+    var parentPosition = { Xi: 0, Yi: 0, X: 0, Y: 0, scalei: 1, scale: 1 };
+    var newPosition = store$1.state.position;
+    // Calc position for z-panel (the main view)
+    switch (component.type) {
+      case 'panel':
+        if (store$1.state.mode === 'backward' && store$1.state.cache.length >= 3 && store$1.state.cache[store$1.state.cache.length - 3].id === component.viewID) {
+          newPosition = {
+            X: store$1.state.cache[store$1.state.cache.length - 3].position.X,
+            Xi: store$1.state.cache[store$1.state.cache.length - 3].position.Xi,
+            Y: store$1.state.cache[store$1.state.cache.length - 3].position.Y,
+            Yi: store$1.state.cache[store$1.state.cache.length - 3].position.Yi,
+            scalei: store$1.state.cache[store$1.state.cache.length - 3].position.scalei,
+            scale: store$1.state.cache[store$1.state.cache.length - 3].position.scale
+          };
+        }
+        break;
+      default:
+        // Cal position for other components such as z-scale
+        var angle = component.angle;
+        var distance = component.distance;
+        scale = store$1.state.zircleWidth.xl / store$1.actions.getComponentWidth(component.size);
+        scalei = store$1.actions.getComponentWidth(component.size) / store$1.state.zircleWidth.xl;
+        distance === 0 ? (currentX = 0, currentY = 0) : (currentX = store$1.state.zircleWidth.xl / 2 * distance / 100 * Math.cos(angle * (Math.PI / 180)), currentY = store$1.state.zircleWidth.xl / 2 * distance / 100 * Math.sin(angle * (Math.PI / 180)));
+        currentX > 0 ? currentXi = -Math.abs(Number(currentX)) : currentXi = Math.abs(Number(currentX));
+        currentY > 0 ? currentYi = -Math.abs(Number(currentY)) : currentYi = Math.abs(Number(currentY));
+        if (component.$parent.type === 'panel') {
+          parentPosition = {
+            Xi: component.$parent.position.Xi,
+            Yi: component.$parent.position.Yi,
+            X: component.$parent.position.X,
+            Y: component.$parent.position.Y,
+            scalei: component.$parent.position.scalei,
+            scale: component.$parent.position.scale
+          };
+        }
         newPosition = {
-          X: store$1.state.cache[store$1.state.cache.length - 3].position.X,
-          Xi: store$1.state.cache[store$1.state.cache.length - 3].position.Xi,
-          Y: store$1.state.cache[store$1.state.cache.length - 3].position.Y,
-          Yi: store$1.state.cache[store$1.state.cache.length - 3].position.Yi,
-          scalei: store$1.state.cache[store$1.state.cache.length - 3].position.scalei,
-          scale: store$1.state.cache[store$1.state.cache.length - 3].position.scale
+          X: currentX,
+          Y: currentY,
+          Xi: parentPosition.Xi + currentXi * parentPosition.scalei,
+          Yi: parentPosition.Yi + currentYi * parentPosition.scalei,
+          scale: parentPosition.scale * scale,
+          scalei: parentPosition.scalei * scalei,
+          Xabs: parentPosition.X + currentX * parentPosition.scalei,
+          Yabs: parentPosition.Y + currentY * parentPosition.scalei
         };
-      } else {
-        newPosition = {
-          X: store$1.state.position.X,
-          Xi: store$1.state.position.Xi,
-          Y: store$1.state.position.Y,
-          Yi: store$1.state.position.Yi,
-          scalei: store$1.state.position.scalei,
-          scale: store$1.state.position.scale
-        };
-      }
-    } else {
-      var angle = component.angle;
-      var distance = component.distance;
-      if (component.size === 'xxs') {
-        scale = store$1.state.zircleWidth.xl / store$1.state.zircleWidth.xxs;
-        scalei = store$1.state.zircleWidth.xxs / store$1.state.zircleWidth.xl;
-      } else if (component.size === 'extrasmall') {
-        scale = store$1.state.zircleWidth.xl / store$1.state.zircleWidth.xs;
-        scalei = store$1.state.zircleWidth.xs / store$1.state.zircleWidth.xl;
-      } else if (component.size === 'small') {
-        scale = store$1.state.zircleWidth.xl / store$1.state.zircleWidth.s;
-        scalei = store$1.state.zircleWidth.s / store$1.state.zircleWidth.xl;
-      } else if (component.size === 'medium') {
-        scale = store$1.state.zircleWidth.xl / store$1.state.zircleWidth.m;
-        scalei = store$1.state.zircleWidth.m / store$1.state.zircleWidth.xl;
-      } else if (component.size === 'large') {
-        scale = store$1.state.zircleWidth.xl / store$1.state.zircleWidth.l;
-        scalei = store$1.state.zircleWidth.l / store$1.state.zircleWidth.xl;
-      } else if (component.size === 'extralarge') {
-        scale = 1;
-        scalei = 1;
-      }
-      if (distance === 0) {
-        currentX = 0;
-        currentY = 0;
-      } else {
-        currentX = store$1.state.zircleWidth.xl / 2 * distance / 100 * Math.cos(angle * (Math.PI / 180));
-        currentY = store$1.state.zircleWidth.xl / 2 * distance / 100 * Math.sin(angle * (Math.PI / 180));
-      }
-      if (currentX > 0) {
-        currentXi = -Math.abs(Number(currentX));
-      } else {
-        currentXi = Math.abs(Number(currentX));
-      }
-      if (currentY > 0) {
-        currentYi = -Math.abs(Number(currentY));
-      } else {
-        currentYi = Math.abs(Number(currentY));
-      }
-      if (component.$parent.type === 'panel') {
-        parentPosition = {
-          Xi: component.$parent.position.Xi,
-          Yi: component.$parent.position.Yi,
-          X: component.$parent.position.X,
-          Y: component.$parent.position.Y,
-          scalei: component.$parent.position.scalei,
-          scale: component.$parent.position.scale
-        };
-      } else {
-        parentPosition = {
-          Xi: 0,
-          Yi: 0,
-          X: 0,
-          Y: 0,
-          scalei: 1,
-          scale: 1
-        };
-      }
-      newPosition = {
-        X: currentX,
-        Y: currentY,
-        Xi: parentPosition.Xi + currentXi * parentPosition.scalei,
-        Yi: parentPosition.Yi + currentYi * parentPosition.scalei,
-        scale: parentPosition.scale * scale,
-        scalei: parentPosition.scalei * scalei,
-        Xabs: parentPosition.X + currentX * parentPosition.scalei,
-        Yabs: parentPosition.Y + currentY * parentPosition.scalei
-      };
     }
     return newPosition;
   },
   setAppPos: function setAppPos(data) {
+    store$1.actions.setLog('setAppPos() => ' + data.go);
     store$1.state.position = {
       X: data.X,
       Y: data.Y,
@@ -679,61 +607,110 @@ var store$1 = {
       itemID: data.itemID,
       item: data.item
     };
-    store$1.setView(data.go);
+    store$1.actions.setView(data.go);
+  }
+};
+
+var navigation = {
+  getCurrentViewName: function getCurrentViewName() {
+    console.log(store$1.state.currentView);
+    return store$1.state.currentView;
   },
+  getPreviousViewName: function getPreviousViewName() {
+    return store$1.state.previousView;
+  },
+  getPastViewName: function getPastViewName() {
+    return store$1.state.pastView;
+  },
+  getCurrentViewId: function getCurrentViewId() {
+    return store$1.state.cache[store$1.state.cache.length - 1].id;
+  },
+  getPreviousViewId: function getPreviousViewId() {
+    return store$1.state.cache[store$1.state.cache.length - 2].id;
+  },
+  getPastViewId: function getPastViewId() {
+    return store$1.state.cache[store$1.state.cache.length - 3].id;
+  },
+  getHistoryLength: function getHistoryLength() {
+    return store$1.state.history.length;
+  },
+  setNavigationMode: function setNavigationMode(value) {
+    if (value === 'forward' || value === 'backward') {
+      store$1.state.mode = value;
+      store$1.actions.setLog('Navigation mode is ' + value);
+    } else {
+      store$1.actions.setLog('setNavigationMode() only acepts forward or backward values', 'error');
+    }
+  },
+  getNavigationMode: function getNavigationMode() {
+    return store$1.state.mode;
+  },
+  getBackNavState: function getBackNavState() {
+    return store$1.state.goBackNav;
+  },
+  setBackNav: function setBackNav(value) {
+    if (value !== store$1.state.goBackNav) {
+      // let state = ''
+      // value === true ? state = 'enabled' : state = 'disabled'
+      // store.actions.setLog('BackNav is ' + state)
+      store$1.state.goBackNav = value;
+    }
+  },
+
+  // setView() is deprecated and will be deleted on zircle 0.5.0. Use setViewName() instead.
   setView: function setView(view) {
+    store$1.actions.setViewName(view);
+    store$1.actions.setLog('Consider use setViewName() instead', 'warn');
+  },
+  setViewName: function setViewName(view) {
+    store$1.actions.setLog('setViewName() => current view: ' + view);
     // check if viewname exists in previous or past and rename '_0' or '_1'
     var viewName = view.toLowerCase();
-    store$1.setHistory(viewName);
-    if (store$1.state.history.length === 1) {
-      store$1.state.previousView = '';
-      store$1.state.pastView = '';
-    } else if (store$1.state.history.length === 2) {
-      store$1.state.previousView = store$1.state.history[store$1.state.history.length - 2];
-      store$1.state.pastView = '';
-    } else if (store$1.state.history.length >= 3) {
-      store$1.state.previousView = store$1.state.history[store$1.state.history.length - 2];
-      store$1.state.pastView = store$1.state.history[store$1.state.history.length - 3];
+    store$1.actions.setHistory(viewName);
+    switch (store$1.state.history.length) {
+      case 1:
+        store$1.state.previousView = '';
+        store$1.state.pastView = '';
+        break;
+      case 2:
+        store$1.state.previousView = store$1.state.history[store$1.state.history.length - 2];
+        store$1.state.pastView = '';
+        break;
+      default:
+        store$1.state.previousView = store$1.state.history[store$1.state.history.length - 2];
+        store$1.state.pastView = store$1.state.history[store$1.state.history.length - 3];
+        break;
     }
     store$1.state.currentView = viewName;
   },
   setHistory: function setHistory(view) {
+    store$1.actions.setLog('setHistory() => new view: ' + view);
     // only component with viewName
     if (store$1.state.mode === 'forward') {
       store$1.state.history.push(view);
       var prevViewName = '';
       var pastViewName = '';
-      if (store$1.state.cache.length === 0) {
-        newID = view + '--0';
-      }
-      if (store$1.state.cache.length === 1) {
-        prevViewName = store$1.state.cache[store$1.state.cache.length - 1].id.split('--');
-        if (view === prevViewName[0]) {
-          var newID = view + '--' + (Number(prevViewName[1]) + 1);
-        } else if (view !== prevViewName[0]) {
-          newID = view + '--0';
-        }
-      }
-      if (store$1.state.cache.length >= 2) {
-        prevViewName = store$1.state.cache[store$1.state.cache.length - 1].id.split('--');
-        pastViewName = store$1.state.cache[store$1.state.cache.length - 2].id.split('--');
-        if (view === prevViewName[0] && view === pastViewName[0]) {
-          newID = view + '--' + (Number(prevViewName[1]) + 1);
-        } else if (view === prevViewName[0] && view !== pastViewName[0]) {
-          newID = view + '--' + (Number(prevViewName[1]) + 1);
-        } else if (view !== prevViewName[0] && view === pastViewName[0]) {
-          newID = view + '--' + (Number(pastViewName[1]) + 1);
-        } else if (view !== prevViewName[0] && view !== pastViewName[0]) {
-          newID = view + '--0';
-        }
-      }
-      if (store$1.state.cache.length >= 3) {
-        var lastViewName = store$1.state.cache[store$1.state.cache.length - 3].id.split('--');
-        if (view === lastViewName[0]) {
-          newID = view + '--' + (Number(prevViewName[1]) + 1);
-        } else {
-          newID = view + '--0';
-        }
+      switch (store$1.state.cache.length) {
+        case 0:
+          var newID = view + '--0';
+          break;
+        case 1:
+          prevViewName = store$1.state.cache[store$1.state.cache.length - 1].id.split('--');
+          view === prevViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0';
+          break;
+        case 2:
+          prevViewName = store$1.state.cache[store$1.state.cache.length - 1].id.split('--');
+          pastViewName = store$1.state.cache[store$1.state.cache.length - 2].id.split('--');
+          if (view === prevViewName[0]) {
+            newID = view + '--' + (Number(prevViewName[1]) + 1);
+          } else {
+            view === pastViewName[0] ? newID = view + '--' + (Number(pastViewName[1]) + 1) : newID = view + '--0';
+          }
+          break;
+        default:
+          var lastViewName = store$1.state.cache[store$1.state.cache.length - 3].id.split('--');
+          view === lastViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0';
+          break;
       }
       var cacheView = {
         view: view,
@@ -741,19 +718,13 @@ var store$1 = {
         position: store$1.state.position
       };
       store$1.state.cache.push(cacheView);
-      if (store$1.state.isRouterEnabled === true) {
-        if (store$1.state.position.itemID === undefined) {
-          store$1.state.$router.push({ name: newID });
-        } else {
-          store$1.state.selectedItem = store$1.state.position.item;
-          var id = store$1.state.position.itemID.toLowerCase();
-          // trim spaces
-          store$1.state.$router.push({ name: newID, params: { id: id } });
-        }
-      } else {
-        if (store$1.state.position.item !== undefined) {
-          store$1.state.selectedItem = store$1.state.position.item;
-        }
+      switch (store$1.state.isRouterEnabled) {
+        case true:
+          store$1.state.position.itemID === undefined ? store$1.state.$router.push({ name: newID }) : (store$1.state.selectedItem = store$1.state.position.item, store$1.state.$router.push({ name: newID, params: { id: store$1.state.position.itemID.toLowerCase() } }));
+          break;
+        case false:
+          store$1.state.position.item !== undefined ? store$1.state.selectedItem = store$1.state.position.item : '';
+          break;
       }
     }
   },
@@ -764,9 +735,147 @@ var store$1 = {
       store$1.state.cache.pop();
       store$1.state.cache[store$1.state.cache.length - 1].position.go = store$1.state.history[store$1.state.history.length - 1];
       store$1.state.mode = 'backward';
-      store$1.setAppPos(store$1.state.cache[store$1.state.cache.length - 1].position);
+      store$1.actions.setLog('goBack() => ' + store$1.state.history[store$1.state.history.length - 1]);
+      store$1.actions.setAppPos(store$1.state.cache[store$1.state.cache.length - 1].position);
     }
   }
+};
+
+var responsiveness = {
+  getComponentWidth: function getComponentWidth(size) {
+    switch (size) {
+      case 'extralarge':
+      case 'xxl':
+        var width = store$1.state.zircleWidth.xl;
+        break;
+      case 'large':
+        width = store$1.state.zircleWidth.l;
+        break;
+      case 'medium':
+        width = store$1.state.zircleWidth.m;
+        break;
+      case 'small':
+        width = store$1.state.zircleWidth.s;
+        break;
+      case 'extrasmall':
+        width = store$1.state.zircleWidth.xs;
+        break;
+      case 'xxs':
+        width = store$1.state.zircleWidth.xxs;
+        break;
+    }
+    return width;
+  },
+  getDimensions: function getDimensions() {
+    // small devices
+    if (window.matchMedia('(max-width: 319px)').matches) store$1.state.zircleWidth = { xl: 200, l: 70, m: 50, s: 30, xs: 20, xxs: 20
+      // medium
+    };if (window.matchMedia('(min-width: 320px)').matches) store$1.state.zircleWidth = { xl: 230, l: 85, m: 65, s: 45, xs: 30, xxs: 20
+      // medium - large devices portrait
+    };if (window.matchMedia('(min-width: 375px) and (orientation: portrait)').matches) store$1.state.zircleWidth = { xl: 260, l: 90, m: 70, s: 50, xs: 40, xxs: 30
+      // medium - large devices landscape
+    };if (window.matchMedia('(min-width: 375px) and (orientation: landscape)').matches) store$1.state.zircleWidth = { xl: 270, l: 90, m: 70, s: 50, xs: 40, xxs: 30
+      // tablets portrait
+    };if (window.matchMedia('(min-width: 768px) and (orientation: portrait) and (min-pixel-ratio: 2)').matches) store$1.state.zircleWidth = { xl: 340, l: 120, m: 100, s: 80, xs: 60, xxs: 40
+      // tablets landscape
+    };if (window.matchMedia('(min-width: 768px) and (orientation: landscape)').matches) store$1.state.zircleWidth = { xl: 360, l: 120, m: 100, s: 80, xs: 60, xxs: 40
+      // desktop or large tablets portrait
+    };if (window.matchMedia('(min-width: 992px) and (orientation: portrait)').matches) store$1.state.zircleWidth = { xl: 420, l: 120, m: 100, s: 80, xs: 60, xxs: 40
+      // desktop or large tablets landscape
+    };if (window.matchMedia('(min-width: 992px) and (orientation: landscape)').matches) store$1.state.zircleWidth = { xl: 420, l: 120, m: 100, s: 80, xs: 60, xxs: 40
+      // large desktop
+    };if (window.matchMedia('(min-width: 1200px) and (orientation: portrait)').matches) store$1.state.zircleWidth = { xl: 430, l: 130, m: 110, s: 90, xs: 70, xxs: 50
+      // xl desktop
+    };if (window.matchMedia('(min-width: 1800px)').matches) store$1.state.zircleWidth = { xl: 650, l: 130, m: 110, s: 90, xs: 70, xxs: 50 };
+    store$1.actions.setLog('getDimensions() => viewPort resize: z-panel width = ' + store$1.state.zircleWidth.xl);
+  }
+};
+
+var themes = {
+  getCurrentTheme: function getCurrentTheme() {
+    return store$1.state.theme;
+  },
+  getCurrentColor: function getCurrentColor() {
+    return store$1.state.color;
+  }
+};
+
+var debug = {
+  setLog: function setLog(msg, type) {
+    switch (type) {
+      case 'warn':
+        var bgColor = 'yellow';
+        var color = 'black';
+        break;
+      case 'error':
+        bgColor = 'red';
+        color = 'white';
+        break;
+      default:
+        bgColor = 'green';
+        color = 'white';
+    }
+    if (store$1.debug) {
+      return console.log('%c z ', 'background: ' + bgColor + '; color:  ' + color + '', msg);
+    }
+  },
+  isDebugEnabled: function isDebugEnabled(value) {
+    if (value === true || value === false) {
+      store$1.debug = value;
+      var state = '';
+      value === true ? state = 'enabled. Options: [all], [warnings], [errors]' : state = 'disabled';
+      store$1.actions.setLog('Debug is ' + state);
+    } else {
+      store$1.actions.setLog('setDebug() only acepts true or false values', 'error');
+    }
+  }
+};
+
+var list = {
+  getSelectedItem: function getSelectedItem() {
+    return store$1.state.selectedItem;
+  },
+  setPages: function setPages(value) {
+    // armar validator por array
+    // mover fx chunk here
+    store$1.state.pages = value;
+  },
+  getPages: function getPages() {
+    return store$1.state.pages;
+  },
+  getNumberOfPages: function getNumberOfPages() {
+    return store$1.state.pages.length;
+  },
+  getCurrentPage: function getCurrentPage() {
+    return store$1.state.pages[store$1.state.currentPage];
+  },
+  getCurrentPageIndex: function getCurrentPageIndex() {
+    return store$1.state.currentPage;
+  },
+  setCurrentPageIndex: function setCurrentPageIndex(value) {
+    store$1.state.currentPage = value;
+  },
+  getNumberOfItemsInCurrentPage: function getNumberOfItemsInCurrentPage() {
+    return store$1.state.pages[store$1.state.currentPage].length;
+  }
+};
+
+var alert = {
+  setAlert: function setAlert(value) {
+    store$1.actions.setLog('setAlert(): ' + value);
+    store$1.state.alert = value;
+  },
+  getAlert: function getAlert() {
+    return store$1.state.alert;
+  }
+};
+
+var actions = _Object$assign({}, router, position, navigation, responsiveness, themes, list, alert, debug);
+
+var store$1 = {
+  debug: false,
+  state: state,
+  actions: actions
 };
 
 (function () {
@@ -802,24 +911,12 @@ var zmixin = {
       type: [String, Number]
     }
   },
-  data: function data() {
-    return {
-      state: store$1.state,
-      store: store$1
-    };
-  },
-
   computed: {
     position: function position() {
-      return this.store.point(this);
+      return this.$zircle.calcPosition(this);
     },
     classes: function classes() {
       return {
-        // currclass: this.viewName === this.state.currentView,
-        // lastclass: this.viewName === this.state.lastView,
-        // pastclass: this.type === 'panel' && this.viewName === this.state.pastView && this.viewName !== this.state.previousView && this.viewName !== this.state.currentView,
-        // prevclass: this.type === 'panel' && this.viewName === this.state.previousView && this.viewName !== this.state.currentView && this.viewName !== this.state.pastView,
-        // hidden: this.$parent.viewName === this.state.previousView,
         zoom: this.type === 'scale' && this.gotoview !== undefined
       };
     },
@@ -843,9 +940,9 @@ var zmixin = {
 
 var zpanel = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "zui main", class: [_vm.classes, _vm.colors], staticStyle: { "overflow": "visible" }, style: _vm.resize === false ? _vm.styles.main : _vm.zpos.main, attrs: { "title": _vm.viewName, "type": "panel" }, on: { "mouseover": function mouseover($event) {
-          _vm.state.backwardNavigation = true;
+          _vm.$zircle.setBackNav(true);
         }, "mouseleave": function mouseleave($event) {
-          _vm.state.backwardNavigation = false;
+          _vm.$zircle.setBackNav(false);
         } } }, [_c('div', { staticClass: "plate", style: _vm.resize === false ? _vm.styles.plate : _vm.zpos.plate }), _vm._v(" "), _vm.range === true ? _c('z-range', { attrs: { "progress": _vm.progress } }) : _vm._e(), _vm._v(" "), _vm.scrollBar === true ? _c('z-scroll', { staticStyle: { "overflow": "visible" }, attrs: { "scrollVal": _vm.scrollVal }, on: { "update:scrollVal": function updateScrollVal($event) {
           _vm.scrollVal = $event;
         } } }) : _vm._e(), _vm._v(" "), _vm.slider === true ? _c('z-slider', { attrs: { "progress": _vm.progress } }) : _vm._e(), _vm._v(" "), _c('div', { staticClass: "z-contentbox dashed", style: _vm.styles.background }, [_vm._t("picture"), _vm._v(" "), _c('div', { staticClass: "z-content maindisc", class: [_vm.classesContent], style: _vm.resize === false ? _vm.styles.hideScroll : _vm.zpos.hideScroll, on: { "scroll": _vm.scroll } }, [_c('section', { staticClass: "z-text" }, [_vm._t("default"), _vm._v(" "), _c('span', { staticClass: "bottom" })], 2)])], 2), _vm._v(" "), _vm._t("circles")], 2);
@@ -893,21 +990,22 @@ var zpanel = { render: function render() {
       return this.view.toLowerCase();
     },
     styles: function styles() {
+      var width = this.$zircle.getComponentWidth('xxl');
       return {
         main: {
-          width: this.state.zircleWidth.xl + 'px',
-          height: this.state.zircleWidth.xl + 'px',
-          margin: -(this.state.zircleWidth.xl / 2) + 'px 0 0 ' + -(this.state.zircleWidth.xl / 2) + 'px',
+          width: width + 'px',
+          height: width + 'px',
+          margin: -(width / 2) + 'px 0 0 ' + -(width / 2) + 'px',
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
-          width: this.state.zircleWidth.xl + 50 + 'px',
-          height: this.state.zircleWidth.xl + 50 + 'px',
-          margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
+          width: width + 50 + 'px',
+          height: width + 50 + 'px',
+          margin: -((width + 50) / 2) + 'px 0 0 ' + -((width + 50) / 2) + 'px'
         },
         hideScroll: {
-          width: this.state.zircleWidth.xl - 5 + 'px',
-          marginLeft: -this.state.zircleWidth.xl * 0.0392 + 3.08 + 'px'
+          width: width - 5 + 'px',
+          marginLeft: -width * 0.0392 + 3.08 + 'px'
         }
       };
     },
@@ -919,39 +1017,40 @@ var zpanel = { render: function render() {
   },
   methods: {
     scroll: function scroll() {
-      var test1 = this.$el.querySelector('.z-content');
-      this.scrollVal = -45 + test1.scrollTop * 100 / (test1.scrollHeight - test1.clientHeight) * 86 / 100;
+      var container = this.$el.querySelector('.z-content');
+      this.scrollVal = -45 + container.scrollTop * 100 / (container.scrollHeight - container.clientHeight) * 86 / 100;
     }
   },
   watch: {
     scrollVal: function scrollVal() {
-      var test1 = this.$el.querySelector('.z-content');
-      test1.scrollTop = (45 + this.scrollVal) * 100 / 86 * (test1.scrollHeight - test1.clientHeight) / 100;
+      var container = this.$el.querySelector('.z-content');
+      container.scrollTop = (45 + this.scrollVal) * 100 / 86 * (container.scrollHeight - container.clientHeight) / 100;
     }
   },
   mounted: function mounted() {
     if (this.$el.classList.contains('pastclass')) {
-      this.viewID = this.state.cache[this.state.cache.length - 3].id;
+      this.viewID = this.$zircle.getPastViewId();
     }
+    var width = this.$zircle.getComponentWidth('xxl');
     this.zpos = {
       main: {
-        width: this.state.zircleWidth.xl + 'px',
-        height: this.state.zircleWidth.xl + 'px',
-        margin: -(this.state.zircleWidth.xl / 2) + 'px 0 0 ' + -(this.state.zircleWidth.xl / 2) + 'px',
+        width: width + 'px',
+        height: width + 'px',
+        margin: -(width / 2) + 'px 0 0 ' + -(width / 2) + 'px',
         transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
       },
       plate: {
-        width: this.state.zircleWidth.xl + 50 + 'px',
-        height: this.state.zircleWidth.xl + 50 + 'px',
-        margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
+        width: width + 50 + 'px',
+        height: width + 50 + 'px',
+        margin: -((width + 50) / 2) + 'px 0 0 ' + -((width + 50) / 2) + 'px'
       },
       hideScroll: {
-        width: this.state.zircleWidth.xl - 5 + 'px',
-        marginLeft: -this.state.zircleWidth.xl * 0.0392 + 3.08 + 'px'
+        width: width - 5 + 'px',
+        marginLeft: -width * 0.0392 + 3.08 + 'px'
       }
     };
-    var test = this.$el.querySelector('.z-content > .z-text'); // guarda con esto que no anda bien
-    if (test.clientHeight > this.state.zircleWidth.xl) {
+    var container = this.$el.querySelector('.z-content > .z-text'); // guarda con esto que no anda bien
+    if (container.clientHeight > width) {
       this.scrollBar = true;
     } else {
       this.scrollBar = false;
@@ -1025,23 +1124,7 @@ var zscale = { render: function render() {
       }
     },
     style: function style() {
-      switch (this.size) {
-        case 'large':
-          var zwidth = this.state.zircleWidth.l;
-          break;
-        case 'medium':
-          zwidth = this.state.zircleWidth.m;
-          break;
-        case 'small':
-          zwidth = this.state.zircleWidth.s;
-          break;
-        case 'extrasmall':
-          zwidth = this.state.zircleWidth.xs;
-          break;
-        case 'xxs':
-          zwidth = this.state.zircleWidth.xxs / 3;
-          break;
-      }
+      var zwidth = this.$zircle.getComponentWidth(this.size);
       return {
         main: {
           width: zwidth + 'px',
@@ -1070,9 +1153,9 @@ var zscale = { render: function render() {
           scalei: this.position.scalei,
           go: go
         };
-        if (this.state.history.length < 6) {
-          this.store.state.mode = 'forward';
-          this.store.setAppPos(position);
+        if (this.$zircle.getHistoryLength() < 6) {
+          this.$zircle.setNavigationMode('forward');
+          this.$zircle.setAppPos(position);
           var vm = this;
           setTimeout(function () {
             vm.hidden = true;
@@ -1086,23 +1169,7 @@ var zscale = { render: function render() {
     }
   },
   mounted: function mounted() {
-    switch (this.size) {
-      case 'large':
-        var zwidth = this.state.zircleWidth.l;
-        break;
-      case 'medium':
-        zwidth = this.state.zircleWidth.m;
-        break;
-      case 'small':
-        zwidth = this.state.zircleWidth.s;
-        break;
-      case 'extrasmall':
-        zwidth = this.state.zircleWidth.xs;
-        break;
-      case 'xxs':
-        zwidth = this.state.zircleWidth.xxs / 3;
-        break;
-    }
+    var zwidth = this.$zircle.getComponentWidth(this.size);
     this.zpos = {
       main: {
         width: zwidth + 'px',
@@ -1181,8 +1248,6 @@ var zitem = { render: function render() {
   data: function data() {
     return {
       type: 'item',
-      state: store$1.state,
-      store: store$1,
       resize: false,
       zpos: {}
     };
@@ -1190,10 +1255,9 @@ var zitem = { render: function render() {
 
   computed: {
     position: function position() {
-      return this.store.point(this);
+      return this.$zircle.calcPosition(this);
     },
     classes: function classes() {
-      // var colorp = this.color
       return {
         zoom: this.type === 'scale' && this.gotoview !== undefined
       };
@@ -1202,7 +1266,7 @@ var zitem = { render: function render() {
       return this.color;
     },
     distance: function distance() {
-      return this.state.pages[this.state.currentPage].length === 1 ? 0 : 60;
+      return this.$zircle.getNumberOfItemsInCurrentPage() === 1 ? 0 : 60;
     },
     gotoviewName: function gotoviewName() {
       if (this.gotoview !== undefined) {
@@ -1210,23 +1274,7 @@ var zitem = { render: function render() {
       }
     },
     styles: function styles() {
-      switch (this.size) {
-        case 'large':
-          var zwidth = this.state.zircleWidth.l;
-          break;
-        case 'medium':
-          zwidth = this.state.zircleWidth.m;
-          break;
-        case 'small':
-          zwidth = this.state.zircleWidth.s;
-          break;
-        case 'extrasmall':
-          zwidth = this.state.zircleWidth.xs;
-          break;
-        case 'xxs':
-          zwidth = this.state.zircleWidth.xxs;
-          break;
-      }
+      var zwidth = this.$zircle.getComponentWidth(this.size);
       return {
         main: {
           width: zwidth + 'px',
@@ -1255,35 +1303,17 @@ var zitem = { render: function render() {
           itemID: this.id,
           item: this.item
         };
-        if (this.state.history.length < 6) {
-          this.store.state.mode = 'forward';
-          this.store.setAppPos(position);
+        if (this.$zircle.getHistoryLength() < 6) {
+          this.$zircle.setNavigationMode('forward');
+          this.$zircle.setAppPos(position);
         } else {
           console.log('Max level of deep reached');
         }
-      } else {
-        // no action
       }
     }
   },
   mounted: function mounted() {
-    switch (this.size) {
-      case 'large':
-        var zwidth = this.state.zircleWidth.l;
-        break;
-      case 'medium':
-        zwidth = this.state.zircleWidth.m;
-        break;
-      case 'small':
-        zwidth = this.state.zircleWidth.s;
-        break;
-      case 'extrasmall':
-        zwidth = this.state.zircleWidth.xs;
-        break;
-      case 'xxs':
-        zwidth = this.state.zircleWidth.xxs;
-        break;
-    }
+    var zwidth = this.$zircle.getComponentWidth(this.size);
     this.zpos = {
       main: {
         width: zwidth + 'px',
@@ -1316,7 +1346,7 @@ var zitem = { render: function render() {
   if (typeof document !== 'undefined') {
     var head = document.head || document.getElementsByTagName('head')[0],
         style = document.createElement('style'),
-        css = " :root { --light-blue: #5FC9F3; --black: #283237; --purple: #ee305a; --orange: #f7892f; --yellow: #ffca26; --blue: #3e78bb; --green: #69bf66; --red: #ef3c3b; --gray: #7c7e81; } * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); } ::-webkit-scrollbar { display: none; } .color--light-blue { --background-color: #F1F1F1; --primary-color: #5FC9F3; --accent-color: #0D7FAC; --success-color: #52B781; --warning-color: #CFA749; --danger-color: #C76B6F; } .color--black { --background-color: #859ba6; --primary-color: #283237; --accent-color: #000000; --success-color: #418a49; --warning-color: #bf7911; --danger-color: #b73e36; } .color--purple { --background-color: #fdecf0; --primary-color: #ee305a; --accent-color: #7b0a23; --success-color: #7d8953; --warning-color: #fa791b; --danger-color: #f23d41; } .color--orange { --background-color: #fff8f3; --primary-color: #f7892f; --accent-color: #884005; --success-color: #7fa446; --warning-color: #fd940e; --danger-color: #f55834; } .color--yellow { --background-color: #fffcf2; --primary-color: #ffca26; --accent-color: #8c6a00; --success-color: #82b743; --warning-color: #ffa70b; --danger-color: #f76c31; } .color--blue { --background-color: #d4e1f1; --primary-color: #3e78bb; --accent-color: #182e48; --success-color: #489f70; --warning-color: #c58e38; --danger-color: #bd535e; } .color--green { --background-color: #f6fbf6; --primary-color: #69bf66; --accent-color: #2b6329; --success-color: #55b457; --warning-color: #d2a41f; --danger-color: #ca6844; } .color--red { --background-color: #fef8f8; --primary-color: #ef3c3b; --accent-color: #860c0b; --success-color: #7d8d4a; --warning-color: #fa7c12; --danger-color: #f34138; } .color--gray { --background-color: #e4e4e5; --primary-color: #7c7e81; --accent-color: #313233; --success-color: #5aa05f; --warning-color: #d89027; --danger-color: #d0554d; } .theme--light { --background: var(--background-color); --primary: var(--primary-color); --accent: var(--accent-color); --background-card: var(--background-color); --border-card: var(--primary-color); --primary-text: var(--primary-color); } .theme--bold-light { --background: var(--background-color); --primary: var(--primary-color); --accent: var(--accent-color); --background-card: var(--primary-color); --border-card: var(--background-color); --primary-text: var(--background-color); } .theme--dark { --background: var(--primary-color); --primary: var(--background-color); --accent: var(--accent-color); --background-card: var(--primary-color); --border-card: var(--background-color); --primary-text: var(--background-color); } .theme--bold-dark { --background: var(--primary-color); --primary: var(--background-color); --accent: var(--accent-color); --background-card: var(--background-color); --border-card: var(--primary-color); --primary-text: var(--primary-color); } #z-container { position: fixed; height: 100%; width: 100%; background-color: var(--background); color: var(--primary); transition: background-color 1s; overflow: hidden; } div[type=\"panel\"], div[type=\"scale\"], div[type=\"button\"] { transition: background-color 1s; } #z-point { font-family: 'Source Sans Pro', sans-serif; font-size: calc(14px + 1vmax); font-style: normal; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; position: absolute; top: 50%; left: 50%; perspective: 1000px; text-decoration: none; } .handlebar:hover { cursor: grab; } .handlebar:active { cursor: grabbing; } .zui { overflow: visible; position: absolute; display: block; border-radius: 50%; top: 50%; left: 50%; text-align: center; } .main { z-index: 40; } .disc { z-index: 80; cursor: default; } .zoom { cursor: zoom-in; } .pop { z-index: 500; } .scroll, .slider { position: absolute; overflow: visible; display: block; z-index: 40; fill: none; stroke-opacity: 0.8; } .accent .slider, .accent .scroll { stroke: var(--primary); } .primary .slider, .primary .scroll { stroke: var(--accent); } .accent .scroll2 { fill: var(--primary); } .primary .scroll2 { fill: var(--accent); } .scroll2 { position: absolute; border-radius: 50%; display: block; width: 40px; height: 40px; top: 50%; left: 50%; margin: -20px 0 0 -20px; z-index: 70; } .dashed { border: 2px solid var(--background-card); } .flow { overflow: visible; } .label { font-size: calc(10px + 1vmax); overflow: visible } .z-contentbox { position: absolute; z-index: 50; top: 2%; left: 2%; width: 96%; height: 96%; display: block; border-radius: 50%; background: none; overflow: hidden; } .z-contentbox > img { border-radius: 50%; overflow: hidden; } .z-content { position: absolute; z-index: 0; top: 1%; left: 1%; width: 98%; height: 98%; display: flex; background: none; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; border-radius: 50%; user-select: none; border: 1px solid transparent; } .maindisc { cursor: default; } .longtext { overflow-y: scroll; padding-right: 20px; margin-right: -20px; /* padding-top: 100px; height: 100%; width: 105%; padding-right: 28px; margin-right: -28px; */ } .bottom { position: relative; display: block; width: 1px; height: 1px } .longtext span.bottom { position: relative; display: block; width: 1px; height: 140px } .nodisplay { display: none; } .button { cursor: pointer; } .button:hover { filter: brightness(0.9); } .button:active { filter: brightness(0.4); } .hidden { cursor: zoom-out; } .current { will-change: opacity; } .pastclass { pointer-events: none; cursor: zoom-out; filter: blur(1.5px); } .prevclass { pointer-events: none; cursor: zoom-out; filter: blur(1.5px); } .currclass { pointer-events: auto; animation: appear 800ms linear forwards; will-change: opacity; } @keyframes appear { 0% { opacity: 0; } 20% { opacity: 0; } 80% { opacity: 1; } 100% { opacity: 1; } } .lastclass { animation: disappear 800ms linear forwards; will-change: opacity; } @keyframes disappear { 0% { opacity: 1; } 20% { opacity: 1; } 80% { opacity: 0; } 100% { opacity: 0; } } @keyframes blur { 0% { filter: blur(0px); } 20% { filter: blur(0px); } 60% { filter: blur(1.5px); } 100% { filter: blur(1.5px); } } .prevclass div { cursor: zoom-out; } .background { background-color: var(--background); border: 3px solid var(--primary); color: var(--primary-text); } .accent { border: 3px solid var(--accent); background-color: var(--accent); color: var(--primary-text); } .accent-secondary { filter: invert(100%); } .accent-secondary-border { filter: invert(100%); background-color: transparent; border-width: 1px; } .primary, .default { border: 3px solid var(--border-card); background-color: var(--background-card); color: var(--primary-text); } .success { background-color: var(--success); border: 3px solid var(--success); color: var(--primary-text); } .warning { background-color: var(--warning); border: 3px solid var(--warning); color: var(--primary-text); } .danger { background-color: var(--danger); border: 3px solid var(--danger); color: var(--primary-text); } .light-blue { background-color: var(--light-blue); border: 3px solid var(--light-blue); color: var(--primary-text); } .black { background-color: var(--black); border: 3px solid var(--black); color: var(--primary-text); } .purple { background-color: var(--purple); border: 3px solid var(--purple); color: var(--primary-text); } .orange { background-color: var(--orange); border: 3px solid var(--orange); color: var(--primary-text); } .yellow { background-color: var(--yellow); border: 3px solid var(--yellow); color: var(--primary-text); } .blue { background-color: var(--blue); border: 3px solid var(--blue); color: var(--primary-text); } .green { background-color: var(--green); border: 3px solid var(--green); color: var(--primary-text); } .red { background-color: var(--red); border: 3px solid var(--red); color: var(--primary-text); } .gray { background-color: var(--gray); border: 3px solid var(--gray); color: var(--primary-text); } .plate, .popup-plate { position: absolute; z-index: 0; top: 50%; left: 50%; border-radius: 50%; border: 1px dashed var(--primary); opacity: 0.3; overflow: hidden; } .navplate { position: absolute; z-index: 90; top: 50%; left: 50%; border-radius: 50%; opacity: 1; overflow: hidden; } .alert { z-index: 100; background: var(--background); border: 1px solid var(--primary); opacity: 0.3; overflow: hidden; } .border { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--background); } div[title=\"z-item\"], div[title=\"z-dotnav\"] { cursor: zoom-in; } div[title=\"z-dotnav\"]:hover { cursor: grab; } div[title=\"z-dotnav\"]:active { cursor: grabbing; } .prevclass section[title=\"z-list\"] { pointer-events: none; } ::placeholder { color: inherit; } input { font-family: 'Source Sans Pro', sans-serif; font-size: calc(14px + 1vmax); font-style: normal; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; margin-top: 20px; width: 100%; background: none; appearance: none; box-shadow: none; border: none; color: inherit; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: inherit; background: inherit; outline: none; text-align: center; } ";style.type = 'text/css';if (style.styleSheet) {
+        css = " /* This is the style for zircle. To override it use !important */ :root { --light-blue: #5FC9F3; --black: #283237; --purple: #ee305a; --orange: #f7892f; --yellow: #ffca26; --blue: #3e78bb; --green: #69bf66; --red: #ef3c3b; --gray: #7c7e81; } * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); } ::-webkit-scrollbar { display: none; } .color--light-blue { --background-color: #F1F1F1; --primary-color: #5FC9F3; --accent-color: #0D7FAC; --success-color: #52B781; --warning-color: #CFA749; --danger-color: #C76B6F; } .color--black { --background-color: #859ba6; --primary-color: #283237; --accent-color: #000000; --success-color: #418a49; --warning-color: #bf7911; --danger-color: #b73e36; } .color--purple { --background-color: #fdecf0; --primary-color: #ee305a; --accent-color: #7b0a23; --success-color: #7d8953; --warning-color: #fa791b; --danger-color: #f23d41; } .color--orange { --background-color: #fff8f3; --primary-color: #f7892f; --accent-color: #884005; --success-color: #7fa446; --warning-color: #fd940e; --danger-color: #f55834; } .color--yellow { --background-color: #fffcf2; --primary-color: #ffca26; --accent-color: #8c6a00; --success-color: #82b743; --warning-color: #ffa70b; --danger-color: #f76c31; } .color--blue { --background-color: #d4e1f1; --primary-color: #3e78bb; --accent-color: #182e48; --success-color: #489f70; --warning-color: #c58e38; --danger-color: #bd535e; } .color--green { --background-color: #f6fbf6; --primary-color: #69bf66; --accent-color: #2b6329; --success-color: #55b457; --warning-color: #d2a41f; --danger-color: #ca6844; } .color--red { --background-color: #fef8f8; --primary-color: #ef3c3b; --accent-color: #860c0b; --success-color: #7d8d4a; --warning-color: #fa7c12; --danger-color: #f34138; } .color--gray { --background-color: #e4e4e5; --primary-color: #7c7e81; --accent-color: #313233; --success-color: #5aa05f; --warning-color: #d89027; --danger-color: #d0554d; } .theme--light { --background: var(--background-color); --primary: var(--primary-color); --accent: var(--accent-color); --background-card: var(--background-color); --border-card: var(--primary-color); --primary-text: var(--primary-color); } .theme--bold-light { --background: var(--background-color); --primary: var(--primary-color); --accent: var(--accent-color); --background-card: var(--primary-color); --border-card: var(--background-color); --primary-text: var(--background-color); } .theme--dark { --background: var(--primary-color); --primary: var(--background-color); --accent: var(--accent-color); --background-card: var(--primary-color); --border-card: var(--background-color); --primary-text: var(--background-color); } .theme--bold-dark { --background: var(--primary-color); --primary: var(--background-color); --accent: var(--accent-color); --background-card: var(--background-color); --border-card: var(--primary-color); --primary-text: var(--primary-color); } #z-container { position: fixed; height: 100%; width: 100%; background-color: var(--background); color: var(--primary); transition: background-color 1s; overflow: hidden; } div[type=\"panel\"], div[type=\"scale\"], div[type=\"button\"] { transition: background-color 1s; } #z-point { font-family: 'Source Sans Pro', sans-serif; font-size: calc(14px + 1vmax); font-style: normal; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; position: absolute; top: 50%; left: 50%; perspective: 1000px; text-decoration: none; } .handlebar:hover { cursor: grab; } .handlebar:active { cursor: grabbing; } .zui { overflow: visible; position: absolute; display: block; border-radius: 50%; top: 50%; left: 50%; text-align: center; } .main { z-index: 40; } .disc { z-index: 80; cursor: default; } .zoom { cursor: zoom-in; } .pop { z-index: 500; } .scroll, .slider { position: absolute; overflow: visible; display: block; z-index: 40; fill: none; stroke-opacity: 0.8; } .accent .slider, .accent .scroll { stroke: var(--primary); } .primary .slider, .primary .scroll { stroke: var(--accent); } .accent .scroll2 { fill: var(--primary); } .primary .scroll2 { fill: var(--accent); } .scroll2 { position: absolute; border-radius: 50%; display: block; width: 40px; height: 40px; top: 50%; left: 50%; margin: -20px 0 0 -20px; z-index: 70; } .dashed { border: 2px solid var(--background-card); } .flow { overflow: visible; } .label { font-size: calc(10px + 1vmax); overflow: visible } .z-contentbox { position: absolute; z-index: 50; top: 2%; left: 2%; width: 96%; height: 96%; display: block; border-radius: 50%; background: none; overflow: hidden; } .z-contentbox > img { border-radius: 50%; overflow: hidden; } .z-content { position: absolute; z-index: 0; top: 1%; left: 1%; width: 98%; height: 98%; display: flex; background: none; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; border-radius: 50%; user-select: none; border: 1px solid transparent; } .maindisc { cursor: default; } .longtext { overflow-y: scroll; padding-right: 20px; margin-right: -20px; /* padding-top: 100px; height: 100%; width: 105%; padding-right: 28px; margin-right: -28px; */ } .bottom { position: relative; display: block; width: 1px; height: 1px } .longtext span.bottom { position: relative; display: block; width: 1px; height: 140px } .nodisplay { display: none; } .button { cursor: pointer; } .button:hover { filter: brightness(0.9); } .button:active { filter: brightness(0.4); } .hidden { cursor: zoom-out; } .current { will-change: opacity; } .pastclass { pointer-events: none; cursor: zoom-out; filter: blur(1.5px); } .prevclass { pointer-events: none; cursor: zoom-out; filter: blur(1.5px); } .currclass { pointer-events: auto; animation: appear 800ms linear forwards; will-change: opacity; } @keyframes appear { 0% { opacity: 0; } 20% { opacity: 0; } 80% { opacity: 1; } 100% { opacity: 1; } } .lastclass { animation: disappear 800ms linear forwards; will-change: opacity; } @keyframes disappear { 0% { opacity: 1; } 20% { opacity: 1; } 80% { opacity: 0; } 100% { opacity: 0; } } @keyframes blur { 0% { filter: blur(0px); } 20% { filter: blur(0px); } 60% { filter: blur(1.5px); } 100% { filter: blur(1.5px); } } .prevclass div { cursor: zoom-out; } .background { background-color: var(--background); border: 3px solid var(--primary); color: var(--primary-text); } .accent { border: 3px solid var(--accent); background-color: var(--accent); color: var(--primary-text); } .accent-secondary { filter: invert(100%); } .accent-secondary-border { filter: invert(100%); background-color: transparent; border-width: 1px; } .primary, .default { border: 3px solid var(--border-card); background-color: var(--background-card); color: var(--primary-text); } .success { background-color: var(--success); border: 3px solid var(--success); color: var(--primary-text); } .warning { background-color: var(--warning); border: 3px solid var(--warning); color: var(--primary-text); } .danger { background-color: var(--danger); border: 3px solid var(--danger); color: var(--primary-text); } .light-blue { background-color: var(--light-blue); border: 3px solid var(--light-blue); color: var(--primary-text); } .black { background-color: var(--black); border: 3px solid var(--black); color: var(--primary-text); } .purple { background-color: var(--purple); border: 3px solid var(--purple); color: var(--primary-text); } .orange { background-color: var(--orange); border: 3px solid var(--orange); color: var(--primary-text); } .yellow { background-color: var(--yellow); border: 3px solid var(--yellow); color: var(--primary-text); } .blue { background-color: var(--blue); border: 3px solid var(--blue); color: var(--primary-text); } .green { background-color: var(--green); border: 3px solid var(--green); color: var(--primary-text); } .red { background-color: var(--red); border: 3px solid var(--red); color: var(--primary-text); } .gray { background-color: var(--gray); border: 3px solid var(--gray); color: var(--primary-text); } .plate, .popup-plate { position: absolute; z-index: 0; top: 50%; left: 50%; border-radius: 50%; border: 1px dashed var(--primary); opacity: 0.3; overflow: hidden; } .navplate { position: absolute; z-index: 90; top: 50%; left: 50%; border-radius: 50%; opacity: 1; overflow: hidden; } .alert { z-index: 100; background: var(--background); border: 1px solid var(--primary); opacity: 0.3; overflow: hidden; } .border { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--background); } div[title=\"z-item\"], div[title=\"z-dotnav\"] { cursor: zoom-in; } div[title=\"z-dotnav\"]:hover { cursor: grab; } div[title=\"z-dotnav\"]:active { cursor: grabbing; } .prevclass section[title=\"z-list\"] { pointer-events: none; } ::placeholder { color: inherit; } input { font-family: 'Source Sans Pro', sans-serif; font-size: calc(14px + 1vmax); font-style: normal; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; margin-top: 20px; width: 100%; background: none; appearance: none; box-shadow: none; border: none; color: inherit; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: inherit; background: inherit; outline: none; text-align: center; } .z-alert-enter-active, .z-alert-leave-active { transition: transform 0.3s; position: absolute; top: 50%; left: 50%; z-index: 500; } .z-alert-enter, .z-alert-leave-to { transform: scale(0); } ";style.type = 'text/css';if (style.styleSheet) {
       style.styleSheet.cssText = css;
     } else {
       style.appendChild(document.createTextNode(css));
@@ -1326,7 +1356,7 @@ var zitem = { render: function render() {
 
 /* eslint-disable no-new */
 var zcanvas = { render: function render() {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { class: [_vm.$zircleStore.state.color, _vm.$zircleStore.state.theme], style: [_vm.state.previousView !== '' ? { cursor: 'zoom-out' } : {}], attrs: { "id": "z-container" }, on: { "click": function click($event) {
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { class: [_vm.$zircle.getCurrentTheme(), _vm.$zircle.getCurrentColor()], style: [_vm.$zircle.getPreviousViewName() !== '' ? { cursor: 'zoom-out' } : {}], attrs: { "id": "z-container" }, on: { "click": function click($event) {
           $event.stopPropagation();_vm.goback($event);
         } } }, [_c('div', { attrs: { "id": "z-point" } }, [_vm._t("default")], 2)]);
   }, staticRenderFns: [],
@@ -1338,16 +1368,15 @@ var zcanvas = { render: function render() {
   },
   data: function data() {
     return {
-      state: store$1.state,
       store: store$1
     };
   },
 
   methods: {
     goback: function goback() {
-      if (this.state.previousView !== '' && this.state.backwardNavigation === false) {
-        if (this.state.isRouterEnabled === false) {
-          this.store.goBack();
+      if (this.$zircle.getPreviousViewName() !== '' && this.$zircle.getBackNavState() === false) {
+        if (this.$zircle.getRouterState() === false) {
+          this.$zircle.goBack();
         } else {
           this.$router.back();
         }
@@ -1356,12 +1385,11 @@ var zcanvas = { render: function render() {
   },
   mounted: function mounted() {
     var vue = this;
-    // seteo inicial de posiciom de circilos responsives pasarlo a store!!!
-    this.store.getDimensions();
-    // dynamic posiciom de circilos responsives
+    // Get window dimension to set the initial width of ui components such as z-panel
+    this.$zircle.getDimensions();
     window.addEventListener('resize', function (event) {
-      vue.store.state.viewport = { x: window.innerWidth, y: window.innerHeight };
-      vue.store.getDimensions();
+      // On resize change the width of ui components
+      vue.$zircle.getDimensions();
     });
   }
 };
@@ -1380,7 +1408,7 @@ var zcanvas = { render: function render() {
 
 /* eslint-disable no-new */
 var zviewmanager = { render: function render() {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('z-transition', [_vm.$zircleStore.state.cache.length >= 3 ? _c(_vm.pastView, { key: _vm.$zircleStore.state.cache[_vm.$zircleStore.state.cache.length - 3].id, tag: "component", staticClass: "pastclass" }) : _vm._e(), _vm._v(" "), _vm.$zircleStore.state.cache.length >= 2 ? _c(_vm.previousView, { key: _vm.$zircleStore.state.cache[_vm.$zircleStore.state.cache.length - 2].id, tag: "component", staticClass: "prevclass" }) : _vm._e(), _vm._v(" "), _vm.$zircleStore.state.isRouterEnabled === false && _vm.$zircleStore.state.cache.length >= 1 ? _c(_vm.currentView, { key: _vm.$zircleStore.state.cache[_vm.$zircleStore.state.cache.length - 1].id, tag: "component", class: _vm.$zircleStore.state.mode === 'forward' ? 'currclass' : '' }) : _vm._e(), _vm._v(" "), _vm.$zircleStore.state.isRouterEnabled === true && _vm.$zircleStore.state.cache.length >= 1 ? _c('router-view', { key: _vm.$zircleStore.state.cache[_vm.$zircleStore.state.cache.length - 1].id, class: _vm.$zircleStore.state.mode === 'forward' ? 'currclass' : '' }) : _vm._e()], 1);
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('z-transition', [_vm.$zircle.getHistoryLength() >= 3 ? _c(_vm.pastView, { key: _vm.$zircle.getPastViewId(), tag: "component", staticClass: "pastclass" }) : _vm._e(), _vm._v(" "), _vm.$zircle.getHistoryLength() >= 2 ? _c(_vm.previousView, { key: _vm.$zircle.getPreviousViewId(), tag: "component", staticClass: "prevclass" }) : _vm._e(), _vm._v(" "), _vm.$zircle.getRouterState() === false && _vm.$zircle.getHistoryLength() >= 1 ? _c(_vm.currentView, { key: _vm.$zircle.getCurrentViewId(), tag: "component", class: _vm.$zircle.getNavigationMode() === 'forward' ? 'currclass' : '' }) : _vm._e(), _vm._v(" "), _vm.$zircle.getRouterState() === true && _vm.$zircle.getHistoryLength() >= 1 ? _c('router-view', { key: _vm.$zircle.getCurrentViewId(), class: _vm.$zircle.getNavigationMode() === 'forward' ? 'currclass' : '' }) : _vm._e()], 1);
   }, staticRenderFns: [],
   name: 'z-view-manager',
   props: {
@@ -1393,18 +1421,18 @@ var zviewmanager = { render: function render() {
     currentView: function currentView() {
       var vm = this;
       var key = _Object$keys(this.list).find(function (k) {
-        if (k.toLowerCase() === vm.$zircleStore.state.currentView) {
+        if (k.toLowerCase() === vm.$zircle.getCurrentViewName()) {
           return k;
         }
       });
-      if (this.$zircleStore.state.isRouterEnabled === false) {
+      if (this.$zircle.getRouterState() === false) {
         return this.list[key];
       }
     },
     previousView: function previousView() {
       var vm = this;
       var key = _Object$keys(this.list).find(function (k) {
-        if (k.toLowerCase() === vm.$zircleStore.state.previousView) {
+        if (k.toLowerCase() === vm.$zircle.getPreviousViewName()) {
           return k;
         }
       });
@@ -1413,7 +1441,7 @@ var zviewmanager = { render: function render() {
     pastView: function pastView() {
       var vm = this;
       var key = _Object$keys(this.list).find(function (k) {
-        if (k.toLowerCase() === vm.$zircleStore.state.pastView) {
+        if (k.toLowerCase() === vm.$zircle.getPastViewName()) {
           return k;
         }
       });
@@ -1446,9 +1474,9 @@ var ztransition = {
       on: {
         enter: function enter(el, done) {
           var point = document.getElementById('z-point');
-          if (context.parent.$zircleStore.state.mode === 'forward') {
+          if (context.parent.$zircle.getNavigationMode() === 'forward') {
             point.style.willChange = 'transform';
-            point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)';
+            point.style.transform = 'scale(' + context.parent.$zircle.getCurrentPosition().scale + ') translate3d(' + context.parent.$zircle.getCurrentPosition().Xi + 'px, ' + context.parent.$zircle.getCurrentPosition().Yi + 'px, 0px)';
             point.style.transition = 'transform 800ms ease-in-out';
             done();
           } else {
@@ -1463,11 +1491,11 @@ var ztransition = {
         beforeLeave: function beforeLeave(el) {},
         leave: function leave(el, done) {
           var point = document.getElementById('z-point');
-          if (context.parent.$zircleStore.state.mode === 'forward') {
+          if (context.parent.$zircle.getNavigationMode() === 'forward') {
             done();
           } else {
             point.style.willChange = 'transform';
-            point.style.transform = 'scale(' + context.parent.$zircleStore.state.position.scale + ') translate3d(' + context.parent.$zircleStore.state.position.Xi + 'px, ' + context.parent.$zircleStore.state.position.Yi + 'px, 0px)';
+            point.style.transform = 'scale(' + context.parent.$zircle.getCurrentPosition().scale + ') translate3d(' + context.parent.$zircle.getCurrentPosition().Xi + 'px, ' + context.parent.$zircle.getCurrentPosition().Yi + 'px, 0px)';
             point.style.transition = 'transform 800ms ease-in-out';
             el.classList.add('lastclass');
             setTimeout(function () {
@@ -1489,7 +1517,7 @@ var ztransition = {
   if (typeof document !== 'undefined') {
     var head = document.head || document.getElementsByTagName('head')[0],
         style = document.createElement('style'),
-        css = " .z-alert-enter-active, .z-alert-leave-active { transition: transform 0.3s; position: absolute; top: 50%; left: 50%; z-index: 500; } .z-alert-enter, .z-alert-leave-to { transform: scale(0); } ";style.type = 'text/css';if (style.styleSheet) {
+        css = "";style.type = 'text/css';if (style.styleSheet) {
       style.styleSheet.cssText = css;
     } else {
       style.appendChild(document.createTextNode(css));
@@ -1502,6 +1530,37 @@ var zalert = { render: function render() {
   }, staticRenderFns: [],
   mixins: [zmixin],
   name: 'z-alert',
+  data: function data() {
+    return {
+      type: 'alert',
+      scrollBar: false,
+      progress: 1
+    };
+  },
+
+  computed: {
+    styles: function styles() {
+      var zwidth = this.$zircle.getComponentWidth('xxl');
+      return {
+        main: {
+          width: zwidth + 50 + 'px',
+          height: zwidth + 50 + 'px',
+          margin: -((zwidth + 50) / 2) + 'px 0 0 ' + -((zwidth + 50) / 2) + 'px'
+        },
+        plate: {
+          width: zwidth + 150 + 'px',
+          height: zwidth + 150 + 'px',
+          margin: -((zwidth + 150) / 2) + 'px 0 0 ' + -((zwidth + 150) / 2) + 'px'
+        }
+      };
+    }
+  },
+  methods: {
+    close: function close() {
+      this.progress = 100;
+      this.$zircle.setAlert(false);
+    }
+  },
   mounted: function mounted() {
     var id = setInterval(frame, 100);
     var vm = this;
@@ -1513,36 +1572,6 @@ var zalert = { render: function render() {
       } else {
         vm.progress++;
       }
-    }
-  },
-  data: function data() {
-    return {
-      type: 'alert',
-      scrollBar: false,
-      progress: 1
-    };
-  },
-
-  computed: {
-    styles: function styles() {
-      return {
-        main: {
-          width: this.state.zircleWidth.xl + 50 + 'px',
-          height: this.state.zircleWidth.xl + 50 + 'px',
-          margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
-        },
-        plate: {
-          width: this.state.zircleWidth.xl + 150 + 'px',
-          height: this.state.zircleWidth.xl + 150 + 'px',
-          margin: -((this.state.zircleWidth.xl + 150) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 150) / 2) + 'px'
-        }
-      };
-    }
-  },
-  methods: {
-    close: function close() {
-      this.progress = 100;
-      this.state.alert = false;
     }
   }
 };
@@ -1572,23 +1601,7 @@ var zbutton = { render: function render() {
 
   computed: {
     style: function style() {
-      switch (this.size) {
-        case 'large':
-          var zwidth = this.state.zircleWidth.l;
-          break;
-        case 'medium':
-          zwidth = this.state.zircleWidth.m;
-          break;
-        case 'small':
-          zwidth = this.state.zircleWidth.s;
-          break;
-        case 'extrasmall':
-          zwidth = this.state.zircleWidth.xs;
-          break;
-        case 'xxs':
-          zwidth = this.state.zircleWidth.xxs;
-          break;
-      }
+      var zwidth = this.$zircle.getComponentWidth(this.size);
       return {
         main: {
           width: zwidth + 'px',
@@ -1634,19 +1647,21 @@ var zslider = { render: function render() {
   },
 
   computed: {
+    // getComponentWidth(this.size)
     styles: function styles() {
-      if (this.$parent.size === 'extralarge') {
+      var zwidth = this.$parent.size;
+      if (zwidth === 'extralarge') {
         var strokeWidth = 3;
-      } else if (this.$parent.size === 'large') {
+      } else if (zwidth === 'large') {
         strokeWidth = 7;
-      } else if (this.$parent.size === 'medium') {
+      } else if (zwidth === 'medium') {
         strokeWidth = 8;
-      } else if (this.$parent.size === 'small') {
+      } else if (zwidth === 'small') {
         strokeWidth = 9;
-      } else if (this.$parent.size === 'xs' || this.$parent.size === 'extrasmall') {
+      } else if (zwidth === 'xs' || zwidth === 'extrasmall') {
         strokeWidth = 10;
-      } else if (this.$parent.size === 'xxs') {}
-      if (this.$parent.type === 'panel' || this.$parent.type === 'popup') {
+      } else if (zwidth === 'xxs') {}
+      if (this.$parent.type === 'panel' || this.$parent.type === 'alert') {
         strokeWidth = 3;
       }
       var circleLength = 2 * Math.PI * 50;
@@ -1704,22 +1719,23 @@ var zrange = { render: function render() {
 
   computed: {
     positionr: function positionr() {
-      if (this.$parent.size === 'extralarge') {
+      var zwidth = this.$zircle.getComponentWidth(this.$parent.size);
+      if (zwidth === 'extralarge') {
         var dimension = this.state.zircleWidth.xl;
         var strokeWidth = 3;
-      } else if (this.$parent.size === 'large') {
+      } else if (zwidth === 'large') {
         dimension = this.state.zircleWidth.l;
         strokeWidth = 7;
-      } else if (this.$parent.size === 'medium') {
+      } else if (zwidth === 'medium') {
         dimension = this.state.zircleWidth.m;
         strokeWidth = 8;
-      } else if (this.$parent.size === 'small') {
+      } else if (zwidth === 'small') {
         dimension = this.state.zircleWidth.s;
         strokeWidth = 9;
-      } else if (this.$parent.size === 'xs' || this.$parent.size === 'extrasmall') {
+      } else if (zwidth === 'xs' || zwidth === 'extrasmall') {
         dimension = this.state.zircleWidth.xs;
         strokeWidth = 10;
-      } else if (this.$parent.size === 'xxs') {
+      } else if (zwidth === 'xxs') {
         dimension = this.state.zircleWidth.xxs;
       }
       if (this.$parent.type === 'panel') {
@@ -1868,9 +1884,10 @@ var zscroll = { render: function render() {
       };
     },
     position: function position() {
+      var zwidth = this.$zircle.getComponentWidth('xxl') / 2;
       return {
-        X: (this.state.zircleWidth.xl / 2 - 3) * Math.cos(this.scrollVal * (Math.PI / 180)),
-        Y: (this.state.zircleWidth.xl / 2 - 3) * Math.sin(this.scrollVal * (Math.PI / 180))
+        X: (zwidth - 3) * Math.cos(this.scrollVal * (Math.PI / 180)),
+        Y: (zwidth - 3) * Math.sin(this.scrollVal * (Math.PI / 180))
       };
     },
     classesContent3: function classesContent3() {
@@ -1960,15 +1977,15 @@ function chunk(myArray, chunkSize) {
   return res;
 }
 var zlist = { render: function render() {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('section', { attrs: { "title": "z-list" } }, [_vm._l(_vm.state.pages[_vm.state.currentPage], function (item, index) {
-      return _vm._t("default", null, { item: item, angle: 360 / _vm.state.pages[_vm.state.currentPage].length * index - 90 });
-    }), _vm._v(" "), _vm._l(_vm.$zircleStore.state.pages, function (page, index) {
-      return _c('z-dotnav', { key: index, attrs: { "size": "xxs", "color": "accent", "index": index, "distance": 112, "angle": (180 - (180 - _vm.$zircleStore.state.pages.length * 10)) / _vm.$zircleStore.state.pages.length * (_vm.$zircleStore.state.pages.length - index) + (180 - (180 - (180 - _vm.$zircleStore.state.pages.length * 10)) - (180 - (180 - _vm.$zircleStore.state.pages.length * 10)) / _vm.$zircleStore.state.pages.length) / 2, "active": _vm.$zircleStore.state.currentPage }, nativeOn: { "mouseover": function mouseover($event) {
-            _vm.state.backwardNavigation = true;
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('section', { attrs: { "title": "z-list" } }, [_vm._l(_vm.$zircle.getCurrentPage(), function (item, index) {
+      return _vm._t("default", null, { item: item, angle: 360 / _vm.$zircle.getNumberOfItemsInCurrentPage() * index - 90 });
+    }), _vm._v(" "), _vm._l(_vm.$zircle.getPages(), function (page, index) {
+      return _c('z-dotnav', { key: index, attrs: { "size": "xxs", "color": "accent", "index": index, "distance": 112, "angle": (180 - (180 - _vm.$zircle.getNumberOfPages() * 10)) / _vm.$zircle.getNumberOfPages() * (_vm.$zircle.getNumberOfPages() - index) + (180 - (180 - (180 - _vm.$zircle.getNumberOfPages() * 10)) - (180 - (180 - _vm.$zircle.getNumberOfPages() * 10)) / _vm.$zircle.getNumberOfPages()) / 2, "active": _vm.$zircle.getCurrentPageIndex() }, nativeOn: { "mouseover": function mouseover($event) {
+            _vm.$zircle.setBackNav(true);
           }, "mouseleave": function mouseleave($event) {
-            _vm.state.backwardNavigation = false;
+            _vm.$zircle.setBackNav(false);
           }, "click": function click($event) {
-            _vm.state.currentPage = index;
+            _vm.$zircle.setCurrentPageIndex(index);
           } } });
     })], 2);
   }, staticRenderFns: [],
@@ -1992,7 +2009,8 @@ var zlist = { render: function render() {
     };
   },
   mounted: function mounted() {
-    this.$zircleStore.state.pages = chunk(this.collection, this.perPage);
+    // this.$zircle.setNumberOfPages(chunk(this.collection, this.perPage))
+    this.$zircle.setPages(chunk(this.collection, this.perPage));
   }
 };
 
@@ -2035,7 +2053,7 @@ var zdotnav = { render: function render() {
 
   computed: {
     position: function position() {
-      return this.store.point(this);
+      return this.$zircle.calcPosition(this);
     },
     activated: function activated() {
       return {
@@ -2044,23 +2062,7 @@ var zdotnav = { render: function render() {
       };
     },
     styles: function styles() {
-      switch (this.size) {
-        case 'large':
-          var zwidth = this.state.zircleWidth.l;
-          break;
-        case 'medium':
-          zwidth = this.state.zircleWidth.m;
-          break;
-        case 'small':
-          zwidth = this.state.zircleWidth.s;
-          break;
-        case 'extrasmall':
-          zwidth = this.state.zircleWidth.xs;
-          break;
-        case 'xxs':
-          zwidth = this.state.zircleWidth.xxs / 3;
-          break;
-      }
+      var zwidth = this.$zircle.getComponentWidth(this.size) / 3;
       return {
         main: {
           width: zwidth + 'px',
@@ -2089,9 +2091,9 @@ var zdotnav = { render: function render() {
 
 var zircle = {
   install: function install(Vue, options) {
-    Object.defineProperty(Vue.prototype, '$zircleStore', {
+    Object.defineProperty(Vue.prototype, '$zircle', {
       get: function get() {
-        return store$1;
+        return store$1.actions;
       }
     });
     Vue.component('z-canvas', zcanvas);
