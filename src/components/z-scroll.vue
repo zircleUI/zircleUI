@@ -48,9 +48,10 @@ export default {
       }
     },
     position () {
+      var zwidth = this.$zircle.getComponentWidth('xxl') / 2
       return {
-        X: ((this.state.zircleWidth.xl / 2) - 3) * Math.cos(this.scrollVal * (Math.PI / 180)),
-        Y: ((this.state.zircleWidth.xl / 2) - 3) * Math.sin(this.scrollVal * (Math.PI / 180))
+        X: (zwidth - 3) * Math.cos(this.scrollVal * (Math.PI / 180)),
+        Y: (zwidth - 3) * Math.sin(this.scrollVal * (Math.PI / 180))
       }
     },
     classesContent3 () {

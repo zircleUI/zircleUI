@@ -22,23 +22,7 @@ export default {
   },
   computed: {
     style () {
-      switch (this.size) {
-        case 'large':
-          var zwidth = this.state.zircleWidth.l
-          break
-        case 'medium':
-          zwidth = this.state.zircleWidth.m
-          break
-        case 'small':
-          zwidth = this.state.zircleWidth.s
-          break
-        case 'extrasmall':
-          zwidth = this.state.zircleWidth.xs
-          break
-        case 'xxs':
-          zwidth = this.state.zircleWidth.xxs
-          break
-      }
+      var zwidth = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: zwidth + 'px',
@@ -56,4 +40,3 @@ export default {
   }
 }
 </script>
-

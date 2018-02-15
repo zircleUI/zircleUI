@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import store from '../store/store'
 export default {
   name: 'z-item',
   props: {
@@ -52,18 +51,15 @@ export default {
   data () {
     return {
       type: 'item',
-      state: store.state,
-      store: store,
       resize: false,
       zpos: {}
     }
   },
   computed: {
     position () {
-      return this.store.point(this)
+      return this.$zircle.calcPosition(this)
     },
     classes () {
-      // var colorp = this.color
       return {
         zoom: this.type === 'scale' && this.gotoview !== undefined
       }
@@ -72,7 +68,7 @@ export default {
       return this.color
     },
     distance () {
-      return this.state.pages[this.state.currentPage].length === 1 ? 0 : 60
+      return this.$zircle.getNumberOfItemsInCurrentPage() === 1 ? 0 : 60
     },
     gotoviewName () {
       if (this.gotoview !== undefined) {
@@ -80,23 +76,7 @@ export default {
       }
     },
     styles () {
-      switch (this.size) {
-        case 'large':
-          var zwidth = this.state.zircleWidth.l
-          break
-        case 'medium':
-          zwidth = this.state.zircleWidth.m
-          break
-        case 'small':
-          zwidth = this.state.zircleWidth.s
-          break
-        case 'extrasmall':
-          zwidth = this.state.zircleWidth.xs
-          break
-        case 'xxs':
-          zwidth = this.state.zircleWidth.xxs
-          break
-      }
+      var zwidth = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: zwidth + 'px',
@@ -125,35 +105,17 @@ export default {
           itemID: this.id,
           item: this.item
         }
-        if (this.state.history.length < 6) {
-          this.store.state.mode = 'forward'
-          this.store.setAppPos(position)
+        if (this.$zircle.getHistoryLength() < 6) {
+          this.$zircle.setNavigationMode('forward')
+          this.$zircle.setAppPos(position)
         } else {
           console.log('Max level of deep reached')
         }
-      } else {
-        // no action
       }
     }
   },
   mounted () {
-    switch (this.size) {
-      case 'large':
-        var zwidth = this.state.zircleWidth.l
-        break
-      case 'medium':
-        zwidth = this.state.zircleWidth.m
-        break
-      case 'small':
-        zwidth = this.state.zircleWidth.s
-        break
-      case 'extrasmall':
-        zwidth = this.state.zircleWidth.xs
-        break
-      case 'xxs':
-        zwidth = this.state.zircleWidth.xxs
-        break
-    }
+    var zwidth = this.$zircle.getComponentWidth(this.size)
     this.zpos = {
       main: {
         width: zwidth + 'px',

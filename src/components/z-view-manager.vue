@@ -1,27 +1,27 @@
 <template>
    <z-transition>
       <component 
-      v-if="$zircleStore.state.cache.length >= 3" 
+      v-if="$zircle.getHistoryLength() >= 3" 
       class="pastclass"
       :is="pastView" 
-      :key="$zircleStore.state.cache[$zircleStore.state.cache.length - 3].id" />
+      :key="$zircle.getPastViewId()" />
 
       <component 
-      v-if="$zircleStore.state.cache.length >= 2" 
+      v-if="$zircle.getHistoryLength() >= 2" 
       :is="previousView" 
       class="prevclass" 
-      :key="$zircleStore.state.cache[$zircleStore.state.cache.length - 2].id" />
+      :key="$zircle.getPreviousViewId()" />
 
       <component 
-      v-if="$zircleStore.state.isRouterEnabled === false && $zircleStore.state.cache.length >= 1"
+      v-if="$zircle.getRouterState() === false && $zircle.getHistoryLength() >= 1"
       :is="currentView" 
-      :class="$zircleStore.state.mode === 'forward' ? 'currclass' : ''"  
-      :key="$zircleStore.state.cache[$zircleStore.state.cache.length - 1].id" />
+      :class="$zircle.getNavigationMode() === 'forward' ? 'currclass' : ''"  
+      :key="$zircle.getCurrentViewId()" />
 
       <router-view 
-        v-if="$zircleStore.state.isRouterEnabled === true && $zircleStore.state.cache.length >= 1" 
-        :class="$zircleStore.state.mode === 'forward' ? 'currclass' : ''" 
-        :key="$zircleStore.state.cache[$zircleStore.state.cache.length - 1].id"> 
+        v-if="$zircle.getRouterState() === true && $zircle.getHistoryLength() >= 1" 
+        :class="$zircle.getNavigationMode() === 'forward' ? 'currclass' : ''" 
+        :key="$zircle.getCurrentViewId()"> 
       </router-view>
 
   </z-transition>
@@ -41,18 +41,18 @@ export default {
     currentView () {
       let vm = this
       let key = Object.keys(this.list).find(function (k) {
-        if (k.toLowerCase() === vm.$zircleStore.state.currentView) {
+        if (k.toLowerCase() === vm.$zircle.getCurrentViewName()) {
           return k
         }
       })
-      if (this.$zircleStore.state.isRouterEnabled === false) {
+      if (this.$zircle.getRouterState() === false) {
         return this.list[key]
       }
     },
     previousView () {
       let vm = this
       let key = Object.keys(this.list).find(function (k) {
-        if (k.toLowerCase() === vm.$zircleStore.state.previousView) {
+        if (k.toLowerCase() === vm.$zircle.getPreviousViewName()) {
           return k
         }
       })
@@ -61,7 +61,7 @@ export default {
     pastView () {
       let vm = this
       let key = Object.keys(this.list).find(function (k) {
-        if (k.toLowerCase() === vm.$zircleStore.state.pastView) {
+        if (k.toLowerCase() === vm.$zircle.getPastViewName()) {
           return k
         }
       })

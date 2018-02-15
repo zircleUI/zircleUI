@@ -39,22 +39,23 @@ export default {
   },
   computed: {
     positionr () {
-      if (this.$parent.size === 'extralarge') {
+      var zwidth = this.$zircle.getComponentWidth(this.$parent.size)
+      if (zwidth === 'extralarge') {
         var dimension = this.state.zircleWidth.xl
         var strokeWidth = 3
-      } else if (this.$parent.size === 'large') {
+      } else if (zwidth === 'large') {
         dimension = this.state.zircleWidth.l
         strokeWidth = 7
-      } else if (this.$parent.size === 'medium') {
+      } else if (zwidth === 'medium') {
         dimension = this.state.zircleWidth.m
         strokeWidth = 8
-      } else if (this.$parent.size === 'small') {
+      } else if (zwidth === 'small') {
         dimension = this.state.zircleWidth.s
         strokeWidth = 9
-      } else if (this.$parent.size === 'xs' || this.$parent.size === 'extrasmall') {
+      } else if (zwidth === 'xs' || zwidth === 'extrasmall') {
         dimension = this.state.zircleWidth.xs
         strokeWidth = 10
-      } else if (this.$parent.size === 'xxs') {
+      } else if (zwidth === 'xxs') {
         dimension = this.state.zircleWidth.xxs
       }
       if (this.$parent.type === 'panel') {

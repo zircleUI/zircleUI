@@ -1,7 +1,7 @@
 <template>
   <div id="z-container" 
-  :class="[$zircleStore.state.color, $zircleStore.state.theme]" 
-  :style="[state.previousView !== '' ? {cursor: 'zoom-out'} : {}]"
+  :class="[$zircle.getCurrentTheme(), $zircle.getCurrentColor()]" 
+  :style="[$zircle.getPreviousViewName() !== '' ? {cursor: 'zoom-out'} : {}]"
   @click.stop="goback" >
     <div id="z-point">
      <slot> </slot>
@@ -21,15 +21,14 @@ export default {
   },
   data () {
     return {
-      state: store.state,
       store: store
     }
   },
   methods: {
     goback () {
-      if (this.state.previousView !== '' && this.state.backwardNavigation === false) {
-        if (this.state.isRouterEnabled === false) {
-          this.store.goBack()
+      if (this.$zircle.getPreviousViewName() !== '' && this.$zircle.getBackNavState() === false) {
+        if (this.$zircle.getRouterState() === false) {
+          this.$zircle.goBack()
         } else {
           this.$router.back()
         }
@@ -38,17 +37,17 @@ export default {
   },
   mounted () {
     var vue = this
-    // seteo inicial de posiciom de circilos responsives pasarlo a store!!!
-    this.store.getDimensions()
-    // dynamic posiciom de circilos responsives
+    // Get window dimension to set the initial width of ui components such as z-panel
+    this.$zircle.getDimensions()
     window.addEventListener('resize', function (event) {
-      vue.store.state.viewport = {x: window.innerWidth, y: window.innerHeight}
-      vue.store.getDimensions()
+      // On resize change the width of ui components
+      vue.$zircle.getDimensions()
     })
   }
 }
 </script>
 <style>
+/* This is the style for zircle. To override it use !important */
 :root {
   --light-blue: #5FC9F3;
   --black: #283237;
@@ -661,5 +660,14 @@ input {
   background: inherit;
   outline: none;
   text-align: center;
+}
+.z-alert-enter-active, .z-alert-leave-active {
+  transition: transform 0.3s;
+  position: absolute;
+  top: 50%; left: 50%;
+  z-index: 500;
+}
+.z-alert-enter, .z-alert-leave-to {
+  transform: scale(0);
 }
 </style>

@@ -57,23 +57,7 @@ export default {
       }
     },
     style () {
-      switch (this.size) {
-        case 'large':
-          var zwidth = this.state.zircleWidth.l
-          break
-        case 'medium':
-          zwidth = this.state.zircleWidth.m
-          break
-        case 'small':
-          zwidth = this.state.zircleWidth.s
-          break
-        case 'extrasmall':
-          zwidth = this.state.zircleWidth.xs
-          break
-        case 'xxs':
-          zwidth = this.state.zircleWidth.xxs / 3
-          break
-      }
+      var zwidth = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: zwidth + 'px',
@@ -102,9 +86,9 @@ export default {
           scalei: this.position.scalei,
           go: go
         }
-        if (this.state.history.length < 6) {
-          this.store.state.mode = 'forward'
-          this.store.setAppPos(position)
+        if (this.$zircle.getHistoryLength() < 6) {
+          this.$zircle.setNavigationMode('forward')
+          this.$zircle.setAppPos(position)
           var vm = this
           setTimeout(function () {
             vm.hidden = true
@@ -118,23 +102,7 @@ export default {
     }
   },
   mounted () {
-    switch (this.size) {
-      case 'large':
-        var zwidth = this.state.zircleWidth.l
-        break
-      case 'medium':
-        zwidth = this.state.zircleWidth.m
-        break
-      case 'small':
-        zwidth = this.state.zircleWidth.s
-        break
-      case 'extrasmall':
-        zwidth = this.state.zircleWidth.xs
-        break
-      case 'xxs':
-        zwidth = this.state.zircleWidth.xxs / 3
-        break
-    }
+    var zwidth = this.$zircle.getComponentWidth(this.size)
     this.zpos = {
       main: {
         width: zwidth + 'px',

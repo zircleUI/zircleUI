@@ -7,8 +7,8 @@
   :class="[classes, colors]" 
   :style="resize === false ? styles.main : zpos.main" 
   style="overflow: visible;"
-  @mouseover = "state.backwardNavigation = true"
-  @mouseleave = "state.backwardNavigation = false"> 
+  @mouseover = "$zircle.setBackNav(true)"
+  @mouseleave = "$zircle.setBackNav(false)"> 
 
     <div class="plate" :style="resize === false ? styles.plate : zpos.plate"></div>
 
@@ -87,21 +87,22 @@ export default {
       return this.view.toLowerCase()
     },
     styles () {
+      var width = this.$zircle.getComponentWidth('xxl')
       return {
         main: {
-          width: this.state.zircleWidth.xl + 'px',
-          height: this.state.zircleWidth.xl + 'px',
-          margin: -(this.state.zircleWidth.xl / 2) + 'px 0 0 ' + -(this.state.zircleWidth.xl / 2) + 'px',
+          width: width + 'px',
+          height: width + 'px',
+          margin: -(width / 2) + 'px 0 0 ' + -(width / 2) + 'px',
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
-          width: this.state.zircleWidth.xl + 50 + 'px',
-          height: this.state.zircleWidth.xl + 50 + 'px',
-          margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
+          width: width + 50 + 'px',
+          height: width + 50 + 'px',
+          margin: -((width + 50) / 2) + 'px 0 0 ' + -((width + 50) / 2) + 'px'
         },
         hideScroll: {
-          width: this.state.zircleWidth.xl - 5 + 'px',
-          marginLeft: -this.state.zircleWidth.xl * 0.0392 + 3.08 + 'px'
+          width: width - 5 + 'px',
+          marginLeft: -width * 0.0392 + 3.08 + 'px'
         }
       }
     },
@@ -113,39 +114,40 @@ export default {
   },
   methods: {
     scroll () {
-      var test1 = this.$el.querySelector('.z-content')
-      this.scrollVal = -45 + ((test1.scrollTop * 100 / (test1.scrollHeight - test1.clientHeight)) * 86 / 100)
+      var container = this.$el.querySelector('.z-content')
+      this.scrollVal = -45 + ((container.scrollTop * 100 / (container.scrollHeight - container.clientHeight)) * 86 / 100)
     }
   },
   watch: {
     scrollVal () {
-      var test1 = this.$el.querySelector('.z-content')
-      test1.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (test1.scrollHeight - test1.clientHeight) / 100
+      var container = this.$el.querySelector('.z-content')
+      container.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (container.scrollHeight - container.clientHeight) / 100
     }
   },
   mounted () {
     if (this.$el.classList.contains('pastclass')) {
-      this.viewID = this.state.cache[this.state.cache.length - 3].id
+      this.viewID = this.$zircle.getPastViewId()
     }
+    var width = this.$zircle.getComponentWidth('xxl')
     this.zpos = {
       main: {
-        width: this.state.zircleWidth.xl + 'px',
-        height: this.state.zircleWidth.xl + 'px',
-        margin: -(this.state.zircleWidth.xl / 2) + 'px 0 0 ' + -(this.state.zircleWidth.xl / 2) + 'px',
+        width: width + 'px',
+        height: width + 'px',
+        margin: -(width / 2) + 'px 0 0 ' + -(width / 2) + 'px',
         transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
       },
       plate: {
-        width: this.state.zircleWidth.xl + 50 + 'px',
-        height: this.state.zircleWidth.xl + 50 + 'px',
-        margin: -((this.state.zircleWidth.xl + 50) / 2) + 'px 0 0 ' + -((this.state.zircleWidth.xl + 50) / 2) + 'px'
+        width: width + 50 + 'px',
+        height: width + 50 + 'px',
+        margin: -((width + 50) / 2) + 'px 0 0 ' + -((width + 50) / 2) + 'px'
       },
       hideScroll: {
-        width: this.state.zircleWidth.xl - 5 + 'px',
-        marginLeft: -this.state.zircleWidth.xl * 0.0392 + 3.08 + 'px'
+        width: width - 5 + 'px',
+        marginLeft: -width * 0.0392 + 3.08 + 'px'
       }
     }
-    var test = this.$el.querySelector('.z-content > .z-text') // guarda con esto que no anda bien
-    if (test.clientHeight > this.state.zircleWidth.xl) {
+    var container = this.$el.querySelector('.z-content > .z-text') // guarda con esto que no anda bien
+    if (container.clientHeight > width) {
       this.scrollBar = true
     } else {
       this.scrollBar = false

@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     position () {
-      return this.store.point(this)
+      return this.$zircle.calcPosition(this)
     },
     activated () {
       return {
@@ -40,23 +40,7 @@ export default {
       }
     },
     styles () {
-      switch (this.size) {
-        case 'large':
-          var zwidth = this.state.zircleWidth.l
-          break
-        case 'medium':
-          zwidth = this.state.zircleWidth.m
-          break
-        case 'small':
-          zwidth = this.state.zircleWidth.s
-          break
-        case 'extrasmall':
-          zwidth = this.state.zircleWidth.xs
-          break
-        case 'xxs':
-          zwidth = this.state.zircleWidth.xxs / 3
-          break
-      }
+      var zwidth = this.$zircle.getComponentWidth(this.size) / 3
       return {
         main: {
           width: zwidth + 'px',

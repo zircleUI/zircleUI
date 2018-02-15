@@ -22,20 +22,22 @@ export default {
     }
   },
   computed: {
+    // getComponentWidth(this.size)
     styles () {
-      if (this.$parent.size === 'extralarge') {
+      var zwidth = this.$parent.size
+      if (zwidth === 'extralarge') {
         var strokeWidth = 3
-      } else if (this.$parent.size === 'large') {
+      } else if (zwidth === 'large') {
         strokeWidth = 7
-      } else if (this.$parent.size === 'medium') {
+      } else if (zwidth === 'medium') {
         strokeWidth = 8
-      } else if (this.$parent.size === 'small') {
+      } else if (zwidth === 'small') {
         strokeWidth = 9
-      } else if (this.$parent.size === 'xs' || this.$parent.size === 'extrasmall') {
+      } else if (zwidth === 'xs' || zwidth === 'extrasmall') {
         strokeWidth = 10
-      } else if (this.$parent.size === 'xxs') {
+      } else if (zwidth === 'xxs') {
       }
-      if (this.$parent.type === 'panel' || this.$parent.type === 'popup') {
+      if (this.$parent.type === 'panel' || this.$parent.type === 'alert') {
         strokeWidth = 3
       }
       var circleLength = 2 * Math.PI * 50
@@ -52,4 +54,3 @@ export default {
   }
 }
 </script>
-
