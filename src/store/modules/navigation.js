@@ -1,14 +1,19 @@
 import store from '../store'
 function transformViewName (view) {
-  if (store.state.cache.length === 0) {
-    var newID = view + '--0'
-  } else if (store.state.cache.length === 1) {
-    newID = newIDGen(view, 'previous')
-  } else if (store.state.cache.length === 2) {
-    var prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
-    view === prevViewName[0] ? newID = newIDGen(view, 'previous') : newID = newIDGen(view, 'past')
-  } else {
-    newID = newIDGen(view, 'last')
+  switch (store.state.cache.length) {
+    case 0:
+      var newID = view + '--0'
+      break
+    case 1:
+      newID = newIDGen(view, 'previous')
+      break
+    case 2:
+      var prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
+      view === prevViewName[0] ? newID = newIDGen(view, 'previous') : newID = newIDGen(view, 'past')
+      break
+    default:
+      newID = newIDGen(view, 'last')
+      break
   }
   return newID
 }
