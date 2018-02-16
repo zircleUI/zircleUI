@@ -3,21 +3,22 @@ function transformViewName (view) {
   if (store.state.cache.length === 0) {
     var newID = view + '--0'
   } else if (store.state.cache.length === 1) {
-    var prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
-    view === prevViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0'
+    newID = newIDGen(view, 'previous')
   } else if (store.state.cache.length === 2) {
-    prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
-    var pastViewName = store.state.cache[store.state.cache.length - 2].id.split('--')
-    if (view === prevViewName[0]) {
-      newID = view + '--' + (Number(prevViewName[1]) + 1)
-    } else {
-      view === pastViewName[0] ? newID = view + '--' + (Number(pastViewName[1]) + 1) : newID = view + '--0'
-    }
+    var prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
+    view === prevViewName[0] ? newID = newIDGen(view, 'previous') : newID = newIDGen(view, 'past')
   } else {
-    var lastViewName = store.state.cache[store.state.cache.length - 3].id.split('--')
-    view === lastViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0'
+    newID = newIDGen(view, 'last')
   }
   return newID
+}
+function newIDGen (view, viewPosition) {
+  let ID = ''
+  if (viewPosition === 'previous') store.state.cache[store.state.cache.length - 1].id.split('--')
+  if (viewPosition === 'past') store.state.cache[store.state.cache.length - 2].id.split('--')
+  if (viewPosition === 'last') store.state.cache[store.state.cache.length - 3].id.split('--')
+  view === viewPosition[0] ? ID = view + '--' + (Number(viewPosition[1]) + 1) : ID = view + '--0'
+  return ID
 }
 const navigation = {
   getCurrentViewName () {
