@@ -1,4 +1,24 @@
 import store from '../store'
+function transformViewName (view) {
+  if (store.state.cache.length === 0) {
+    var newID = view + '--0'
+  } else if (store.state.cache.length === 1) {
+    var prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
+    view === prevViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0'
+  } else if (store.state.cache.length === 2) {
+    prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
+    var pastViewName = store.state.cache[store.state.cache.length - 2].id.split('--')
+    if (view === prevViewName[0]) {
+      newID = view + '--' + (Number(prevViewName[1]) + 1)
+    } else {
+      view === pastViewName[0] ? newID = view + '--' + (Number(pastViewName[1]) + 1) : newID = view + '--0'
+    }
+  } else {
+    var lastViewName = store.state.cache[store.state.cache.length - 3].id.split('--')
+    view === lastViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0'
+  }
+  return newID
+}
 const navigation = {
   getCurrentViewName () {
     console.log(store.state.currentView)
@@ -75,24 +95,7 @@ const navigation = {
     // only component with viewName
     if (store.state.mode === 'forward') {
       store.state.history.push(view)
-      // armar function
-      if (store.state.cache.length === 0) {
-        var newID = view + '--0'
-      } else if (store.state.cache.length === 1) {
-        var prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
-        view === prevViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0'
-      } else if (store.state.cache.length === 2) {
-        prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
-        var pastViewName = store.state.cache[store.state.cache.length - 2].id.split('--')
-        if (view === prevViewName[0]) {
-          newID = view + '--' + (Number(prevViewName[1]) + 1)
-        } else {
-          view === pastViewName[0] ? newID = view + '--' + (Number(pastViewName[1]) + 1) : newID = view + '--0'
-        }
-      } else {
-        var lastViewName = store.state.cache[store.state.cache.length - 3].id.split('--')
-        view === lastViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0'
-      }
+      var newID = transformViewName(view)
       store.state.cache.push({view: view, id: newID, position: store.state.position})
       if (store.state.isRouterEnabled === true) {
         store.state.position.itemID === undefined ? store.state.$router.push({name: newID}) : (
