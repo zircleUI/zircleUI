@@ -75,46 +75,32 @@ const navigation = {
     // only component with viewName
     if (store.state.mode === 'forward') {
       store.state.history.push(view)
-      var prevViewName = ''
-      var pastViewName = ''
-      switch (store.state.cache.length) {
-        case 0:
-          var newID = view + '--0'
-          break
-        case 1:
-          prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
-          view === prevViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0'
-          break
-        case 2:
-          prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
-          pastViewName = store.state.cache[store.state.cache.length - 2].id.split('--')
-          if (view === prevViewName[0]) {
-            newID = view + '--' + (Number(prevViewName[1]) + 1)
-          } else {
-            view === pastViewName[0] ? newID = view + '--' + (Number(pastViewName[1]) + 1) : newID = view + '--0'
-          }
-          break
-        default:
-          var lastViewName = store.state.cache[store.state.cache.length - 3].id.split('--')
-          view === lastViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0'
-          break
+      // armar function
+      if (store.state.cache.length === 0) {
+        var newID = view + '--0'
+      } else if (store.state.cache.length === 1) {
+        var prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
+        view === prevViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0'
+      } else if (store.state.cache.length === 2) {
+        prevViewName = store.state.cache[store.state.cache.length - 1].id.split('--')
+        var pastViewName = store.state.cache[store.state.cache.length - 2].id.split('--')
+        if (view === prevViewName[0]) {
+          newID = view + '--' + (Number(prevViewName[1]) + 1)
+        } else {
+          view === pastViewName[0] ? newID = view + '--' + (Number(pastViewName[1]) + 1) : newID = view + '--0'
+        }
+      } else {
+        var lastViewName = store.state.cache[store.state.cache.length - 3].id.split('--')
+        view === lastViewName[0] ? newID = view + '--' + (Number(prevViewName[1]) + 1) : newID = view + '--0'
       }
-      var cacheView = {
-        view: view,
-        id: newID,
-        position: store.state.position
-      }
-      store.state.cache.push(cacheView)
-      switch (store.state.isRouterEnabled) {
-        case true:
-          store.state.position.itemID === undefined ? store.state.$router.push({name: newID}) : (
-              store.state.selectedItem = store.state.position.item,
-              store.state.$router.push({name: newID, params: {id: store.state.position.itemID.toLowerCase()}})
-            )
-          break
-        case false:
-          store.state.position.item !== undefined ? store.state.selectedItem = store.state.position.item : ''
-          break
+      store.state.cache.push({view: view, id: newID, position: store.state.position})
+      if (store.state.isRouterEnabled === true) {
+        store.state.position.itemID === undefined ? store.state.$router.push({name: newID}) : (
+            store.state.selectedItem = store.state.position.item,
+            store.state.$router.push({name: newID, params: {id: store.state.position.itemID.toLowerCase()}})
+          )
+      } else {
+        store.state.position.item !== undefined ? store.state.selectedItem = store.state.position.item : ''
       }
     }
   },
