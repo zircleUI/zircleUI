@@ -102,19 +102,19 @@ const navigation = {
     store.state.currentView = viewName
   },
   setHistory (view) {
-    store.actions.setLog('setHistory() => new view: ' + view)
     // only component with viewName
     if (store.state.mode === 'forward') {
       store.state.history.push(view)
+      store.actions.setLog('setHistory() => new view: ' + view)
       var newID = transformViewName(view)
       store.state.cache.push({view: view, id: newID, position: store.state.position})
-      if (store.state.isRouterEnabled === true) {
-        store.state.position.itemID === undefined ? store.state.$router.push({name: newID}) : (
-            store.state.selectedItem = store.state.position.item,
-            store.state.$router.push({name: newID, params: {id: store.state.position.itemID.toLowerCase()}})
-          )
-      } else {
-        store.state.position.item !== undefined ? store.state.selectedItem = store.state.position.item : ''
+      if (store.state.isRouterEnabled === true && store.state.position.itemID === undefined) {
+        store.state.$router.push({name: newID})
+      } else if (store.state.isRouterEnabled === true && store.state.position.itemID !== undefined) {
+        store.state.selectedItem = store.state.position.item
+        store.state.$router.push({name: newID, params: {id: store.state.position.itemID.toLowerCase()}})
+      } else if (store.state.isRouterEnabled === false && store.state.position.itemID !== undefined) {
+        store.state.selectedItem = store.state.position.item
       }
     }
   },
