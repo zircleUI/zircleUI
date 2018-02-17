@@ -14,6 +14,41 @@ function findComponent (list, view) {
     }
   })
 }
+function runHooks (components) {
+  store.state.$router.beforeEach((to, from, next) => {
+    if (from.name === store.state.cache[store.state.cache.length - 1].id && to.name !== store.state.lastViewCache.id) {
+      // Go backward using both: browser navigation arrows or zircle UI
+      store.actions.setLog('vue-router: Go backward' + to.name)
+      store.actions.goBack()
+      next()
+    } else if (to.name === store.state.cache[store.state.cache.length - 1].id && to.name !== store.state.lastViewCache.id) {
+      // Check if the route exists
+      if (to.matched.length === 0) {
+        // If not, add route
+        let component = to.name.split('--')
+        let key = findComponent(components, component[0])
+        if (to.params.id === undefined) {
+          createRoute('/' + to.name, to.name, components[key])
+        } else {
+          createRoute('/' + to.name + '/:id', to.name, components[key], to.params)
+        }
+      } else {
+        // If exists, go forward
+        store.actions.setLog('vue-router: Go forward: ' + to.name)
+        store.state.lastViewCache = {}
+        next()
+      }
+    } else if (to.name === store.state.lastViewCache.id && to.name === store.state.cache[store.state.cache.length - 1].id) {
+      // Just in case browser navigation forward arrow is clicked
+      store.actions.setLog('vue-router: browser forward arrow was clicked: ' + to.name)
+      store.state.lastViewCache = {}
+      next()
+    } else {
+      store.actions.setLog('Router Error: unable to resolve routes :(', 'error')
+      next(false)
+    }
+  })
+}
 const router = {
   getRouterState () {
     return store.state.isRouterEnabled
@@ -37,40 +72,7 @@ const router = {
       let key = findComponent(data.$options.components, view)
       createRoute('/' + view + '--0', view + '--0', data.$options.components[key])
     })
-    // Router hooks
-    store.state.$router.beforeEach((to, from, next) => {
-      if (from.name === store.state.cache[store.state.cache.length - 1].id && to.name !== store.state.lastViewCache.id) {
-        // Go backward using both: browser navigation arrows or zircle UI
-        store.actions.setLog('vue-router: Go backward' + to.name)
-        store.actions.goBack()
-        next()
-      } else if (to.name === store.state.cache[store.state.cache.length - 1].id && to.name !== store.state.lastViewCache.id) {
-        // Check if the route exists
-        if (to.matched.length === 0) {
-          // If not, add route
-          let component = to.name.split('--')
-          let key = findComponent(data.$options.components, component[0])
-          if (to.params.id === undefined) {
-            createRoute('/' + to.name, to.name, data.$options.components[key])
-          } else {
-            createRoute('/' + to.name + '/:id', to.name, data.$options.components[key], to.params)
-          }
-        } else {
-          // If exists, go forward
-          store.actions.setLog('vue-router: Go forward: ' + to.name)
-          store.state.lastViewCache = {}
-          next()
-        }
-      } else if (to.name === store.state.lastViewCache.id && to.name === store.state.cache[store.state.cache.length - 1].id) {
-        // Just in case browser navigation forward arrow is clicked
-        store.actions.setLog('vue-router: browser forward arrow was clicked: ' + to.name)
-        store.state.lastViewCache = {}
-        next()
-      } else {
-        store.actions.setLog('Router Error: unable to resolve routes :(', 'error')
-        next(false)
-      }
-    })
+    runHooks(data.$options.components)
   }
 }
 
