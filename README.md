@@ -8,6 +8,8 @@
   A lightweight front-end library for developing zoomable user interfaces.
 </p>
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability)](https://codeclimate.com/github/zircleUI/zircleUI/maintainability)
+
 > This is the development branch for the next version of Zircle
 
 ## Status Beta
