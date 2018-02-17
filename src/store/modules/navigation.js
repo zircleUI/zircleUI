@@ -113,7 +113,7 @@ const navigation = {
       } else if (store.state.isRouterEnabled === true && store.state.position.itemID !== undefined) {
         store.state.selectedItem = store.state.position.item
         store.state.$router.push({name: newID, params: {id: store.state.position.itemID.toLowerCase()}})
-      } else if (store.state.isRouterEnabled === false && store.state.position.itemID !== undefined) {
+      } else {
         store.state.selectedItem = store.state.position.item
       }
     }
