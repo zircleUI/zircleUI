@@ -12,6 +12,8 @@
 
 > This is the development branch for the next version of Zircle
 
+> Waiting por Vue-CLI 3. When ready I will update the dev branch.
+
 ## Status Beta
 This is the first commit, many things may change in the near future. Check [Changelog](https://github.com/zircleUI/zircleUI/tree/dev/CHANGELOG.md)
 
@@ -34,7 +36,7 @@ npm install zircle@next --save
 
 - [ ] Add Unit testing
 - [ ] Add E2E testing
-- [ ] Optimize code
+- [X] Optimize code
 - [ ] Add examples
 - [ ] Update documentation
 
