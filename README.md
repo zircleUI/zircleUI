@@ -33,11 +33,13 @@ npm install zircle@next --save
 ```
 
 ## To-Do
-
+- [ ] Wrap zircle with Vue-CLI 3
+- [ ] Be dev friendly
+- [ ] Automatic deploy, change log, versioning
+- [X] Remame some In-built component following Style Guide
 - [ ] Add Unit testing
 - [ ] Add E2E testing
 - [X] Optimize code
-- [ ] Add examples
 - [ ] Update documentation
 
 
