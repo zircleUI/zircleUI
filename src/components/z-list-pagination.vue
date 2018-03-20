@@ -8,7 +8,7 @@
 <script>
 import zmixin from '../mixins/zircle-mixin'
 export default {
-  name: 'z-page',
+  name: 'z-list-pagination',
   mixins: [zmixin],
   props: {
     type: {

@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: 'z-item',
+  name: 'z-list-item',
   props: {
     size: {
       type: String,

@@ -1,7 +1,6 @@
 import store from './store/store'
 import zpanel from './components/z-panel.vue'
 import zscale from './components/z-scale.vue'
-import zitem from './components/z-item.vue'
 import zcanvas from './components/z-canvas.vue'
 import zviewmanager from './components/z-view-manager.vue'
 import ztransition from './transitions/z-transition.vue'
@@ -11,7 +10,8 @@ import zslider from './components/z-slider.vue'
 import zrange from './components/z-range.vue'
 import zscroll from './components/z-scroll.vue'
 import zlist from './components/z-list.vue'
-import zdotnav from './components/z-dotnav.vue'
+import zitem from './components/z-list-item.vue'
+import zdotnav from './components/z-list-pagination.vue'
 const zircle = {
   install (Vue, options) {
     Object.defineProperty(Vue.prototype, '$zircle', {
@@ -23,10 +23,10 @@ const zircle = {
     Vue.component('z-view-manager', zviewmanager)
     Vue.component('z-panel', zpanel)
     Vue.component('z-scale', zscale)
-    Vue.component('z-dotnav', zdotnav)
     Vue.component('z-list', zlist)
+    Vue.component('z-list-item', zitem)
+    Vue.component('z-list-pagination', zdotnav)
     Vue.component('z-slider', zslider)
-    Vue.component('z-item', zitem)
     Vue.component('z-range', zrange)
     Vue.component('z-scroll', zscroll)
     Vue.component('z-transition', ztransition)

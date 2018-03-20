@@ -8,7 +8,7 @@
     :angle="(360 / $zircle.getNumberOfItemsInCurrentPage() * index) - 90">
     </slot>
  
-    <z-dotnav
+    <z-list-pagination
     v-for="(page, index) in $zircle.getPages()"
     size="xxs"
     color="accent"
