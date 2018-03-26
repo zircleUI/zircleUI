@@ -25,14 +25,13 @@
 -   It is possible to customize themes and styles to fit your needs. 
 
 > **Note:** Waiting Vue-CLI 3 to be ready for production. Please check out the Zircle´s dev branch since many changes are being made under the hood:
-1. Optimize, modify, merge or delete some in-built components.
-2. Optmize code for maintainbility.
-3. Add unit tests based on Jest.
-4. Add debug mode for development.
-5. Optimize zircle state store. Only actions will be exposed.
-6. Repack zircle with vueCLI in order to be more dev friendly.
-
-For those reasons, the next release will have some breaking changes.
+> 1. Optimize, modify, merge or delete some in-built components.
+> 2. Optmize code for maintainbility.
+> 3. Add unit tests based on Jest.
+> 4. Add debug mode for development.
+> 5. Optimize zircle state store. Only actions will be exposed.
+> 6. Repack zircle with vueCLI in order to be more dev friendly.
+> For those reasons, the next release will have some breaking changes.
 
 ## Documentation
 To check out live examples and docs, visit http://zircle.io
