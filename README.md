@@ -5,7 +5,9 @@
 </p>
 
 <p align="center">
-  A lightweight front-end library for developing zoomable user interfaces.
+  A lightweight front-end library for developing zoomable user interfaces. 
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/zircleUI/zircleUI.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FzircleUI%2FzircleUI)
+
 </p>
 
 <p align="center">
