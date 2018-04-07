@@ -12,6 +12,7 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/npm/v/zircle.svg"></a>
   <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-2.x-brightgreen.svg"></a>
+<a href="https://app.fossa.io/projects/git%2Bgithub.com%2FzircleUI%2FzircleUI?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FzircleUI%2FzircleUI.svg?type=shield"/></a>
   <a href="https://travis-ci.org/zircleUI/zircleUI"><img alt="Build Status" src="https://travis-ci.org/zircleUI/zircleUI.svg?branch=master"></a>
 </p>
 
@@ -58,3 +59,6 @@ npm install zircle --save
 
 ## License
 [MIT](http://opensource.org/licenses/MIT)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FzircleUI%2FzircleUI.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FzircleUI%2FzircleUI?ref=badge_large)
