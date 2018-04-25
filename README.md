@@ -38,7 +38,6 @@
 To check out live examples and docs, visit http://zircle.io
 
 ## Installation
-There are several ways to install zircle UI according your needs:
 
 ### Direct download 
 * Download Zircle from [Github](https://github.com/zircleUI/zircleUI/tree/master/dist)
@@ -53,8 +52,6 @@ NPM is the recommended installation method of zircle if you are building medium 
 ```bash 
 npm install zircle --save
 ```
-
-> **Note**: When you install Zircle in a fresh project, Vue will also be installed since is a dependency of Zircle. On the other hand, you can install Zircle after you have started a project based on Vue. 
 
 ## License
 [MIT](http://opensource.org/licenses/MIT)
