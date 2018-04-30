@@ -18,6 +18,7 @@ const state = {
   cache: [],
   lastViewCache: {},
   goBackNav: false,
+  component_uid: '',
   // Styles
   zircleWidth: {
     xl: 200,

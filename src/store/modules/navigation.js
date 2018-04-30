@@ -31,8 +31,18 @@ function newIDGen (view, viewPosition) {
   return ID
 }
 const navigation = {
+  getComponent_uid () {
+    return store.state.component_uid
+  },
+  setComponent_uid (value) {
+    setTimeout(function () {
+      store.state.component_uid = value
+    }, 800)
+  },
+  resetComponent_uid () {
+    store.state.component_uid = ''
+  },
   getCurrentViewName () {
-    console.log(store.state.currentView)
     return store.state.currentView
   },
   getPreviousViewName () {
@@ -127,6 +137,7 @@ const navigation = {
       store.state.mode = 'backward'
       store.actions.setLog('goBack() => ' + store.state.history[store.state.history.length - 1])
       store.actions.setAppPos(store.state.cache[store.state.cache.length - 1].position)
+      store.state.component_uid = ''
     }
   }
 }
