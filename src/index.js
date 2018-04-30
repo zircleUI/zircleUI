@@ -24,7 +24,7 @@ const zircle = {
     Vue.component('z-panel', zpanel)
     Vue.component('z-scale', zscale)
     Vue.component('z-list', zlist)
-    Vue.component('z-list-item', zitem)
+    Vue.component('z-item', zitem)
     Vue.component('z-list-pagination', zdotnav)
     Vue.component('z-slider', zslider)
     Vue.component('z-range', zrange)
