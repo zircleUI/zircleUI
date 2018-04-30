@@ -1,7 +1,15 @@
 <template>
-
-  <div v-show="hidden === false" title="z-dotnav" class="zui disc" :type="type" :class="[classes, colors, activated]"  :style="styles.main"> 
-  <div class="navplate" :style="styles.plate"></div>
+  <div 
+    v-show="hidden === false"
+    title="z-list-pagination"
+    class="zui disc" 
+    :type="type"
+    :class="[classes, colors, activated]" 
+    :style="styles.main"> 
+    <div
+      class="navplate"
+      :style="styles.plate">    
+    </div>
   </div>
 </template>
 

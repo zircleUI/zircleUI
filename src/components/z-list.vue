@@ -1,30 +1,31 @@
 <template>
-  
- <section title="z-list" >
- 
+  <section title="list">
     <slot
-    :item="item"
-    v-for="(item, index) in $zircle.getCurrentPage()"
-    :angle="(360 / $zircle.getNumberOfItemsInCurrentPage() * index) - 90">
+      v-for="(item, index) in $zircle.getCurrentPage()"
+      v-bind="item"
+      :index=index>
     </slot>
- 
-    <z-list-pagination
-    v-for="(page, index) in $zircle.getPages()"
-    size="xxs"
-    color="accent"
-    :key= "index"
-    :index="index"
-    :distance="112"
-    :angle="(180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages() * ($zircle.getNumberOfPages() - index) + ((180 - (180 - (180 - ($zircle.getNumberOfPages() * 10)))) - ((180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages())) / 2"
-    :active="$zircle.getCurrentPageIndex()"
-    @mouseover.native = "$zircle.setBackNav(true)"
-    @mouseleave.native = "$zircle.setBackNav(false)"
-    @click.native="$zircle.setCurrentPageIndex(index)" />
- </section>
-
+    <z-list-pagination  
+      v-for="(page, index) in $zircle.getNumberOfPages()"
+      :key="index + '_page'"
+      size="xxs"
+      color="accent"
+      :index="index"
+      :distance="112"
+      :angle="(180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages() * ($zircle.getNumberOfPages() - index) + ((180 - (180 - (180 - ($zircle.getNumberOfPages() * 10)))) - ((180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages())) / 2"
+      :active="$zircle.getCurrentPageIndex()"
+      @mouseover.native = "$zircle.setBackNav(true)"
+      @mouseleave.native = "$zircle.setBackNav(false)"
+      @click.native="$zircle.setCurrentPageIndex(index)"/>
+  </section>
 </template>
 
 <script>
+// prevenir que se use en otro lugar que no sea parent.
+// parsear gotoview para detectar si tiene id
+// permitir el uso del id
+// explicar el uso de label or image as prop or as slot
+// METER COMENTARIOS EN LOS COMPONENTES HTML
 import zmixin from '../mixins/zircle-mixin'
 function chunk (myArray, chunkSize) {
   var res = []
@@ -34,28 +35,24 @@ function chunk (myArray, chunkSize) {
   return res
 }
 export default {
-  name: 'z-list',
   mixins: [zmixin],
   props: {
-    collection: {
+    items: {
       type: Array
     },
     perPage: {
       type: [Number]
-    },
-    color: {
-      type: String
     }
   },
-  data () {
-    return {
-      type: 'panel',
-      viewName: 'test'
+  name: 'z-list',
+  computed: {
+    collectionCopy () {
+      return this.items.slice(0)
     }
   },
   mounted () {
-    // this.$zircle.setNumberOfPages(chunk(this.collection, this.perPage))
-    this.$zircle.setPages(chunk(this.collection, this.perPage))
+    this.$zircle.setPages(chunk(this.collectionCopy, this.perPage))
   }
 }
 </script>
+

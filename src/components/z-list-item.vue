@@ -1,20 +1,24 @@
 <template>
-  
-    <div title="z-item" class="zui disc" :class="[classes, colors]" :style="resize === false ? styles.main : zpos.main" @click.stop="move"> 
-      
-      <section class="z-content label" :style="resize === false ? styles.label : zpos.label" style="overflow: visible;" >
-        <span>{{label}}</span>
+    <div 
+      title="z-item"
+      class="zui disc"
+      :class="[classes, colors]"
+      :style="resize === false ? styles.main : zpos.main"
+      @click.stop="move"> 
+      <section 
+        class="z-content label"
+        :style="resize === false ? styles.label : zpos.label"
+        style="overflow: visible;">
+        <slot name="item-label">
+          {{label}} 
+        </slot>
       </section>
-      
       <div class="z-content">
-        <img :src="image" width="100%" height="100%" />
-        <section>
-          
-        </section>
+        <slot name="item-img">
+          <img :src="image" width="100%" height="100%" />
+        </slot>
       </div>
-
     </div>
-  
 </template>
 
 <script>
@@ -25,27 +29,29 @@ export default {
       type: String,
       default: 'medium'
     },
+    index: {
+      type: Number,
+      required: true
+    },
     color: {
       default: 'accent'
     },
     label: {
-      default: ''
+      type: [String, Number]
     },
     image: {
-      default: ''
+      type: [String, Number]
     },
     item: {
       default: ''
     },
     id: {
+      type: [String, Number],
       default: ''
     },
     gotoview: {
+      type: [String, Number],
       default: 'item'
-    },
-    angle: {
-      type: Number,
-      required: true
     }
   },
   data () {
@@ -56,6 +62,12 @@ export default {
     }
   },
   computed: {
+    angle () {
+      return (360 / this.$zircle.getNumberOfItemsInCurrentPage() * this.index) - 90
+    },
+    distance () {
+      return this.$zircle.getNumberOfItemsInCurrentPage() === 1 ? 0 : 60
+    },
     position () {
       return this.$zircle.calcPosition(this)
     },
@@ -67,12 +79,14 @@ export default {
     colors () {
       return this.color
     },
-    distance () {
-      return this.$zircle.getNumberOfItemsInCurrentPage() === 1 ? 0 : 60
-    },
     gotoviewName () {
       if (this.gotoview !== undefined) {
-        return this.gotoview.toLowerCase()
+        return this.gotoview.split('/')[0]
+      }
+    },
+    gotoId () {
+      if (this.gotoview !== undefined) {
+        return this.gotoview.split('/')[1]
       }
     },
     styles () {
@@ -94,6 +108,7 @@ export default {
     move () {
       if (this.gotoview !== undefined) {
         var go = this.gotoviewName
+        console.log(go, this.gotoId)
         var position = {
           X: this.position.Xabs,
           Y: this.position.Yabs,
@@ -129,17 +144,17 @@ export default {
     }
   },
   beforeUpdate () {
-    if (this.$parent.$parent.$el.classList.contains('prevclass') || this.$parent.$parent.$el.classList.contains('pastclass')) {
-    } else {
+    if (this.$parent.$parent.view.toLowerCase() === this.$zircle.getCurrentViewName()) {
       this.zpos = this.styles
     }
   },
   updated () {
+    var vm = this
     this.$nextTick(function () {
-      if (this.$parent.$parent.$el.classList.contains('prevclass') || this.$parent.$parent.$el.classList.contains('pastclass')) {
-        this.resize = false
+      if (vm.$parent.$parent.view.toLowerCase() === vm.$zircle.getCurrentViewName()) {
+        vm.resize = false
       } else {
-        this.resize = true
+        vm.resize = true
       }
     })
   }
