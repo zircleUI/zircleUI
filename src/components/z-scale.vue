@@ -1,15 +1,26 @@
 <template>
-
-  <div v-show="hidden === false" title="z-scale" class="zui disc" :type="type" :class="[classes, colors]" :style="resize === false ? style.main : zpos.main"  @click.stop="move">
-    
-    <z-range :progress='progress' v-if="range === true"></z-range>
-
-    <z-slider v-if="slider === true" :progress='progress'></z-slider>
-    
-    <section class="z-content label" :style="resize === false ? style.label : zpos.label" style="overflow: visible;" >
-      <slot name="label" ></slot>
+  <div 
+    v-show="$zircle.getComponent_uid() !== _uid"
+    title="z-scale"
+    class="zui disc"
+    :type="type"
+    :class="[classes, colors]"
+    :style="resize === false ? styles.main : zpos.main"
+    @click.stop="move">
+      <z-range 
+        :progress='progress'
+        v-if="range === true">
+      </z-range>
+      <z-slider
+        v-if="slider === true"
+        :progress='progress'>
+      </z-slider>
+    <section 
+      class="z-content label"
+      :style="resize === false ? styles.label : zpos.label"
+      style="overflow: visible;">
+      <slot name="label"></slot>
     </section>
-    
     <div class="z-content">
       <slot name="picture"></slot>
       <section>
@@ -46,8 +57,7 @@ export default {
   data () {
     return {
       resize: false,
-      zpos: {},
-      hidden: false
+      zpos: {}
     }
   },
   computed: {
@@ -56,7 +66,7 @@ export default {
         return this.gotoview.toLowerCase()
       }
     },
-    style () {
+    styles () {
       var zwidth = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
@@ -90,9 +100,7 @@ export default {
           this.$zircle.setNavigationMode('forward')
           this.$zircle.setAppPos(position)
           var vm = this
-          setTimeout(function () {
-            vm.hidden = true
-          }, 800)
+          vm.$zircle.setComponent_uid(vm._uid)
         } else {
           console.log('Max level of deep reached')
         }
@@ -116,18 +124,17 @@ export default {
     }
   },
   beforeUpdate () {
-    if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
-    } else {
-      this.zpos = this.style
+    if (this.$parent.view.toLowerCase() === this.$zircle.getCurrentViewName()) {
+      this.zpos = this.styles
     }
   },
   updated () {
+    var vm = this
     this.$nextTick(function () {
-      if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
-        this.resize = true
+      if (vm.$parent.view.toLowerCase() === vm.$zircle.getCurrentViewName()) {
+        vm.resize = false
       } else {
-        this.resize = false
-        this.hidden = false
+        vm.resize = true
       }
     })
   }

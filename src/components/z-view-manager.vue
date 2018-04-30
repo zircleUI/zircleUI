@@ -1,29 +1,25 @@
 <template>
    <z-transition>
       <component 
-      v-if="$zircle.getHistoryLength() >= 3" 
-      class="pastclass"
-      :is="pastView" 
-      :key="$zircle.getPastViewId()" />
-
+        v-if="$zircle.getHistoryLength() >= 3" 
+        class="pastclass"
+        :is="pastView" 
+        :key="$zircle.getPastViewId()" />
       <component 
-      v-if="$zircle.getHistoryLength() >= 2" 
-      :is="previousView" 
-      class="prevclass" 
-      :key="$zircle.getPreviousViewId()" />
-
+        v-if="$zircle.getHistoryLength() >= 2" 
+        :is="previousView" 
+        class="prevclass" 
+        :key="$zircle.getPreviousViewId()" />
       <component 
-      v-if="$zircle.getRouterState() === false && $zircle.getHistoryLength() >= 1"
-      :is="currentView" 
-      :class="$zircle.getNavigationMode() === 'forward' ? 'currclass' : ''"  
-      :key="$zircle.getCurrentViewId()" />
-
+        v-if="$zircle.getRouterState() === false && $zircle.getHistoryLength() >= 1"
+        :is="currentView" 
+        :class="$zircle.getNavigationMode() === 'forward' ? 'currclass' : ''"  
+        :key="$zircle.getCurrentViewId()" />
       <router-view 
         v-if="$zircle.getRouterState() === true && $zircle.getHistoryLength() >= 1" 
         :class="$zircle.getNavigationMode() === 'forward' ? 'currclass' : ''" 
         :key="$zircle.getCurrentViewId()"> 
       </router-view>
-
   </z-transition>
 </template>
 

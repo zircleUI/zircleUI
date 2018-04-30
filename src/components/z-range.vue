@@ -1,23 +1,37 @@
 <template>
-<section :type="type">
-  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="scroll" @click="point">
-   
-    <circle r="50" cx="50" cy="50"  :style="[styles]"  ></circle>
-  </svg>
-  <svg v-show="hidden === false" xmlns="http://www.w3.org/2000/svg" class="scroll2" :style="[classesContent3]" 
-  @touchstart="drag = true"
-  @touchmove.prevent="slide1" 
-  @touchend="drag = false"
-  @mousedown="drag = true" 
-  @mousemove="slide1" 
-  @mouseup="drag = false"
-  >
-   <circle r="8" cx="20" cy="20" class="handlebar"></circle> 
-  </svg>
-  <div class="z-content">
-      {{Math.round((anglex / 360) * 100, 0)}}
-  </div>
-  
+  <section :type="type">
+    <svg 
+      viewBox="0 0 100 100" 
+      xmlns="http://www.w3.org/2000/svg" 
+      class="scroll" 
+      @click="point">
+        <circle 
+          r="50"
+          cx="50"cy="50"
+          :style="[styles]">
+        </circle>
+    </svg>
+    <svg 
+      v-show="hidden === false"
+      xmlns="http://www.w3.org/2000/svg"
+      class="scroll2"
+      :style="[classesContent3]"
+      @touchstart="drag = true"
+      @touchmove.prevent="slide1" 
+      @touchend="drag = false"
+      @mousedown="drag = true" 
+      @mousemove="slide1" 
+      @mouseup="drag = false">
+        <circle 
+          r="8"
+          cx="20"
+          cy="20"
+          class="handlebar">
+        </circle> 
+    </svg>
+    <div class="z-content">
+        {{Math.round((anglex / 360) * 100, 0)}}
+    </div>
   </section>
 </template>
 

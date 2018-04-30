@@ -1,16 +1,23 @@
 <template>
-  <div title="z-button" type="button" class="zui disc button" :class="[classes, colors]" :style="style.main"> 
+  <div title="z-button"
+    type="button"
+    class="zui disc button"
+    :class="[classes, colors]"
+    :style="style.main"> 
     <div class="z-content">
       <slot></slot>
     </div>
-    <section class="z-content label" :style="style.label">
-      <slot name="label" ></slot>
+    <section 
+      class="z-content label"
+      :style="style.label">
+        <slot name="label" ></slot>
     </section>
     <slot name="circles"></slot>
   </div>
 </template>
 
 <script>
+// mejorar estados y todo
 import zmixin from '../mixins/zircle-mixin'
 export default {
   mixins: [zmixin],

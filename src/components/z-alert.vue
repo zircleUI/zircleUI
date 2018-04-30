@@ -1,19 +1,22 @@
 <template>
- <transition name="z-alert">
-  <div type="alert" class="zui pop" :class="[classes, colors]" :style="styles.main"> 
-    <z-slider :progress="progress"></z-slider>
-    <div class="z-popup-plate" :style="styles.plate"></div>
-    <div class="z-contentbox dashed">
-    <div class="z-content">
-      <section>
-           <slot></slot>
-      </section>
+  <transition name="z-alert">
+    <div 
+      type="alert"
+      class="zui pop"
+      :class="[classes, colors]"
+      :style="styles.main"> 
+        <z-slider :progress="progress"></z-slider>
+        <div class="z-popup-plate" :style="styles.plate"></div>
+        <div class="z-contentbox dashed">
+        <div class="z-content">
+          <section>
+            <slot></slot>
+          </section>
+        </div>
+      </div>
+      <slot name="circles"></slot>
     </div>
-  </div>
-   <slot name="circles"></slot>
-</div>
-</transition>
-
+  </transition>
 </template>
 
 <script>

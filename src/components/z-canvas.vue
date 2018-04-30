@@ -1,11 +1,12 @@
 <template>
-  <div id="z-container" 
-  :class="[$zircle.getCurrentTheme(), $zircle.getCurrentColor()]" 
-  :style="[$zircle.getPreviousViewName() !== '' ? {cursor: 'zoom-out'} : {}]"
-  @click.stop="goback" >
-    <div id="z-point">
-     <slot> </slot>
-    </div>
+  <div 
+    id="z-container" 
+    :class="[$zircle.getCurrentTheme(), $zircle.getCurrentColor()]" 
+    :style="[$zircle.getPreviousViewName() !== '' ? {cursor: 'zoom-out'} : {}]"
+    @click.stop="goback" >
+      <div id="z-point">
+        <slot></slot>
+      </div>
   </div>
 </template>
 
@@ -431,7 +432,12 @@ div[type="button"] {
   }
 
 }
-
+.show {
+  opacity: 1;
+}
+.no-show{
+  opacity: 0;
+}
 .lastclass {
   animation: disappear 800ms linear forwards;
   will-change: opacity;

@@ -1,23 +1,36 @@
 <template>
-<section >
-  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="scroll" @click="point">
-   
-    <circle r="50" cx="50" cy="50"  :style="[styles2]" ></circle>
-  </svg>
-  
-  </svg>
-
-  <svg v-show="hidden === false" xmlns="http://www.w3.org/2000/svg" class="scroll2"  :style="classesContent3" 
-  @touchstart="drag = true"
-  @touchmove.prevent="slide" 
-  @touchend="drag = false"
-  @mousedown="drag = true" 
-  @mousemove="slide" 
-  @mouseup="drag = false"
-  >
-   <circle r="10" cx="20" cy="20" class="handlebar"></circle> 
-  </svg>
-</section>
+  <section>
+    <svg 
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+      class="scroll"
+      @click="point">
+        <circle 
+          r="50"
+          cx="50"
+          cy="50"
+          :style="[styles2]">
+        </circle>
+    </svg>
+    <svg 
+      v-show="hidden === false"
+      xmlns="http://www.w3.org/2000/svg"
+      class="scroll2"
+      :style="classesContent3"
+      @touchstart="drag = true"
+      @touchmove.prevent="slide"
+      @touchend="drag = false"
+      @mousedown="drag = true"
+      @mousemove="slide"
+      @mouseup="drag = false">
+        <circle 
+          r="10"
+          cx="20"
+          cy="20"
+          class="handlebar">
+        </circle> 
+    </svg>
+  </section>
 </template>
 
 <script>

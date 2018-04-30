@@ -1,49 +1,39 @@
 <template>
- 
   <div 
-  :title="viewName" 
-  type="panel" 
-  class="zui main" 
-  :class="[classes, colors]" 
-  :style="resize === false ? styles.main : zpos.main" 
-  style="overflow: visible;"
-  @mouseover = "$zircle.setBackNav(true)"
-  @mouseleave = "$zircle.setBackNav(false)"> 
-
-    <div class="plate" :style="resize === false ? styles.plate : zpos.plate"></div>
-
-    <z-range :progress='progress' v-if="range === true"></z-range>
-    
-    <z-scroll :scrollVal.sync="scrollVal" v-if="scrollBar === true" style="overflow: visible;"></z-scroll>
-    
-    <z-slider v-if="slider === true" :progress='progress'></z-slider>
-    
-    <div class="z-contentbox dashed" :style="styles.background" >
-
-         <slot name="picture"></slot>
-    
-      <div class="z-content maindisc" :class="[classesContent]" :style="resize === false ? styles.hideScroll : zpos.hideScroll" @scroll="scroll">
-        
-        <section class="z-text">
-
-           <slot></slot>
-
-           <span class="bottom"></span>
-
-        </section>
-      
+    :title="'z-panel - ' + viewName" 
+    type="panel" 
+    class="zui main" 
+    :class="[classes, colors]" 
+    :style="resize === false ? styles.main : zpos.main" 
+    style="overflow: visible;"
+    @mouseover = "$zircle.setBackNav(true)"
+    @mouseleave = "$zircle.setBackNav(false)"> 
+      <div class="plate" :style="resize === false ? styles.plate : zpos.plate"></div>
+      <z-range :progress='progress' v-if="range === true"/> 
+      <z-scroll :scrollVal.sync="scrollVal" v-if="scrollBar === true" style="overflow: visible;"/> 
+      <z-slider v-if="slider === true" :progress='progress'/>
+      <div class="z-contentbox dashed" :style="styles.background">
+          <slot name="picture"></slot>
+        <div class="z-content maindisc" :class="[classesContent]" :style="resize === false ? styles.hideScroll : zpos.hideScroll" @scroll="scroll">
+          <section class="z-text">
+             <slot></slot>
+             <span class="bottom"></span>
+          </section>
+        </div>
       </div>
-    
-    </div>
-    
-    <slot name="circles"></slot>
-  
+     <slot name="circles"></slot>
   </div>
-
 </template>
 
 <script>
 import zmixin from '../mixins/zircle-mixin'
+function chunk (myArray, chunkSize) {
+  var res = []
+  while (myArray.length) {
+    res.push(myArray.splice(0, chunkSize))
+  }
+  return res
+}
 export default {
   mixins: [zmixin],
   props: {
@@ -62,10 +52,6 @@ export default {
     slider: {
       type: [Boolean],
       default: false
-    },
-    imgSource: {
-      type: String,
-      default: ''
     }
   },
   name: 'z-panel',
@@ -125,6 +111,9 @@ export default {
     }
   },
   mounted () {
+    if (this.list === true) {
+      this.$zircle.setPages(chunk(this.collectionCopy, this.perPage))
+    }
     if (this.$el.classList.contains('pastclass')) {
       this.viewID = this.$zircle.getPastViewId()
     }
@@ -154,17 +143,17 @@ export default {
     }
   },
   beforeUpdate () {
-    if (this.$el.classList.contains('prevclass') || this.$el.classList.contains('pastclass')) {
-    } else {
+    if (this.view.toLowerCase() === this.$zircle.getCurrentViewName()) {
       this.zpos = this.styles
     }
   },
   updated () {
+    var vm = this
     this.$nextTick(function () {
-      if (this.$el.classList.contains('prevclass') || this.$el.classList.contains('pastclass')) {
-        this.resize = true
+      if (vm.view.toLowerCase() === vm.$zircle.getCurrentViewName()) {
+        vm.resize = false
       } else {
-        this.resize = false
+        vm.resize = true
       }
     })
   }
