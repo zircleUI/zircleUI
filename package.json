@@ -1,6 +1,6 @@
 {
   "name": "zircle",
-  "version": "0.3.3",
+  "version": "0.0.0-development",
   "description": "A lightweight front-end library for developing zoomable user interfaces",
   "author": "Juan Martín Muda",
   "main": "dist/zircle.min.js",
@@ -21,11 +21,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zircleui/zircleUI.git"
+    "url": "https://github.com/zircleui/zircleUI.git"
   },
   "bugs": {
     "url": "https://github.com/zircleui/zircleUI/issues"
   },
   "homepage": "https://github.com/zircleui/zircleUI#readme",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "commit": "git-cz"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^2.1.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
