@@ -1,3 +1,17 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="0.3.4"></a>
+## [0.3.4](https://github.com/zircleui/zircleUI/compare/v0.3.3...v0.3.4) (2018-05-02)
+
+
+### Reverts
+
+* Uninstall semantic-release ([a784d2f](https://github.com/zircleui/zircleUI/commit/a784d2f))
+
+
+
 # Changelog
 All notable changes to this project will be documented in this file.
 
