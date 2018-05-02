@@ -23,3 +23,4 @@
 - Stay Tunned
   - [Twitter](?id=stay-tunned)
   - [Mailing list](?id=stay-tunned)
+- [![GitHub stars](https://img.shields.io/github/stars/zircleUI/zircleUI.svg?style=social)](https://github.com/zircleUI/zircleUI/stargazers)
