@@ -1,4 +1,17 @@
 import store from '../store'
+function newIDGen (view, viewPosition) {
+  let ID = ''
+  if (viewPosition === 'previous') {
+    var index = 1
+  } else if (viewPosition === 'past') {
+    index = 2
+  } else {
+    index = 3
+  }
+  store.state.cache[store.state.cache.length - index].id.split('--')
+  view === viewPosition[0] ? ID = view + '--' + (Number(viewPosition[1]) + 1) : ID = view + '--0'
+  return ID
+}
 function transformViewName (view) {
   switch (store.state.cache.length) {
     case 0:
@@ -16,19 +29,6 @@ function transformViewName (view) {
       break
   }
   return newID
-}
-function newIDGen (view, viewPosition) {
-  let ID = ''
-  if (viewPosition === 'previous') {
-    var index = 1
-  } else if (viewPosition === 'past') {
-    index = 2
-  } else {
-    index = 3
-  }
-  store.state.cache[store.state.cache.length - index].id.split('--')
-  view === viewPosition[0] ? ID = view + '--' + (Number(viewPosition[1]) + 1) : ID = view + '--0'
-  return ID
 }
 const navigation = {
   getComponent_uid () {
