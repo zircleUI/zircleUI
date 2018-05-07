@@ -15,33 +15,18 @@
 > Waiting por Vue-CLI 3. When ready I will update the dev branch.
 
 ## Status Beta
-This is the first commit, many things may change in the near future. Check [Changelog](https://github.com/zircleUI/zircleUI/tree/dev/CHANGELOG.md)
-
-## Installation
-
-### Direct download 
-* Download Zircle@next from [Github](https://github.com/zircleUI/zircleUI/tree/dev/dist)
-
-### Content delivery networks (CDN)
-
-* Include https://unpkg.com/zircle@next in your project with ```<script>``` tag. With CDN you will have the latest version of Zircle as soon as it is published to npm.
-
-### NPM
-
-```bash 
-npm install zircle@next --save
-```
-
-## To-Do
-- [ ] Wrap zircle with Vue-CLI 3
-- [ ] Be dev friendly
-- [ ] Automatic deploy, change log, versioning
+Many things may change in the near future. 
+- [ ] Wrap zircle with Vue-CLI 3. Waiting for Vue-CLI to be ready
+- [ ] Make Zircle dev friendly. WIP (waiting for Vue-CLI and tests)
+- [ ] Automatic deploy, change log, versioning. WIP using commitizen and standar-release
 - [X] Remame some In-built component following Style Guide
-- [ ] Add Unit testing
-- [ ] Add E2E testing
+- [ ] Add Unit testing. WIP using jest
 - [X] Optimize code
-- [ ] Update documentation
-
+- [ ] Update documentation. WIP --> [Github](https://zircleui.github.io/docs)
+- [ ] Rewrite how zircle handle vue-router and views. WIP
+- [X] Rewrite Zircle State Management.
+- [ ] Re write `z-list` component and its user templates. WIP 95% done
+- [ ] Publish a dev release. Soon
 
 ## License
 [MIT](http://opensource.org/licenses/MIT)
