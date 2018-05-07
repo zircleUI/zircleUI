@@ -4,17 +4,17 @@
     type="panel" 
     class="zui main" 
     :class="[classes, colors]" 
-    :style="resize === false ? styles.main : zpos.main" 
+    :style="responsive === true ? styles.main : zpos.main" 
     style="overflow: visible;"
     @mouseover = "$zircle.setBackNav(true)"
     @mouseleave = "$zircle.setBackNav(false)"> 
-      <div class="plate" :style="resize === false ? styles.plate : zpos.plate"></div>
+      <div class="plate" :style="responsive === true ? styles.plate : zpos.plate"></div>
       <z-range :progress='progress' v-if="range === true"/> 
       <z-scroll :scrollVal.sync="scrollVal" v-if="scrollBar === true" style="overflow: visible;"/> 
       <z-slider v-if="slider === true" :progress='progress'/>
       <div class="z-contentbox dashed" :style="styles.background">
           <slot name="picture"></slot>
-        <div class="z-content maindisc" :class="[classesContent]" :style="resize === false ? styles.hideScroll : zpos.hideScroll" @scroll="scroll">
+        <div class="z-content maindisc" :class="[classesContent]" :style="responsive === true ? styles.hideScroll : zpos.hideScroll" @scroll="scroll">
           <section class="z-text">
              <slot></slot>
              <span class="bottom"></span>
@@ -27,13 +27,6 @@
 
 <script>
 import zmixin from '../mixins/zircle-mixin'
-function chunk (myArray, chunkSize) {
-  var res = []
-  while (myArray.length) {
-    res.push(myArray.splice(0, chunkSize))
-  }
-  return res
-}
 export default {
   mixins: [zmixin],
   props: {
@@ -63,14 +56,26 @@ export default {
       scrollVal: -45,
       width: 0,
       img: {},
-      resize: false,
       zpos: {},
       viewID: ''
+    }
+  },
+  provide () {
+    return {
+      view: this.viewName
     }
   },
   computed: {
     viewName () {
       return this.view.toLowerCase()
+    },
+    responsive () {
+      if (this.viewName === this.$zircle.getCurrentViewName()) {
+        this.zpos = this.styles
+        return true
+      } else {
+        return false
+      }
     },
     styles () {
       var width = this.$zircle.getComponentWidth('xxl')
@@ -111,51 +116,17 @@ export default {
     }
   },
   mounted () {
-    if (this.list === true) {
-      this.$zircle.setPages(chunk(this.collectionCopy, this.perPage))
-    }
     if (this.$el.classList.contains('pastclass')) {
       this.viewID = this.$zircle.getPastViewId()
     }
     var width = this.$zircle.getComponentWidth('xxl')
-    this.zpos = {
-      main: {
-        width: width + 'px',
-        height: width + 'px',
-        margin: -(width / 2) + 'px 0 0 ' + -(width / 2) + 'px',
-        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
-      },
-      plate: {
-        width: width + 50 + 'px',
-        height: width + 50 + 'px',
-        margin: -((width + 50) / 2) + 'px 0 0 ' + -((width + 50) / 2) + 'px'
-      },
-      hideScroll: {
-        width: width - 5 + 'px',
-        marginLeft: -width * 0.0392 + 3.08 + 'px'
-      }
-    }
+    this.zpos = this.styles
     var container = this.$el.querySelector('.z-content > .z-text') // guarda con esto que no anda bien
     if (container.clientHeight > width) {
       this.scrollBar = true
     } else {
       this.scrollBar = false
     }
-  },
-  beforeUpdate () {
-    if (this.view.toLowerCase() === this.$zircle.getCurrentViewName()) {
-      this.zpos = this.styles
-    }
-  },
-  updated () {
-    var vm = this
-    this.$nextTick(function () {
-      if (vm.view.toLowerCase() === vm.$zircle.getCurrentViewName()) {
-        vm.resize = false
-      } else {
-        vm.resize = true
-      }
-    })
   }
 }
 </script>

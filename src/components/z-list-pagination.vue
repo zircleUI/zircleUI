@@ -5,10 +5,10 @@
     class="zui disc" 
     :type="type"
     :class="[classes, colors, activated]" 
-    :style="styles.main"> 
+    :style="responsive === true ? styles.main : zpos.main"> 
     <div
       class="navplate"
-      :style="styles.plate">    
+      :style="responsive === true ? styles.plate : zpos.plate">    
     </div>
   </div>
 </template>
@@ -32,12 +32,22 @@ export default {
       default: 0
     }
   },
+  inject: ['view'],
   data () {
     return {
-      hidden: false
+      hidden: false,
+      zpos: {}
     }
   },
   computed: {
+    responsive () {
+      if (this.view === this.$zircle.getCurrentViewName()) {
+        this.zpos = this.styles
+        return true
+      } else {
+        return false
+      }
+    },
     position () {
       return this.$zircle.calcPosition(this)
     },
@@ -64,14 +74,8 @@ export default {
       }
     }
   },
-  updated () {
-    this.$nextTick(function () {
-      if (this.$parent.$parent.$el.classList.contains('prevclass') || this.$parent.$parent.$el.classList.contains('pastclass')) {
-        this.hidden = true
-      } else {
-        this.hidden = false
-      }
-    })
+  mounted () {
+    this.zpos = this.styles
   }
 }
 </script>

@@ -45,6 +45,11 @@ export default {
     }
   },
   name: 'z-list',
+  data () {
+    return {
+      type: 'panel'
+    }
+  },
   computed: {
     collectionCopy () {
       return this.items.slice(0)

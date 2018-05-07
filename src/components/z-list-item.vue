@@ -3,19 +3,19 @@
       title="z-item"
       class="zui disc"
       :class="[classes, colors]"
-      :style="resize === false ? styles.main : zpos.main"
+      :style="responsive === true ? styles.main : zpos.main"
       @click.stop="move"> 
       <section 
         class="z-content label"
-        :style="resize === false ? styles.label : zpos.label"
+        :style="responsive === true ? styles.label : zpos.label"
         style="overflow: visible;">
         <slot name="item-label">
           {{label}} 
         </slot>
       </section>
       <div class="z-content">
-        <slot name="item-img">
-          <img :src="image" width="100%" height="100%" />
+        <slot name="item-image">
+          <img :src="imagescr" width="100%" height="100%" />
         </slot>
       </div>
     </div>
@@ -39,7 +39,7 @@ export default {
     label: {
       type: [String, Number]
     },
-    image: {
+    imagescr: {
       type: [String, Number]
     },
     item: {
@@ -54,14 +54,22 @@ export default {
       default: 'item'
     }
   },
+  inject: ['view'],
   data () {
     return {
       type: 'item',
-      resize: false,
       zpos: {}
     }
   },
   computed: {
+    responsive () {
+      if (this.view === this.$zircle.getCurrentViewName()) {
+        this.zpos = this.styles
+        return true
+      } else {
+        return false
+      }
+    },
     angle () {
       return (360 / this.$zircle.getNumberOfItemsInCurrentPage() * this.index) - 90
     },
@@ -107,6 +115,7 @@ export default {
   methods: {
     move () {
       if (this.gotoview !== undefined) {
+        // crear fxn parse gotoview.
         var go = this.gotoviewName
         console.log(go, this.gotoId)
         var position = {
@@ -117,7 +126,7 @@ export default {
           Yi: this.position.Yi,
           scalei: this.position.scalei,
           go: go,
-          itemID: this.id,
+          itemID: this.gotoId,
           item: this.item
         }
         if (this.$zircle.getHistoryLength() < 6) {
@@ -130,33 +139,7 @@ export default {
     }
   },
   mounted () {
-    var zwidth = this.$zircle.getComponentWidth(this.size)
-    this.zpos = {
-      main: {
-        width: zwidth + 'px',
-        height: zwidth + 'px',
-        margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
-        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
-      },
-      label: {
-        top: zwidth / 2 + 10 + 'px'
-      }
-    }
-  },
-  beforeUpdate () {
-    if (this.$parent.$parent.view.toLowerCase() === this.$zircle.getCurrentViewName()) {
-      this.zpos = this.styles
-    }
-  },
-  updated () {
-    var vm = this
-    this.$nextTick(function () {
-      if (vm.$parent.$parent.view.toLowerCase() === vm.$zircle.getCurrentViewName()) {
-        vm.resize = false
-      } else {
-        vm.resize = true
-      }
-    })
+    this.zpos = this.styles
   }
 }
 </script>

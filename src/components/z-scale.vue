@@ -5,7 +5,7 @@
     class="zui disc"
     :type="type"
     :class="[classes, colors]"
-    :style="resize === false ? styles.main : zpos.main"
+    :style="responsive === true ? styles.main : zpos.main"
     @click.stop="move">
       <z-range 
         :progress='progress'
@@ -17,7 +17,7 @@
       </z-slider>
     <section 
       class="z-content label"
-      :style="resize === false ? styles.label : zpos.label"
+      :style="responsive === true ? styles.label : zpos.label"
       style="overflow: visible;">
       <slot name="label"></slot>
     </section>
@@ -54,13 +54,21 @@ export default {
       default: 'scale'
     }
   },
+  inject: ['view'],
   data () {
     return {
-      resize: false,
       zpos: {}
     }
   },
   computed: {
+    responsive () {
+      if (this.view === this.$zircle.getCurrentViewName()) {
+        this.zpos = this.styles
+        return true
+      } else {
+        return false
+      }
+    },
     gotoviewName () {
       if (this.gotoview !== undefined) {
         return this.gotoview.toLowerCase()
@@ -110,33 +118,7 @@ export default {
     }
   },
   mounted () {
-    var zwidth = this.$zircle.getComponentWidth(this.size)
-    this.zpos = {
-      main: {
-        width: zwidth + 'px',
-        height: zwidth + 'px',
-        margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
-        transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
-      },
-      label: {
-        top: zwidth / 2 + 10 + 'px'
-      }
-    }
-  },
-  beforeUpdate () {
-    if (this.$parent.view.toLowerCase() === this.$zircle.getCurrentViewName()) {
-      this.zpos = this.styles
-    }
-  },
-  updated () {
-    var vm = this
-    this.$nextTick(function () {
-      if (vm.$parent.view.toLowerCase() === vm.$zircle.getCurrentViewName()) {
-        vm.resize = false
-      } else {
-        vm.resize = true
-      }
-    })
+    this.zpos = this.styles
   }
 }
 </script>

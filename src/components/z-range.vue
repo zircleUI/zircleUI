@@ -53,32 +53,25 @@ export default {
   },
   computed: {
     positionr () {
-      var zwidth = this.$zircle.getComponentWidth(this.$parent.size)
-      if (zwidth === 'extralarge') {
-        var dimension = this.state.zircleWidth.xl
+      var dimension = this.$zircle.getComponentWidth(this.$parent.size) / 2
+      if (this.$parent.size === 'extralarge') {
         var strokeWidth = 3
-      } else if (zwidth === 'large') {
-        dimension = this.state.zircleWidth.l
+      } else if (this.$parent.size === 'large') {
         strokeWidth = 7
-      } else if (zwidth === 'medium') {
-        dimension = this.state.zircleWidth.m
+      } else if (this.$parent.size === 'medium') {
         strokeWidth = 8
-      } else if (zwidth === 'small') {
-        dimension = this.state.zircleWidth.s
+      } else if (this.$parent.size === 'small') {
         strokeWidth = 9
-      } else if (zwidth === 'xs' || zwidth === 'extrasmall') {
-        dimension = this.state.zircleWidth.xs
+      } else if (this.$parent.size === 'xs' || this.$parent.size === 'extrasmall') {
         strokeWidth = 10
-      } else if (zwidth === 'xxs') {
-        dimension = this.state.zircleWidth.xxs
       }
       if (this.$parent.type === 'panel') {
         dimension = this.state.zircleWidth.xl
         strokeWidth = 3
       }
       return {
-        X: (dimension / 2) * Math.cos(this.anglex * (Math.PI / 180)),
-        Y: (dimension / 2) * Math.sin(this.anglex * (Math.PI / 180)),
+        X: (dimension - 3) * Math.cos(this.anglex * (Math.PI / 180)),
+        Y: (dimension - 3) * Math.sin(this.anglex * (Math.PI / 180)),
         arc: (Math.PI * 100) * ((this.anglex - 360) / 360),
         strokeWidth: strokeWidth
       }
@@ -155,15 +148,6 @@ export default {
         this.anglex = tangle
       }
     }
-  },
-  updated () {
-    this.$nextTick(function () {
-      if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
-        this.hidden = true
-      } else {
-        this.hidden = false
-      }
-    })
   }
 }
 </script>

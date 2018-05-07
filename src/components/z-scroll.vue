@@ -122,15 +122,6 @@ export default {
         this.$emit('update:scrollVal', tangle)
       }
     }
-  },
-  updated () {
-    this.$nextTick(function () {
-      if (this.$parent.$el.classList.contains('prevclass') || this.$parent.$el.classList.contains('pastclass')) {
-        this.hidden = true
-      } else {
-        this.hidden = false
-      }
-    })
   }
 }
 </script>

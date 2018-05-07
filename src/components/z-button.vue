@@ -3,13 +3,13 @@
     type="button"
     class="zui disc button"
     :class="[classes, colors]"
-    :style="style.main"> 
+    :style="responsive === true ? styles.main : zpos.main"> 
     <div class="z-content">
       <slot></slot>
     </div>
     <section 
       class="z-content label"
-      :style="style.label">
+      :style="responsive === true ? styles.label : zpos.label">
         <slot name="label" ></slot>
     </section>
     <slot name="circles"></slot>
@@ -21,14 +21,24 @@
 import zmixin from '../mixins/zircle-mixin'
 export default {
   mixins: [zmixin],
+  inject: ['view'],
   name: 'z-button',
   data () {
     return {
-      type: 'button'
+      type: 'button',
+      zpos: {}
     }
   },
   computed: {
-    style () {
+    responsive () {
+      if (this.view === this.$zircle.getCurrentViewName()) {
+        this.zpos = this.styles
+        return true
+      } else {
+        return false
+      }
+    },
+    styles () {
       var zwidth = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
@@ -44,6 +54,9 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    this.zpos = this.styles
   }
 }
 </script>
