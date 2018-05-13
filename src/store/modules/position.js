@@ -19,21 +19,15 @@ function calcCoords (distance, angle) {
 }
 const position = {
   getCurrentPosition () {
-    return store.state.position
+    return store.state.history[store.state.history.length - 1].position
   },
-  calcPanelPosition (component) {
-    store.actions.setLog('calcPanelPosition() => ' + component.type)
+  calcPanelPosition (data) {
+    store.actions.setLog('calcPanelPosition() => Panel')
     // Variable declaration
-    var newPosition = store.state.position
-    if (store.state.mode === 'backward' && store.state.cache.length >= 3 && store.state.cache[store.state.cache.length - 3].id === component.viewID) {
-      newPosition = {
-        X: store.state.cache[store.state.cache.length - 3].position.X,
-        Xi: store.state.cache[store.state.cache.length - 3].position.Xi,
-        Y: store.state.cache[store.state.cache.length - 3].position.Y,
-        Yi: store.state.cache[store.state.cache.length - 3].position.Yi,
-        scalei: store.state.cache[store.state.cache.length - 3].position.scalei,
-        scale: store.state.cache[store.state.cache.length - 3].position.scale
-      }
+    var newPosition = store.state.history[store.state.history.length - 1].position
+    if (store.state.history.length > 2 && store.state.history[store.state.history.length - 3].viewName === data) {
+      newPosition = store.state.history[store.state.history.length - 3].position
+      console.log('3ra activada')
     }
     return newPosition
   },
@@ -41,7 +35,7 @@ const position = {
     store.actions.setLog('calcPosition() => ' + component.type)
     // Variable declaration
     var parentPosition = {Xi: 0, Yi: 0, X: 0, Y: 0, scalei: 1, scale: 1}
-    var newPosition = store.state.position
+    var newPosition = store.state.history[store.state.history.length - 1].position
     var newCoords = calcCoords(component.distance, component.angle)
     if (component.$parent.type === 'panel') parentPosition = { Xi: component.$parent.position.Xi, Yi: component.$parent.position.Yi, X: component.$parent.position.X, Y: component.$parent.position.Y, scalei: component.$parent.position.scalei, scale: component.$parent.position.scale }
     newPosition = {
@@ -55,7 +49,7 @@ const position = {
       Yabs: parentPosition.Y + newCoords.Y * parentPosition.scalei
     }
     return newPosition
-  },
+  } /* ,
   setAppPos (data) {
     store.actions.setLog('setAppPos() => ' + data.go)
     store.state.position = {
@@ -64,12 +58,12 @@ const position = {
       scale: data.scale,
       Xi: data.Xi,
       Yi: data.Yi,
-      scalei: data.scalei,
-      go: data.go,
-      itemID: data.itemID,
-      item: data.item
+      scalei: data.scalei
+      // go: data.go, // delete
+      // itemID: data.itemID, // delete
+      // item: data.item // delete
     }
     store.actions.setView(data.go)
-  }
+  } */
 }
 export default position

@@ -1,44 +1,23 @@
 import store from '../store'
-function createRoute (path, name, component, params) {
+function createRoute (path, name, component) {
+  console.log(path, name, component)
   store.state.$router.addRoutes([{path: path,
     name: name,
     component: component
   }])
-  store.actions.setLog('vue-router: route added: ' + name)
-  params !== undefined ? store.state.$router.push({name: name, params: params}) : store.state.$router.push({name: name})
+  store.actions.setLog('vue-router: route added: ' + name, component)
 }
-function findComponent (list, view) {
-  return Object.keys(list).find(function (k) {
-    if (k.toLowerCase() === view) {
-      return k
-    }
-  })
-}
-function runHooks (components) {
+function runHooks () {
   store.state.$router.beforeEach((to, from, next) => {
-    if (from.name === store.state.cache[store.state.cache.length - 1].id && to.name !== store.state.lastViewCache.id) {
-      // Go backward using both: browser navigation arrows or zircle UI
-      store.actions.goBack()
+    if (store.state.mode === 'forward') {
+      store.actions.setLog('vue-router: Go forward: ' + to.name)
       next()
-    } else if (to.name === store.state.cache[store.state.cache.length - 1].id) {
-      // Check if the route exists
-      if (to.matched.length === 0) {
-        // If not, add route
-        let component = to.name.split('--')
-        let key = findComponent(components, component[0])
-        if (to.params.id === undefined) {
-          createRoute('/' + to.name, to.name, components[key])
-        } else {
-          createRoute('/' + to.name + '/:id', to.name, components[key], to.params)
-        }
-      } else {
-        // If exists, go forward
-        store.actions.setLog('vue-router: Go forward: ' + to.name)
+    } else {
+      if (store.state.history.length >= 1) {
+        store.actions.setLog('vue-router: Go backward: ' + to.name)
+        store.actions.goBack()
         next()
       }
-    } else {
-      store.actions.setLog('Router Error: unable to resolve routes :(', 'error')
-      next(false)
     }
   })
 }
@@ -46,26 +25,22 @@ const router = {
   getRouterState () {
     return store.state.isRouterEnabled
   },
-  // RouterHooks() is deprecated and will be deleted on zircle 0.5.0. Use setRouter() instead.
   routerHooks (data) {
     store.actions.setLog('Consider use setRouter() instead', 'warn')
     store.actions.setRouter(data)
   },
-  setRouter (data) {
-    store.actions.setLog('vue-router enabled')
+  setRouter (data, view) {
     // Auto configuration for vue-router
-    store.state.$router = data.$router
+    store.state.$router = data
     store.state.isRouterEnabled = true
-    store.actions.setViewName(data.initialView.toLowerCase())
+    store.actions.setLog('vue-router enabled')
     // Add default redirect route to initialView and go to initialView
     store.state.$router.onReady(function () {
-      var view = data.initialView.toLowerCase()
-      store.state.$router.addRoutes([{path: '/', redirect: '/' + view + '--0'}])
-      // 0.3.3 (fix bug init)
-      let key = findComponent(data.$options.components, view)
-      createRoute('/' + view + '--0', view + '--0', data.$options.components[key])
+      // var view = data.initialView.toLowerCase()
+      store.state.$router.addRoutes([{path: '/', redirect: '/' + view}])
+      createRoute('/' + view, view, store.actions.resolveComponent(store.actions.getComponentList(), view))
     })
-    runHooks(data.$options.components)
+    runHooks()
   }
 }
 

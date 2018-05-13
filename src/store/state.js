@@ -1,23 +1,12 @@
 const state = {
-  position: {
-    X: 0,
-    Y: 0,
-    scale: 1,
-    Xi: 0,
-    Yi: 0,
-    scalei: 1
-  },
   // Navigation
   mode: 'forward',
   isRouterEnabled: false,
   $router: {},
-  currentView: '',
-  previousView: '',
-  pastView: '',
   history: [],
-  cache: [],
-  lastViewCache: {},
+  lastViewHistory: {},
   goBackNav: false,
+  componentList: {},
   component_uid: '',
   // Styles
   zircleWidth: {
