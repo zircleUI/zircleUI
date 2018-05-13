@@ -1,4 +1,11 @@
 import store from '../store'
+function retrieveViewName (pos) {
+  let viewName = ''
+  if (store.state.history.length >= pos) {
+    viewName = store.state.history[store.state.history.length - pos].viewName
+  }
+  return viewName
+}
 function transformViewName (view) {
   view = view.toLowerCase()
   var count = 0
@@ -73,25 +80,13 @@ const navigation = {
     store.state.component_uid = ''
   },
   getCurrentViewName () {
-    if (store.state.history.length >= 1) {
-      return store.state.history[store.state.history.length - 1].viewName
-    } else {
-      return ''
-    }
+    return retrieveViewName(1)
   },
   getPreviousViewName () {
-    if (store.state.history.length >= 2) {
-      return store.state.history[store.state.history.length - 2].viewName
-    } else {
-      return ''
-    }
+    return retrieveViewName(2)
   },
   getPastViewName () {
-    if (store.state.history.length >= 3) {
-      return store.state.history[store.state.history.length - 3].viewName
-    } else {
-      return ''
-    }
+    return retrieveViewName(3)
   },
   getHistoryLength () {
     return store.state.history.length
