@@ -17,19 +17,19 @@ export default {
       type: String,
       default: 'primary'
     },
-    gotoview: {
-      type: [String, Number]
+    toView: {
+      type: [String, Object]
     }
   },
   computed: {
     position () {
       let position
-      this.type === 'panel' ? position = this.$zircle.calcPanelPosition(this) : position = this.$zircle.calcPosition(this)
+      this.type === 'panel' ? position = this.$zircle.calcPanelPosition(this.viewID) : position = this.$zircle.calcPosition(this)
       return position
     },
     classes () {
       return {
-        zoom: this.type === 'scale' && this.gotoview !== undefined
+        zoom: this.type === 'scale' && this.toView !== undefined
       }
     },
     colors () {
