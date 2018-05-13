@@ -4,21 +4,21 @@
         v-if="$zircle.getHistoryLength() >= 3" 
         class="pastclass"
         :is="pastView" 
-        :key="$zircle.getPastViewId()" />
+        :key="$zircle.getPastViewName()" />
       <component 
         v-if="$zircle.getHistoryLength() >= 2" 
         :is="previousView" 
         class="prevclass" 
-        :key="$zircle.getPreviousViewId()" />
+        :key="$zircle.getPreviousViewName()" />
       <component 
         v-if="$zircle.getRouterState() === false && $zircle.getHistoryLength() >= 1"
         :is="currentView" 
         :class="$zircle.getNavigationMode() === 'forward' ? 'currclass' : ''"  
-        :key="$zircle.getCurrentViewId()" />
+        :key="$zircle.getCurrentViewName()" />
       <router-view 
         v-if="$zircle.getRouterState() === true && $zircle.getHistoryLength() >= 1" 
         :class="$zircle.getNavigationMode() === 'forward' ? 'currclass' : ''" 
-        :key="$zircle.getCurrentViewId()"> 
+        :key="$zircle.getCurrentViewName()"> 
       </router-view>
   </z-transition>
 </template>
@@ -35,36 +35,19 @@ export default {
   },
   computed: {
     currentView () {
-      let vm = this
-      let key = Object.keys(this.list).find(function (k) {
-        if (k.toLowerCase() === vm.$zircle.getCurrentViewName()) {
-          return k
-        }
-      })
       if (this.$zircle.getRouterState() === false) {
-        return this.list[key]
+        return this.$zircle.resolveComponent(this.list, this.$zircle.getCurrentViewName())
       }
     },
     previousView () {
-      let vm = this
-      let key = Object.keys(this.list).find(function (k) {
-        if (k.toLowerCase() === vm.$zircle.getPreviousViewName()) {
-          return k
-        }
-      })
-      return this.list[key]
+      return this.$zircle.resolveComponent(this.list, this.$zircle.getPreviousViewName())
     },
     pastView () {
-      let vm = this
-      let key = Object.keys(this.list).find(function (k) {
-        if (k.toLowerCase() === vm.$zircle.getPastViewName()) {
-          return k
-        }
-      })
-      return this.list[key]
+      return this.$zircle.resolveComponent(this.list, this.$zircle.getPastViewName())
     }
   },
-  mounted () {
+  created () {
+    this.$zircle.setComponentList(this.list)
   }
 }
 </script>

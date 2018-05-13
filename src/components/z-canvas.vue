@@ -12,19 +12,7 @@
 
 <script>
 /* eslint-disable no-new */
-import store from '../store/store'
 export default {
-  props: {
-    isStandalone: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data () {
-    return {
-      store: store
-    }
-  },
   methods: {
     goback () {
       if (this.$zircle.getPreviousViewName() !== '' && this.$zircle.getBackNavState() === false) {

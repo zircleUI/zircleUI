@@ -117,11 +117,11 @@ export default {
   },
   mounted () {
     if (this.$el.classList.contains('pastclass')) {
-      this.viewID = this.$zircle.getPastViewId()
+      this.viewID = this.$zircle.getPastViewName()
     }
     var width = this.$zircle.getComponentWidth('xxl')
     this.zpos = this.styles
-    var container = this.$el.querySelector('.z-content > .z-text') // guarda con esto que no anda bien
+    var container = this.$el.querySelector('.z-content > .z-text')
     if (container.clientHeight > width) {
       this.scrollBar = true
     } else {

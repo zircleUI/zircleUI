@@ -57,7 +57,8 @@ export default {
   inject: ['view'],
   data () {
     return {
-      zpos: {}
+      zpos: {},
+      innerpos: {}
     }
   },
   computed: {
@@ -91,7 +92,23 @@ export default {
   },
   methods: {
     move () {
-      if (this.gotoview !== undefined) {
+      var position = {
+        X: this.position.Xabs,
+        Y: this.position.Yabs,
+        scale: this.position.scale,
+        Xi: this.position.Xi,
+        Yi: this.position.Yi,
+        scalei: this.position.scalei
+      }
+      this.$zircle.setView(this.toView, {
+        // set view implica si o si mode forward
+        // si el hystory length es > 6 cancel move
+        mode: 'forward',
+        position: position
+      })
+      this.$zircle.setComponent_uid(this._uid)
+
+/*      if (this.gotoview !== undefined) {
         // Apply moveApp & setNextView
         // seteo el gotoview aca, xq dsp se borra el "this". OJO ver si usar algun hook
         var go = this.gotoviewName
@@ -112,9 +129,7 @@ export default {
         } else {
           console.log('Max level of deep reached')
         }
-      } else {
-        console.log('gotoview is not defined')
-      }
+      } */
     }
   },
   mounted () {

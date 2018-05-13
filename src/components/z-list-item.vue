@@ -49,9 +49,8 @@ export default {
       type: [String, Number],
       default: ''
     },
-    gotoview: {
-      type: [String, Number],
-      default: 'item'
+    toView: {
+      type: [String, Number]
     }
   },
   inject: ['view'],
@@ -114,28 +113,19 @@ export default {
   },
   methods: {
     move () {
-      if (this.gotoview !== undefined) {
-        // crear fxn parse gotoview.
-        var go = this.gotoviewName
-        console.log(go, this.gotoId)
-        var position = {
-          X: this.position.Xabs,
-          Y: this.position.Yabs,
-          scale: this.position.scale,
-          Xi: this.position.Xi,
-          Yi: this.position.Yi,
-          scalei: this.position.scalei,
-          go: go,
-          itemID: this.gotoId,
-          item: this.item
-        }
-        if (this.$zircle.getHistoryLength() < 6) {
-          this.$zircle.setNavigationMode('forward')
-          this.$zircle.setAppPos(position)
-        } else {
-          console.log('Max level of deep reached')
-        }
+      var position = {
+        X: this.position.Xabs,
+        Y: this.position.Yabs,
+        scale: this.position.scale,
+        Xi: this.position.Xi,
+        Yi: this.position.Yi,
+        scalei: this.position.scalei
       }
+      this.$zircle.setView(this.toView, {
+        mode: 'forward',
+        position: position
+      })
+      this.$zircle.setComponent_uid(this._uid)
     }
   },
   mounted () {
