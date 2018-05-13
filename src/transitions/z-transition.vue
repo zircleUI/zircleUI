@@ -15,6 +15,7 @@ export default {
             point.style.willChange = 'transform'
             point.style.transform = 'scale(' + context.parent.$zircle.getCurrentPosition().scale + ') translate3d(' + context.parent.$zircle.getCurrentPosition().Xi + 'px, ' + context.parent.$zircle.getCurrentPosition().Yi + 'px, 0px)'
             point.style.transition = 'transform 800ms ease-in-out'
+            context.parent.$zircle.setNavigationMode('backward')
             done()
           } else {
             el.style.opacity = 1
