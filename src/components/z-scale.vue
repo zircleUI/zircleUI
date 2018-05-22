@@ -1,6 +1,6 @@
 <template>
   <div 
-    v-show="$zircle.getComponent_uid() !== _uid"
+    
     title="z-scale"
     class="zui disc"
     :type="type"
@@ -27,7 +27,7 @@
          <slot></slot>
       </section>
     </div>
-    <slot name="circles"></slot>
+    <slot name="zircle"></slot>
    </div>
 </template>
 
@@ -70,11 +70,6 @@ export default {
         return false
       }
     },
-    gotoviewName () {
-      if (this.gotoview !== undefined) {
-        return this.gotoview.toLowerCase()
-      }
-    },
     styles () {
       var zwidth = this.$zircle.getComponentWidth(this.size)
       return {
@@ -100,36 +95,21 @@ export default {
         Yi: this.position.Yi,
         scalei: this.position.scalei
       }
+      /* var position1 = {
+        X: 0,
+        Y: 0,
+        scale: 1,
+        Xi: 0,
+        Yi: 0,
+        scalei: 1
+      } */
       this.$zircle.setView(this.toView, {
         // set view implica si o si mode forward
         // si el hystory length es > 6 cancel move
         mode: 'forward',
         position: position
       })
-      this.$zircle.setComponent_uid(this._uid)
-
-/*      if (this.gotoview !== undefined) {
-        // Apply moveApp & setNextView
-        // seteo el gotoview aca, xq dsp se borra el "this". OJO ver si usar algun hook
-        var go = this.gotoviewName
-        var position = {
-          X: this.position.Xabs,
-          Y: this.position.Yabs,
-          scale: this.position.scale,
-          Xi: this.position.Xi,
-          Yi: this.position.Yi,
-          scalei: this.position.scalei,
-          go: go
-        }
-        if (this.$zircle.getHistoryLength() < 6) {
-          this.$zircle.setNavigationMode('forward')
-          this.$zircle.setAppPos(position)
-          var vm = this
-          vm.$zircle.setComponent_uid(vm._uid)
-        } else {
-          console.log('Max level of deep reached')
-        }
-      } */
+      // this.$zircle.setComponent_uid(this._uid)
     }
   },
   mounted () {

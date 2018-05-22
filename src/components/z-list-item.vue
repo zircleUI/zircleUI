@@ -1,5 +1,6 @@
 <template>
     <div 
+      
       title="z-item"
       class="zui disc"
       :class="[classes, colors]"
@@ -42,13 +43,6 @@ export default {
     imagescr: {
       type: [String, Number]
     },
-    item: {
-      default: ''
-    },
-    id: {
-      type: [String, Number],
-      default: ''
-    },
     toView: {
       type: [String, Number]
     }
@@ -86,16 +80,6 @@ export default {
     colors () {
       return this.color
     },
-    gotoviewName () {
-      if (this.gotoview !== undefined) {
-        return this.gotoview.split('/')[0]
-      }
-    },
-    gotoId () {
-      if (this.gotoview !== undefined) {
-        return this.gotoview.split('/')[1]
-      }
-    },
     styles () {
       var zwidth = this.$zircle.getComponentWidth(this.size)
       return {
@@ -125,7 +109,7 @@ export default {
         mode: 'forward',
         position: position
       })
-      this.$zircle.setComponent_uid(this._uid)
+      // this.$zircle.setComponent_uid(this._uid)
     }
   },
   mounted () {

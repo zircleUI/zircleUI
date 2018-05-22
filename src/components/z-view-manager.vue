@@ -1,5 +1,6 @@
 <template>
    <z-transition>
+    
       <component 
         v-if="$zircle.getHistoryLength() >= 3" 
         class="pastclass"
@@ -8,8 +9,9 @@
       <component 
         v-if="$zircle.getHistoryLength() >= 2" 
         :is="previousView" 
-        class="prevclass" 
+        class="prevclass"
         :key="$zircle.getPreviousViewName()" />
+   
       <component 
         v-if="$zircle.getRouterState() === false && $zircle.getHistoryLength() >= 1"
         :is="currentView" 

@@ -15,13 +15,13 @@
       <div class="z-contentbox dashed" :style="styles.background">
           <slot name="picture"></slot>
         <div class="z-content maindisc" :class="[classesContent]" :style="responsive === true ? styles.hideScroll : zpos.hideScroll" @scroll="scroll">
-          <section class="z-text">
+          <section ref="ztext" class="z-text">
              <slot></slot>
              <span class="bottom"></span>
           </section>
         </div>
       </div>
-     <slot name="circles"></slot>
+     <slot name="zircle"></slot>
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
       type: Number,
       default: 0
     },
-    view: {
+    viewName: {
       type: [String, Number],
       required: true
     },
@@ -51,26 +51,31 @@ export default {
   data () {
     return {
       type: 'panel',
-      scrollBar: false,
       alertar: '',
       scrollVal: -45,
       width: 0,
       img: {},
       zpos: {},
-      viewID: ''
+      isMounted: false,
+      viewID: '',
+      fullView: this.$zircle.getCurrentViewName()
     }
   },
   provide () {
     return {
-      view: this.viewName
+      view: this.$zircle.getCurrentViewName()
     }
   },
   computed: {
-    viewName () {
-      return this.view.toLowerCase()
+    scrollBar () {
+      var isScrollNeeded = false
+      if (this.isMounted === true && this.viewName.toLowerCase() === this.$zircle.getCurrentViewName().split('--')[0] && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth('xxl')) {
+        isScrollNeeded = true
+      }
+      return isScrollNeeded
     },
     responsive () {
-      if (this.viewName === this.$zircle.getCurrentViewName()) {
+      if (this.fullView === this.$zircle.getCurrentViewName()) {
         this.zpos = this.styles
         return true
       } else {
@@ -87,9 +92,9 @@ export default {
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
-          width: width + 50 + 'px',
-          height: width + 50 + 'px',
-          margin: -((width + 50) / 2) + 'px 0 0 ' + -((width + 50) / 2) + 'px'
+          width: width + 60 + 'px',
+          height: width + 60 + 'px',
+          margin: -((width + 60) / 2) + 'px 0 0 ' + -((width + 60) / 2) + 'px'
         },
         hideScroll: {
           width: width - 5 + 'px',
@@ -105,27 +110,28 @@ export default {
   },
   methods: {
     scroll () {
-      var container = this.$el.querySelector('.z-content')
-      this.scrollVal = -45 + ((container.scrollTop * 100 / (container.scrollHeight - container.clientHeight)) * 86 / 100)
+      if (this.scrollBar === true) {
+        var container = this.$el.querySelector('.z-content')
+        this.scrollVal = -45 + ((container.scrollTop * 100 / (container.scrollHeight - container.clientHeight)) * 86 / 100)
+      }
     }
   },
   watch: {
     scrollVal () {
-      var container = this.$el.querySelector('.z-content')
-      container.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (container.scrollHeight - container.clientHeight) / 100
+      if (this.scrollBar === true) {
+        var container = this.$el.querySelector('.z-content')
+        container.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (container.scrollHeight - container.clientHeight) / 100
+      }
     }
   },
   mounted () {
+    this.zpos = this.styles
+    this.isMounted = true
     if (this.$el.classList.contains('pastclass')) {
       this.viewID = this.$zircle.getPastViewName()
-    }
-    var width = this.$zircle.getComponentWidth('xxl')
-    this.zpos = this.styles
-    var container = this.$el.querySelector('.z-content > .z-text')
-    if (container.clientHeight > width) {
-      this.scrollBar = true
+      this.zpos = this.styles
     } else {
-      this.scrollBar = false
+      this.viewID = ''
     }
   }
 }

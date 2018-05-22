@@ -1,6 +1,6 @@
 <template>
   <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="slider">
-    <circle r="50" cx="50" cy="50"  :style="[styles]"></circle>
+    <circle r="51" cx="50" cy="50"  :style="[styles]"></circle>
   </svg>
 </template>
 
@@ -19,7 +19,6 @@ export default {
     }
   },
   computed: {
-    // getComponentWidth(this.size)
     styles () {
       var zwidth = this.$parent.size
       if (zwidth === 'extralarge') {
@@ -41,10 +40,8 @@ export default {
       return {
         transformOrigin: '50% 50%',
         transform: 'rotate(-90deg)',
-        // transition: 'stroke-dashoffset .3s ease-in-out',
         strokeDasharray: circleLength,
-        // strokeDashoffset: circleLength,
-        strokeDashoffset: -(Math.PI * 100) * ((this.progress - 100) / 100), // ((100 - this.progress) / 100) * circleLength,
+        strokeDashoffset: -(Math.PI * 100) * ((this.progress - 100) / 100),
         strokeWidth: strokeWidth
       }
     }

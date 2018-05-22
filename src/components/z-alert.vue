@@ -14,7 +14,7 @@
           </section>
         </div>
       </div>
-      <slot name="circles"></slot>
+      <slot name="zircle"></slot>
     </div>
   </transition>
 </template>
@@ -41,9 +41,9 @@ export default {
           margin: -((zwidth + 50) / 2) + 'px 0 0 ' + -((zwidth + 50) / 2) + 'px'
         },
         plate: {
-          width: zwidth + 150 + 'px',
-          height: zwidth + 150 + 'px',
-          margin: -((zwidth + 150) / 2) + 'px 0 0 ' + -((zwidth + 150) / 2) + 'px'
+          width: zwidth + 180 + 'px',
+          height: zwidth + 180 + 'px',
+          margin: -((zwidth + 180) / 2) + 'px 0 0 ' + -((zwidth + 180) / 2) + 'px'
         }
       }
     }

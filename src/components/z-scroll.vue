@@ -6,7 +6,7 @@
       class="scroll"
       @click="point">
         <circle 
-          r="50"
+          r="51"
           cx="50"
           cy="50"
           :style="[styles2]">
@@ -54,7 +54,7 @@ export default {
       return {
         transformOrigin: '50% 50%',
         transform: 'rotate(-45deg)',
-        strokeDasharray: circleLength,
+        strokeDasharray: circleLength - 2,
         // strokeDashoffset: circleLength,
         strokeDashoffset: -(Math.PI * 100) * ((90 - 360) / 360),
         strokeWidth: 3
@@ -63,8 +63,8 @@ export default {
     position () {
       var zwidth = this.$zircle.getComponentWidth('xxl') / 2
       return {
-        X: (zwidth - 3) * Math.cos(this.scrollVal * (Math.PI / 180)),
-        Y: (zwidth - 3) * Math.sin(this.scrollVal * (Math.PI / 180))
+        X: (zwidth) * Math.cos(this.scrollVal * (Math.PI / 180)),
+        Y: (zwidth) * Math.sin(this.scrollVal * (Math.PI / 180))
       }
     },
     classesContent3 () {

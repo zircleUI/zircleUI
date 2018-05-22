@@ -6,7 +6,7 @@
       class="scroll" 
       @click="point">
         <circle 
-          r="50"
+          r="51"
           cx="50"cy="50"
           :style="[styles]">
         </circle>

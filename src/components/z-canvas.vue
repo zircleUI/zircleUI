@@ -36,7 +36,27 @@ export default {
 }
 </script>
 <style>
-/* This is the style for zircle. To override it use !important */
+/* This is the style for zircle. To override it use !important 
+z-container {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    z-index: 999;
+    /* box-shadow: inset 0 0 2px 0; */
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: calc(14px + 1vmax);
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    border-radius: 50%;
+    /* background-color: var(--background); */
+    color: var(--primary);
+    transition: background-color 1s;
+    overflow: hidden;
+*/
+.zuit-move {
+
+}
 :root {
   --light-blue: #5FC9F3;
   --black: #283237;
@@ -176,36 +196,43 @@ export default {
   --border-card: var(--primary-color);
   --primary-text: var(--primary-color);
 }
-
 #z-container {
   position: fixed;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: calc(14px + 1vmax);
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   background-color: var(--background);
   color: var(--primary);
   transition: background-color 1s;
   overflow: hidden;
 }
-
+#z-point {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-decoration: none;
+  will-change: transform;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+  transform-style: perserve-3d
+}
+#z-point::after {
+    width: 100%;
+  height: 100%;
+    display: block;
+    content:'';
+  }
 div[type="panel"],
 div[type="scale"],
 div[type="button"] {
   transition: background-color 1s;
 }
 
-#z-point {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: calc(14px + 1vmax);
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  perspective: 1000px;
-  text-decoration: none;
-  
-}
+
 
 .handlebar:hover {
   cursor: grab;
@@ -224,6 +251,10 @@ div[type="button"] {
   left: 50%;
   text-align: center;
   
+}
+
+.disc:active, .disc:focus {
+  filter: brightness(0.4) drop-shadow(0 0 0.55rem black);
 }
 
 .main {
@@ -250,7 +281,7 @@ div[type="button"] {
   display: block;
   z-index: 40;
   fill: none;
-  stroke-opacity: 0.8;
+  stroke-opacity: 0.9;
 }
 
 .accent .slider,
@@ -339,11 +370,7 @@ div[type="button"] {
 .longtext {
   overflow-y: scroll;
   padding-right: 20px;
-  margin-right: -20px; /* padding-top: 100px;
-    height: 100%;
-    width: 105%;
-     padding-right: 28px;
-    margin-right: -28px; */
+  margin-right: -20px;
 }
 
 .bottom {
@@ -361,7 +388,7 @@ div[type="button"] {
 }
 
 .nodisplay {
-  display: none;
+  opacity: 0.1;
 }
 
 .button {
@@ -369,39 +396,39 @@ div[type="button"] {
 }
 
 .button:hover {
-  filter: brightness(0.9);
+  filter: brightness(0.7);
 }
 
 .button:active {
-  filter: brightness(0.4);
+  filter: brightness(0.4) drop-shadow(0 0 0.55rem black);
 }
 
 .hidden {
   cursor: zoom-out;
 }
 
-.current {
-  will-change: opacity;
-}
-
 .pastclass {
   pointer-events: none;
   cursor: zoom-out;
-  filter: blur(1.5px);
+  filter: blur(2px) grayscale(100%) opacity(20%);
+  overflow: hidden
 }
 
 .prevclass {
   pointer-events: none;
   cursor: zoom-out;
-  filter: blur(1.5px);
+  filter: blur(2px) grayscale(100%) opacity(20%);
+  overflow: hidden
 }
 
 .currclass {
   pointer-events: auto;
-  animation: appear 800ms linear forwards;
   will-change: opacity;
+  animation: appear 800ms linear forwards
 }
-
+.disappear {
+  animation: disappear 800ms linear forwards
+}
 @keyframes appear {
   0% {
     opacity: 0;
@@ -424,11 +451,7 @@ div[type="button"] {
   opacity: 1;
 }
 .no-show{
-  opacity: 0;
-}
-.lastclass {
-  animation: disappear 800ms linear forwards;
-  will-change: opacity;
+  opacity: 1;
 }
 
 @keyframes disappear {
@@ -450,21 +473,13 @@ div[type="button"] {
 
 }
 
-@keyframes blur {
+@keyframes hide {
   0% {
-    filter: blur(0px);
+    opacity: 1;
   }
-
-  20% {
-    filter: blur(0px);
-  }
-
-  60% {
-    filter: blur(1.5px);
-  }
-
+  
   100% {
-    filter: blur(1.5px);
+    opacity: 0;
   }
 
 }

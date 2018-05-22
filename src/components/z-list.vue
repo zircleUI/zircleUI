@@ -5,10 +5,10 @@
       v-bind="item"
       :index=index>
     </slot>
-    <z-list-pagination  
+    <z-list-pagination  v-if="$zircle.getNumberOfPages() > 1"
       v-for="(page, index) in $zircle.getNumberOfPages()"
       :key="index + '_page'"
-      size="xxs"
+      size="extrasmall"
       color="accent"
       :index="index"
       :distance="112"
@@ -21,11 +21,6 @@
 </template>
 
 <script>
-// prevenir que se use en otro lugar que no sea parent.
-// parsear gotoview para detectar si tiene id
-// permitir el uso del id
-// explicar el uso de label or image as prop or as slot
-// METER COMENTARIOS EN LOS COMPONENTES HTML
 import zmixin from '../mixins/zircle-mixin'
 function chunk (myArray, chunkSize) {
   var res = []

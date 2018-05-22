@@ -12,7 +12,7 @@
       :style="responsive === true ? styles.label : zpos.label">
         <slot name="label" ></slot>
     </section>
-    <slot name="circles"></slot>
+    <slot name="zircle"></slot>
   </div>
 </template>
 
