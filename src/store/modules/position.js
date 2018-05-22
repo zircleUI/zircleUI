@@ -21,13 +21,27 @@ const position = {
   getCurrentPosition () {
     return store.state.history[store.state.history.length - 1].position
   },
+  getPreviousPosition () {
+    if (store.state.history[store.state.history.length - 2]) {
+      return store.state.history[store.state.history.length - 2].position
+    } else {
+      return {
+        X: 0, Y: 0, Xi: 0, Yi: 0, scale: 0, scalei: 0
+      }
+    }
+  },
+  getPastPosition () {
+    return store.state.history[store.state.history.length - 3].position
+  },
+  getLastPosition () {
+    return store.state.lastViewHistory.position
+  },
   calcPanelPosition (data) {
     store.actions.setLog('calcPanelPosition() => Panel')
     // Variable declaration
     var newPosition = store.state.history[store.state.history.length - 1].position
     if (store.state.history.length > 2 && store.state.history[store.state.history.length - 3].viewName === data) {
       newPosition = store.state.history[store.state.history.length - 3].position
-      console.log('3ra activada')
     }
     return newPosition
   },
@@ -49,21 +63,6 @@ const position = {
       Yabs: parentPosition.Y + newCoords.Y * parentPosition.scalei
     }
     return newPosition
-  } /* ,
-  setAppPos (data) {
-    store.actions.setLog('setAppPos() => ' + data.go)
-    store.state.position = {
-      X: data.X,
-      Y: data.Y,
-      scale: data.scale,
-      Xi: data.Xi,
-      Yi: data.Yi,
-      scalei: data.scalei
-      // go: data.go, // delete
-      // itemID: data.itemID, // delete
-      // item: data.item // delete
-    }
-    store.actions.setView(data.go)
-  } */
+  }
 }
 export default position

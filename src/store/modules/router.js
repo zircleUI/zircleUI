@@ -1,11 +1,10 @@
 import store from '../store'
 function createRoute (path, name, component) {
-  console.log(path, name, component)
   store.state.$router.addRoutes([{path: path,
     name: name,
     component: component
   }])
-  store.actions.setLog('vue-router: route added: ' + name, component)
+  store.actions.setLog('vue-router: route added: ' + name)
 }
 function runHooks () {
   store.state.$router.beforeEach((to, from, next) => {
@@ -36,7 +35,6 @@ const router = {
     store.actions.setLog('vue-router enabled')
     // Add default redirect route to initialView and go to initialView
     store.state.$router.onReady(function () {
-      // var view = data.initialView.toLowerCase()
       store.state.$router.addRoutes([{path: '/', redirect: '/' + view}])
       createRoute('/' + view, view, store.actions.resolveComponent(store.actions.getComponentList(), view))
     })

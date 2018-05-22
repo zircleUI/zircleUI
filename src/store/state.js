@@ -17,10 +17,9 @@ const state = {
     xs: 20,
     xxs: 20
   },
-  color: 'color--black',
+  color: 'color--blue',
   theme: 'theme--dark',
   // Pagination components
-  selectedItem: '',
   currentPage: 0,
   items: [],
   pages: [],
