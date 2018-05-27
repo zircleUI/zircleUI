@@ -5,19 +5,17 @@
       class="zui disc"
       :class="[classes, colors]"
       :style="responsive === true ? styles.main : zpos.main"
-      @click.stop="move"> 
-      <section 
-        class="z-content label"
-        :style="responsive === true ? styles.label : zpos.label"
-        style="overflow: visible;">
-        <slot name="item-label">
-          {{label}} 
-        </slot>
+      @mousedown="pulse"
+      @touchstart="pulse"
+      @mouseup="move">
+      <div class="z-pulse"></div>
+      <section class="label overflow" v-if="label || $slots['label']">
+        {{label}} 
+        <slot v-if="!label" name="label"></slot>
       </section>
       <div class="z-content">
-        <slot name="item-image">
-          <img :src="imagescr" width="100%" height="100%" />
-        </slot>
+        <img v-if="imagesrc" :src="imagesrc" width="100%" height="100%" />
+        <slot v-if="!imagesrc" name="image"></slot>
       </div>
     </div>
 </template>
@@ -40,7 +38,7 @@ export default {
     label: {
       type: [String, Number]
     },
-    imagescr: {
+    imagesrc: {
       type: [String, Number]
     },
     toView: {
@@ -88,14 +86,21 @@ export default {
           height: zwidth + 'px',
           margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
-        },
-        label: {
-          top: zwidth / 2 + 10 + 'px'
         }
       }
     }
   },
   methods: {
+    pulse () {
+      let pulse = this.$el.querySelector('.z-pulse')
+      pulse.classList.add('pulse')
+      pulse.addEventListener('animationend', function () {
+        pulse.classList.remove('pulse')
+      }, false)
+      pulse.removeEventListener('animationend', function () {
+        pulse.classList.remove('pulse')
+      }, false)
+    },
     move () {
       var position = {
         X: this.position.Xabs,
@@ -106,10 +111,8 @@ export default {
         scalei: this.position.scalei
       }
       this.$zircle.setView(this.toView, {
-        mode: 'forward',
         position: position
       })
-      // this.$zircle.setComponent_uid(this._uid)
     }
   },
   mounted () {

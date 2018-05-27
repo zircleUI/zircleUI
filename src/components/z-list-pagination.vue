@@ -58,7 +58,7 @@ export default {
       }
     },
     styles () {
-      var zwidth = this.$zircle.getComponentWidth(this.size) / 3
+      var zwidth = this.$zircle.getComponentWidth(this.size) / 2.5
       return {
         main: {
           width: zwidth + 'px',
@@ -67,9 +67,9 @@ export default {
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
         },
         plate: {
-          width: zwidth + 10 + 'px',
-          height: zwidth + 10 + 'px',
-          margin: -((zwidth + 10) / 2) + 'px 0 0 ' + -((zwidth + 10) / 2) + 'px'
+          width: zwidth + 12 + 'px',
+          height: zwidth + 12 + 'px',
+          margin: -((zwidth + 12) / 2) + 'px 0 0 ' + -((zwidth + 12) / 2) + 'px'
         }
       }
     }
