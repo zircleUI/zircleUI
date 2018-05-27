@@ -7,13 +7,9 @@
       :style="styles.main"> 
         <z-slider :progress="progress"></z-slider>
         <div class="z-popup-plate" :style="styles.plate"></div>
-        <div class="z-contentbox dashed">
         <div class="z-content">
-          <section>
             <slot></slot>
-          </section>
         </div>
-      </div>
       <slot name="zircle"></slot>
     </div>
   </transition>
@@ -27,8 +23,7 @@ export default {
   data () {
     return {
       type: 'alert',
-      scrollBar: false,
-      progress: 1
+      progress: 0
     }
   },
   computed: {
@@ -50,20 +45,18 @@ export default {
   },
   methods: {
     close () {
-      this.progress = 100
       this.$zircle.setAlert(false)
     }
   },
   mounted () {
-    var id = setInterval(frame, 100)
+    var id = setInterval(frame, 300)
     var vm = this
     function frame () {
-      if (vm.progress >= 100) {
+      if (vm.progress >= 101) {
         clearInterval(id)
-        vm.progress = 1
         vm.close()
       } else {
-        vm.progress++
+        vm.progress += 10
       }
     }
   }

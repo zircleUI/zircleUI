@@ -9,16 +9,19 @@
     @mouseover = "$zircle.setBackNav(true)"
     @mouseleave = "$zircle.setBackNav(false)"> 
       <div class="plate" :style="responsive === true ? styles.plate : zpos.plate"></div>
-      <z-range :progress='progress' v-if="range === true"/> 
-      <z-scroll :scrollVal.sync="scrollVal" v-if="scrollBar === true" style="overflow: visible;"/> 
+      <z-scroll v-if="scrollBar === true" :scrollVal.sync="scrollVal" style="overflow: visible;"/> 
       <z-slider v-if="slider === true" :progress='progress'/>
-      <div class="z-contentbox dashed" :style="styles.background">
-          <slot name="picture"></slot>
-        <div class="z-content maindisc" :class="[classesContent]" :style="responsive === true ? styles.hideScroll : zpos.hideScroll" @scroll="scroll">
-          <section ref="ztext" class="z-text">
-             <slot></slot>
-             <span class="bottom"></span>
-          </section>
+      <section class="label" v-if="label || $slots['label']">
+        {{label}}
+        <slot v-if="!label" name="label"></slot>
+      </section>
+      <div class="z-content">
+        <img v-if="imagesrc" :src="imagesrc" width="100%" height="100%" />
+        <slot v-if="!imagesrc" name="image"></slot>
+      </div>
+      <div class="z-content maindisc" :class="[longtext, ffoxScroll]" @scroll.passive="scroll">
+        <div ref="ztext" class="z-text">
+          <slot></slot>
         </div>
       </div>
      <slot name="zircle"></slot>
@@ -38,10 +41,6 @@ export default {
       type: [String, Number],
       required: true
     },
-    range: {
-      type: [Boolean],
-      default: false
-    },
     slider: {
       type: [Boolean],
       default: false
@@ -51,13 +50,13 @@ export default {
   data () {
     return {
       type: 'panel',
-      alertar: '',
       scrollVal: -45,
       width: 0,
       img: {},
       zpos: {},
       isMounted: false,
       viewID: '',
+      ffox: false,
       fullView: this.$zircle.getCurrentViewName()
     }
   },
@@ -95,23 +94,24 @@ export default {
           width: width + 60 + 'px',
           height: width + 60 + 'px',
           margin: -((width + 60) / 2) + 'px 0 0 ' + -((width + 60) / 2) + 'px'
-        },
-        hideScroll: {
-          width: width - 5 + 'px',
-          marginLeft: -width * 0.0392 + 3.08 + 'px'
         }
       }
     },
-    classesContent () {
+    longtext () {
       return {
         longtext: this.scrollBar === true
+      }
+    },
+    ffoxScroll () {
+      return {
+        ffoxScroll: this.scrollBar === true && this.ffox === true
       }
     }
   },
   methods: {
     scroll () {
       if (this.scrollBar === true) {
-        var container = this.$el.querySelector('.z-content')
+        var container = this.$el.querySelector('.maindisc')
         this.scrollVal = -45 + ((container.scrollTop * 100 / (container.scrollHeight - container.clientHeight)) * 86 / 100)
       }
     }
@@ -119,12 +119,16 @@ export default {
   watch: {
     scrollVal () {
       if (this.scrollBar === true) {
-        var container = this.$el.querySelector('.z-content')
+        var container = this.$el.querySelector('.maindisc')
         container.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (container.scrollHeight - container.clientHeight) / 100
       }
     }
   },
   mounted () {
+    if (navigator.userAgent.match('Firefox')) {
+      console.log('Firefox detected. Disable scroll event')
+      this.ffox = true
+    }
     this.zpos = this.styles
     this.isMounted = true
     if (this.$el.classList.contains('pastclass')) {

@@ -1,33 +1,33 @@
 <template>
   <div 
-    
     title="z-scale"
     class="zui disc"
     :type="type"
     :class="[classes, colors]"
     :style="responsive === true ? styles.main : zpos.main"
-    @click.stop="move">
-      <z-range 
-        :progress='progress'
-        v-if="range === true">
-      </z-range>
+    @mousedown="pulse"
+    @touchstart="pulse"
+    @mouseup="move">
+    <div class="z-pulse"></div>
       <z-slider
         v-if="slider === true"
         :progress='progress'>
       </z-slider>
-    <section 
-      class="z-content label"
-      :style="responsive === true ? styles.label : zpos.label"
-      style="overflow: visible;">
-      <slot name="label"></slot>
-    </section>
-    <div class="z-content">
-      <slot name="picture"></slot>
-      <section>
-         <slot></slot>
+      <section class="label" v-if="label || $slots['label']">
+        {{label}}
+        <slot v-if="!label" name="label"></slot>
+        {{extrainfo}}
       </section>
-    </div>
-    <slot name="zircle"></slot>
+      <div class="z-content">
+        <img v-if="imagesrc" :src="imagesrc" width="100%" height="100%" />
+        <slot v-if="!imagesrc" name="image"></slot>
+      </div>
+      <div class="z-content">
+        <span class="overflow">
+          <slot></slot>
+        </span>
+      </div>
+      <slot name="zircle"></slot>
    </div>
 </template>
 
@@ -39,11 +39,7 @@ export default {
   props: {
     progress: {
       type: Number,
-      default: 70
-    },
-    range: {
-      type: [Boolean],
-      default: false
+      default: 0
     },
     slider: {
       type: [Boolean],
@@ -58,7 +54,8 @@ export default {
   data () {
     return {
       zpos: {},
-      innerpos: {}
+      innerpos: {},
+      extrainfo: ''
     }
   },
   computed: {
@@ -78,14 +75,21 @@ export default {
           height: zwidth + 'px',
           margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
-        },
-        label: {
-          top: zwidth / 2 + 10 + 'px'
         }
       }
     }
   },
   methods: {
+    pulse () {
+      let pulse = this.$el.querySelector('.z-pulse')
+      pulse.classList.add('pulse')
+      pulse.addEventListener('animationend', function () {
+        pulse.classList.remove('pulse')
+      }, false)
+      pulse.removeEventListener('animationend', function () {
+        pulse.classList.remove('pulse')
+      }, false)
+    },
     move () {
       var position = {
         X: this.position.Xabs,
@@ -95,25 +99,19 @@ export default {
         Yi: this.position.Yi,
         scalei: this.position.scalei
       }
-      /* var position1 = {
-        X: 0,
-        Y: 0,
-        scale: 1,
-        Xi: 0,
-        Yi: 0,
-        scalei: 1
-      } */
-      this.$zircle.setView(this.toView, {
-        // set view implica si o si mode forward
-        // si el hystory length es > 6 cancel move
-        mode: 'forward',
-        position: position
-      })
-      // this.$zircle.setComponent_uid(this._uid)
+      if (this.toView) {
+        this.$zircle.setView(this.toView, {
+          position: position
+        })
+      }
+    },
+    extraInfo (data) {
+      this.extrainfo = data
     }
   },
   mounted () {
     this.zpos = this.styles
+    if (this.slider) this.extrainfo = this.progress
   }
 }
 </script>
