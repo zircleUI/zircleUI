@@ -1,153 +1,105 @@
 <template>
-  <section :type="type">
-    <svg 
-      viewBox="0 0 100 100" 
-      xmlns="http://www.w3.org/2000/svg" 
-      class="scroll" 
-      @click="point">
-        <circle 
-          r="51"
-          cx="50"cy="50"
-          :style="[styles]">
-        </circle>
-    </svg>
-    <svg 
-      v-show="hidden === false"
-      xmlns="http://www.w3.org/2000/svg"
-      class="scroll2"
-      :style="[classesContent3]"
-      @touchstart="drag = true"
-      @touchmove.prevent="slide1" 
-      @touchend="drag = false"
-      @mousedown="drag = true" 
-      @mousemove="slide1" 
-      @mouseup="drag = false">
-        <circle 
-          r="8"
-          cx="20"
-          cy="20"
-          class="handlebar">
-        </circle> 
-    </svg>
-    <div class="z-content">
-        {{Math.round((anglex / 360) * 100, 0)}}
-    </div>
-  </section>
+  <div 
+    title="z-range"
+    class="zui disc"
+    :type="type"
+    :class="[classes, colors, rangeClass]"
+    :style="responsive === true ? styles.main : zpos.main"
+    @mousedown="pulse"
+    @touchstart="pulse">
+    <div class="z-pulse"></div>
+      <z-range-bar
+        v-on:rangeVal="extraInfo"
+        :progress='progress'>
+      </z-range-bar>
+      <section class="label" v-if="label || $slots['label']">
+        {{label}}
+        <slot v-if="!label" name="label"></slot>
+        {{extrainfo}}
+      </section>
+      <div class="z-content">
+        <img v-if="imagesrc" :src="imagesrc" width="100%" height="100%" />
+        <slot v-if="!imagesrc" name="image"></slot>
+      </div>
+      <div class="z-content">
+        <span class="overflow">
+          <slot></slot>
+        </span>
+      </div>
+      <slot name="zircle"></slot>
+   </div>
 </template>
 
 <script>
 import zmixin from '../mixins/zircle-mixin'
 export default {
-  mixins: [zmixin],
-  props: ['progress'],
   name: 'z-range',
+  mixins: [zmixin],
+  props: {
+    progress: {
+      type: Number,
+      default: 0
+    },
+    range: {
+      type: [Boolean],
+      default: true
+    },
+    type: {
+      type: String,
+      default: 'range'
+    }
+  },
+  inject: ['view'],
   data () {
     return {
-      type: 'range',
-      drag: false,
-      anglex: (this.progress * 360) / 100,
-      duration: '0s',
-      previousAngle: 0,
-      hidden: false
+      zpos: {},
+      innerpos: {},
+      extrainfo: ''
     }
   },
   computed: {
-    positionr () {
-      var dimension = this.$zircle.getComponentWidth(this.$parent.size) / 2
-      if (this.$parent.size === 'extralarge') {
-        var strokeWidth = 3
-      } else if (this.$parent.size === 'large') {
-        strokeWidth = 7
-      } else if (this.$parent.size === 'medium') {
-        strokeWidth = 8
-      } else if (this.$parent.size === 'small') {
-        strokeWidth = 9
-      } else if (this.$parent.size === 'xs' || this.$parent.size === 'extrasmall') {
-        strokeWidth = 10
+    responsive () {
+      if (this.view === this.$zircle.getCurrentViewName()) {
+        this.zpos = this.styles
+        return true
+      } else {
+        return false
       }
-      if (this.$parent.type === 'panel') {
-        dimension = this.state.zircleWidth.xl
-        strokeWidth = 3
-      }
+    },
+    rangeClass () {
       return {
-        X: (dimension - 3) * Math.cos(this.anglex * (Math.PI / 180)),
-        Y: (dimension - 3) * Math.sin(this.anglex * (Math.PI / 180)),
-        arc: (Math.PI * 100) * ((this.anglex - 360) / 360),
-        strokeWidth: strokeWidth
+        range: this.range === true
       }
     },
     styles () {
-      // progress circle
-      var circleLength = 2 * Math.PI * 50
-      // progress circle
+      var zwidth = this.$zircle.getComponentWidth(this.size)
       return {
-        transformOrigin: '50% 50%',
-        transform: 'rotate(0deg)',
-        strokeDasharray: circleLength,
-        // strokeDashoffset: circleLength,
-        strokeDashoffset: -this.positionr.arc,
-        strokeWidth: this.positionr.strokeWidth
-      }
-    },
-    classesContent3 () {
-      return {
-        transformOrigin: '50% 50%',
-        transform: 'translate3d(' + this.positionr.X + 'px, ' + this.positionr.Y + 'px, 0px)'
+        main: {
+          width: zwidth + 'px',
+          height: zwidth + 'px',
+          margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
+          transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+        }
       }
     }
   },
   methods: {
-    point (e) {
-      e = e.changedTouches ? e.changedTouches[0] : e
-      const dimensions = this.$el.querySelector('.scroll').getBoundingClientRect()
-      var centerx = (dimensions.width / 2) + dimensions.left
-      var centery = (dimensions.height / 2) + dimensions.top
-      var posx = e.pageX
-      var posy = e.pageY
-      var deltay = centery - posy
-      var deltax = centerx - posx
-      var tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
-      tangle -= 180
-      tangle = Math.round(tangle)
-      // console.log(tangle)
-      if (tangle < 0) {
-        tangle = 360 + tangle
-      }
-      var previousAngle = this.anglex
-      var vm = this
-      var id = setInterval(frame, 0)
-      function frame () {
-        if (previousAngle === tangle) {
-          clearInterval(id)
-        } else {
-          if (previousAngle > tangle) {
-            previousAngle--
-          } else {
-            previousAngle++
-          }
-          vm.anglex = previousAngle
-        }
-      }
+    pulse () {
+      let pulse = this.$el.querySelector('.z-pulse')
+      pulse.classList.add('pulse')
+      pulse.addEventListener('animationend', function () {
+        pulse.classList.remove('pulse')
+      }, false)
+      pulse.removeEventListener('animationend', function () {
+        pulse.classList.remove('pulse')
+      }, false)
     },
-    slide1 (e) {
-      if (this.drag === true) {
-        e = e.changedTouches ? e.changedTouches[0] : e
-        const dimensions = this.$el.querySelector('.scroll').getBoundingClientRect()
-        var centerx = (dimensions.width / 2) + dimensions.left
-        var centery = (dimensions.height / 2) + dimensions.top
-        var posx = e.pageX
-        var posy = e.pageY
-        var deltay = centery - posy
-        var deltax = centerx - posx
-        var tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
-        tangle -= 180
-        tangle = Math.round(tangle)
-        if (tangle < 0) {
-          tangle = 360 + tangle
-        }
-        this.anglex = tangle
-      }
+    extraInfo (data) {
+      this.extrainfo = data
     }
+  },
+  mounted () {
+    this.zpos = this.styles
   }
 }
 </script>
