@@ -24,6 +24,7 @@ Many things may change in the near future.
 - [ ] Write migration guide. Just will be a few breaking changes.
 - [ ] Publish a dev release. ASAP
 - [ ] Group similar logs in the zircle's console log events. **WIP**
+- [ ] Zircle State Management -> Expose state in development mode. **WIP**
 - [X] Add possibilty of use properties or slots for image source and labels.
 - [X] Rewrite router auto config and routes management
 - [X] Fix responsiveness
@@ -37,7 +38,8 @@ Many things may change in the near future.
 - [X] Optimize code. --> [Maintainability](https://codeclimate.com/github/zircleUI/zircleUI/maintainability)
 - [X] Rewrite position and navigation system
 - [X] Rewrite how zircle handle vue-router and views.
-- [X] Rewrite Zircle State Management.
+- [X] Add debug mode for development.
+- [X] Rewrite Zircle State Management. Only actions are exposed.
 
 ## License
 [MIT](http://opensource.org/licenses/MIT)
