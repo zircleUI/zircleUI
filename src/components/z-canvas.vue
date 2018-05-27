@@ -37,24 +37,35 @@ export default {
 </script>
 <style>
 /* This is the style for zircle. To override it use !important 
-z-container {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    z-index: 999;
-    /* box-shadow: inset 0 0 2px 0; */
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: calc(14px + 1vmax);
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    border-radius: 50%;
-    /* background-color: var(--background); */
-    color: var(--primary);
-    transition: background-color 1s;
-    overflow: hidden;
 */
-.zuit-move {
+
+.z-pulse {
+  opacity: 0;
+  transform: scale(0);
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 100%;
+  height: 100%;
+  margin: -50% 0 0 -50%;
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+}
+.pulse {
+animation: pulse 110ms ease-out
+}
+@keyframes pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0)
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.4)
+  }
+
 
 }
 :root {
@@ -204,6 +215,7 @@ z-container {
   font-size: calc(14px + 1vmax);
   font-style: normal;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   background-color: var(--background);
   color: var(--primary);
@@ -222,7 +234,7 @@ z-container {
 }
 #z-point::after {
     width: 100%;
-  height: 100%;
+    height: 100%;
     display: block;
     content:'';
   }
@@ -231,8 +243,6 @@ div[type="scale"],
 div[type="button"] {
   transition: background-color 1s;
 }
-
-
 
 .handlebar:hover {
   cursor: grab;
@@ -253,18 +263,24 @@ div[type="button"] {
   
 }
 
-.disc:active, .disc:focus {
-  filter: brightness(0.4) drop-shadow(0 0 0.55rem black);
-}
-
-.main {
-  z-index: 40;
-}
-
 .disc {
   z-index: 80;
   cursor: default;
 }
+
+.range {
+  z-index: 80;
+  cursor: grab;
+}
+.range:active, .range.focus {
+ filter: '';
+ cursor: grabbing;
+}
+.main {
+  z-index: 40;
+}
+
+
 
 .zoom {
   cursor: zoom-in;
@@ -281,7 +297,25 @@ div[type="button"] {
   display: block;
   z-index: 40;
   fill: none;
-  stroke-opacity: 0.9;
+  stroke-linecap: round; 
+  stroke-opacity: 1;
+  filter: brightness(1.5);
+}
+
+
+.scroll2 {
+  position: absolute;
+  border-radius: 50%;
+  display: block;
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  left: 50%;
+  margin: -20px 0 0 -20px;
+  z-index: 70;
+}
+.slider > circle {
+  transition: all .5s linear;
 }
 
 .accent .slider,
@@ -302,17 +336,6 @@ div[type="button"] {
   fill: var(--accent);
 }
 
-.scroll2 {
-  position: absolute;
-  border-radius: 50%;
-  display: block;
-  width: 40px;
-  height: 40px;
-  top: 50%;
-  left: 50%;
-  margin: -20px 0 0 -20px;
-  z-index: 70;
-}
 
 .dashed {
   border: 2px solid var(--background-card);
@@ -320,29 +343,6 @@ div[type="button"] {
 
 .flow {
   overflow: visible;
-}
-
-.label {
-  font-size: calc(10px + 1vmax);
-  overflow: visible
-}
-
-.z-contentbox {
-  position: absolute;
-  z-index: 50;
-  top: 2%;
-  left: 2%;
-  width: 96%;
-  height: 96%;
-  display: block;
-  border-radius: 50%;
-  background: none;
-  overflow: hidden;
-}
-
-.z-contentbox > img {
-  border-radius: 50%;
-  overflow: hidden;
 }
 
 .z-content {
@@ -363,14 +363,46 @@ div[type="button"] {
   border: 1px solid transparent;
 }
 
+.overflow {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.label {
+  font-size: calc(10px + 1vmax);
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  top: 100%
+}
+
 .maindisc {
   cursor: default;
+  z-index: 50;
 }
 
 .longtext {
   overflow-y: scroll;
-  padding-right: 20px;
-  margin-right: -20px;
+  display: block;
+}
+.ffoxScroll {
+  overflow-y: hidden;
+}
+
+.longtext::before {
+  display: block;
+  padding-top: 50px;
+  content:'';
+    
+}
+
+.longtext::after {
+  top: 0;
+  display: block;
+    content:'';
+
 }
 
 .bottom {
@@ -387,10 +419,6 @@ div[type="button"] {
   height: 140px
 }
 
-.nodisplay {
-  opacity: 0.1;
-}
-
 .button {
   cursor: pointer;
 }
@@ -400,7 +428,7 @@ div[type="button"] {
 }
 
 .button:active {
-  filter: brightness(0.4) drop-shadow(0 0 0.55rem black);
+  // filter: brightness(0.4) drop-shadow(0 0 0.55rem black);
 }
 
 .hidden {
@@ -410,14 +438,14 @@ div[type="button"] {
 .pastclass {
   pointer-events: none;
   cursor: zoom-out;
-  filter: blur(2px) grayscale(100%) opacity(20%);
+  filter: blur(2px) opacity(20%);
   overflow: hidden
 }
 
 .prevclass {
   pointer-events: none;
   cursor: zoom-out;
-  filter: blur(2px) grayscale(100%) opacity(20%);
+  filter: blur(2px) opacity(40%);
   overflow: hidden
 }
 
@@ -446,12 +474,6 @@ div[type="button"] {
     opacity: 1;
   }
 
-}
-.show {
-  opacity: 1;
-}
-.no-show{
-  opacity: 1;
 }
 
 @keyframes disappear {
@@ -630,15 +652,15 @@ div[type="button"] {
 }
 
 div[title="z-item"],
-div[title="z-dotnav"] {
+div[title="z-list-pagination"] {
   cursor: zoom-in;
 }
 
-div[title="z-dotnav"]:hover {
+div[title="z-list-pagination"]:hover {
   cursor: grab;
 }
 
-div[title="z-dotnav"]:active {
+div[title="z-list-pagination"]:active {
   cursor: grabbing;
 }
 
@@ -651,10 +673,9 @@ div[title="z-dotnav"]:active {
 }
 
 input {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: calc(14px + 1vmax);
-  font-style: normal;
+  font: inherit;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   margin-top: 20px;
   width: 100%;
