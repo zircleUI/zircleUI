@@ -4,24 +4,24 @@
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
       class="scroll"
-      @click="point">
+      @click.prevent="point">
         <circle 
           r="51"
           cx="50"
           cy="50"
-          :style="[styles2]">
+          :style="arcStyle">
         </circle>
     </svg>
     <svg 
       v-show="hidden === false"
       xmlns="http://www.w3.org/2000/svg"
       class="scroll2"
-      :style="classesContent3"
+      :style="circleStyle"
       @touchstart="drag = true"
       @touchmove.prevent="slide"
       @touchend="drag = false"
       @mousedown="drag = true"
-      @mousemove="slide"
+      @mousemove.prevent="slide"
       @mouseup="drag = false">
         <circle 
           r="10"
@@ -47,7 +47,7 @@ export default {
     }
   },
   computed: {
-    styles2 () {
+    arcStyle () {
       // progress circle
       var circleLength = 2 * Math.PI * 50
       // progress circle
@@ -67,7 +67,7 @@ export default {
         Y: (zwidth) * Math.sin(this.scrollVal * (Math.PI / 180))
       }
     },
-    classesContent3 () {
+    circleStyle () {
       return {
         transformOrigin: '50% 50%',
         transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
