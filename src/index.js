@@ -8,6 +8,7 @@ import zalert from './components/z-alert.vue'
 import zbutton from './components/z-button.vue'
 import zslider from './components/z-slider.vue'
 import zrange from './components/z-range.vue'
+import zrangebar from './components/z-range-bar.vue'
 import zscroll from './components/z-scroll.vue'
 import zlist from './components/z-list.vue'
 import zitem from './components/z-list-item.vue'
@@ -33,6 +34,7 @@ const zircle = {
     Vue.component('z-list-pagination', zdotnav)
     Vue.component('z-slider', zslider)
     Vue.component('z-range', zrange)
+    Vue.component('z-range-bar', zrangebar)
     Vue.component('z-scroll', zscroll)
     Vue.component('z-transition', ztransition)
     Vue.component('z-alert', zalert)
