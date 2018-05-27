@@ -132,7 +132,6 @@ const navigation = {
       store.state.mode = 'forward'
       store.state.history.push({viewName: view.name, position: position})
       if (view.route && store.state.isRouterEnabled === true) store.state.$router.push(view.route)
-      // store.state.mode = ''
     } else {
       store.actions.setLog('setView() => You have reach the max level of navigation')
     }
@@ -143,7 +142,6 @@ const navigation = {
       store.state.lastViewHistory = store.state.history[store.state.history.length - 1]
       store.state.history.pop()
       store.actions.setLog('goBack() => ' + store.state.history[store.state.history.length - 1].viewName)
-      // store.state.component_uid = ''
     }
   }
 }

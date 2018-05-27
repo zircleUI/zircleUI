@@ -15,11 +15,11 @@
       <component 
         v-if="$zircle.getRouterState() === false && $zircle.getHistoryLength() >= 1"
         :is="currentView" 
-        :class="$zircle.getNavigationMode() === 'forward' ? 'currclass' : ''"  
+        :class="$zircle.getNavigationMode() === '' ? 'currclass' : ''"  
         :key="$zircle.getCurrentViewName()" />
       <router-view 
         v-if="$zircle.getRouterState() === true && $zircle.getHistoryLength() >= 1" 
-        :class="$zircle.getNavigationMode() === 'forward' ? 'currclass' : ''" 
+        :class="$zircle.getNavigationMode() === '' ? 'currclass' : ''" 
         :key="$zircle.getCurrentViewName()"> 
       </router-view>
   </z-transition>

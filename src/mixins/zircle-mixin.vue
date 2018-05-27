@@ -17,8 +17,14 @@ export default {
       type: String,
       default: 'primary'
     },
+    label: {
+      type: [String, Number]
+    },
     toView: {
       type: [String, Object]
+    },
+    imagesrc: {
+      type: [String, Number]
     }
   },
   computed: {
