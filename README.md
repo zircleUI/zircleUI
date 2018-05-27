@@ -21,9 +21,18 @@ Many things may change in the near future.
 - [ ] Automatic deploy, change log, versioning. **WIP** using commitizen and standar-release
 - [ ] Add Unit testing. **WIP** using jest
 - [ ] Update documentation. **WIP** --> [new doc site](https://zircleui.github.io/docs)
-- [ ] Re write `z-list` component and its user templates. **WIP** 95% done
 - [ ] Write migration guide. Just will be a few breaking changes.
-- [ ] Publish a dev release. Soon
+- [ ] Publish a dev release. ASAP
+- [ ] Group similar logs in the zircle's console log events. **WIP**
+- [X] Add possibilty of use properties or slots for image source and labels.
+- [X] Rewrite router auto config and routes management
+- [X] Fix responsiveness
+- [X] Improve SVG styles
+- [X] Re write `z-list` component and its user templates.
+- [X] Add `label` and `image src` properties to `z-button` `z-panel` `z-range` `z-scale` `z-alert` 
+- [X] Improve circular scroll. Disable scroll event on Firefox desktop, but is it possible to use the circular scroll.
+- [X] Promote `z-range` to independent component.
+- [X] Add micro animations on user events
 - [X] Remame some In-built component following Style Guide
 - [X] Optimize code. --> [Maintainability](https://codeclimate.com/github/zircleUI/zircleUI/maintainability)
 - [X] Rewrite position and navigation system
