@@ -20,13 +20,7 @@
 
 **Zircle UI** is a circular zooming user interface library based on Vue.js. It mixes two principles: **circular shapes** and **zooming navigation** in the aim of strengthening each other and create a good user experience.
 
-### Main features
--   Zooming navigation up to 6 level of depth.
--   It works well on mobile devices and big screens as it is responsive.
--   It comes with a minimal set of UI components to build your app.
--   It is possible to customize themes and styles to fit your needs. 
-
-> **Note:** Waiting Vue-CLI 3 to be ready for production. Please [**check out the Zircle´s dev branch**](https://github.com/zircleUI/zircleUI/tree/dev) since many changes are being made under the hood:
+**Note:** Waiting Vue-CLI 3 to be ready for production. Please [**check out the Zircle´s dev branch**](https://github.com/zircleUI/zircleUI/tree/dev) since many changes are being made under the hood:
 
 - [ ] Wrap zircle with Vue-CLI 3. Waiting for Vue-CLI to be ready
 - [ ] Make Zircle dev friendly. **WIP** (waiting for Vue-CLI and tests)
@@ -37,6 +31,8 @@
 - [ ] Publish a dev release. ASAP
 - [ ] Group similar logs in the zircle's console log events. **WIP**
 - [ ] Zircle State Management -> Expose state in development mode. **WIP**
+- [X] Add `media` slot in `z-panel` to include maps, videos, etc. 
+- [X] Allow zircle's apps to be in full mode (as happens currently) or embedded.
 - [X] Add possibilty of use properties or slots for image source and labels.
 - [X] Rewrite router auto config and routes management
 - [X] Fix responsiveness
@@ -52,6 +48,12 @@
 - [X] Rewrite how zircle handle vue-router and views.
 - [X] Add debug mode for development.
 - [X] Rewrite Zircle State Management. Only actions are exposed.
+
+### Main features
+-   Zooming navigation up to 6 level of depth.
+-   It works well on mobile devices and big screens as it is responsive.
+-   It comes with a minimal set of UI components to build your app.
+-   It is possible to customize themes and styles to fit your needs. 
 
 ## Documentation
 To check out live examples and docs, visit http://zircle.io
