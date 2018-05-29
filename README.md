@@ -25,6 +25,8 @@ Many things may change in the near future.
 - [ ] Publish a dev release. ASAP
 - [ ] Group similar logs in the zircle's console log events. **WIP**
 - [ ] Zircle State Management -> Expose state in development mode. **WIP**
+- [X] Add `media` slot in `z-panel` to include maps, videos, etc. 
+- [X] Allow zircle's apps to be in full mode (as happens currently) or embedded.
 - [X] Add possibilty of use properties or slots for image source and labels.
 - [X] Rewrite router auto config and routes management
 - [X] Fix responsiveness
