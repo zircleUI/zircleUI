@@ -16,10 +16,12 @@
         <slot v-if="!label" name="label"></slot>
       </section>
       <div class="z-content">
+
         <img v-if="imagesrc" :src="imagesrc" width="100%" height="100%" />
         <slot v-if="!imagesrc" name="image"></slot>
       </div>
       <div class="z-content maindisc" :class="[longtext, ffoxScroll]" @scroll.passive="scroll">
+        <slot name="media"></slot>
         <div ref="ztext" class="z-text">
           <slot></slot>
         </div>
