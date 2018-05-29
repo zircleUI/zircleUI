@@ -1,4 +1,5 @@
 import store from '../store'
+// armar document.getElementById('foo').offsetWidth para cuando zrcle este embedded. para que tome por referencia al canvas o %
 var mediaQuery = [
   { // small devices
     media: window.matchMedia('(max-width: 319px)'),
@@ -41,7 +42,6 @@ var mediaQuery = [
     width: {xl: 650, l: 130, m: 110, s: 90, xs: 70, xxs: 50}
   }
 ]
-
 const responsiveness = {
   getComponentWidth (size) {
     switch (size) {
@@ -68,10 +68,30 @@ const responsiveness = {
     return width
   },
   getDimensions () {
-    for (var i = 0; i < mediaQuery.length; i++) {
-      if (mediaQuery[i].media.matches) store.state.zircleWidth = mediaQuery[i].width
+    if (store.actions.getAppMode() === 'full') {
+      for (var i = 0; i < mediaQuery.length; i++) {
+        if (mediaQuery[i].media.matches) store.state.zircleWidth = mediaQuery[i].width
+      }
+      store.actions.setLog('getDimensions() AppMode full => viewPort resize: z-panel width = ' + store.state.zircleWidth.xl)
+    } else if (store.actions.getAppMode() === 'embedded') {
+      let vp = document.getElementById('z-container').offsetWidth
+      if (vp <= 319) {
+        store.state.zircleWidth = mediaQuery[0].width
+      } else if (vp >= 320 && vp <= 374) {
+        store.state.zircleWidth = mediaQuery[1].width
+      } else if (vp >= 375 && vp <= 767) {
+        store.state.zircleWidth = mediaQuery[2].width
+      } else if (vp >= 768 && vp <= 991) {
+        store.state.zircleWidth = mediaQuery[4].width
+      } else if (vp >= 992 && vp <= 1199) {
+        store.state.zircleWidth = mediaQuery[6].width
+      } else if (vp >= 1200 && vp <= 1799) {
+        store.state.zircleWidth = mediaQuery[8].width
+      } else if (vp >= 1800) {
+        store.state.zircleWidth = mediaQuery[9].width
+      }
+      store.actions.setLog('getDimensions() AppMode embedded => viewPort resize: z-panel width = ' + store.state.zircleWidth.xl)
     }
-    store.actions.setLog('getDimensions() => viewPort resize: z-panel width = ' + store.state.zircleWidth.xl)
   }
 }
 export default responsiveness

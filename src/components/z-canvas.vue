@@ -1,7 +1,7 @@
 <template>
   <div 
     id="z-container" 
-    :class="[$zircle.getCurrentTheme(), $zircle.getCurrentColor()]" 
+    :class="[$zircle.getCurrentTheme(), $zircle.getCurrentColor(), $zircle.getAppMode()]" 
     :style="[$zircle.getPreviousViewName() !== '' ? {cursor: 'zoom-out'} : {}]"
     @click.stop="goback" >
       <div id="z-point">
@@ -208,11 +208,7 @@ animation: pulse 110ms ease-out
   --primary-text: var(--primary-color);
 }
 #z-container {
-  position: fixed;
-  width: 100%;
-  height: 100%;
   font-family: 'Source Sans Pro', sans-serif;
-  font-size: calc(14px + 1vmax);
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -222,6 +218,23 @@ animation: pulse 110ms ease-out
   transition: background-color 1s;
   overflow: hidden;
 }
+.full {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  font-size: calc(14px + 1vmax);
+}
+.embedded {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: calc(14px);
+}
+
+.embedded > .label{
+  font-size: calc(10px);
+}
+
 #z-point {
   position: absolute;
   top: 50%;
@@ -374,7 +387,7 @@ div[type="button"] {
   font-size: calc(10px + 1vmax);
   position: absolute;
   width: 100%;
-  height: 20px;
+  height: 25px;
   top: 100%
 }
 

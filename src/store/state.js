@@ -1,4 +1,6 @@
 const state = {
+  // App Mode
+  AppMode: 'full',
   // Navigation
   mode: 'forward',
   isRouterEnabled: false,

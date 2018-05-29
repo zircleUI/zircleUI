@@ -6,7 +6,8 @@ import themes from './modules/themes'
 import debug from './modules/debug'
 import list from './modules/list'
 import alert from './modules/alert'
+import appMode from './modules/appMode'
 
-const actions = Object.assign({}, router, position, navigation, responsiveness, themes, list, alert, debug)
+const actions = Object.assign({}, router, position, navigation, responsiveness, themes, list, alert, debug, appMode)
 
 export default actions
