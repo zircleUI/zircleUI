@@ -22,9 +22,11 @@ Many things may change in the near future.
 - [ ] Add Unit testing. **WIP** using jest
 - [ ] Update documentation. **WIP** --> [new doc site](https://zircleui.github.io/docs)
 - [ ] Write migration guide. Just will be a few breaking changes.
-- [ ] Publish a dev release. ASAP
-- [ ] Group similar logs in the zircle's console log events. **WIP**
+- [ ] Publish a dev release. **ASAP**
 - [ ] Zircle State Management -> Expose state in development mode. **WIP**
+- [X] Simplify `z-view-manager`
+- [X] Improve animation and render performance. Resolve poor performance in Chrome when go back. Now transitions are smooth in Chrome, Firefox and Safari.
+- [X] Group similar logs in the zircle's console log events.
 - [X] Add `media` slot in `z-panel` to include maps, videos, etc. 
 - [X] Allow zircle's apps to be in full mode (as happens currently) or embedded.
 - [X] Add possibilty of use properties or slots for image source and labels.
