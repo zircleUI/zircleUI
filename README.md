@@ -22,15 +22,18 @@
 
 **Note:** Waiting Vue-CLI 3 to be ready for production. Please [**check out the Zircle´s dev branch**](https://github.com/zircleUI/zircleUI/tree/dev) since many changes are being made under the hood:
 
+Many things may change in the near future. 
 - [ ] Wrap zircle with Vue-CLI 3. Waiting for Vue-CLI to be ready
 - [ ] Make Zircle dev friendly. **WIP** (waiting for Vue-CLI and tests)
 - [ ] Automatic deploy, change log, versioning. **WIP** using commitizen and standar-release
 - [ ] Add Unit testing. **WIP** using jest
 - [ ] Update documentation. **WIP** --> [new doc site](https://zircleui.github.io/docs)
 - [ ] Write migration guide. Just will be a few breaking changes.
-- [ ] Publish a dev release. ASAP
-- [ ] Group similar logs in the zircle's console log events. **WIP**
+- [ ] Publish a dev release. **ASAP**
 - [ ] Zircle State Management -> Expose state in development mode. **WIP**
+- [X] Simplify `z-view-manager`
+- [X] **Improve animation and render performance**. Resolve poor performance in Chrome when go back. Now transitions are smooth in Chrome, Firefox and Safari.
+- [X] Group similar logs in the zircle's console log events.
 - [X] Add `media` slot in `z-panel` to include maps, videos, etc. 
 - [X] Allow zircle's apps to be in full mode (as happens currently) or embedded.
 - [X] Add possibilty of use properties or slots for image source and labels.
@@ -43,17 +46,16 @@
 - [X] Promote `z-range` to independent component.
 - [X] Add micro animations on user events
 - [X] Remame some In-built component following Style Guide
-- [X] Optimize code. --> [Maintainability status in Dev branch](https://codeclimate.com/github/zircleUI/zircleUI/maintainability)
+- [X] Optimize code. --> [Maintainability](https://codeclimate.com/github/zircleUI/zircleUI/maintainability)
 - [X] Rewrite position and navigation system
 - [X] Rewrite how zircle handle vue-router and views.
 - [X] Add debug mode for development.
 - [X] Rewrite Zircle State Management. Only actions are exposed.
 
 ### Main features
--   Zooming navigation up to 6 level of depth.
--   It works well on mobile devices and big screens as it is responsive.
--   It comes with a minimal set of UI components to build your app.
--   It is possible to customize themes and styles to fit your needs. 
+-  **Zoomable navigation**: Enjoy a different User Experience to navigate your app. Zircle has 6 levels of depth to organize the content.
+-  **Circular UI**: Zircle comes with a minimal set of circular UI components to build your app. It is possible to customize themes and styles to fit your needs.
+-  **Responsive**: Zircle works pretty well on mobile devices and big screens
 
 ## Documentation
 To check out live examples and docs, visit http://zircle.io
