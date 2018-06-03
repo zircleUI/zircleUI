@@ -6,6 +6,9 @@ function retrieveViewName (pos) {
   }
   return viewName
 }
+function papa (view, position) {
+  return store.state.history.push({viewName: view.name, position: position, component: store.actions.resolveComponent(store.actions.getComponentList(), view.name)})
+}
 function transformViewName (view) {
   view = view.toLowerCase()
   var count = 0
@@ -43,18 +46,6 @@ function parseView (data) {
   }
 }
 const navigation = {
-  setFirst (data) {
-    store.state.first = data
-  },
-  setLast (data) {
-    store.state.last = data
-  },
-  getFirst (data) {
-    return store.state.first
-  },
-  getLast (data) {
-    return store.state.last
-  },
   resolveComponent (list, view) {
     if (view) {
       view = view.split('--')[0]
@@ -72,17 +63,6 @@ const navigation = {
   getComponentList () {
     return store.state.componentList
   },
-  getComponent_uid () {
-    return store.state.component_uid
-  },
-  setComponent_uid (value) {
-    setTimeout(function () {
-      // store.state.component_uid = value
-    }, 700)
-  },
-  resetComponent_uid () {
-    store.state.component_uid = ''
-  },
   getCurrentViewName () {
     return retrieveViewName(1)
   },
@@ -95,12 +75,14 @@ const navigation = {
   getHistoryLength () {
     return store.state.history.length
   },
+  getHistory () {
+    return store.state.history
+  },
   setNavigationMode (value) {
     if (value === 'forward' || value === 'backward' || value === '') {
       store.state.mode = value
+      if (value === '') value = 'iddle'
       store.actions.setLog('Navigation mode is ' + value)
-    } else {
-      store.actions.setLog('setNavigationMode() only acepts forward or backward values', 'error')
     }
   },
   getNavigationMode () {
@@ -129,8 +111,8 @@ const navigation = {
         Yi: 0,
         scalei: 1
       } : position = options.position
-      store.state.mode = 'forward'
-      store.state.history.push({viewName: view.name, position: position})
+      store.actions.setNavigationMode('forward')
+      papa(view, position)
       if (view.route && store.state.isRouterEnabled === true) store.state.$router.push(view.route)
     } else {
       store.actions.setLog('setView() => You have reach the max level of navigation')
@@ -139,7 +121,6 @@ const navigation = {
   goBack () {
     if (store.state.history.length >= 1) {
       store.actions.setNavigationMode('backward')
-      store.state.lastViewHistory = store.state.history[store.state.history.length - 1]
       store.state.history.pop()
       store.actions.setLog('goBack() => ' + store.state.history[store.state.history.length - 1].viewName)
     }

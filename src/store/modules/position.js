@@ -36,14 +36,9 @@ const position = {
   getLastPosition () {
     return store.state.lastViewHistory.position
   },
-  calcPanelPosition (data) {
+  calcPanelPosition () {
     store.actions.setLog('calcPanelPosition() => Panel')
-    // Variable declaration
-    var newPosition = store.state.history[store.state.history.length - 1].position
-    if (store.state.history.length > 2 && store.state.history[store.state.history.length - 3].viewName === data) {
-      newPosition = store.state.history[store.state.history.length - 3].position
-    }
-    return newPosition
+    return store.state.history[store.state.history.length - 1].position
   },
   calcPosition (component) {
     store.actions.setLog('calcPosition() => ' + component.type)

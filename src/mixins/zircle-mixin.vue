@@ -30,7 +30,7 @@ export default {
   computed: {
     position () {
       let position
-      this.type === 'panel' ? position = this.$zircle.calcPanelPosition(this.viewID) : position = this.$zircle.calcPosition(this)
+      this.type === 'panel' ? position = this.$zircle.calcPanelPosition() : position = this.$zircle.calcPosition(this)
       return position
     },
     classes () {

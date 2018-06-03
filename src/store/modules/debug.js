@@ -15,7 +15,17 @@ const debug = {
         color = 'white'
     }
     if (store.debug) {
-      return console.log('%c z ', 'background: ' + bgColor + '; color:  ' + color + '', msg)
+      if (msg === 'Navigation mode is forward' && store.actions.getHistoryLength() === 0) {
+        console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Initial view')
+      } else if (msg === 'Navigation mode is forward' && store.actions.getHistoryLength() >= 1) {
+        console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Go to new view')
+      } else if (msg === 'Navigation mode is backward') {
+        console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Return to previous view')
+      }
+      console.log('%c z ', 'background: ' + bgColor + '; color:  ' + color + '', msg)
+      if (msg === 'Navigation mode is iddle' || msg === 'end') {
+        console.groupEnd()
+      }
     }
   },
   isDebugEnabled (value) {

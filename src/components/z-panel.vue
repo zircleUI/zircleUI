@@ -1,6 +1,6 @@
 <template>
   <div 
-    :title="'z-panel - ' + viewName" 
+    :title="'z-panel - ' + viewName"
     type="panel" 
     class="zui main" 
     :class="[classes, colors]" 
@@ -8,6 +8,7 @@
     style="overflow: visible;"
     @mouseover = "$zircle.setBackNav(true)"
     @mouseleave = "$zircle.setBackNav(false)"> 
+    <section :style="fullView !== $zircle.getCurrentViewName() ? 'opacity: 0;' : 'opacity: 1;'" style="transition: opacity 1s;">
       <div class="plate" :style="responsive === true ? styles.plate : zpos.plate"></div>
       <z-scroll v-if="scrollBar === true" :scrollVal.sync="scrollVal" style="overflow: visible;"/> 
       <z-slider v-if="slider === true" :progress='progress'/>
@@ -16,17 +17,18 @@
         <slot v-if="!label" name="label"></slot>
       </section>
       <div class="z-content">
-
         <img v-if="imagesrc" :src="imagesrc" width="100%" height="100%" />
         <slot v-if="!imagesrc" name="image"></slot>
       </div>
-      <div class="z-content maindisc" :class="[longtext, ffoxScroll]" @scroll.passive="scroll">
+      <div class="z-content maindisc" ref="maindisc" :class="[longtext, ffoxScroll]" @scroll.passive="scroll">
         <slot name="media"></slot>
         <div ref="ztext" class="z-text">
           <slot></slot>
         </div>
       </div>
+
      <slot name="zircle"></slot>
+     </section>
   </div>
 </template>
 
@@ -57,20 +59,19 @@ export default {
       img: {},
       zpos: {},
       isMounted: false,
-      viewID: '',
       ffox: false,
-      fullView: this.$zircle.getCurrentViewName()
+      fullView: this.$zircle.getNavigationMode() === 'forward' ? this.$zircle.getCurrentViewName() : this.$zircle.getPastViewName()
     }
   },
   provide () {
     return {
-      view: this.$zircle.getCurrentViewName()
+      view: this.fullView
     }
   },
   computed: {
     scrollBar () {
       var isScrollNeeded = false
-      if (this.isMounted === true && this.viewName.toLowerCase() === this.$zircle.getCurrentViewName().split('--')[0] && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth('xxl')) {
+      if (this.isMounted === true && this.fullView === this.$zircle.getCurrentViewName() && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth('xxl')) {
         isScrollNeeded = true
       }
       return isScrollNeeded
@@ -113,7 +114,7 @@ export default {
   methods: {
     scroll () {
       if (this.scrollBar === true) {
-        var container = this.$el.querySelector('.maindisc')
+        var container = this.$refs.maindisc
         this.scrollVal = -45 + ((container.scrollTop * 100 / (container.scrollHeight - container.clientHeight)) * 86 / 100)
       }
     }
@@ -121,7 +122,7 @@ export default {
   watch: {
     scrollVal () {
       if (this.scrollBar === true) {
-        var container = this.$el.querySelector('.maindisc')
+        var container = this.$refs.maindisc
         container.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (container.scrollHeight - container.clientHeight) / 100
       }
     }
@@ -133,12 +134,6 @@ export default {
     }
     this.zpos = this.styles
     this.isMounted = true
-    if (this.$el.classList.contains('pastclass')) {
-      this.viewID = this.$zircle.getPastViewName()
-      this.zpos = this.styles
-    } else {
-      this.viewID = ''
-    }
   }
 }
 </script>

@@ -1,8 +1,5 @@
 import store from '../store'
 const list = {
-  getSelectedItem () {
-    return store.state.selectedItem
-  },
   setPages (value) {
     // armar validator por array
     // mover fx chunk here

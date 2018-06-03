@@ -14,6 +14,7 @@ export default {
             var point = document.getElementById('z-point')
             point.style.transform = 'scale(' + context.parent.$zircle.getCurrentPosition().scale + ') translate3d(' + context.parent.$zircle.getCurrentPosition().Xi + 'px, ' + context.parent.$zircle.getCurrentPosition().Yi + 'px, 0px)'
             point.style.transition = 'transform 900ms ease-in'
+            el.style.animation = 'appear 800ms linear forwards'
             done()
           } else {
             done()
@@ -25,17 +26,23 @@ export default {
           } else {
           }
         },
-        leave (el, done) {
+        beforeLeave (el) {
           if (context.parent.$zircle.getNavigationMode() === 'forward') {
-            done()
           } else {
             var point = document.getElementById('z-point')
             point.style.transform = 'scale(' + context.parent.$zircle.getCurrentPosition().scale + ') translate3d(' + context.parent.$zircle.getCurrentPosition().Xi + 'px, ' + context.parent.$zircle.getCurrentPosition().Yi + 'px, 0px)'
             point.style.transition = 'transform 900ms ease-in'
-            el.classList.add('disappear')
+          }
+        },
+        leave (el, done) {
+          if (context.parent.$zircle.getNavigationMode() === 'forward') {
+            done()
+          } else {
+            el.style.animation = 'disappear 900ms 200ms linear forwards'
             setTimeout(function () {
+              context.parent.$zircle.setLog('end')
               done()
-            }, 800)
+            }, 1100)
           }
         }
       }

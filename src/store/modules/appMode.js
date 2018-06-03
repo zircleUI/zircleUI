@@ -5,6 +5,7 @@ const appMode = {
   },
   setAppMode (value) {
     store.state.appMode = value
+    store.actions.setLog('setAppMode(): ' + value)
   }
 }
 export default appMode

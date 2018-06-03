@@ -39,6 +39,27 @@ export default {
 /* This is the style for zircle. To override it use !important 
 */
 
+.pepe:nth-last-child(-n-4) {
+  opacity: 0;
+}
+.pepe:nth-last-child() {
+  opacity: 0;
+  pointer-events: auto;
+  will-change: opacity;
+}
+.pepe:nth-last-child(2) {
+  pointer-events: none;
+  cursor: zoom-out;
+  filter: blur(2px) opacity(40%);
+  overflow: hidden
+}
+.pepe:nth-last-child(3) {
+  pointer-events: none;
+  cursor: zoom-out;
+  filter: blur(2px) opacity(40%);
+  overflow: hidden
+}
+
 .z-pulse {
   opacity: 0;
   transform: scale(0);
@@ -243,7 +264,7 @@ animation: pulse 110ms ease-out
   will-change: transform;
   perspective: 1000px;
   perspective-origin: 50% 50%;
-  transform-style: perserve-3d
+  transform-style: perserve-3d;
 }
 #z-point::after {
     width: 100%;
@@ -254,6 +275,7 @@ animation: pulse 110ms ease-out
 div[type="panel"],
 div[type="scale"],
 div[type="button"] {
+  will-change: transform, opacity;
   transition: background-color 1s;
 }
 
@@ -273,7 +295,7 @@ div[type="button"] {
   top: 50%;
   left: 50%;
   text-align: center;
-  
+ 
 }
 
 .disc {
@@ -445,7 +467,7 @@ div[type="button"] {
 }
 
 .hidden {
-  cursor: zoom-out;
+  display: none;
 }
 
 .pastclass {
@@ -492,14 +514,6 @@ div[type="button"] {
 @keyframes disappear {
   0% {
     opacity: 1;
-  }
-
-  20% {
-    opacity: 1;
-  }
-
-  80% {
-    opacity: 0;
   }
 
   100% {

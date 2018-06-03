@@ -72,7 +72,7 @@ const responsiveness = {
       for (var i = 0; i < mediaQuery.length; i++) {
         if (mediaQuery[i].media.matches) store.state.zircleWidth = mediaQuery[i].width
       }
-      store.actions.setLog('getDimensions() AppMode full => viewPort resize: z-panel width = ' + store.state.zircleWidth.xl)
+      store.actions.setLog('getDimensions() AppMode full => viewPort resized: z-panel width = ' + store.state.zircleWidth.xl)
     } else if (store.actions.getAppMode() === 'embedded') {
       let vp = document.getElementById('z-container').offsetWidth
       if (vp <= 319) {
@@ -90,7 +90,7 @@ const responsiveness = {
       } else if (vp >= 1800) {
         store.state.zircleWidth = mediaQuery[9].width
       }
-      store.actions.setLog('getDimensions() AppMode embedded => viewPort resize: z-panel width = ' + store.state.zircleWidth.xl)
+      store.actions.setLog('getDimensions() AppMode embedded => z-container resized: z-panel width = ' + store.state.zircleWidth.xl)
     }
   }
 }

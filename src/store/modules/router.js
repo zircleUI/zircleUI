@@ -8,13 +8,13 @@ function createRoute (path, name, component) {
 }
 function runHooks () {
   store.state.$router.beforeEach((to, from, next) => {
-    if (store.state.mode === 'forward') {
+    if (store.state.mode === 'forward' && store.state.history.length >= 1) {
       store.actions.setLog('vue-router: Go forward: ' + to.name)
       next()
     } else {
-      if (store.state.history.length >= 1) {
-        store.actions.setLog('vue-router: Go backward: ' + to.name)
+      if (store.state.history.length > 1) {
         store.actions.goBack()
+        store.actions.setLog('vue-router: Go backward: ' + to.name)
         next()
       }
     }
@@ -24,14 +24,12 @@ const router = {
   getRouterState () {
     return store.state.isRouterEnabled
   },
-  routerHooks (data) {
-    store.actions.setLog('Consider use setRouter() instead', 'warn')
-    store.actions.setRouter(data)
-  },
   setRouter (data, view) {
     // Auto configuration for vue-router
     store.state.$router = data
     store.state.isRouterEnabled = true
+    store.actions.setLog('vue-router enabled')
+    if (store.actions.getAppMode() === 'embedded') store.actions.setLog('As zircle is embedded maybe you should not use vue-router as affects whole app.', 'warn')
     store.actions.setLog('vue-router enabled')
     // Add default redirect route to initialView and go to initialView
     store.state.$router.onReady(function () {

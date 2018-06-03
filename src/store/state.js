@@ -1,15 +1,13 @@
 const state = {
   // App Mode
-  AppMode: 'full',
+  appMode: 'full',
   // Navigation
   mode: 'forward',
   isRouterEnabled: false,
   $router: {},
   history: [],
-  lastViewHistory: {},
   goBackNav: false,
   componentList: {},
-  component_uid: '',
   // Styles
   zircleWidth: {
     xl: 200,
