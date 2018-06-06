@@ -23,14 +23,15 @@
 **Note:** Waiting Vue-CLI 3 to be ready for production. Please [**check out the Zircle´s dev branch**](https://github.com/zircleUI/zircleUI/tree/dev) since many changes are being made under the hood:
 
 Many things may change in the near future. 
-- [ ] Wrap zircle with Vue-CLI 3. Waiting for Vue-CLI to be ready
-- [ ] Make Zircle dev friendly. **WIP** (waiting for Vue-CLI and tests)
+- [ ] Wrap zircle with Vue-CLI 3.**WIP**  Waiting for Vue-CLI to be ready
+- [ ] Make Zircle dev friendly. **WIP** (waiting for Vue-CLI)
 - [ ] Automatic deploy, change log, versioning. **WIP** using commitizen and standar-release
-- [ ] Add Unit testing. **WIP** using jest
 - [ ] Update documentation. **WIP** --> [new doc site](https://zircleui.github.io/docs)
 - [ ] Write migration guide. Just will be a few breaking changes.
 - [ ] Publish a dev release. **ASAP**
 - [ ] Zircle State Management -> Expose state in development mode. **WIP**
+- [X] Add Jest unit tests and snapShoots.
+- [X] Eslint components
 - [X] Simplify `z-view-manager`
 - [X] **Improve animation and render performance**. Resolve poor performance in Chrome when go back. Now transitions are smooth in Chrome, Firefox and Safari.
 - [X] Group similar logs in the zircle's console log events.
