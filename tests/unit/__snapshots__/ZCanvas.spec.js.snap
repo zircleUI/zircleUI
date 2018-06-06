@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`z-canvas.vue Has the expected html structure 1`] = `
+<div
+  class="theme--dark color--blue full"
+  id="z-container"
+>
+  <div
+    id="z-point"
+  />
+</div>
+`;

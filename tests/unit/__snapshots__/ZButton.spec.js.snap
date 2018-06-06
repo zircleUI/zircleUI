@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`z-button.vue Has the expected html structure 1`] = `
+<div
+  class="zui disc button success"
+  style="width: 30px; height: 30px; margin: -15px 0px 0px -15px; transform: translate3d(0px, 0px, 0px);"
+  title="z-button"
+  type="button"
+>
+  <div
+    class="z-pulse"
+  />
+   
+  <section
+    class="label"
+  >
+    
+    Test label prop 
+    
+    <!---->
+  </section>
+   
+  <div
+    class="z-content"
+  >
+    <img
+      height="100%"
+      src="./images/test.png"
+      width="100%"
+    />
+     
+    <!---->
+  </div>
+   
+  <div
+    class="z-content"
+  >
+    <span
+      class="overflow"
+    >
+      <p>
+         lorem text 
+      </p>
+    </span>
+  </div>
+   
+  <div />
+</div>
+`;

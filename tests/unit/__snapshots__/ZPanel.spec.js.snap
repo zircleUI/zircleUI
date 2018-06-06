@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`z-panel.vue Has the expected html structure (slots, z-scroll, z-slider) 1`] = `
+<div
+  class="zui main success"
+  style="overflow: visible; width: 200px; height: 200px; margin: -100px 0px 0px -100px; transform: translate3d(0px, 0px, 0px) scale(1);"
+  title="z-panel - search"
+  type="panel"
+>
+  <section
+    style="opacity: 1;"
+  >
+    <div
+      class="plate"
+      style="width: 260px; height: 260px; margin: -130px 0px 0px -130px;"
+    />
+     
+    <section
+      style="overflow: visible;"
+    >
+      <svg
+        class="scroll"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          r="51"
+          style="transform: rotate(-45deg); stroke-dasharray: 312.1592653589793; stroke-dashoffset: 235.61944901923448; stroke-width: 3;"
+        />
+      </svg>
+       
+      <svg
+        class="scroll2"
+        style="transform: translate3d(70.71067811865476px, -70.71067811865474px, 0px);"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          class="handlebar"
+          cx="20"
+          cy="20"
+          r="10"
+        />
+      </svg>
+    </section>
+     
+    <svg
+      class="slider"
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="50"
+        cy="50"
+        r="51"
+        style="transform: rotate(-90deg); stroke-dasharray: 314.1592653589793; stroke-dashoffset: 62.83185307179587; stroke-width: 3;"
+      />
+    </svg>
+     
+    <section
+      class="label"
+    >
+      
+      Test label prop
+      
+      <!---->
+    </section>
+     
+    <div
+      class="z-content"
+    >
+      <img
+        height="100%"
+        src="./images/test.png"
+        width="100%"
+      />
+       
+      <!---->
+    </div>
+     
+    <div
+      class="z-content maindisc longtext"
+    >
+      <div>
+        youtube video
+      </div>
+       
+      <div
+        class="z-text"
+      >
+        <p>
+           lorem text 
+        </p>
+      </div>
+    </div>
+     
+    <div
+      class="zui disc button primary"
+      style="width: 30px; height: 30px; margin: -15px 0px 0px -15px; transform: translate3d(100px, 0px, 0px);"
+      title="z-button"
+      type="button"
+    >
+      <div
+        class="z-pulse"
+      />
+       
+      <!---->
+       
+      <div
+        class="z-content"
+      >
+        <!---->
+         
+      </div>
+       
+      <div
+        class="z-content"
+      >
+        <span
+          class="overflow"
+        />
+      </div>
+       
+    </div>
+  </section>
+</div>
+`;

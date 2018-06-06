@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`z-alert.vue Has the expected html structure 1`] = `
+<div
+  class="zui pop success"
+  name="z-alert"
+  style="width: 250px; height: 250px; margin: -125px 0px 0px -125px;"
+  type="alert"
+>
+  <svg
+    class="slider"
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle
+      cx="50"
+      cy="50"
+      r="51"
+      style="transform: rotate(-90deg); stroke-dasharray: 314.1592653589793; stroke-dashoffset: 314.1592653589793;"
+    />
+  </svg>
+   
+  <div
+    class="z-popup-plate"
+    style="width: 380px; height: 380px; margin: -190px 0px 0px -190px;"
+  />
+   
+  <div
+    class="z-content"
+  >
+    <p>
+       lorem text 
+    </p>
+  </div>
+   
+  <div />
+</div>
+`;
