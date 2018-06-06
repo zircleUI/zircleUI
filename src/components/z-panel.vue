@@ -1,16 +1,16 @@
 <template>
-  <div 
+  <div
     :title="'z-panel - ' + viewName"
-    type="panel" 
-    class="zui main" 
-    :class="[classes, colors]" 
-    :style="responsive === true ? styles.main : zpos.main" 
+    type="panel"
+    class="zui main"
+    :class="[classes, colors]"
+    :style="responsive === true ? styles.main : zpos.main"
     style="overflow: visible;"
     @mouseover = "$zircle.setBackNav(true)"
-    @mouseleave = "$zircle.setBackNav(false)"> 
+    @mouseleave = "$zircle.setBackNav(false)">
     <section :style="fullView !== $zircle.getCurrentViewName() ? 'opacity: 0;' : 'opacity: 1;'" style="transition: opacity 1s;">
       <div class="plate" :style="responsive === true ? styles.plate : zpos.plate"></div>
-      <z-scroll v-if="scrollBar === true" :scrollVal.sync="scrollVal" style="overflow: visible;"/> 
+      <z-scroll v-if="scrollBar === true" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
       <z-slider v-if="slider === true" :progress='progress'/>
       <section class="label" v-if="label || $slots['label']">
         {{label}}
@@ -27,7 +27,7 @@
         </div>
       </div>
 
-     <slot name="zircle"></slot>
+     <slot name="extension"></slot>
      </section>
   </div>
 </template>
@@ -55,8 +55,6 @@ export default {
     return {
       type: 'panel',
       scrollVal: -45,
-      width: 0,
-      img: {},
       zpos: {},
       isMounted: false,
       ffox: false,
@@ -78,6 +76,7 @@ export default {
     },
     responsive () {
       if (this.fullView === this.$zircle.getCurrentViewName()) {
+        // eslint-disable-next-line
         this.zpos = this.styles
         return true
       } else {
@@ -132,9 +131,8 @@ export default {
       console.log('Firefox detected. Disable scroll event')
       this.ffox = true
     }
-    this.zpos = this.styles
+    this.zpos = Object.assign({}, this.zpos, this.styles)
     this.isMounted = true
   }
 }
 </script>
-

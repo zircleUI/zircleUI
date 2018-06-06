@@ -29,9 +29,7 @@ export default {
   },
   computed: {
     position () {
-      let position
-      this.type === 'panel' ? position = this.$zircle.calcPanelPosition() : position = this.$zircle.calcPosition(this)
-      return position
+      return this.type === 'panel' ? this.$zircle.calcPanelPosition() : this.$zircle.calcPosition(this)
     },
     classes () {
       return {

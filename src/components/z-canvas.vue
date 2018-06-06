@@ -1,7 +1,7 @@
 <template>
-  <div 
-    id="z-container" 
-    :class="[$zircle.getCurrentTheme(), $zircle.getCurrentColor(), $zircle.getAppMode()]" 
+  <div
+    id="z-container"
+    :class="[$zircle.getCurrentTheme(), $zircle.getCurrentColor(), $zircle.getAppMode()]"
     :style="[$zircle.getPreviousViewName() !== '' ? {cursor: 'zoom-out'} : {}]"
     @click.stop="goback" >
       <div id="z-point">
@@ -25,41 +25,17 @@ export default {
     }
   },
   mounted () {
-    var vue = this
+    var vm = this
     // Get window dimension to set the initial width of ui components such as z-panel
     this.$zircle.getDimensions()
     window.addEventListener('resize', function (event) {
       // On resize change the width of ui components
-      vue.$zircle.getDimensions()
+      vm.$zircle.getDimensions()
     })
   }
 }
 </script>
 <style>
-/* This is the style for zircle. To override it use !important 
-*/
-
-.pepe:nth-last-child(-n-4) {
-  opacity: 0;
-}
-.pepe:nth-last-child() {
-  opacity: 0;
-  pointer-events: auto;
-  will-change: opacity;
-}
-.pepe:nth-last-child(2) {
-  pointer-events: none;
-  cursor: zoom-out;
-  filter: blur(2px) opacity(40%);
-  overflow: hidden
-}
-.pepe:nth-last-child(3) {
-  pointer-events: none;
-  cursor: zoom-out;
-  filter: blur(2px) opacity(40%);
-  overflow: hidden
-}
-
 .z-pulse {
   opacity: 0;
   transform: scale(0);
@@ -86,7 +62,6 @@ animation: pulse 110ms ease-out
     opacity: 1;
     transform: scale(1.4)
   }
-
 
 }
 :root {
@@ -295,7 +270,7 @@ div[type="button"] {
   top: 50%;
   left: 50%;
   text-align: center;
- 
+
 }
 
 .disc {
@@ -315,8 +290,6 @@ div[type="button"] {
   z-index: 40;
 }
 
-
-
 .zoom {
   cursor: zoom-in;
 }
@@ -332,11 +305,10 @@ div[type="button"] {
   display: block;
   z-index: 40;
   fill: none;
-  stroke-linecap: round; 
+  stroke-linecap: round;
   stroke-opacity: 1;
   filter: brightness(1.5);
 }
-
 
 .scroll2 {
   position: absolute;
@@ -370,7 +342,6 @@ div[type="button"] {
 .primary .scroll2 {
   fill: var(--accent);
 }
-
 
 .dashed {
   border: 2px solid var(--background-card);
@@ -430,7 +401,7 @@ div[type="button"] {
   display: block;
   padding-top: 50px;
   content:'';
-    
+
 }
 
 .longtext::after {
@@ -460,10 +431,6 @@ div[type="button"] {
 
 .button:hover {
   filter: brightness(0.7);
-}
-
-.button:active {
-  // filter: brightness(0.4) drop-shadow(0 0 0.55rem black);
 }
 
 .hidden {
@@ -526,7 +493,7 @@ div[type="button"] {
   0% {
     opacity: 1;
   }
-  
+
   100% {
     opacity: 0;
   }

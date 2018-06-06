@@ -38,7 +38,10 @@ const position = {
   },
   calcPanelPosition () {
     store.actions.setLog('calcPanelPosition() => Panel')
-    return store.state.history[store.state.history.length - 1].position
+    if (store.state.history[store.state.history.length - 1]) {
+      return store.state.history[store.state.history.length - 1].position
+    }
+    // return {Xi: 0, Yi: 0, X: 0, Y: 0, scalei: 1, scale: 1}
   },
   calcPosition (component) {
     store.actions.setLog('calcPosition() => ' + component.type)

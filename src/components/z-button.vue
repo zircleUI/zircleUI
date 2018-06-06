@@ -3,12 +3,12 @@
     type="button"
     class="zui disc button"
     :class="[classes, colors]"
-    :style="responsive === true ? styles.main : zpos.main" 
+    :style="responsive === true ? styles.main : zpos.main"
     @mousedown="pulse"
     @touchstart="pulse">
     <div class="z-pulse"></div>
     <section class="label" v-if="label || $slots['label']">
-      {{label}} 
+      {{label}}
       <slot v-if="!label" name="label"></slot>
     </section>
     <div class="z-content">
@@ -20,7 +20,7 @@
         <slot></slot>
       </span>
     </div>
-    <slot name="zircle"></slot>
+    <slot name="extension"></slot>
   </div>
 </template>
 
@@ -52,6 +52,7 @@ export default {
   computed: {
     responsive () {
       if (this.view === this.$zircle.getCurrentViewName()) {
+        // eslint-disable-next-line
         this.zpos = this.styles
         return true
       } else {

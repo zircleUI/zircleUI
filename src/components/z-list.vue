@@ -33,10 +33,12 @@ export default {
   mixins: [zmixin],
   props: {
     items: {
-      type: Array
+      type: Array,
+      required: true
     },
     perPage: {
-      type: [Number]
+      type: [Number],
+      default: 5
     }
   },
   name: 'z-list',
@@ -55,4 +57,3 @@ export default {
   }
 }
 </script>
-

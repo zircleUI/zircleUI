@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     title="z-range"
     class="zui disc"
     :type="type"
@@ -26,7 +26,7 @@
           <slot></slot>
         </span>
       </div>
-      <slot name="zircle"></slot>
+      <slot name="extension"></slot>
    </div>
 </template>
 
@@ -60,6 +60,7 @@ export default {
   computed: {
     responsive () {
       if (this.view === this.$zircle.getCurrentViewName()) {
+        // eslint-disable-next-line
         this.zpos = this.styles
         return true
       } else {
@@ -103,4 +104,3 @@ export default {
   }
 }
 </script>
-

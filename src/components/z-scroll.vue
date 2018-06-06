@@ -1,18 +1,18 @@
 <template>
   <section>
-    <svg 
+    <svg
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
       class="scroll"
       @click.prevent="point">
-        <circle 
+        <circle
           r="51"
           cx="50"
           cy="50"
           :style="arcStyle">
         </circle>
     </svg>
-    <svg 
+    <svg
       v-show="hidden === false"
       xmlns="http://www.w3.org/2000/svg"
       class="scroll2"
@@ -23,12 +23,12 @@
       @mousedown="drag = true"
       @mousemove.prevent="slide"
       @mouseup="drag = false">
-        <circle 
+        <circle
           r="10"
           cx="20"
           cy="20"
           class="handlebar">
-        </circle> 
+        </circle>
     </svg>
   </section>
 </template>
@@ -125,4 +125,3 @@ export default {
   }
 }
 </script>
-

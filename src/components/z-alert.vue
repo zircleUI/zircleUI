@@ -1,16 +1,16 @@
 <template>
   <transition name="z-alert">
-    <div 
+    <div
       type="alert"
       class="zui pop"
       :class="[classes, colors]"
-      :style="styles.main"> 
+      :style="styles.main">
         <z-slider :progress="progress"></z-slider>
         <div class="z-popup-plate" :style="styles.plate"></div>
         <div class="z-content">
             <slot></slot>
         </div>
-      <slot name="zircle"></slot>
+      <slot name="extension"></slot>
     </div>
   </transition>
 </template>

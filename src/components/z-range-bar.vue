@@ -1,33 +1,33 @@
 <template>
   <section :type="type">
-    <svg 
-      viewBox="0 0 100 100" 
-      xmlns="http://www.w3.org/2000/svg" 
-      class="scroll" 
+    <svg
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+      class="scroll"
       @click.self.prevent="point">
-        <circle 
+        <circle
           r="51"
-          cx="50"cy="50"
+          cx="50" cy="50"
           :style="[styles]">
         </circle>
     </svg>
-    <svg 
+    <svg
       v-show="hidden === false"
       xmlns="http://www.w3.org/2000/svg"
       class="scroll2"
       :style="circleStyle"
       @touchstart="drag = true"
-      @touchmove.prevent="slide1" 
+      @touchmove.prevent="slide1"
       @touchend="drag = false"
-      @mousedown="drag = true" 
-      @mousemove.prevent="slide1" 
+      @mousedown="drag = true"
+      @mousemove.prevent="slide1"
       @mouseup="drag = false">
-        <circle 
+        <circle
           r="8"
           cx="20"
           cy="20"
           class="handlebar">
-        </circle> 
+        </circle>
     </svg>
   </section>
 </template>
@@ -144,4 +144,3 @@ export default {
   }
 }
 </script>
-

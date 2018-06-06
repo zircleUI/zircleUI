@@ -1,6 +1,5 @@
 <template>
-    <div 
-      
+    <div
       title="z-item"
       class="zui disc"
       :class="[classes, colors]"
@@ -10,7 +9,7 @@
       @mouseup="move">
       <div class="z-pulse"></div>
       <section class="label overflow" v-if="label || $slots['label']">
-        {{label}} 
+        {{label}}
         <slot v-if="!label" name="label"></slot>
       </section>
       <div class="z-content">
@@ -19,7 +18,6 @@
       </div>
     </div>
 </template>
-
 <script>
 export default {
   name: 'z-list-item',
@@ -55,6 +53,7 @@ export default {
   computed: {
     responsive () {
       if (this.view === this.$zircle.getCurrentViewName()) {
+        // eslint-disable-next-line
         this.zpos = this.styles
         return true
       } else {
@@ -120,4 +119,3 @@ export default {
   }
 }
 </script>
-

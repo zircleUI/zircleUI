@@ -1,14 +1,14 @@
 <template>
-  <div 
+  <div
     v-show="hidden === false"
     title="z-list-pagination"
-    class="zui disc" 
+    class="zui disc"
     :type="type"
-    :class="[classes, colors, activated]" 
-    :style="responsive === true ? styles.main : zpos.main"> 
+    :class="[classes, colors, activated]"
+    :style="responsive === true ? styles.main : zpos.main">
     <div
       class="navplate"
-      :style="responsive === true ? styles.plate : zpos.plate">    
+      :style="responsive === true ? styles.plate : zpos.plate">
     </div>
   </div>
 </template>
@@ -42,6 +42,7 @@ export default {
   computed: {
     responsive () {
       if (this.view === this.$zircle.getCurrentViewName()) {
+        // eslint-disable-next-line
         this.zpos = this.styles
         return true
       } else {
