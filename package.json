@@ -2,7 +2,7 @@
   "name": "zircle",
   "version": "0.5.0",
   "description": "A lightweight front-end library for developing zoomable user interfaces",
-  "author": "Juan Martín Muda",
+  "author": "Juan Martín Muda <juan.martin.muda@gmail.com>",
   "main": "dist/zircle.min.js",
   "unpkg": "dist/zircle.min.js",
   "files": [
