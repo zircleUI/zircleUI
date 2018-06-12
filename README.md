@@ -18,40 +18,9 @@
 
 ## What is Zircle UI?
 
-**Zircle UI** is a circular zooming user interface library based on Vue.js. It mixes two principles: **circular shapes** and **zooming navigation** in the aim of strengthening each other and create a good user experience.
+**Zircle UI** A lightweight frontend library for developing [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface).
 
-**Note:** Waiting Vue-CLI 3 to be ready for production. Please [**check out the Zircle´s dev branch**](https://github.com/zircleUI/zircleUI/tree/dev) since many changes are being made under the hood:
-
-Many things may change in the near future. 
-- [ ] Wrap zircle with Vue-CLI 3.**WIP**  Waiting for Vue-CLI to be ready
-- [ ] Make Zircle dev friendly. **WIP** (waiting for Vue-CLI)
-- [ ] Automatic deploy, change log, versioning. **WIP** using commitizen and standar-release
-- [ ] Update documentation. **WIP** --> [new doc site](https://zircleui.github.io/docs)
-- [ ] Write migration guide. Just will be a few breaking changes.
-- [ ] Publish a dev release. **ASAP**
-- [ ] Zircle State Management -> Expose state in development mode. **WIP**
-- [X] Add Jest unit tests and snapShoots.
-- [X] Eslint components
-- [X] Simplify `z-view-manager`
-- [X] **Improve animation and render performance**. Resolve poor performance in Chrome when go back. Now transitions are smooth in Chrome, Firefox and Safari.
-- [X] Group similar logs in the zircle's console log events.
-- [X] Add `media` slot in `z-panel` to include maps, videos, etc. 
-- [X] Allow zircle's apps to be in full mode (as happens currently) or embedded.
-- [X] Add possibilty of use properties or slots for image source and labels.
-- [X] Rewrite router auto config and routes management
-- [X] Fix responsiveness
-- [X] Improve SVG styles
-- [X] Re write `z-list` component and its user templates.
-- [X] Add `label` and `image src` properties to `z-button` `z-panel` `z-range` `z-scale` `z-alert` 
-- [X] Improve circular scroll. Disable scroll event on Firefox desktop, but is it possible to use the circular scroll.
-- [X] Promote `z-range` to independent component.
-- [X] Add micro animations on user events
-- [X] Remame some In-built component following Style Guide
-- [X] Optimize code. --> [Maintainability](https://codeclimate.com/github/zircleUI/zircleUI/maintainability)
-- [X] Rewrite position and navigation system
-- [X] Rewrite how zircle handle vue-router and views.
-- [X] Add debug mode for development.
-- [X] Rewrite Zircle State Management. Only actions are exposed.
+**Note:** Waiting [vue-cli 3](https://github.com/vuejs/vue-cli) to be ready for production. Please [**check out the Zircle´s dev branch**](https://github.com/zircleUI/zircleUI/tree/dev) to see what is happening under the hood.
 
 ### Main features
 -  **Zoomable navigation**: Enjoy a different User Experience to navigate your app. Zircle has 6 levels of depth to organize the content.
@@ -68,17 +37,19 @@ To check out live examples and docs, visit http://zircle.io
 
 ### Content delivery networks (CDN)
 
-* Include https://unpkg.com/zircle in your project with ```<script>``` tag. With CDN you will have the latest version of Zircle as soon as it is published to npm. You can also browse the source of the npm package at https://unpkg.com/zircle/ 
+* Include [https://unpkg.com/zircle](https://unpkg.com/zircle) in your project with ```<script>``` tag.
 
 ### NPM
-NPM is the recommended installation method of zircle if you are building medium to large scale applications with Vue. 
 
 ```bash 
-npm install zircle --save
+npm install zircle
+
+#or
+
+yarn add zircle
 ```
 
 ## License
-[MIT](http://opensource.org/licenses/MIT)
-
+[MIT Licensed | Copyright © 2017 - present - Juan Martín Muda](https://raw.githubusercontent.com/zircleUI/zircleUI/master/LICENSE)
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FzircleUI%2FzircleUI.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FzircleUI%2FzircleUI?ref=badge_large)
