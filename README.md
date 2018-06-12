@@ -16,13 +16,14 @@
 
 ## Status Beta
 Many things may change in the near future. 
-- [ ] Wrap zircle with Vue-CLI 3. Waiting for Vue-CLI to be ready
+- [ ] Wrap zircle with Vue-CLI 3. **WIP** Waiting for Vue-CLI to be ready
 - [ ] Make Zircle dev friendly. **WIP** (waiting for Vue-CLI and tests)
 - [ ] Automatic deploy, change log, versioning. **WIP** using commitizen and standar-release
 - [ ] Update documentation. **WIP** --> [new doc site](https://zircleui.github.io/docs)
-- [ ] Write migration guide. Just will be a few breaking changes.
+- [ ] Write migration guide. ˜˜Just will be a few breaking changes.˜˜ **No so few**
 - [ ] Publish a dev release. **ASAP**
 - [ ] Zircle State Management -> Expose state in development mode. **WIP**
+- [X] Add SASS and maintain de css separated from the js.
 - [X] Add Jest unit tests and snapShoots.
 - [X] Eslint components
 - [X] Simplify `z-view-manager`
