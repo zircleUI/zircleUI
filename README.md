@@ -20,7 +20,7 @@ Many things may change in the near future.
 - [ ] Make Zircle dev friendly. **WIP** (waiting for Vue-CLI and tests)
 - [ ] Automatic deploy, change log, versioning. **WIP** using commitizen and standar-release
 - [ ] Update documentation. **WIP** --> [new doc site](https://zircleui.github.io/docs)
-- [ ] Write migration guide. ˜˜Just will be a few breaking changes.˜˜ **No so few**
+- [ ] Write migration guide. ~~Just will be a few breaking changes.~~ **No so few**
 - [ ] Publish a dev release. **ASAP**
 - [ ] Zircle State Management -> Expose state in development mode. **WIP**
 - [X] Add SASS and maintain de css separated from the js.
