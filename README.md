@@ -18,7 +18,7 @@
 
 ## What is Zircle UI?
 
-**Zircle UI** A lightweight frontend library for developing [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface).
+**Zircle UI** is a lightweight frontend library for developing [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface).
 
 **Note:** Waiting [vue-cli 3](https://github.com/vuejs/vue-cli) to be ready for production. Please [**check out the Zircle´s dev branch**](https://github.com/zircleUI/zircleUI/tree/dev) to see what is happening under the hood.
 
