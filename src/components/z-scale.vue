@@ -1,9 +1,7 @@
 <template>
   <div
-    title="z-scale"
-    class="zui disc"
-    :type="type"
-    :class="[classes, colors]"
+    class="z-shape is-extension"
+    :class="[componentType, classes, colors]"
     :style="responsive === true ? styles.main : zpos.main"
     @mousedown="pulse"
     @touchstart="pulse"
@@ -32,7 +30,7 @@
 </template>
 
 <script>
-import zmixin from '../mixins/zircle-mixin'
+import zmixin from '../mixins/z-mixin'
 export default {
   name: 'z-scale',
   mixins: [zmixin],
@@ -44,15 +42,12 @@ export default {
     slider: {
       type: [Boolean],
       default: false
-    },
-    type: {
-      type: String,
-      default: 'scale'
     }
   },
   inject: ['view'],
   data () {
     return {
+      componentType: this.$options.name,
       zpos: {},
       innerpos: {},
       extrainfo: ''
@@ -83,12 +78,12 @@ export default {
   methods: {
     pulse () {
       let pulse = this.$el.querySelector('.z-pulse')
-      pulse.classList.add('pulse')
+      pulse.classList.add('pulse-animation')
       pulse.addEventListener('animationend', function () {
-        pulse.classList.remove('pulse')
+        pulse.classList.remove('pulse-animation')
       }, false)
       pulse.removeEventListener('animationend', function () {
-        pulse.classList.remove('pulse')
+        pulse.classList.remove('pulse-animation')
       }, false)
     },
     move () {

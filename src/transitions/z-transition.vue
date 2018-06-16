@@ -4,14 +4,14 @@ export default {
   render: function (createElement, context) {
     var data = {
       props: {
-        name: 'zuit',
+        name: 'zircle transition',
         css: false,
         tag: 'section'
       },
       on: {
         enter (el, done) {
           if (context.parent.$zircle.getNavigationMode() === 'forward') {
-            var point = document.getElementById('z-point')
+            var point = document.getElementById('z-zoomable-layer')
             point.style.transform = 'scale(' + context.parent.$zircle.getCurrentPosition().scale + ') translate3d(' + context.parent.$zircle.getCurrentPosition().Xi + 'px, ' + context.parent.$zircle.getCurrentPosition().Yi + 'px, 0px)'
             point.style.transition = 'transform 900ms ease-in'
             el.style.animation = 'appear 800ms linear forwards'
@@ -29,7 +29,7 @@ export default {
         beforeLeave (el) {
           if (context.parent.$zircle.getNavigationMode() === 'forward') {
           } else {
-            var point = document.getElementById('z-point')
+            var point = document.getElementById('z-zoomable-layer')
             point.style.transform = 'scale(' + context.parent.$zircle.getCurrentPosition().scale + ') translate3d(' + context.parent.$zircle.getCurrentPosition().Xi + 'px, ' + context.parent.$zircle.getCurrentPosition().Yi + 'px, 0px)'
             point.style.transition = 'transform 900ms ease-in'
           }
@@ -38,11 +38,11 @@ export default {
           if (context.parent.$zircle.getNavigationMode() === 'forward') {
             done()
           } else {
-            el.style.animation = 'disappear 900ms 200ms linear forwards'
+            el.style.animation = 'disappear 900ms linear forwards'
             setTimeout(function () {
               context.parent.$zircle.setLog('end')
               done()
-            }, 1100)
+            }, 1000)
           }
         }
       }

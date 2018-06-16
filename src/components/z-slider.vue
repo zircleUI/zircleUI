@@ -1,18 +1,18 @@
 <template>
-  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="slider">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="z-slider">
     <circle r="51" cx="50" cy="50"  :style="[styles]"></circle>
   </svg>
 </template>
 
 <script>
-import zmixin from '../mixins/zircle-mixin'
+import zmixin from '../mixins/z-mixin'
 export default {
+  name: 'z-slider',
   mixins: [zmixin],
   props: ['progress'],
-  name: 'z-slider',
   data () {
     return {
-      type: 'slider',
+      componentType: this.$options.name,
       drag: false,
       anglex: 0,
       duration: 0.05
@@ -33,7 +33,7 @@ export default {
         strokeWidth = 10
       } else if (zwidth === 'xxs') {
       }
-      if (this.$parent.type === 'panel' || this.$parent.type === 'alert') {
+      if (this.$parent.componentType === 'z-view' || this.$parent.componentType === 'z-dialog') {
         strokeWidth = 3
       }
       var circleLength = 2 * Math.PI * 50

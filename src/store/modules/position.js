@@ -36,8 +36,8 @@ const position = {
   getLastPosition () {
     return store.state.lastViewHistory.position
   },
-  calcPanelPosition () {
-    store.actions.setLog('calcPanelPosition() => Panel')
+  calcViewPosition () {
+    store.actions.setLog('calcViewPosition()')
     if (store.state.history[store.state.history.length - 1]) {
       return store.state.history[store.state.history.length - 1].position
     }
@@ -49,7 +49,7 @@ const position = {
     var parentPosition = {Xi: 0, Yi: 0, X: 0, Y: 0, scalei: 1, scale: 1}
     var newPosition = store.state.history[store.state.history.length - 1].position
     var newCoords = calcCoords(component.distance, component.angle)
-    if (component.$parent.type === 'panel') parentPosition = { Xi: component.$parent.position.Xi, Yi: component.$parent.position.Yi, X: component.$parent.position.X, Y: component.$parent.position.Y, scalei: component.$parent.position.scalei, scale: component.$parent.position.scale }
+    if (component.$parent.componentType === 'z-view' || component.$parent.componentType === 'z-view-list') parentPosition = { Xi: component.$parent.position.Xi, Yi: component.$parent.position.Yi, X: component.$parent.position.X, Y: component.$parent.position.Y, scalei: component.$parent.position.scalei, scale: component.$parent.position.scale }
     newPosition = {
       X: newCoords.X,
       Y: newCoords.Y,

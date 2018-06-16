@@ -1,8 +1,7 @@
 <template>
-  <div title="z-button"
-    type="button"
-    class="zui disc button"
-    :class="[classes, colors]"
+  <div
+    class="z-shape is-extension"
+    :class="[componentType, classes, colors]"
     :style="responsive === true ? styles.main : zpos.main"
     @mousedown="pulse"
     @touchstart="pulse">
@@ -26,26 +25,26 @@
 
 <script>
 // mejorar estados y todo
-import zmixin from '../mixins/zircle-mixin'
+import zmixin from '../mixins/z-mixin'
 export default {
+  name: 'z-button',
   mixins: [zmixin],
   inject: ['view'],
-  name: 'z-button',
   data () {
     return {
-      type: 'button',
+      componentType: this.$options.name,
       zpos: {}
     }
   },
   methods: {
     pulse () {
       let pulse = this.$el.querySelector('.z-pulse')
-      pulse.classList.add('pulse')
+      pulse.classList.add('pulse-animation')
       pulse.addEventListener('animationend', function () {
-        pulse.classList.remove('pulse')
+        pulse.classList.remove('pulse-animation')
       }, false)
       pulse.removeEventListener('animationend', function () {
-        pulse.classList.remove('pulse')
+        pulse.classList.remove('pulse-animation')
       }, false)
     }
   },

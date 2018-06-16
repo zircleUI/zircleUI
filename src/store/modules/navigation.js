@@ -2,18 +2,18 @@ import store from '../store'
 function retrieveViewName (pos) {
   let viewName = ''
   if (store.state.history.length >= pos) {
-    viewName = store.state.history[store.state.history.length - pos].viewName
+    viewName = store.state.history[store.state.history.length - pos].name
   }
   return viewName
 }
 function papa (view, position) {
-  return store.state.history.push({viewName: view.name, position: position, component: store.actions.resolveComponent(store.actions.getComponentList(), view.name)})
+  return store.state.history.push({name: view.name, position: position, component: store.actions.resolveComponent(store.actions.getComponentList(), view.name)})
 }
 function transformViewName (view) {
   view = view.toLowerCase()
   var count = 0
   for (var i = 1; i <= store.state.history.length; i++) {
-    if (store.state.history[store.state.history.length - i].viewName.split('--')[0] === view) {
+    if (store.state.history[store.state.history.length - i].name.split('--')[0] === view) {
       count += 1
     }
   }
@@ -31,6 +31,7 @@ function parseView (data) {
   let chunkData = data.split('/')
   let name = transformViewName(chunkData[0])
   // let params = {}
+  // ARMAR ITEMID PARA ROUTER O NO ROUTER
   let paramPath = ''
   for (var i = 1; i < chunkData.length; i++) {
     // params['param' + i] = chunkData[i]
@@ -47,14 +48,21 @@ function parseView (data) {
 }
 const navigation = {
   resolveComponent (list, view) {
-    if (view) {
-      view = view.split('--')[0]
-      let key = Object.keys(list).find(function (k) {
-        if (k.toLowerCase() === view) {
-          return k
-        }
-      })
+    view = view.split('--')[0]
+    let key = Object.keys(list).find(function (k) {
+      if (k.toLowerCase() === view) return k
+    })
+    if (key) {
       return list[key]
+    } else {
+      // create 404
+      return {
+        template: `<z-view name="${view}">
+        <h1>404</h1>
+        '<b>${view}</b>' not found. <br>
+        Check view's name in your component var or props.name
+        </z-view>`
+      }
     }
   },
   setComponentList (list) {
@@ -88,12 +96,12 @@ const navigation = {
   getNavigationMode () {
     return store.state.mode
   },
-  getBackNavState () {
-    return store.state.goBackNav
+  getBackwardNavigationState () {
+    return store.state.backwardNavigation
   },
-  setBackNav (value) {
-    if (value !== store.state.goBackNav) {
-      store.state.goBackNav = value
+  allowBackwardNavigation (value) {
+    if (value !== store.state.backwardNavigation) {
+      store.state.backwardNavigation = value
     }
   },
   setView (data, options) {
@@ -122,7 +130,7 @@ const navigation = {
     if (store.state.history.length >= 1) {
       store.actions.setNavigationMode('backward')
       store.state.history.pop()
-      store.actions.setLog('goBack() => ' + store.state.history[store.state.history.length - 1].viewName)
+      store.actions.setLog('goBack() => ' + store.state.history[store.state.history.length - 1].name)
     }
   }
 }

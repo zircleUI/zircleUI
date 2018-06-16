@@ -1,9 +1,7 @@
 <template>
   <div
-    title="z-range"
-    class="zui disc"
-    :type="type"
-    :class="[classes, colors, rangeClass]"
+    class="z-shape is-extension"
+    :class="[componentType, classes, colors]"
     :style="responsive === true ? styles.main : zpos.main"
     @mousedown="pulse"
     @touchstart="pulse">
@@ -31,7 +29,7 @@
 </template>
 
 <script>
-import zmixin from '../mixins/zircle-mixin'
+import zmixin from '../mixins/z-mixin'
 export default {
   name: 'z-range',
   mixins: [zmixin],
@@ -39,19 +37,12 @@ export default {
     progress: {
       type: Number,
       default: 0
-    },
-    range: {
-      type: [Boolean],
-      default: true
-    },
-    type: {
-      type: String,
-      default: 'range'
     }
   },
   inject: ['view'],
   data () {
     return {
+      componentType: this.$options.name,
       zpos: {},
       innerpos: {},
       extrainfo: ''
@@ -65,11 +56,6 @@ export default {
         return true
       } else {
         return false
-      }
-    },
-    rangeClass () {
-      return {
-        range: this.range === true
       }
     },
     styles () {
@@ -87,12 +73,12 @@ export default {
   methods: {
     pulse () {
       let pulse = this.$el.querySelector('.z-pulse')
-      pulse.classList.add('pulse')
+      pulse.classList.add('pulse-animation')
       pulse.addEventListener('animationend', function () {
-        pulse.classList.remove('pulse')
+        pulse.classList.remove('pulse-animation')
       }, false)
       pulse.removeEventListener('animationend', function () {
-        pulse.classList.remove('pulse')
+        pulse.classList.remove('pulse-animation')
       }, false)
     },
     extraInfo (data) {

@@ -22,6 +22,15 @@ const list = {
   },
   getNumberOfItemsInCurrentPage () {
     return store.state.pages[store.state.currentPage].length
+  },
+  setItemId () {
+    store.state.itemId = value
+  },
+  getItemId () {
+    return store.state.itemId
+  },
+  clearItemId () {
+    store.state.itemId = ''
   }
 }
 export default list

@@ -3,7 +3,7 @@
     <svg
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
-      class="scroll"
+      class="z-scroll"
       @click.prevent="point">
         <circle
           r="51"
@@ -15,7 +15,7 @@
     <svg
       v-show="hidden === false"
       xmlns="http://www.w3.org/2000/svg"
-      class="scroll2"
+      class="z-scroll-bar"
       :style="circleStyle"
       @touchstart="drag = true"
       @touchmove.prevent="slide"
@@ -27,21 +27,21 @@
           r="10"
           cx="20"
           cy="20"
-          class="handlebar">
+          class="z-scroll-handlebar">
         </circle>
     </svg>
   </section>
 </template>
 
 <script>
-import zmixin from '../mixins/zircle-mixin'
+import zmixin from '../mixins/z-mixin'
 export default {
   mixins: [zmixin],
   props: ['scrollVal'],
-  name: 'z-scroll',
+  name: 'z-view-scroll',
   data () {
     return {
-      type: 'scroll',
+      componentType: this.$options.name,
       drag: false,
       hidden: false
     }
@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     point (e) {
-      const dimensions = this.$el.querySelector('.scroll').getBoundingClientRect()
+      const dimensions = this.$el.querySelector('.z-scroll').getBoundingClientRect()
       var centerx = (dimensions.width / 2) + dimensions.left
       var centery = (dimensions.height / 2) + dimensions.top
       var posx = e.x
@@ -100,7 +100,7 @@ export default {
     slide (e) {
       if (this.drag === true) {
         e = e.changedTouches ? e.changedTouches[0] : e
-        const dimensions = this.$el.querySelector('.scroll').getBoundingClientRect()
+        const dimensions = this.$el.querySelector('.z-scroll').getBoundingClientRect()
         var centerx = (dimensions.width / 2) + dimensions.left
         var centery = (dimensions.height / 2) + dimensions.top
         var posx = e.pageX

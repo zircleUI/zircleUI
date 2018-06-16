@@ -1,28 +1,22 @@
 <template>
   <div
     v-show="hidden === false"
-    title="z-list-pagination"
-    class="zui disc"
-    :type="type"
-    :class="[classes, colors, activated]"
+    class="z-shape is-extension"
+    :class="[componentType, classes, activated]"
     :style="responsive === true ? styles.main : zpos.main">
     <div
-      class="navplate"
+      class="z-outer-point"
       :style="responsive === true ? styles.plate : zpos.plate">
     </div>
   </div>
 </template>
 
 <script>
-import zmixin from '../mixins/zircle-mixin'
+import zmixin from '../mixins/z-mixin'
 export default {
-  name: 'z-list-pagination',
+  name: 'z-view-list-pagination',
   mixins: [zmixin],
   props: {
-    type: {
-      type: String,
-      default: 'pagination'
-    },
     index: {
       type: Number,
       default: 0
@@ -35,6 +29,7 @@ export default {
   inject: ['view'],
   data () {
     return {
+      componentType: this.$options.name,
       hidden: false,
       zpos: {}
     }
@@ -54,8 +49,8 @@ export default {
     },
     activated () {
       return {
-        'accent-secondary': this.active === this.index,
-        'accent-secondary-border': this.active < this.index || this.active > this.index
+        'active': this.active === this.index,
+        'deactive': this.active < this.index || this.active > this.index
       }
     },
     styles () {

@@ -1,0 +1,273 @@
+// General
+*
+  box-sizing: border-box
+  margin: 0
+  padding: 0
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+
+\::-webkit-scrollbar
+  display: none
+
+\::placeholder
+  color: inherit
+
+input
+  font: inherit
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  text-rendering: optimizeLegibility
+  margin-top: 20px
+  width: 100%
+  background: none
+  appearance: none
+  box-shadow: none
+  border: none
+  color: inherit
+  border-bottom-width: 1px
+  border-bottom-style: solid
+  border-bottom-color: inherit
+  background: inherit
+  outline: none
+  text-align: center
+
+.z-canvas
+  font-family: 'Source Sans Pro', sans-serif
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  text-rendering: optimizeLegibility
+  background-color: var(--background-color)
+  color: var(--foreground-color)
+  transition: background-color 1s
+  overflow: hidden
+  &.is-full-mode
+    position: fixed
+    width: 100%
+    height: 100%
+    font-size: calc(14px + 1vmax)
+  &.is-embedded-mode
+    position: absolute
+    width: 100%
+    height: 100%
+    font-size: calc(14px)
+    > .label
+      font-size: calc(10px)
+
+#z-zoomable-layer
+  position: absolute
+  top: 50%
+  left: 50%
+  text-decoration: none
+  will-change: transform
+  perspective: 1000px
+
+.z-shape
+  overflow: visible
+  position: absolute
+  display: block
+  border-radius: 50%
+  border-width: 3px
+  border-style: solid
+  top: 50%
+  left: 50%
+  text-align: center
+
+  &.z-view
+    z-index: 40
+    will-change: transform, opacity
+    transition: background-color 1s
+  &.is-extension
+    z-index: 80
+    cursor: default
+    &.z-button
+      cursor: pointer
+      &:hover
+        filter: brightness(0.7)
+    &.z-dialog
+      z-index: 500
+      background: var(--background-color)
+      border: 1px solid var(--foreground-color)
+      // opacity: 0.3
+      overflow: hidden
+    &.z-scale, &.z-button, &.z-range
+      will-change: transform, opacity
+      transition: background-color 1s
+    &.z-view-list-item
+      cursor: zoom-in
+    &.z-view-list-pagination
+      cursor: zoom-in
+      &:hover
+        cursor: grab
+      &:active
+        cursor: grabbing
+
+.z-content
+  position: absolute
+  z-index: 0
+  top: 1%
+  left: 1%
+  width: 98%
+  height: 98%
+  display: flex
+  background: none
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  overflow: hidden
+  border-radius: 50%
+  user-select: none
+  border: 1px solid transparent
+  &.maincontent
+    cursor: default
+    z-index: 50
+    &.long-content
+      overflow-y: scroll
+      display: block
+      &::before
+        display: block
+        padding-top: 50px
+        content: ''
+      &::after
+        top: 0
+        display: block
+        content: ''
+    &.z-scroll-disabled-for-firefox
+      overflow-y: hidden
+
+.label
+  font-size: calc(10px + 1vmax)
+  position: absolute
+  width: 100%
+  height: 25px
+  top: 100%
+
+.overflow
+  width: 100%
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+.z-zoom-in-cursor
+  cursor: zoom-in
+
+.z-scroll, .z-slider, .z-range-bar
+  position: absolute
+  overflow: visible
+  display: block
+  z-index: 40
+  fill: none
+  stroke-linecap: round
+  stroke-opacity: 1
+  // filter: brightness(1.5)
+
+.z-slider > circle
+  //transition: all .5s linear
+
+.z-scroll-bar, .z-range-bar-bar
+  position: absolute
+  border-radius: 50%
+  display: block
+  width: 40px
+  height: 40px
+  top: 50%
+  left: 50%
+  margin: -20px 0 0 -20px
+  z-index: 70
+  &:hover
+    cursor: grab
+  &:active
+    cursor: grabbing
+
+.is-past-view
+  pointer-events: none
+  cursor: zoom-out
+  filter: blur(2px) opacity(20%)
+  overflow: hidden
+
+.is-previous-view
+  pointer-events: none
+  cursor: zoom-out
+  filter: blur(2px) opacity(40%)
+  overflow: hidden
+
+.is-previous-view div
+  cursor: zoom-out
+
+.is-previous-view section[title="z-view-list"]
+  pointer-events: none
+
+.is-current-view
+  pointer-events: auto
+  will-change: opacity
+  animation: appear 800ms linear forwards
+
+.z-outer-circle
+  position: absolute
+  z-index: 0
+  top: 50%
+  left: 50%
+  border-radius: 50%
+  border-width: 1px
+  border-style: dashed 
+  opacity: 0.1
+  overflow: hidden
+
+.z-outer-point
+  position: absolute
+  z-index: 90
+  top: 50%
+  left: 50%
+  border-radius: 50%
+  opacity: 1
+  overflow: hidden
+
+.z-dialog-transition-enter-active, .z-dialog-transition-leave-active
+  transition: transform 0.3s
+  position: absolute
+  top: 50%
+  left: 50%
+  z-index: 500
+
+.z-dialog-transition-enter, .z-dialog-transition-leave-to
+  transform: scale(0)
+
+.z-pulse
+  opacity: 0
+  transform: scale(0)
+  background-color: rgba(255, 255, 255, 0.1)
+  width: 100%
+  height: 100%
+  margin: -50% 0 0 -50%
+  position: absolute
+  z-index: 0
+  top: 50%
+  left: 50%
+  border-radius: 50%
+
+.pulse-animation
+  animation: pulse 110ms ease-out
+
+@keyframes pulse
+  0%
+    opacity: 0
+    transform: scale(0)
+
+  100%
+    opacity: 1
+    transform: scale(1.4)
+
+@keyframes appear
+  0%
+    opacity: 0
+
+  80%
+    opacity: 1
+
+  100%
+    opacity: 1
+
+@keyframes disappear
+  0%
+    opacity: 1
+
+  100%
+    opacity: 0

@@ -29,11 +29,11 @@ export default {
   },
   computed: {
     position () {
-      return this.type === 'panel' ? this.$zircle.calcPanelPosition() : this.$zircle.calcPosition(this)
+      return this.componentType === 'z-view' || this.componentType === 'z-view-list' ? this.$zircle.calcViewPosition() : this.$zircle.calcPosition(this)
     },
     classes () {
       return {
-        zoom: this.type === 'scale' && this.toView !== undefined
+        zZoomInCursor: this.componentType === 'z-scale' && this.toView !== undefined
       }
     },
     colors () {

@@ -1,12 +1,11 @@
 <template>
-  <transition name="z-alert">
+  <transition name="z-dialog-transition">
     <div
-      type="alert"
-      class="zui pop"
-      :class="[classes, colors]"
+      class="z-shape is-extension"
+      :class="[componentType, classes, colors]"
       :style="styles.main">
         <z-slider :progress="progress"></z-slider>
-        <div class="z-popup-plate" :style="styles.plate"></div>
+        <div class="z-outer-circle" :style="styles.plate"></div>
         <div class="z-content">
             <slot></slot>
         </div>
@@ -16,13 +15,13 @@
 </template>
 
 <script>
-import zmixin from '../mixins/zircle-mixin'
+import zmixin from '../mixins/z-mixin'
 export default {
+  name: 'z-dialog',
   mixins: [zmixin],
-  name: 'z-alert',
   data () {
     return {
-      type: 'alert',
+      componentType: this.$options.name,
       progress: 0
     }
   },
@@ -45,7 +44,7 @@ export default {
   },
   methods: {
     close () {
-      this.$zircle.setAlert(false)
+      this.$zircle.setDialog(false)
     }
   },
   mounted () {

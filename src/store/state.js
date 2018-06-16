@@ -6,7 +6,7 @@ const state = {
   isRouterEnabled: false,
   $router: {},
   history: [],
-  goBackNav: false,
+  backwardNavigation: false,
   componentList: {},
   // Styles
   zircleWidth: {
@@ -17,14 +17,17 @@ const state = {
     xs: 20,
     xxs: 20
   },
-  color: 'color--blue',
-  theme: 'theme--dark',
+  appStyle: {
+    theme: 'theme-blue',
+    mode: 'mode-dark'
+  },
   // Pagination components
   currentPage: 0,
   items: [],
   pages: [],
-  // z-alert component
-  alert: false
+  item: '',
+  // z-dialog component
+  dialog: false
 }
 
 export default state
