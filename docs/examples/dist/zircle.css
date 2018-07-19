@@ -1,0 +1,739 @@
+:root {
+	--success-color: green;
+	--warning-color: #ff0;
+	--danger-color: red
+}
+
+.theme-white {
+	--shade-color: #000;
+	--primary-color: #fff;
+	--accent-color: gray
+}
+
+.theme-light-blue {
+	--shade-color: #f1f1f1;
+	--primary-color: #5fc9f3;
+	--accent-color: #0d7fac
+}
+
+.theme-black {
+	--shade-color: #859ba6;
+	--primary-color: #283237;
+	--accent-color: #000
+}
+
+.theme-purple {
+	--shade-color: #fdecf0;
+	--primary-color: #ee305a;
+	--accent-color: #7b0a23
+}
+
+.theme-orange {
+	--shade-color: #fff8f3;
+	--primary-color: #f7892f;
+	--accent-color: #884005
+}
+
+.theme-yellow {
+	--shade-color: #fffcf2;
+	--primary-color: #ffca26;
+	--accent-color: #8c6a00
+}
+
+.theme-blue {
+	--shade-color: #d4e1f1;
+	--primary-color: #3e78bb;
+	--accent-color: #182e48
+}
+
+.theme-green {
+	--shade-color: #f6fbf6;
+	--primary-color: #69bf66;
+	--accent-color: #2b6329
+}
+
+.theme-red {
+	--shade-color: #fef8f8;
+	--primary-color: #ef3c3b;
+	--accent-color: #860c0b
+}
+
+.theme-gray {
+	--shade-color: #e4e4e5;
+	--primary-color: #7c7e81;
+	--accent-color: #313233
+}
+
+.mode-light {
+	--main-text-and-border-color: var(--primary-color);
+	--main-color: var(--shade-color);
+	--accent-text-and-border-color: var(--accent-color)
+}
+
+.mode-light,
+.mode-light-filled {
+	--background-color: var(--shade-color)
+}
+
+.mode-dark,
+.mode-light-filled {
+	--main-text-and-border-color: var(--shade-color);
+	--main-color: var(--primary-color);
+	--accent-text-and-border-color: var(--accent-color)
+}
+
+.mode-dark,
+.mode-dark-filled {
+	--background-color: var(--primary-color)
+}
+
+.mode-dark-filled {
+	--main-text-and-border-color: var(--accent-color);
+	--main-color: var(--shade-color);
+	--accent-text-and-border-color: var(--shade-color)
+}
+
+.primary {
+	border-color: var(--main-text-and-border-color);
+	color: var(--main-text-and-border-color);
+	background-color: var(--main-color)
+}
+
+.accent {
+	border-color: var(--accent-color);
+	background-color: var(--accent-color);
+	color: var(--main-text-and-border-color)
+}
+
+.success {
+	background-color: var(--success-color);
+	border-color: var(--success-color)
+}
+
+.warning {
+	background-color: var(--warning-color);
+	border-color: var(--warning-color)
+}
+
+.z-outer-circle {
+	border-color: var(--main-text-and-border-color)
+}
+
+.danger {
+	background-color: var(--danger-color);
+	border-color: var(--danger-color)
+}
+
+.z-range-bar,
+.z-range-bar-handlebar,
+.z-scroll,
+.z-scroll-handlebar,
+.z-slider {
+	stroke: var(--accent-color)
+}
+
+.z-shape.active {
+	background-color: var(--accent-color)
+}
+
+.z-shape.active,
+.z-shape.deactive {
+	border-width: 1px;
+	border-color: var(--accent-color)
+}
+
+.z-shape.deactive {
+	background-color: transparent
+}
+
+* {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+}
+
+::-webkit-scrollbar {
+	display: none
+}
+
+::-webkit-input-placeholder {
+	color: inherit
+}
+
+:-ms-input-placeholder,
+::-ms-input-placeholder {
+	color: inherit
+}
+
+::placeholder {
+	color: inherit
+}
+
+.z-next-enter {
+	opacity: 0
+}
+
+.z-next-enter-active {
+	-webkit-animation: appear 1s linear forwards;
+	animation: appear 1s linear forwards
+}
+
+.z-prev-leave-to {
+	-webkit-animation: disappear 1s linear forwards;
+	animation: disappear 1s linear forwards
+}
+
+input {
+	font: inherit;
+	margin-top: 20px;
+	width: 100%;
+	background: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: none;
+	color: inherit;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: inherit;
+	background: inherit;
+	outline: none;
+	text-align: center
+}
+
+.z-canvas,
+input {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility
+}
+
+.z-canvas {
+	font-family: Source Sans Pro, sans-serif;
+	background-color: var(--background-color);
+	color: var(--foreground-color);
+	-webkit-transition: background-color .5s;
+	transition: background-color .5s;
+	overflow: hidden
+}
+
+.z-canvas.is-full-mode {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	font-size: calc(13px + 1vmax)
+}
+
+.z-canvas.is-embedded-mode {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	font-size: 13px
+}
+
+#z-zoomable-layer {
+	text-decoration: none;
+	will-change: transform;
+	-webkit-perspective: 1000px;
+	perspective: 1000px
+}
+
+#z-zoomable-layer,
+.z-shape {
+	position: absolute;
+	top: 50%;
+	left: 50%
+}
+
+.z-shape {
+	overflow: visible;
+	display: block;
+	border-radius: 50%;
+	border-width: 3px;
+	border-style: solid;
+	text-align: center
+}
+
+.z-shape.z-view {
+	z-index: 40;
+	will-change: transform, opacity;
+	-webkit-transition: background-color 1s;
+	transition: background-color 1s
+}
+
+.z-shape.is-extension {
+	z-index: 80
+}
+
+.z-shape.is-extension.z-spot {
+	cursor: -webkit-zoom-in;
+	cursor: zoom-in
+}
+
+.z-shape.is-extension.z-spot[role=button] {
+	cursor: pointer
+}
+
+.z-shape.is-extension.z-spot[role=button]:hover {
+	border-color: var(--accent-text-and-border-color) !important;
+	-webkit-transition: border-color .3s;
+	transition: border-color .3s
+}
+
+.z-shape.is-extension.z-dialog {
+	z-index: 500
+}
+
+.z-shape.is-extension.z-range,
+.z-shape.is-extension.z-scale,
+.z-shape.is-extension.z-spot {
+	will-change: transform, opacity;
+	-webkit-transition: background-color 1s;
+	transition: background-color 1s
+}
+
+.z-shape.is-extension.z-list-item {
+	cursor: -webkit-zoom-in;
+	cursor: zoom-in
+}
+
+.z-shape.is-extension.z-list-item:hover,
+.z-shape.is-extension.z-list-pagination:hover {
+	border-color: var(--main-text-and-border-color) !important;
+	-webkit-transition: border-color .3s;
+	transition: border-color .3s
+}
+
+.z-shape.is-extension.z-list-pagination:hover {
+	cursor: -webkit-grab;
+	cursor: grab
+}
+
+.z-shape.is-extension.z-list-pagination:active {
+	cursor: -webkit-grabbing;
+	cursor: grabbing
+}
+
+.z-shape.is-extension.z-range,
+.z-shape.is-extension.z-range:hover,
+.z-shape.is-extension.z-scroll,
+.z-shape.is-extension.z-scroll:hover {
+	cursor: pointer
+}
+
+.z-shape.is-extension.z-range:active,
+.z-shape.is-extension.z-scroll:active {
+	cursor: -webkit-grabbing;
+	cursor: grabbing
+}
+
+.z-scroll,
+.z-scroll:hover {
+	cursor: pointer
+}
+
+.z-scroll:active {
+	cursor: -webkit-grabbing;
+	cursor: grabbing
+}
+
+.z-content {
+	position: absolute;
+	z-index: 0;
+	top: 1%;
+	left: 1%;
+	right: 1%;
+	bottom: 1%;
+	width: 98%;
+	height: 98%;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	background: none;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	overflow: hidden;
+	border-radius: 50%;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none
+}
+
+.z-content.maincontent {
+	cursor: default;
+	z-index: 50
+}
+
+.z-content.maincontent.long-content {
+	overflow-y: scroll;
+	display: block
+}
+
+.z-content.maincontent.long-content:before {
+	display: block;
+	padding-top: 80px;
+	content: ""
+}
+
+.z-content.maincontent.long-content:after {
+	top: 0;
+	display: block;
+	padding-bottom: 80px;
+	content: ""
+}
+
+.z-content.maincontent.z-scroll-disabled-for-firefox {
+	overflow-y: hidden
+}
+
+.z-label {
+	font-size: calc(8px + 1vw);
+	position: absolute;
+	height: 25px;
+	background: none;
+	white-space: nowrap
+}
+
+.z-label.bottom {
+	top: 100%;
+	margin-top: 1vw
+}
+
+.z-label.bottom,
+.z-label.top {
+	width: 100%;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center
+}
+
+.z-label.top {
+	top: -30px
+}
+
+.z-label.left {
+	margin-right: 8px;
+	right: 100%
+}
+
+.z-label.left,
+.z-label.right {
+	width: -webkit-fit-content;
+	width: -moz-fit-content;
+	width: fit-content;
+	margin-top: 1vw
+}
+
+.z-label.right {
+	margin-left: 8px;
+	left: 100%
+}
+
+.overflow {
+	overflow: visible
+}
+
+.z-zoom-in-cursor {
+	cursor: -webkit-zoom-in;
+	cursor: zoom-in
+}
+
+.z-range-bar,
+.z-scroll,
+.z-slider {
+	position: absolute;
+	overflow: visible;
+	display: block;
+	z-index: 40;
+	fill: none;
+	stroke-linecap: round;
+	stroke-opacity: 1
+}
+
+.z-range-bar-bar,
+.z-scroll-bar {
+	position: absolute;
+	border-radius: 50%;
+	display: block;
+	width: 40px;
+	height: 40px;
+	top: 50%;
+	left: 50%;
+	margin: -20px 0 0 -20px;
+	z-index: 70
+}
+
+.z-range-bar-bar:hover,
+.z-scroll-bar:hover {
+	cursor: -webkit-grab;
+	cursor: grab
+}
+
+.z-range-bar-bar:active,
+.z-scroll-bar:active {
+	cursor: -webkit-grabbing;
+	cursor: grabbing
+}
+
+.is-past-view {
+	-webkit-filter: blur(2px) opacity(20%);
+	filter: blur(2px) opacity(20%)
+}
+
+.is-past-view,
+.is-previous-view {
+	pointer-events: none;
+	cursor: -webkit-zoom-out;
+	cursor: zoom-out;
+	overflow: hidden
+}
+
+.is-previous-view {
+	-webkit-filter: blur(2px) opacity(40%);
+	filter: blur(2px) opacity(40%)
+}
+
+.is-previous-view section[title=z-list] {
+	pointer-events: none
+}
+
+.is-previous-view div {
+	cursor: -webkit-zoom-out;
+	cursor: zoom-out
+}
+
+.is-current-view {
+	pointer-events: auto;
+	will-change: opacity
+}
+
+.z-outer-circle,
+.z-outer-spot {
+	position: absolute;
+	z-index: 0;
+	top: 50%;
+	left: 50%;
+	border-radius: 50%;
+	overflow: hidden
+}
+
+.z-outer-circle {
+	border-width: 1px;
+	border-style: dashed;
+	opacity: .2
+}
+
+.z-outer-spot {
+	border-width: 3px;
+	border-style: solid;
+	border-color: var(--accent-text-and-border-color) !important;
+	opacity: 0
+}
+
+.z-outer-point {
+	position: absolute;
+	z-index: 90;
+	top: 50%;
+	left: 50%;
+	border-radius: 50%;
+	opacity: 1;
+	overflow: hidden
+}
+
+.z-dialog-transition-enter-active,
+.z-dialog-transition-leave-active {
+	-webkit-transition: -webkit-transform .3s;
+	transition: -webkit-transform .3s;
+	transition: transform .3s;
+	transition: transform .3s, -webkit-transform .3s;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 500
+}
+
+.z-dialog-transition-enter,
+.z-dialog-transition-leave-to,
+.z-pulse {
+	-webkit-transform: scale(0);
+	transform: scale(0)
+}
+
+.z-pulse {
+	opacity: 0;
+	background-color: hsla(0, 0%, 100%, .1);
+	width: 100%;
+	height: 100%;
+	margin: -50% 0 0 -50%;
+	position: absolute;
+	z-index: 0;
+	top: 50%;
+	left: 50%;
+	border-radius: 50%
+}
+
+.pulse-animation {
+	-webkit-animation: pulse .35s ease-out;
+	animation: pulse .35s ease-out
+}
+
+.spot-animation {
+	-webkit-animation: spot .7s ease-in;
+	animation: spot .7s ease-in
+}
+
+@-webkit-keyframes pulse {
+	0% {
+		opacity: 0;
+		-webkit-transform: scale(0);
+		transform: scale(0)
+	}
+
+	to {
+		opacity: 1;
+		-webkit-transform: scale(1.4);
+		transform: scale(1.4)
+	}
+
+}
+
+@keyframes pulse {
+	0% {
+		opacity: 0;
+		-webkit-transform: scale(0);
+		transform: scale(0)
+	}
+
+	to {
+		opacity: 1;
+		-webkit-transform: scale(1.4);
+		transform: scale(1.4)
+	}
+
+}
+
+@-webkit-keyframes appear {
+	0% {
+		opacity: 0
+	}
+
+	15% {
+		opacity: 0
+	}
+
+	to {
+		opacity: 1
+	}
+
+}
+
+@keyframes appear {
+	0% {
+		opacity: 0
+	}
+
+	15% {
+		opacity: 0
+	}
+
+	to {
+		opacity: 1
+	}
+
+}
+
+@-webkit-keyframes disappear {
+	0% {
+		opacity: 1
+	}
+
+	to {
+		opacity: 0
+	}
+
+}
+
+@keyframes disappear {
+	0% {
+		opacity: 1
+	}
+
+	to {
+		opacity: 0
+	}
+
+}
+
+@-webkit-keyframes spot {
+	0% {
+		opacity: 0;
+		-webkit-transform: scale(1);
+		transform: scale(1)
+	}
+
+	45% {
+		opacity: .2;
+		-webkit-transform: scale(1);
+		transform: scale(1)
+	}
+
+	85% {
+		opacity: 0;
+		-webkit-transform: scale(1.3);
+		transform: scale(1.3)
+	}
+
+	to {
+		opacity: 0;
+		-webkit-transform: scale(1.4);
+		transform: scale(1.4)
+	}
+
+}
+
+@keyframes spot {
+	0% {
+		opacity: 0;
+		-webkit-transform: scale(1);
+		transform: scale(1)
+	}
+
+	45% {
+		opacity: .2;
+		-webkit-transform: scale(1);
+		transform: scale(1)
+	}
+
+	85% {
+		opacity: 0;
+		-webkit-transform: scale(1.3);
+		transform: scale(1.3)
+	}
+
+	to {
+		opacity: 0;
+		-webkit-transform: scale(1.4);
+		transform: scale(1.4)
+	}
+
+}
