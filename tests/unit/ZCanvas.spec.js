@@ -4,13 +4,21 @@ import zircle from '@/index'
 const localVue = createLocalVue()
 localVue.use(zircle)
 const wrapper = shallowMount(zcanvas, {
-  localVue
+  localVue,
+  propsData: {
+    views: {
+      0: {component: 'one'},
+      1: {component: 'two'},
+      2: {component: 'three'},
+      3: {component: 'four'}
+    }
+  }
 })
 describe('z-canvas.vue', () => {
-  it('Renders class theme, color and AppMode', () => {
-    expect(wrapper.find('#z-container').classes()).toContain('theme--dark')
-    expect(wrapper.find('#z-container').classes()).toContain('color--blue')
-    expect(wrapper.find('#z-container').classes()).toContain('full')
+  it('Renders css classes: theme, themeMode and AppMode', () => {
+    expect(wrapper.find('#z-container').classes()).toContain('theme-blue')
+    expect(wrapper.find('#z-container').classes()).toContain('mode-dark')
+    expect(wrapper.find('#z-container').classes()).toContain('is-full-mode')
   })
   it('Has the expected html structure', () => {
     // Note: If props.imagesrc and or props.label are present, slots.imagesrc and slots.label wont be rendered

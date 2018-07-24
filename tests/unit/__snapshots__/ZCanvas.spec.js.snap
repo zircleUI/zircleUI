@@ -2,11 +2,14 @@
 
 exports[`z-canvas.vue Has the expected html structure 1`] = `
 <div
-  class="theme--dark color--blue full"
+  class="z-canvas is-full-mode theme-blue mode-dark"
   id="z-container"
 >
   <div
-    id="z-point"
-  />
+    id="z-zoomable-layer"
+    style="transform: scale(1) translate3d(0px, 0px, 0px);"
+  >
+    <z-view-manager-stub />
+  </div>
 </div>
 `;

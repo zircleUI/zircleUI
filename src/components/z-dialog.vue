@@ -1,10 +1,10 @@
 <template>
   <transition name="z-dialog-transition">
     <div
-      class="z-shape is-extension"
-      :class="[componentType, classes, colors]"
+      class="z-shape is-extension primary"
+      :class="[componentType]"
       :style="styles.main">
-        <z-slider :progress="progress"></z-slider>
+        <z-slider v-if="selfClose" :progress="progress"></z-slider>
         <div class="z-outer-circle" :style="styles.plate"></div>
         <div class="z-content">
             <slot></slot>
@@ -15,10 +15,18 @@
 </template>
 
 <script>
-import zmixin from '../mixins/z-mixin'
+import ZSlider from './child-components/z-slider'
 export default {
   name: 'z-dialog',
-  mixins: [zmixin],
+  props: {
+    selfClose: {
+      type: Boolean,
+      default: false
+    }
+  },
+  components: {
+    ZSlider
+  },
   data () {
     return {
       componentType: this.$options.name,
@@ -42,21 +50,17 @@ export default {
       }
     }
   },
-  methods: {
-    close () {
-      this.$zircle.setDialog(false)
-    }
-  },
   mounted () {
-    var id = setInterval(frame, 300)
-    var vm = this
-    function frame () {
-      if (vm.progress >= 101) {
-        clearInterval(id)
-        vm.close()
-      } else {
-        vm.progress += 10
-      }
+    if (this.selfClose) {
+      var vm = this
+      var id = setInterval(function () {
+        if (vm.progress >= 101) {
+          clearInterval(id)
+          vm.$emit('done')
+        } else {
+          vm.progress += 10
+        }
+      }, 300)
     }
   }
 }

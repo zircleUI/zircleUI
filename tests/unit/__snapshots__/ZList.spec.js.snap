@@ -2,8 +2,9 @@
 
 exports[`z-list.vue Has the expected html structure 1`] = `
 <section
-  title="list"
+  title="z-list"
 >
    
+  <!---->
 </section>
 `;

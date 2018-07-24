@@ -1,53 +1,77 @@
 <template>
   <div
-    :title="name"
-    class="z-shape"
-    :class="[componentType, classes, colors]"
+    class="z-shape primary"
+    :class="[componentType]"
     :style="responsive === true ? styles.main : zpos.main"
     style="overflow: visible;"
+    @animationend="notify"
     @mouseover = "$zircle.allowBackwardNavigation(true)"
     @mouseleave = "$zircle.allowBackwardNavigation(false)">
-    <section :style="fullView !== $zircle.getCurrentViewName() ? 'opacity: 0;' : 'opacity: 1;'" style="transition: opacity 1s;">
-      <div class="z-outer-circle" :style="responsive === true ? styles.plate : zpos.plate"></div>
-      <z-view-scroll v-if="scrollBar === true" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
+    <section :style="animation">
+      <div class="z-outer-circle"  :style="responsive === true ? styles.plate : zpos.plate"></div>
+      <z-scroll v-if="scrollBar" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
       <z-slider v-if="slider === true" :progress='progress'/>
-      <section class="label" v-if="label || $slots['label']">
+      <section v-if="label || $slots['label']" class="z-label" :class="labelPos" >
         {{label}}
         <slot v-if="!label" name="label"></slot>
       </section>
-      <div class="z-content">
-        <img v-if="imagesrc" :src="imagesrc" width="100%" height="100%" />
-        <slot v-if="!imagesrc" name="image"></slot>
+      <div v-if="$slots['image'] || imageSrc" class="z-content">
+        <img v-if="imageSrc" :src="imageSrc" width="100%" height="100%" />
+        <slot v-if="!imageSrc" name="image"></slot>
       </div>
       <div class="z-content maincontent" ref="maincontent" :class="[longContent, firefoxScroll]" @scroll.passive="scroll">
-        <slot name="media"></slot>
-        <div ref="ztext" class="z-text">
+        <div ref="ztext">
           <slot></slot>
         </div>
       </div>
+      <div v-if="$slots['media']" class="z-content" style="z-index: 60">
+        <slot name="media" ></slot>
+      </div>
      <slot name="extension"></slot>
-     </section>
+   </section>
   </div>
 </template>
 
 <script>
-import zmixin from '../mixins/z-mixin'
+import ZSlider from './child-components/z-slider'
+import ZScroll from './child-components/z-scroll'
 export default {
   name: 'z-view',
-  mixins: [zmixin],
   props: {
-    progress: {
+    distance: {
       type: Number,
       default: 0
     },
-    name: {
+    angle: {
+      type: Number,
+      default: 0
+    },
+    size: {
+      type: String,
+      default: 'xxl'
+    },
+    label: {
+      type: [String]
+    },
+    labelPos: {
       type: [String],
-      required: true
+      default: 'bottom'
+    },
+    imageSrc: {
+      type: [String]
+    },
+    progress: {
+      type: Number,
+      default: 0
     },
     slider: {
       type: [Boolean],
       default: false
     }
+  },
+  components: {
+    ZScroll,
+    ZSlider
   },
   data () {
     return {
@@ -56,6 +80,7 @@ export default {
       zpos: {},
       isMounted: false,
       ffox: false,
+      ok: false,
       fullView: this.$zircle.getNavigationMode() === 'forward' ? this.$zircle.getCurrentViewName() : this.$zircle.getPastViewName()
     }
   },
@@ -65,9 +90,12 @@ export default {
     }
   },
   computed: {
+    position () {
+      return this.$zircle.calcViewPosition(this.fullView)
+    },
     scrollBar () {
       var isScrollNeeded = false
-      if (this.isMounted === true && this.fullView === this.$zircle.getCurrentViewName() && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth('xxl')) {
+      if (this.isMounted === true && this.fullView === this.$zircle.getCurrentViewName() && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth(this.size)) {
         isScrollNeeded = true
       }
       return isScrollNeeded
@@ -82,7 +110,7 @@ export default {
       }
     },
     styles () {
-      var width = this.$zircle.getComponentWidth('xxl')
+      var width = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: width + 'px',
@@ -97,6 +125,14 @@ export default {
         }
       }
     },
+    animation () {
+      if (this.fullView === this.$zircle.getCurrentViewName()) {
+        var zstyle = 'opacity: 0; animation: appear 490ms 510ms linear forwards'
+      } else {
+        zstyle = 'opacity: 0;'
+      }
+      return zstyle
+    },
     longContent () {
       return {
         'long-content': this.scrollBar === true
@@ -109,6 +145,9 @@ export default {
     }
   },
   methods: {
+    notify () {
+      if (this.$zircle.getHistoryLength() === 1) this.$zircle.setNavigationMode('')
+    },
     scroll () {
       if (this.scrollBar === true) {
         var container = this.$refs.maincontent
@@ -126,11 +165,15 @@ export default {
   },
   mounted () {
     if (navigator.userAgent.match('Firefox')) {
-      this.$zircle.setLog('Firefox detected. Scroll event disabled')
+      this.$zircle.setLog('Firefox desktop detected. Scroll events disabled')
       this.ffox = true
     }
-    this.zpos = Object.assign({}, this.zpos, this.styles)
+    this.zpos = this.styles
     this.isMounted = true
+    // var vm = this
+    // setTimeout(function () {
+    //   return vm.ok = true
+    // }, 2330)
   }
 }
 </script>

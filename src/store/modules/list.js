@@ -1,8 +1,6 @@
 import store from '../store'
 const list = {
   setPages (value) {
-    // armar validator por array
-    // mover fx chunk here
     store.state.pages = value
   },
   getPages () {
@@ -23,14 +21,11 @@ const list = {
   getNumberOfItemsInCurrentPage () {
     return store.state.pages[store.state.currentPage].length
   },
-  setItemId () {
-    store.state.itemId = value
+  setParams (value) {
+    store.state.params = value
   },
-  getItemId () {
-    return store.state.itemId
-  },
-  clearItemId () {
-    store.state.itemId = ''
+  getParams () {
+    return store.state.params
   }
 }
 export default list

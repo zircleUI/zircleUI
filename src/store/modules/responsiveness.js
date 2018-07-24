@@ -3,66 +3,74 @@ import store from '../store'
 var mediaQuery = [
   { // small devices
     media: window.matchMedia('(max-width: 319px)'),
-    width: {xl: 200, l: 70, m: 50, s: 30, xs: 20, xxs: 20}
+    width: {xxl: 200, xl: 124, l: 76, m: 47, s: 29, xs: 18, xxs: 9}
   },
   { // medium
     media: window.matchMedia('(min-width: 320px)'),
-    width: {xl: 230, l: 85, m: 65, s: 45, xs: 30, xxs: 20}
+    width: {xxl: 230, xl: 142, l: 88, m: 54, s: 34, xs: 21, xxs: 10}
   },
   { // medium - large devices portrait
     media: window.matchMedia('(min-width: 375px) and (orientation: portrait)'),
-    width: {xl: 260, l: 90, m: 70, s: 50, xs: 40, xxs: 30}
+    width: {xxl: 260, xl: 161, l: 99, m: 61, s: 38, xs: 23, xxs: 11}
   },
   { // medium - large devices landscape
     media: window.matchMedia('(min-width: 375px) and (orientation: landscape)'),
-    width: {xl: 270, l: 90, m: 70, s: 50, xs: 40, xxs: 30}
+    width: {xxl: 270, xl: 167, l: 103, m: 64, s: 39, xs: 24, xxs: 12}
   },
   { // tablets portrait
     media: window.matchMedia('(min-width: 768px) and (orientation: portrait) and (min-pixel-ratio: 2)'),
-    width: {xl: 340, l: 120, m: 100, s: 80, xs: 60, xxs: 40}
+    width: {xxl: 340, xl: 210, l: 130, m: 80, s: 50, xs: 31, xxs: 14}
   },
   { // tablets landscape
     media: window.matchMedia('(min-width: 768px) and (orientation: landscape)'),
-    width: {xl: 360, l: 120, m: 100, s: 80, xs: 60, xxs: 40}
+    width: {xxl: 360, xl: 222, l: 138, m: 85, s: 53, xs: 32, xxs: 15}
   },
   { // desktop or large tablets portrait
     media: window.matchMedia('(min-width: 992px) and (orientation: portrait)'),
-    width: {xl: 420, l: 120, m: 100, s: 80, xs: 60, xxs: 40}
+    width: {xxl: 420, xl: 260, l: 160, m: 99, s: 61, xs: 38, xxs: 16}
   },
   { // desktop or large tablets landscape
     media: window.matchMedia('(min-width: 992px) and (orientation: landscape)'),
-    width: {xl: 420, l: 120, m: 100, s: 80, xs: 60, xxs: 40}
+    width: {xxl: 420, xl: 260, l: 160, m: 99, s: 61, xs: 38, xxs: 16}
   },
   { // large desktop
     media: window.matchMedia('(min-width: 1200px) and (orientation: portrait)'),
-    width: {xl: 430, l: 130, m: 110, s: 90, xs: 70, xxs: 50}
+    width: {xxl: 450, xl: 278, l: 172, m: 106, s: 66, xs: 41, xxs: 20}
   },
-  { // xl desktop
+  { // xxl desktop
     media: window.matchMedia('(min-width: 1800px)'),
-    width: {xl: 650, l: 130, m: 110, s: 90, xs: 70, xxs: 50}
+    width: {xxl: 450, xl: 278, l: 172, m: 106, s: 66, xs: 41, xxs: 20}
   }
 ]
 const responsiveness = {
   getComponentWidth (size) {
-    switch (size) {
-      case 'extralarge':
+    let sizes = size.toLowerCase()
+    switch (sizes) {
       case 'xxl':
-        var width = store.state.zircleWidth.xl
+        var width = store.state.diameters.xxl
+        break
+      case 'extralarge':
+      case 'xl':
+        width = store.state.diameters.xl
         break
       case 'large':
-        width = store.state.zircleWidth.l
+      case 'l':
+        width = store.state.diameters.l
         break
       case 'medium':
-        width = store.state.zircleWidth.m
+      case 'm':
+        width = store.state.diameters.m
         break
       case 'small':
-        width = store.state.zircleWidth.s
+      case 's':
+        width = store.state.diameters.s
         break
       case 'extrasmall':
-        width = store.state.zircleWidth.xs
+      case 'xs':
+        width = store.state.diameters.xs
         break
       case 'xxs':
-        width = store.state.zircleWidth.xxs
+        width = store.state.diameters.xxs
         break
     }
     return width
@@ -70,27 +78,27 @@ const responsiveness = {
   getDimensions () {
     if (store.actions.getAppMode() === 'full') {
       for (var i = 0; i < mediaQuery.length; i++) {
-        if (mediaQuery[i].media.matches) store.state.zircleWidth = mediaQuery[i].width
+        if (mediaQuery[i].media.matches) store.state.diameters = mediaQuery[i].width
       }
-      store.actions.setLog('getDimensions() AppMode full => viewPort resized: z-panel width = ' + store.state.zircleWidth.xl)
+      store.actions.setLog('getDimensions() at appMode full. z-view new diameter: ' + store.state.diameters.xxl)
     } else if (store.actions.getAppMode() === 'embedded') {
       let vp = document.getElementById('z-container').offsetWidth
       if (vp <= 319) {
-        store.state.zircleWidth = mediaQuery[0].width
+        store.state.diameters = mediaQuery[0].width
       } else if (vp >= 320 && vp <= 374) {
-        store.state.zircleWidth = mediaQuery[1].width
+        store.state.diameters = mediaQuery[1].width
       } else if (vp >= 375 && vp <= 767) {
-        store.state.zircleWidth = mediaQuery[2].width
+        store.state.diameters = mediaQuery[2].width
       } else if (vp >= 768 && vp <= 991) {
-        store.state.zircleWidth = mediaQuery[4].width
+        store.state.diameters = mediaQuery[4].width
       } else if (vp >= 992 && vp <= 1199) {
-        store.state.zircleWidth = mediaQuery[6].width
+        store.state.diameters = mediaQuery[6].width
       } else if (vp >= 1200 && vp <= 1799) {
-        store.state.zircleWidth = mediaQuery[8].width
+        store.state.diameters = mediaQuery[8].width
       } else if (vp >= 1800) {
-        store.state.zircleWidth = mediaQuery[9].width
+        store.state.diameters = mediaQuery[9].width
       }
-      store.actions.setLog('getDimensions() AppMode embedded => z-container resized: z-panel width = ' + store.state.zircleWidth.xl)
+      store.actions.setLog('getDimensions() at appMode embedded. z-view new diameter: ' + store.state.diameters.xxl)
     }
   }
 }

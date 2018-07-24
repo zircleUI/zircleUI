@@ -2,7 +2,10 @@
   --success-color: green
   --warning-color: yellow
   --danger-color: red
-
+.theme-white
+  --shade-color: black
+  --primary-color: white
+  --accent-color: gray
 .theme-light-blue
   --shade-color: #f1f1f1
   --primary-color: #5fc9f3
@@ -41,51 +44,51 @@
   --accent-color: #313233
 .mode-light
   --background-color: var(--shade-color)
-  --main-text-and-border-color: var(--primary-color)
+  --main-text-color: var(--primary-color)
   --main-color: var(--shade-color)
-  --accent-text-and-border-color: var(--shade-color)
+  --accent-text-color: var(--accent-color)
   &-filled
     --background-color: var(--shade-color)
-    --main-text-and-border-color: var(--shade-color)
+    --main-text-color: var(--shade-color)
     --main-color: var(--primary-color)
-    --accent-text-and-border-color: var(--primary-color)
+    --accent-text-color: var(--accent-color)
 
 .mode-dark
   --background-color: var(--primary-color)
-  --main-text-and-border-color: var(--shade-color)
+  --main-text-color: var(--shade-color)
   --main-color: var(--primary-color)
-  --accent-text-and-border-color: var(--shade-color)
+  --accent-text-color: var(--accent-color)
   &-filled
     --background-color: var(--primary-color)
-    --main-text-and-border-color: var(--primary-color)
+    --main-text-color: var(--accent-color)
     --main-color: var(--shade-color)
-    --accent-text-and-border-color: var(--primary-color)
+    --accent-text-color: var(--shade-color)
 
 
 .primary
-  border-color: var(--main-text-and-border-color)
-  color: var(--main-text-and-border-color)
+  border-color: var(--main-text-color)
+  color: var(--main-text-color)
   background-color: var(--main-color)
 
 .accent
   border-color: var(--accent-color)
   background-color: var(--accent-color)
-  color: var(--accent-text-and-border-color)
+  color: var(--primary-text-color)
   
 .success
-  background-color: var(--success)
-  border-color: var(--success)
+  background-color: var(--success-color)
+  border-color: var(--success-color)
   
 .warning
-  background-color: var(--warning)
-  border-color: var(--warning)
+  background-color: var(--warning-color)
+  border-color: var(--warning-color)
   
 .z-outer-circle
-  border-color: var(--main-text-and-border-color)
+  border-color: var(--main-text-color)
 
 .danger
-  background-color: var(--danger)
-  border-color: var(--danger)
+  background-color: var(--danger-color)
+  border-color: var(--danger-color)
 
 .z-slider, .z-scroll, .z-range-bar, .z-scroll-handlebar, .z-range-bar-handlebar
   stroke: var(--accent-color)
@@ -101,7 +104,7 @@
 
 /* .z-slider, .z-scroll .z-scroll-handlebar, .z-range-bar-bar
   fill: var(--accent-color)
-  stroke: var(--accent-text-and-border-color) */
+  stroke: var(--accent-text-color) */
 
   
   

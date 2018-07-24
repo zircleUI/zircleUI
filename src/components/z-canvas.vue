@@ -5,31 +5,45 @@
     :class="[classes, $zircle.getTheme(), $zircle.getThemeMode()]"
     :style="[$zircle.getPreviousViewName() !== '' ? {cursor: 'zoom-out'} : {}]"
     @click.stop="goback">
-      <div id="z-zoomable-layer">
-        <z-canvas-view-manager :list="$zircle.getComponentList()" />
+      <div id="z-zoomable-layer" ref="zoom" :style="zoom" @transitionend="notify">
+        <z-view-manager />
       </div>
   </div>
 </template>
-
 <script>
 /* eslint-disable no-new */
+import ZViewManager from './child-components/z-view-manager'
 export default {
   name: 'z-canvas',
   props: {
     views: {
-      type: [Object, Array],
+      type: [Object],
       required: true
     }
   },
+  components: {
+    ZViewManager
+  },
   computed: {
+    zoom () {
+      var pos = {}
+      this.$zircle.getHistoryLength() === 0 ? pos = {X: 0, Y: 0, Xi: 0, Yi: 0, scale: 1, scalei: 1} : pos = this.$zircle.getCurrentPosition()
+      return {
+        transform: 'scale(' + pos.scale + ') translate3d(' + pos.Xi + 'px, ' + pos.Yi + 'px, 0px)',
+        transition: 'transform 1000ms ease-in-out'
+      }
+    },
     classes () {
       return {
         'is-full-mode': this.$zircle.getAppMode() === 'full',
-        'is-embedded-mode': this.$zircle.getAppMode() === 'embedded',
+        'is-embedded-mode': this.$zircle.getAppMode() === 'embedded'
       }
     }
   },
   methods: {
+    notify () {
+      this.$zircle.setNavigationMode('')
+    },
     goback () {
       if (this.$zircle.getPreviousViewName() !== '' && this.$zircle.getBackwardNavigationState() === false) {
         if (this.$zircle.getRouterState() === false) {

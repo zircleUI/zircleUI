@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`z-view.vue Has the expected html structure (slots, z-scroll, z-slider) 1`] = `
+<div
+  class="z-shape primary z-view"
+  style="overflow: visible; width: 200px; height: 200px; margin: -100px 0px 0px -100px; transform: translate3d(0px, 0px, 0px) scale(1);"
+>
+  <section
+    style="opacity: 0;"
+  >
+    <div
+      class="z-outer-circle"
+      style="width: 260px; height: 260px; margin: -130px 0px 0px -130px;"
+    />
+     
+    <section
+      style="overflow: visible;"
+    >
+      <svg
+        class="z-scroll"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          r="51"
+          style="transform: rotate(-45deg); stroke-dasharray: 312.1592653589793; stroke-dashoffset: 235.61944901923448; stroke-width: 3px;"
+        />
+      </svg>
+       
+      <svg
+        class="z-scroll-bar"
+        style="transform: translate3d(70.71067811865476px, -70.71067811865474px, 0px);"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          class="z-scroll-handlebar"
+          cx="20"
+          cy="20"
+          r="10"
+        />
+      </svg>
+    </section>
+     
+    <svg
+      class="z-slider"
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="50"
+        cy="50"
+        r="51"
+        style="transform: rotate(-90deg); stroke-dasharray: 320.4424506661589; stroke-dashoffset: 64.08849013323174; stroke-width: 3;"
+      />
+    </svg>
+     
+    <section
+      class="z-label bottom"
+    >
+      
+      Test label prop
+      
+      <!---->
+    </section>
+     
+    <div
+      class="z-content"
+    >
+      <img
+        height="100%"
+        src="./images/test.png"
+        width="100%"
+      />
+       
+      <!---->
+    </div>
+     
+    <div
+      class="z-content maincontent long-content"
+    >
+      <div>
+        <p>
+           lorem text 
+        </p>
+        ./images/dummy.pngTest label slot
+      </div>
+    </div>
+     
+    <div
+      class="z-content"
+      style="z-index: 60;"
+    >
+      <div>
+        youtube video
+      </div>
+    </div>
+     
+    <div />
+  </section>
+</div>
+`;

@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`z-spot.vue Has the expected html structure 1`] = `
+<div
+  class="z-shape is-extension z-spot primary"
+  role=""
+  style="width: 47px; height: 47px; margin: -23.5px 0px 0px -23.5px; transform: translate3d(0px, 0px, 0px);"
+>
+  <div
+    class="z-outer-spot"
+    style="width: 62px; height: 62px; margin: -31px 0px 0px -31px;"
+  />
+   
+  <div
+    class="z-pulse"
+  />
+   
+  <!---->
+   
+  <svg
+    class="z-slider"
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle
+      cx="50"
+      cy="50"
+      r="51"
+      style="transform: rotate(-90deg); stroke-dasharray: 320.4424506661589; stroke-dashoffset: 64.08849013323174; stroke-width: 8;"
+    />
+  </svg>
+   
+  <section
+    class="z-label bottom"
+  >
+    
+      Test label prop
+      
+    <!---->
+     
+    <!---->
+  </section>
+   
+  <div
+    class="z-content"
+  >
+    <img
+      height="100%"
+      src="./images/test.png"
+      width="100%"
+    />
+     
+    <!---->
+  </div>
+   
+  <div
+    class="z-content"
+    style="z-index: 10;"
+  >
+    <span
+      class="overflow"
+    >
+      <span>
+        
+      </span>
+       
+      <p>
+         lorem text 
+      </p>
+      ./images/dummy.pngTest label slot
+    </span>
+  </div>
+   
+  <div />
+</div>
+`;

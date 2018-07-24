@@ -10,6 +10,12 @@
 
 \::placeholder
   color: inherit
+.z-next-enter
+  opacity: 0
+.z-next-enter-active
+  animation: appear 500ms linear forwards
+.z-prev-leave-to
+  animation: disappear .5s .5s linear forwards
 
 input
   font: inherit
@@ -37,20 +43,18 @@ input
   text-rendering: optimizeLegibility
   background-color: var(--background-color)
   color: var(--foreground-color)
-  transition: background-color 1s
+  transition: background-color 500ms
   overflow: hidden
   &.is-full-mode
     position: fixed
     width: 100%
     height: 100%
-    font-size: calc(14px + 1vmax)
+    font-size: calc(13px + 1vmax)
   &.is-embedded-mode
     position: absolute
     width: 100%
     height: 100%
-    font-size: calc(14px)
-    > .label
-      font-size: calc(10px)
+    font-size: calc(13px)
 
 #z-zoomable-layer
   position: absolute
@@ -70,41 +74,57 @@ input
   top: 50%
   left: 50%
   text-align: center
-
   &.z-view
     z-index: 40
     will-change: transform, opacity
     transition: background-color 1s
   &.is-extension
     z-index: 80
-    cursor: default
-    &.z-button
-      cursor: pointer
-      &:hover
-        filter: brightness(0.7)
+    &.z-spot
+      cursor: zoom-in
+      &[role=button]
+        cursor: pointer
+        &:hover
+          border-color: var(--accent-text-and-border-color) !important
+          transition: border-color 300ms
     &.z-dialog
       z-index: 500
-      background: var(--background-color)
-      border: 1px solid var(--foreground-color)
       // opacity: 0.3
-      overflow: hidden
-    &.z-scale, &.z-button, &.z-range
+      // overflow: hidden
+    &.z-scale, &.z-spot, &.z-range
       will-change: transform, opacity
       transition: background-color 1s
-    &.z-view-list-item
-      cursor: zoom-in
-    &.z-view-list-pagination
+    &.z-list-item
       cursor: zoom-in
       &:hover
+        border-color: var(--main-text-and-border-color) !important
+        transition: border-color 300ms
+    &.z-list-pagination
+      &:hover
         cursor: grab
+        border-color: var(--main-text-and-border-color) !important
+        transition: border-color 300ms
       &:active
         cursor: grabbing
-
+    &.z-range, &.z-scroll
+      cursor: pointer
+      &:hover
+        cursor: pointer
+      &:active
+        cursor: grabbing
+.z-scroll
+  cursor: pointer
+  &:hover
+    cursor: pointer
+  &:active
+    cursor: grabbing
 .z-content
   position: absolute
   z-index: 0
   top: 1%
   left: 1%
+  right: 1%
+  bottom: 1%
   width: 98%
   height: 98%
   display: flex
@@ -115,7 +135,6 @@ input
   overflow: hidden
   border-radius: 50%
   user-select: none
-  border: 1px solid transparent
   &.maincontent
     cursor: default
     z-index: 50
@@ -124,28 +143,47 @@ input
       display: block
       &::before
         display: block
-        padding-top: 50px
+        padding-top: 80px
         content: ''
       &::after
         top: 0
         display: block
+        padding-bottom: 80px
         content: ''
     &.z-scroll-disabled-for-firefox
       overflow-y: hidden
 
-.label
-  font-size: calc(10px + 1vmax)
+.z-label
+  font-size: calc(8px + 1vw)
   position: absolute
-  width: 100%
   height: 25px
-  top: 100%
-
-.overflow
-  width: 100%
+  background: none
   white-space: nowrap
-  overflow: hidden
-  text-overflow: ellipsis
-
+  &.bottom
+    width: 100%
+    top: 100%
+    margin-top: calc(2% + 8px)
+    display: flex
+    flex-direction: column
+    align-items: center
+  &.top
+    width: 100%
+    top: -15px
+    display: flex
+    flex-direction: column
+    align-items: center
+  &.left
+    width: fit-content
+    margin-top: calc(50% - 12.5px)
+    margin-right: 8px
+    right: 100%
+  &.right
+    width: fit-content
+    margin-top: calc(50% - 12.5px)
+    margin-left: 8px
+    left: 100%
+.overflow
+  overflow: visible
 .z-zoom-in-cursor
   cursor: zoom-in
 
@@ -189,27 +227,32 @@ input
   filter: blur(2px) opacity(40%)
   overflow: hidden
 
+.is-previous-view section[title="z-list"]
+  pointer-events: none
+
 .is-previous-view div
   cursor: zoom-out
-
-.is-previous-view section[title="z-view-list"]
-  pointer-events: none
 
 .is-current-view
   pointer-events: auto
   will-change: opacity
-  animation: appear 800ms linear forwards
 
-.z-outer-circle
+.z-outer-circle, .z-outer-spot
   position: absolute
   z-index: 0
   top: 50%
   left: 50%
   border-radius: 50%
+  overflow: hidden
+.z-outer-circle
   border-width: 1px
   border-style: dashed 
-  opacity: 0.1
-  overflow: hidden
+  opacity: 0.2
+.z-outer-spot
+  border-width: 3px
+  border-style: solid 
+  border-color: var(--accent-text-and-border-color) !important
+  opacity: 0
 
 .z-outer-point
   position: absolute
@@ -244,7 +287,10 @@ input
   border-radius: 50%
 
 .pulse-animation
-  animation: pulse 110ms ease-out
+  animation: pulse 350ms ease-out
+
+.spot-animation
+  animation: spot 700ms ease-in
 
 @keyframes pulse
   0%
@@ -259,9 +305,6 @@ input
   0%
     opacity: 0
 
-  80%
-    opacity: 1
-
   100%
     opacity: 1
 
@@ -271,3 +314,17 @@ input
 
   100%
     opacity: 0
+
+@keyframes spot
+  0%
+    opacity: 0
+    transform: scale(1)
+  45%
+    opacity: 0.2
+    transform: scale(1)
+  85%
+    opacity: 0
+    transform: scale(1.3)
+  100%
+    opacity: 0
+    transform: scale(1.4)
