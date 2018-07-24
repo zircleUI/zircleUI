@@ -8,8 +8,6 @@
   A frontend library for developing zoomable user interfaces.
 </p>
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability)](https://codeclimate.com/github/zircleUI/zircleUI/maintainability)
-
 > This is the development branch for the next version of Zircle
 
 ## Status Beta
@@ -41,7 +39,6 @@ Many things may change in the near future.
 - [X] Promote `z-range` to independent component.
 - [X] Add micro animations on user events
 - [X] Remame some In-built component following Style Guide
-- [X] Optimize code. --> [Maintainability](https://codeclimate.com/github/zircleUI/zircleUI/maintainability)
 - [X] Rewrite position and navigation system
 - [X] Rewrite how zircle handle vue-router and views.
 - [X] Add debug mode for development.
