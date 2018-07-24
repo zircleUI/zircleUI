@@ -1,11 +1,11 @@
 <p align="center">
   <a href="http://zircle.io">
-    <img src="docs/_images/zircle-dev.png" width="350">
+    <img src="public/zircle-dev.png" width="350">
   </a>
 </p>
 
 <p align="center">
-  A lightweight front-end library for developing zoomable user interfaces.
+  A frontend library for developing zoomable user interfaces.
 </p>
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability)](https://codeclimate.com/github/zircleUI/zircleUI/maintainability)
@@ -15,13 +15,13 @@
 ## Status Beta
 Many things may change in the near future. 
 - [ ] Wrap zircle with Vue-CLI 3. **WIP** Soon, vue-cli 3 is now RC
-- [ ] Make Zircle dev friendly. **WIP** (waiting for vue-cli ~~and tests~~)
+- [ ] Make Zircle dev friendly. **WIP** (waiting for vue-cli)
 - [ ] Automatic deploy, change log, versioning. **WIP** using commitizen and standar-release
-- [ ] Update documentation. **WIP** Almost done. Working on Tutorial and css themes 
+- [ ] Update documentation. **WIP** Almost done. Working on Tutorial
 - [X] New doc site with @vuepress (https://zircleui.github.io/docs)
-- [ ] Write migration guide. ~~Just will be a few breaking changes.~~ **No so few, but improve usability**
+- [X] Write migration guide. ~~Just will be a few breaking changes.~~ **No so few, but improve usability**
 - [ ] Publish a dev release. **ASAP**
-- [ ] Zircle State Management -> Expose state in development mode. **WIP**
+- [X] Zircle State Management -> Expose state in development mode. 
 - [X] Optimize themes maintainig custom variables
 - [X] Add SASS and maintain de css separated from the js.
 - [X] Add Jest unit tests and snapShoots.
