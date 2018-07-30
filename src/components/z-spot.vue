@@ -11,19 +11,20 @@
     @mouseup="move">
       <div v-if="!button" ref="spot" class="z-outer-spot" :style="styles.plate"></div>
       <div class="z-pulse" ref="pulse"></div>
-      <z-knob v-if="knob" v-on:rangeVal="extraInfo" :progress='progress' />
-      <z-slider v-if="slider === true" :progress='progress'>
-      </z-slider>
-      <section class="z-label" :class="labelPos" style="" :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''" v-if="label || $slots['label']">
-        {{label}} <span v-if="progress.pos === 'outside'"> {{progressLabel}}</span>
-      </section>
+      <z-knob v-if="knob" :qty.sync="computedQty" :unit="unit" :min="min" :max="max" />
+      <z-slider v-if="slider === true" :progress='progress' />
+      <div class="z-label" :class="labelPos" :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''" v-if="label">
+        <div class="inside">
+        {{label}} <span v-if="pos === 'outside'"> {{progressLabel}}</span>
+        </div>
+      </div>
       <div class="z-content">
-        <img v-if="imageSrc" :src="imageSrc" width="100%" height="100%" />
-        <slot v-if="!imageSrc" name="image"></slot>
+        <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
+        <slot v-if="!imagePath" name="image"></slot>
       </div>
       <div class="z-content" style="z-index: 10">
         <span class="overflow">
-          <span v-if="progress.pos === 'inside' || progress.pos === undefined ">{{progressLabel}}</span>
+          <span v-if="pos === 'inside' || pos === undefined ">{{progressLabel}}</span>
           <slot></slot>
         </span>
       </div>
@@ -59,12 +60,30 @@ export default {
       type: [String],
       default: 'bottom'
     },
-    imageSrc: {
+    imagePath: {
       type: [String]
     },
     progress: {
       type: [Number, Object],
       default: 0
+    },
+    qty: {
+      type: [Number],
+      default: 0
+    },
+    unit: {
+      type: [String]
+    },
+    min: {
+      type: [Number],
+      default: 0
+    },
+    max: {
+      type: [Number],
+      default: 100
+    },
+    pos: {
+      type: [String]
     },
     slider: {
       type: [Boolean],
@@ -92,7 +111,8 @@ export default {
       componentType: this.$options.name,
       zpos: {},
       innerpos: {},
-      extrainfo: ''
+      extrainfo: '',
+      val: 0
     }
   },
   computed: {
@@ -110,7 +130,7 @@ export default {
       return (360 / this.$zircle.getNumberOfItemsInCurrentPage() * this.index) - 90
     },
     distanceItem () {
-      return this.$zircle.getNumberOfItemsInCurrentPage() === 1 ? 0 : 60
+      return this.$zircle.getNumberOfItemsInCurrentPage() === 1 ? 0 : this.distance
     },
     responsive () {
       if (this.view === this.$zircle.getCurrentViewName()) {
@@ -145,10 +165,19 @@ export default {
       }
     },
     progressLabel () {
-      if (typeof this.progress === 'object' && this.extrainfo !== '') {
-        return this.extrainfo + '' + this.progress.unit
-      } else {
-        return this.extrainfo
+      if (this.computedQty) {
+        let unit = ''
+        this.unit ? unit = this.unit : unit = ''
+        return this.qty + '' + unit
+      }
+    },
+    computedQty: {
+      get: function () {
+        return this.qty
+      },
+      set: function (newValue) {
+        // this.val = newValue
+        this.$emit('update:qty', newValue)
       }
     }
   },
@@ -161,10 +190,10 @@ export default {
       }, false)
     },
     spotin () {
-       if (this.button === false && this.view === this.$zircle.getCurrentViewName() && this.toView) this.$refs.spot.classList.add('spot-animation')
+      if (this.button === false && this.view === this.$zircle.getCurrentViewName() && this.toView) this.$refs.spot.classList.add('spot-animation')
     },
     spotout () {
-      if (this.button === false &&  this.view === this.$zircle.getCurrentViewName() && this.toView) this.$refs.spot.classList.remove('spot-animation')
+      if (this.button === false && this.view === this.$zircle.getCurrentViewName() && this.toView) this.$refs.spot.classList.remove('spot-animation')
     },
     move () {
       if (this.toView) {
@@ -179,9 +208,6 @@ export default {
           }
         })
       }
-    },
-    extraInfo (data) {
-      this.extrainfo = data
     }
   },
   mounted () {

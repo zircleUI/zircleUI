@@ -9,7 +9,7 @@
       v-for="(page, index) in $zircle.getNumberOfPages()"
       :key="index + '_page'"
       :index="index"
-      :distance="108"
+      :distance="130"
       :angle="(180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages() * ($zircle.getNumberOfPages() - index) + ((180 - (180 - (180 - ($zircle.getNumberOfPages() * 10)))) - ((180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages())) / 2"
       :active="$zircle.getCurrentPageIndex()"
       @mouseover.native = "$zircle.allowBackwardNavigation(true)"
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import ZPagination from './child-components/z-pagination'
 function chunk (myArray, chunkSize) {
   var res = []
   while (myArray.length) {
@@ -26,7 +27,6 @@ function chunk (myArray, chunkSize) {
   }
   return res
 }
-import ZPagination from './child-components/z-pagination'
 export default {
   name: 'z-list',
   props: {

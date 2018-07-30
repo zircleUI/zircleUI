@@ -1,16 +1,11 @@
 <template>
-  <section>
+  <section style="border-radius: 50%">
     <svg
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
       class="z-scroll"
       @click.prevent="point">
-        <circle
-          r="51"
-          cx="50"
-          cy="50"
-          :style="arcStyle">
-        </circle>
+        <circle r="51" cx="50" cy="50" :style="arcStyle"></circle>
     </svg>
     <svg
       v-show="hidden === false"
@@ -23,12 +18,7 @@
       @mousedown="drag = true"
       @mousemove.prevent="slide"
       @mouseup="drag = false">
-        <circle
-          r="10"
-          cx="20"
-          cy="20"
-          class="z-scroll-handlebar">
-        </circle>
+        <circle r="10" cx="20" cy="20" class="z-scroll-handlebar"></circle>
     </svg>
   </section>
 </template>
@@ -51,9 +41,8 @@ export default {
         transformOrigin: '50% 50%',
         transform: 'rotate(-45deg)',
         strokeDasharray: circleLength - 2,
-        // strokeDashoffset: circleLength,
         strokeDashoffset: -(Math.PI * 100) * ((90 - 360) / 360),
-        strokeWidth: '3px' 
+        strokeWidth: '3px'
       }
     },
     position () {
@@ -81,15 +70,9 @@ export default {
       var deltax = centerx - posx
       var tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
       tangle -= 135
-      if (tangle < 0) {
-        tangle = 360 + tangle
-      }
-      if (tangle >= 135) {
-        tangle = 0
-      }
-      if (tangle > 90) {
-        tangle = 90
-      }
+      if (tangle < 0) tangle = 360 + tangle
+      if (tangle >= 135) tangle = 0
+      if (tangle > 90) tangle = 90
       tangle = Math.round(tangle) - 45
       this.$emit('update:scrollVal', tangle)
     },
@@ -105,15 +88,9 @@ export default {
         var deltax = centerx - posx
         var tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
         tangle -= 135
-        if (tangle < 0) {
-          tangle = 360 + tangle
-        }
-        if (tangle >= 135) {
-          tangle = 0
-        }
-        if (tangle > 90) {
-          tangle = 90
-        }
+        if (tangle < 0) tangle = 360 + tangle
+        if (tangle >= 135) tangle = 0
+        if (tangle > 90) tangle = 90
         tangle = Math.round(tangle) - 45
         this.$emit('update:scrollVal', tangle)
       }

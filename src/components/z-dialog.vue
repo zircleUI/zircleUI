@@ -22,7 +22,11 @@ export default {
     selfClose: {
       type: Boolean,
       default: false
-    }
+    },
+    size: {
+      type: String,
+      default: 'xxl'
+    },
   },
   components: {
     ZSlider
@@ -35,7 +39,7 @@ export default {
   },
   computed: {
     styles () {
-      var zwidth = this.$zircle.getComponentWidth('xxl')
+      var zwidth = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: zwidth + 50 + 'px',
@@ -53,14 +57,15 @@ export default {
   mounted () {
     if (this.selfClose) {
       var vm = this
+      this.progress = 5
       var id = setInterval(function () {
-        if (vm.progress >= 101) {
+        if (vm.progress >= 100) {
           clearInterval(id)
           vm.$emit('done')
         } else {
-          vm.progress += 10
+          vm.progress++
         }
-      }, 300)
+      }, 100)
     }
   }
 }

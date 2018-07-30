@@ -1,20 +1,13 @@
 <template>
   <section>
     <svg
-      viewBox="0 0 100 100"
-      xmlns="http://www.w3.org/2000/svg"
-      class="z-range-bar"
+      viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="z-range-bar"
       ref="bar"
-      @click="bar">
-        <circle
-          r="52"
-          cx="50" cy="50"
-          :style="[styles]">
-        </circle>
+      @click.prevent="bar">
+        <circle r="52" cx="50" cy="50" :style="[styles]"></circle>
     </svg>
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="z-range-bar-bar"
+      xmlns="http://www.w3.org/2000/svg" class="z-range-bar-bar"
       :style="circleStyle"
       @touchstart="drag = true"
       @touchmove.prevent="handleBar"
@@ -22,12 +15,7 @@
       @mousedown="drag = true"
       @mousemove.prevent="handleBar"
       @mouseup="drag = false">
-        <circle
-          r="8"
-          cx="20"
-          cy="20"
-          class="z-range-bar-handlebar">
-        </circle>
+        <circle r="8" cx="20" cy="20" class="z-range-bar-handlebar"></circle>
     </svg>
   </section>
 </template>
@@ -35,7 +23,20 @@
 <script>
 export default {
   name: 'z-knob',
-  props: ['progress'],
+  props: {
+    qty: {
+      type: [Number]
+    },
+    min: {
+      type: [Number]
+    },
+    max: {
+      type: [Number]
+    },
+    pos: {
+      type: [String]
+    }
+  },
   data () {
     return {
       componentType: this.$options.name,
@@ -46,10 +47,10 @@ export default {
   },
   computed: {
     position () {
-      var dimension = this.$zircle.getComponentWidth(this.$parent.size) / 2
+      var diameter = this.$zircle.getComponentWidth(this.$parent.size) / 2
       return {
-        X: (dimension - 3) * Math.cos(this.angle * (Math.PI / 180)),
-        Y: (dimension - 3) * Math.sin(this.angle * (Math.PI / 180)),
+        X: (diameter - 3) * Math.cos(this.angle * (Math.PI / 180)),
+        Y: (diameter - 3) * Math.sin(this.angle * (Math.PI / 180)),
         arc: (Math.PI * 100) * ((this.angle - 360) / 360)
       }
     },
@@ -70,6 +71,11 @@ export default {
       }
     }
   },
+  watch: {
+    qty () {
+      this.angle = Math.round(((this.qty - this.min) * 360) / (this.max - this.min))
+    }
+  },
   methods: {
     bar (e) {
       e = e.changedTouches ? e.changedTouches[0] : e
@@ -83,13 +89,10 @@ export default {
       var tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
       tangle -= 180
       tangle = Math.round(tangle)
-      if (tangle < 0) {
-        tangle = 360 + tangle
-      }
+      if (tangle < 0) tangle = 360 + tangle
       var prevAngle = Math.round(this.angle)
       var vm = this
-      var id = setInterval(frame, 0)
-      function frame () {
+      var id = setInterval(function () {
         if (prevAngle > tangle) {
           prevAngle--
         } else if (prevAngle < tangle) {
@@ -98,14 +101,8 @@ export default {
           clearInterval(id)
         }
         vm.angle = prevAngle
-        var max = 100
-        var min = 0
-        if (typeof vm.progress === 'object') {
-          vm.progress.max === undefined ? max = 100 : max = vm.progress.max
-          vm.progress.min === undefined ? min = 0 : min = vm.progress.min
-        }
-        vm.$emit('update:rangeVal', Math.round((prevAngle / 360) * (max - min)) + min)
-      }
+        vm.$emit('update:qty', Math.round((prevAngle / 360) * (vm.max - vm.min)) + vm.min)
+      }, 0)
     },
     handleBar (e) {
       if (this.drag === true) {
@@ -120,30 +117,15 @@ export default {
         var tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
         tangle -= 180
         tangle = Math.round(tangle)
-        if (tangle < 0) {
-          tangle = 360 + tangle
-        }
+        if (tangle < 0) tangle = 360 + tangle
         this.angle = tangle
-        var max = 100
-        var min = 0
-        if (typeof this.progress === 'object') {
-          this.progress.max === undefined ? max = 100 : max = this.progress.max
-          this.progress.min === undefined ? min = 0 : min = this.progress.min
-        }
-        this.$emit('update:rangeVal', Math.round((tangle / 360) * (max - min)) + min)
+        this.$emit('update:qty', Math.round((tangle / 360) * (this.max - this.min)) + this.min)
       }
     }
   },
   mounted () {
-    var max = 100
-    typeof this.progress === 'object' ? ( 
-      this.progress.max === undefined ? max = 100 : max = this.progress.max,
-      this.angle = (this.progress.value * 360) / max,
-      this.$emit('update:rangeVal', this.progress.value)
-      ) : (
-      this.angle = (this.progress * 360) / 100,
-      this.$emit('update:rangeVal', this.progress)
-      )
+    this.angle = Math.round(((this.qty - this.min) * 360) / (this.max - this.min))
+    this.$emit('update:qty', this.qty)
   }
 }
 </script>

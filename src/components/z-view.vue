@@ -11,13 +11,14 @@
       <div class="z-outer-circle"  :style="responsive === true ? styles.plate : zpos.plate"></div>
       <z-scroll v-if="scrollBar" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
       <z-slider v-if="slider === true" :progress='progress'/>
-      <section v-if="label || $slots['label']" class="z-label" :class="labelPos" >
-        {{label}}
-        <slot v-if="!label" name="label"></slot>
-      </section>
-      <div v-if="$slots['image'] || imageSrc" class="z-content">
-        <img v-if="imageSrc" :src="imageSrc" width="100%" height="100%" />
-        <slot v-if="!imageSrc" name="image"></slot>
+      <div v-if="label" class="z-label" :class="labelPos">
+        <div class="inside">
+          {{label}}
+        </div>
+      </div>
+      <div v-if="$slots['image'] || imagePath" class="z-content">
+        <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
+        <slot v-if="!imagePath" name="image"></slot>
       </div>
       <div class="z-content maincontent" ref="maincontent" :class="[longContent, firefoxScroll]" @scroll.passive="scroll">
         <div ref="ztext">
@@ -57,7 +58,7 @@ export default {
       type: [String],
       default: 'bottom'
     },
-    imageSrc: {
+    imagePath: {
       type: [String]
     },
     progress: {
@@ -80,7 +81,6 @@ export default {
       zpos: {},
       isMounted: false,
       ffox: false,
-      ok: false,
       fullView: this.$zircle.getNavigationMode() === 'forward' ? this.$zircle.getCurrentViewName() : this.$zircle.getPastViewName()
     }
   },
@@ -170,10 +170,6 @@ export default {
     }
     this.zpos = this.styles
     this.isMounted = true
-    // var vm = this
-    // setTimeout(function () {
-    //   return vm.ok = true
-    // }, 2330)
   }
 }
 </script>
