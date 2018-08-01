@@ -1,0 +1,5 @@
+eslint:
+  enabled: true
+  config:
+    extensions:
+    - .vue
