@@ -2,6 +2,6 @@ eslint:
   enabled: true
   channel: "eslint-4"
   config:
-    config: .eslintrc.js
+    config: /.eslintrc.js
     extensions:
     - .vue
