@@ -21,19 +21,19 @@ function transformViewName (view) {
   return view + '--' + count
 }
 function createRoute (path, name, component) {
-  store.state.router.addRoutes([{path: path,
-    name: name,
-    component: component
-  }])
+  if (store.state.isRouterEnabled && store.state.router.resolve(route).route.matched[0] === undefined) {
+      store.state.router.addRoutes([{path: path,
+      name: name,
+      component: component
+    }])
   store.actions.setLog('VueRouter: route added ' + name, component)
+  }
 }
 function parseView (data) {
   if (typeof data === 'string') {
     var name = transformViewName(data)
     var route = '/' + name
-    if (store.state.isRouterEnabled && store.state.router.resolve(route).route.matched[0] === undefined) {
-      createRoute(route, name, store.actions.resolveComponent(store.actions.getComponentList(), name))
-    }
+    createRoute(route, name, store.actions.resolveComponent(store.actions.getComponentList(), name))
   } else {
     name = transformViewName(data.name)
     let params = data.params
@@ -43,9 +43,7 @@ function parseView (data) {
     })
     var path = '/' + name + paramPath
     route = {name: name, params: data.params}
-    if (store.state.isRouterEnabled && store.state.router.resolve(route).route.matched[0] === undefined) {
-      createRoute(path, name, store.actions.resolveComponent(store.actions.getComponentList(), name))
-    }
+    createRoute(path, name, store.actions.resolveComponent(store.actions.getComponentList(), name))
   }
   return {
     name,

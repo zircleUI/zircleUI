@@ -17,27 +17,24 @@ function calcCoords (distance, angle, parentSize) {
     Yi: Yi
   }
 }
+function determinePosition (pos) {
+  if (store.state.history[store.state.history.length - pos]) {
+    return store.state.history[store.state.history.length - pos].position
+  } else {
+    return {
+      X: 0, Y: 0, Xi: 0, Yi: 0, scale: 0, scalei: 0
+    }
+  }
+}
 const position = {
   getCurrentPosition () {
     return store.state.history[store.state.history.length - 1].position
   },
   getPreviousPosition () {
-    if (store.state.history[store.state.history.length - 2]) {
-      return store.state.history[store.state.history.length - 2].position
-    } else {
-      return {
-        X: 0, Y: 0, Xi: 0, Yi: 0, scale: 0, scalei: 0
-      }
-    }
+    return determinePosition(2)
   },
   getPastPosition () {
-    if (store.state.history[store.state.history.length - 3]) {
-      return store.state.history[store.state.history.length - 3].position
-    } else {
-      return {
-        X: 0, Y: 0, Xi: 0, Yi: 0, scale: 0, scalei: 0
-      }
-    }
+    return determinePosition(3)
   },
   calcViewPosition (viewName) {
     store.actions.setLog('calcViewPosition() ' + viewName)

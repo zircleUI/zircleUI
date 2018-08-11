@@ -9,7 +9,7 @@ const app = {
       store.actions.setLog('config:')
       store.actions.setLog('- Debug enabled')
     }
-    if (config.mode === 'full' || config.mode === 'embedded') {
+    if (config.mode === 'full' || config.mode === 'mixed') {
       store.state.appMode = config.mode
       store.actions.setLog('- Mode: ' + config.mode)
     }
@@ -26,7 +26,7 @@ const app = {
       store.state.isRouterEnabled = true
       store.actions.setRouterHooks()
       store.actions.setLog('- VueRouter enabled')
-      if (store.actions.getAppMode() === 'embedded') store.actions.setLog('You should not use VueRouter when Zircle is in embedded mode.', 'warn')
+      if (store.actions.getAppMode() === 'mixed') store.actions.setLog('You should not use VueRouter when Zircle is in mixed mode.', 'warn')
     }
   }
 }

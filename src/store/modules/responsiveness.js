@@ -4,7 +4,7 @@ function setDiameter (size) {
   console.log(diameter)
   return diameter
 }
-var mediaQuery = [
+const mediaQuery = [
   { // small devices
     media: window.matchMedia('(max-width: 319px)'),
     width: {xxl: 200, xl: 124, l: 76, m: 47, s: 29, xs: 18, xxs: 9}
@@ -63,7 +63,7 @@ const responsiveness = {
         if (mediaQuery[i].media.matches) store.state.diameters = mediaQuery[i].width
       }
       store.actions.setLog('getDimensions() at appMode full. z-view new diameter: ' + store.state.diameters.xxl)
-    } else if (store.actions.getAppMode() === 'embedded') {
+    } else if (store.actions.getAppMode() === 'mixed') {
       let vp = document.getElementById('z-container').offsetWidth
       if (vp <= 319) {
         store.state.diameters = mediaQuery[0].width
@@ -80,7 +80,7 @@ const responsiveness = {
       } else if (vp >= 1800) {
         store.state.diameters = mediaQuery[9].width
       }
-      store.actions.setLog('getDimensions() at appMode embedded. z-view new diameter: ' + store.state.diameters.xxl)
+      store.actions.setLog('getDimensions() at appMode mixed. z-view new diameter: ' + store.state.diameters.xxl)
     }
   }
 }
