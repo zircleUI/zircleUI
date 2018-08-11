@@ -1,42 +1,56 @@
 <p align="center">
   <a href="http://zircle.io">
-    <img src="public/zircle-ui-blue.png" width="350">
+    <img src="https://github.com/zircleUI/docs/blob/gh-pages/zircle-ui-blue.png" width="350">
   </a>
 </p>
 
 <p align="center">
-  A frontend library for developing zoomable user interfaces.
+  A frontend library to develop zoomable user interfaces.
 </p>
 
 > This is the development branch for the next version of Zircle
 
-## What is Zircle UI?
+## What is zircle-ui?
 
-**Zircle UI** is a frontend library to develop [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface). It works with vue.js as a plugin and comes with a set of built-in componentes, such as: buttons, knobs, sliders, scroll bars, dialogs, view controllers and item lists.
+**Zircle-ui** is a frontend library to develop [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface). It is based on [vue.js](https://vuejs.org/) and comes with a set of componentes, such as: buttons, knobs, sliders, scroll bars, dialogues, view controllers and lists.
 
-You would think in Zircle UI as if it were a kind of [map](https://www.openstreetmap.org/#map=13/45.4126/-75.7247&layers=H). At a given zoom level you see some hints of what it could be found in the next zoom level. Then, going deeper you will find more detailed information without losing focus. 
+<img :src="https://github.com/zircleUI/docs/blob/gh-pages/final.gif" width="100%" style="border-radius: 6px;" alt="demo">
 
 ## Features
 
-- **Zoomable UI/UX:** Enjoy a different UI/UX with the built-in zoomable navigation.
-- **Circles everywhere:** Breaking away from the conventional UI with a circular UI Kit and customizable themes and styles.
-- **Responsive:** Zircle UI works pretty well on mobile devices and big screens. 
-- **Focus:** ----
-- **Recursive:** Zircle UI works pretty well on mobile devices and big screens. 
-- **Zero-conf routes:** Zircle UI can work with vuw-router and can automatically handle the routes.
-- **Themes**: 4 
+- **Zoomable UI/UX** Enjoy a different UI/UX with the built-in zoomable navigation.
 
-## When to use Zircle UI?
+- **Circles everywhere** Breaking away from the conventional UI with a circular UI Kit.
 
-You can try zircle ui to develop a wide range of applications, such as: dashboards, health/fitness trackers, IOT hubs or controllers, contact managers, information and entertainment, interactive menus, etc.
+- **Responsive** zircle-ui works pretty well on mobile devices and big screens. 
 
-In general, using Zircle UI should be fine if your application is highly interactive and you need to intuitively view and control information without draw the user’s attention. 
+- **Customizable themes** Aren't the integrated color themes enough? No problem, it is easy to create new ones.
 
-## Status
-Zircle has reached the 0.9.0 version. It could be considered stable. For early zircle user a easy-to-follow migration guide [is available here](http://zircle.io)
+- **Zero-conf routes** Using Vue-router? Let **zircle-ui** handles the routes for you.
+
+## When to use zircle-ui?
+
+You can try **zircle-ui** to develop a wide range of applications, such as: dashboards, health/fitness trackers, IOT hubs or controllers, contact management, information and entertainment, interactive menus, etc.
+
+In general, using **zircle-ui** should be fine if your application is highly interactive and you need to intuitively view and control information without loosing the user’s attention. 
+
+## About zircle-ui
+**zircle-ui** is the first [Open Source Project](https://opensource.guide/starting-a-project/) I've made and it was possible thanks to the Open Source community, specially the [Vue](https://vuejs.org) community. In retribution, I've crearted a project of the hightest quality I could within my limitations since I'm not a professional developer. 
+
+**Zircle-ui** intends to promote aproach in the universe of UIs. My main motivation is believing there is room for a new UI/UX not constrained to grid layouts or to squared shapes. 
+
+**Zircle-ui** was inspired by the idea underneath some really awesome projects and articles like [prezi](https://www.prezi.com), [impress.js](https://github.com/impress/impress.js), [tizen](https://www.tizen.org/), [zoomooz](http://jaukia.github.io/zoomooz/), [creativebloq's article](https://www.creativebloq.com/create-zoomable-user-interface-css-transforms-9114269), [google maps](http://maps.google.com), [bootstrap](https://getbootstrap.com/), [UIKit](https://getuikit.com/) and [bulma](https://bulma.io) among others. 
+
+*Juan Martín Muda*
+
+## Contributing
+Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](http://zircle.io) some guidelines for inspiration.
+
+## Status: Beta
+Until reach the version 1.0.0 Zircle will remains as beta. However, since 0.9.0 api changes are unlikely.
 
 ## Documentation, examples and tutorial
-Please checkout [zircle.io](http://zircle.io) to learn how to use zircle. There are examples and a tutorial for better understaning.
+Please checkout [zircle.io](http://zircle.io) to learn how to use zircle. There are examples and a tutorial for better understaning. For early zircle users a easy-to-follow migration guide [is available here](http://zircle.io)
 
 ## Installation
 
@@ -141,16 +155,6 @@ In the `App.vue` file add this code:
   }
 </script>
 ```
-
-## About Zircle UI
-Zircle UI is the first [Open Source Project](https://opensource.guide/starting-a-project/) I made and it was possible thanks to the open source community, specially the [Vue](https://vuejs.org) community. In retribution, I tried to make the most high quality project I could within my limitations since I'm not a professional developer. 
-
-Zircle UI intends to be a different aproach in the universe of UIs. The main underlying assumption is that perhaps there is room for a new UI/UX not constrained to grid layouts or to squared shapes. 
-
-Zircle UI was inspired on the idea behind of some really awesome projects and ideas like [prezi](https://www.prezi.com), [impress.js](https://github.com/impress/impress.js), [tizen](https://www.tizen.org/), [zoomooz](http://jaukia.github.io/zoomooz/), [creativebloq's article](https://www.creativebloq.com/create-zoomable-user-interface-css-transforms-9114269), [google maps](http://maps.google.com), [bootstrap](https://getbootstrap.com/), [UIKit](https://getuikit.com/) and [bulma](https://bulma.io) among others. 
-
-## Contributing
-Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](http://zircle.io) some guidelines for inspiration.
 
 ## License
 [MIT](http://opensource.org/licenses/MIT)
