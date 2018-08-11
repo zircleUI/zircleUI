@@ -185,10 +185,8 @@ Create the `home.vue` view in the **/components** folder:
 </template>
 ```
 
-
 ## Contributing
-Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](http://zircle.io) some guidelines for inspiration.
-
+Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](https://zircleui.github.io/docs/contribute/) some guidelines for inspiration.
 
 ## License
-[MIT](http://opensource.org/licenses/MIT)
+[MIT Licensed | Copyright © 2017 - present | Juan Martín Muda](https://raw.githubusercontent.com/zircleUI/zircleUI/master/LICENSE]
