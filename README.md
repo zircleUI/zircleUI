@@ -160,4 +160,4 @@ In the `App.vue` file add this code:
 ```
 
 ## License
-[MIT](http://opensource.org/licenses/MIT)
+[MIT Licensed | Copyright © 2017 - present | Juan Martín Muda](https://raw.githubusercontent.com/zircleUI/zircleUI/master/LICENSE)
