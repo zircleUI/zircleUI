@@ -8,7 +8,7 @@
 
 - It's OK to have multiple small commits as you work on the PR - we will let GitHub automatically squash it before merging.
 
-- Make sure `npm test` passes. (see [development setup](#development-setup))
+- Make sure `npm test` passes. (see [development setup](https://zircleui.github.io/docs/contribute/#development-setup))
 
 - If adding new feature:
   - Add accompanying test case.
