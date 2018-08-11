@@ -47,37 +47,37 @@ In general, using **zircle-ui** should be fine if your application is highly int
 **Zircle-ui** was inspired by the idea underneath some really awesome projects and articles like [prezi](https://www.prezi.com), [impress.js](https://github.com/impress/impress.js), [tizen](https://www.tizen.org/), [zoomooz](http://jaukia.github.io/zoomooz/), [creativebloq's article](https://www.creativebloq.com/create-zoomable-user-interface-css-transforms-9114269), [google maps](http://maps.google.com), [bootstrap](https://getbootstrap.com/), [UIKit](https://getuikit.com/) and [bulma](https://bulma.io) among others. 
 
 ---
-## TABLE OF CONTENTS
-- [STATUS: BETA](#status--beta)
-- [DOCUMENTATION, EXAMPLES AND TUTORIAL](#documentation--examples-and-tutorial)
-- [INSTALLATION](#installation)
-  * [Direct download](#direct-download)
-  * [Content delivery networks (CDN)](#content-delivery-networks--cdn-)
-  * [NPM or Yarn](#npm-or-yarn)
-- [QUICK START](#quick-start)
-  * [Code Sandbox](#code-sandbox)
-  * [Browser](#browser)
-  * [Single File Components and vue-cli](#single-file-components-and-vue-cli)
-- [CONTRIBUTING](#contributing)
-- [LICENSE](#license)
+## Table of contents
+- [Status](#status--beta)
+- [Documentation, examples and tutorial](#documentation--examples-and-tutorial)
+- [Installation](#installation)
+  * [* Direct download](#--direct-download)
+  * [* Content delivery networks (CDN)](#--content-delivery-networks--cdn-)
+  * [* NPM or Yarn](#--npm-or-yarn)
+- [Quick Start](#quick-start)
+  * [* Code Sandbox](#--code-sandbox)
+  * [* Browser](#--browser)
+  * [* Single File Components and vue-cli](#--single-file-components-and-vue-cli)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-## STATUS: BETA
+## Status: BETA
 Until reach the version 1.0.0 Zircle will remains as beta. However, since 0.9.0 api changes are unlikely.
 
-## DOCUMENTATION, EXAMPLES AND TUTORIAL
+## Documentation, examples and tutorial
 Please checkout [zircle.io](http://zircle.io) to learn how to use **zircle-ui**. For early **zircle-ui** users a **easy-to-follow migration guide** [is available here](http://zircle.io)
 
-## INSTALLATION
+## Installation
 
-### Direct download 
+### * Direct download 
 Just download **zircle-ui** from [Github](https://github.com/zircleUI/zircleUI/tree/master/dist).
 
-### Content delivery networks (CDN)
+### * Content delivery networks (CDN)
 Include `https://unpkg.com/zircle` in your project with `<script>` tag. With CDN you will have the latest version of **zircle-ui** as soon as it is published to NPM. You can also browse the source of the npm package at [https://unpkg.com/zircle/](https://unpkg.com/zircle/) 
 
-### NPM or Yarn
+### * NPM or Yarn
 NPM or Yarn are the recommended installation method for **zircle-ui**, if you are building medium to large scale applications. 
 
 Create a project folder and inside it run:
@@ -95,15 +95,15 @@ yarn add zircle
 :::
 
 
-## QUICK START
+## Quick Start
 There are several options to setup and start using **zircle-ui**.
 
-### Code Sandbox 
+### * Code Sandbox 
 The easiest way to try and start using **zircle-ui** is using the [JSFiddle sandbox](https://jsfiddle.net/tinchox5/37mr5324/) or the [Codepen sandbox](https://codepen.io/zircle/pen/MExYRv)
 
 For **zircle-ui** projects based on vue-cli 3 you can try the [CodeSandbox](https://codesandbox.io/s/my0ol78l08)
 
-### Browser
+### * Browser
 After you have installed **zicle ui** using [direct download](#direct-download) or [CDN](#content-delivery-networks-cdn), the following starter template creates a Vue Instance and provides `<z-canvas>` component to start the development of your **zircle-ui** application.
 
 ```html
@@ -141,7 +141,7 @@ After you have installed **zicle ui** using [direct download](#direct-download) 
 </html>
 ```
 
-### Single File Components and vue-cli
+### * Single File Components and vue-cli
 As Vue documentation explains, with the previous setup you can work very well for small to medium-sized projects. However, in more complex projects it is better tp use [Single File Components (SFC)](https://vuejs.org/v2/guide/single-file-components.html).
 
 Vue-cli is a powerful tool to develop complex projects. So, after you have installed and run vue-cli as it is described in the [official Vue cli docs](https://cli.vuejs.org/guide/installation.html), you can install **zircle-ui** with [NPM or Yarn](#package-managers-npm-or-yarn) and add the following code to your vue-cli project:
@@ -189,9 +189,9 @@ Create the `home.vue` view in the **/components** folder:
 ```
 
 
-## CONTRIBUTING
+## Contributing
 Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](http://zircle.io) some guidelines for inspiration.
 
 
-## LICENSE
+## License
 [MIT](http://opensource.org/licenses/MIT)
