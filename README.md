@@ -8,7 +8,12 @@
   A frontend library to develop zoomable user interfaces.
 </p>
 
-> This is the development branch for the next version of Zircle
+<p align="center">
+  <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/npm/v/zircle.svg"></a>
+  <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-2.x-brightgreen.svg"></a>
+  <a href="https://travis-ci.org/zircleUI/zircleUI"><img alt="Build Status" src="https://travis-ci.org/zircleUI/zircleUI.svg?branch=master"></a>
+  <a href="https://codeclimate.com/github/zircleUI/zircleUI/maintainability"><img src="https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability" /></a>
+</p>
 
 ## What is zircle-ui?
 
@@ -35,35 +40,45 @@ You can try **zircle-ui** to develop a wide range of applications, such as: dash
 In general, using **zircle-ui** should be fine if your application is highly interactive and you need to intuitively view and control information without loosing the user’s attention. 
 
 ## About zircle-ui
-**zircle-ui** is the first [Open Source Project](https://opensource.guide/starting-a-project/) I've made and it was possible thanks to the Open Source community, specially the [Vue](https://vuejs.org) community. In retribution, I've crearted a project of the hightest quality I could within my limitations since I'm not a professional developer. 
+**Zircle-ui** is the first [Open Source Project](https://opensource.guide/starting-a-project/) I've made and it was possible thanks to the Open Source community, specially the [Vue](https://vuejs.org) community. In retribution, I've crearted a project of the hightest quality I could within my limitations since I'm not a professional developer. 
 
 **Zircle-ui** intends to promote aproach in the universe of UIs. My main motivation is believing there is room for a new UI/UX not constrained to grid layouts or to squared shapes. 
 
 **Zircle-ui** was inspired by the idea underneath some really awesome projects and articles like [prezi](https://www.prezi.com), [impress.js](https://github.com/impress/impress.js), [tizen](https://www.tizen.org/), [zoomooz](http://jaukia.github.io/zoomooz/), [creativebloq's article](https://www.creativebloq.com/create-zoomable-user-interface-css-transforms-9114269), [google maps](http://maps.google.com), [bootstrap](https://getbootstrap.com/), [UIKit](https://getuikit.com/) and [bulma](https://bulma.io) among others. 
 
-*Juan Martín Muda*
+---
+## TABLE OF CONTENTS
+- [STATUS: BETA](#status--beta)
+- [DOCUMENTATION, EXAMPLES AND TUTORIAL](#documentation--examples-and-tutorial)
+- [INSTALLATION](#installation)
+  * [Direct download](#direct-download)
+  * [Content delivery networks (CDN)](#content-delivery-networks--cdn-)
+  * [NPM or Yarn](#npm-or-yarn)
+- [QUICK START](#quick-start)
+  * [Code Sandbox](#code-sandbox)
+  * [Browser](#browser)
+  * [Single File Components and vue-cli](#single-file-components-and-vue-cli)
+- [CONTRIBUTING](#contributing)
+- [LICENSE](#license)
 
 ---
 
-## Contributing
-Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](http://zircle.io) some guidelines for inspiration.
-
-## Status: Beta
+## STATUS: BETA
 Until reach the version 1.0.0 Zircle will remains as beta. However, since 0.9.0 api changes are unlikely.
 
-## Documentation, examples and tutorial
-Please checkout [zircle.io](http://zircle.io) to learn how to use zircle. There are examples and a tutorial for better understaning. For early zircle users a easy-to-follow migration guide [is available here](http://zircle.io)
+## DOCUMENTATION, EXAMPLES AND TUTORIAL
+Please checkout [zircle.io](http://zircle.io) to learn how to use **zircle-ui**. For early **zircle-ui** users a **easy-to-follow migration guide** [is available here](http://zircle.io)
 
-## Installation
+## INSTALLATION
 
 ### Direct download 
-Just download Zircle from [Github](https://github.com/zircleUI/zircleUI/tree/master/dist) and put the zircle.min.js and the zircle.css in a script tag.
+Just download **zircle-ui** from [Github](https://github.com/zircleUI/zircleUI/tree/master/dist).
 
 ### Content delivery networks (CDN)
-Include `https://unpkg.com/zircle` in your project with `<script>` tag. With CDN you will have the latest version of Zircle as soon as it is published to NPM. You can also browse the source of the npm package at [https://unpkg.com/zircle/](https://unpkg.com/zircle/) 
+Include `https://unpkg.com/zircle` in your project with `<script>` tag. With CDN you will have the latest version of **zircle-ui** as soon as it is published to NPM. You can also browse the source of the npm package at [https://unpkg.com/zircle/](https://unpkg.com/zircle/) 
 
 ### NPM or Yarn
-NPM or Yarn are the recommended installation method of zircle if you are building medium to large scale applications with Vue. 
+NPM or Yarn are the recommended installation method for **zircle-ui**, if you are building medium to large scale applications. 
 
 Create a project folder and inside it run:
 
@@ -73,16 +88,23 @@ npm install zircle
 yarn add zircle
 ```
 
-## Quick start
-There are several options to setup and start using Zircle.
+::: tip
+- [Install Vue.js](https://vuejs.org/v2/guide/installation.html) before **zircle-ui**.
+
+- For small applications or prototyping you can directly use **zircle-ui** into a browser and for more complex apps you can use **zircle-ui** with [Single File Components (SFC)](https://vuejs.org/v2/guide/single-file-components.html). 
+:::
+
+
+## QUICK START
+There are several options to setup and start using **zircle-ui**.
 
 ### Code Sandbox 
-The easiest way to try and start using Zircle is using the [JSFiddle Zircle sandbox](https://jsfiddle.net/tinchox5/37mr5324/) or the [Codepen Zircle sandbox](https://codepen.io/zircle/pen/MExYRv)
+The easiest way to try and start using **zircle-ui** is using the [JSFiddle sandbox](https://jsfiddle.net/tinchox5/37mr5324/) or the [Codepen sandbox](https://codepen.io/zircle/pen/MExYRv)
 
-For Zircle projects based on Vue-CLI you can try the [CodeSandbox Zircle sandbox](https://codesandbox.io/s/my0ol78l08)
+For **zircle-ui** projects based on vue-cli 3 you can try the [CodeSandbox](https://codesandbox.io/s/my0ol78l08)
 
 ### Browser
-After you have installed Zircle using [direct download](#direct-download) or [CDN](#content-delivery-networks-cdn), the following starter template creates a Vue Instance and provides `<z-canvas>` component to start the development of your Zircle application.
+After you have installed **zicle ui** using [direct download](#direct-download) or [CDN](#content-delivery-networks-cdn), the following starter template creates a Vue Instance and provides `<z-canvas>` component to start the development of your **zircle-ui** application.
 
 ```html
 <!DOCTYPE html>
@@ -119,13 +141,13 @@ After you have installed Zircle using [direct download](#direct-download) or [CD
 </html>
 ```
 
-### Single File Components and Vue-CLI
-As Vue documentation explains with the previous setup you can work very well for small to medium-sized projects. However, in more complex projects it is better use Single File Components (SFC)](https://vuejs.org/v2/guide/single-file-components.html).
+### Single File Components and vue-cli
+As Vue documentation explains, with the previous setup you can work very well for small to medium-sized projects. However, in more complex projects it is better tp use [Single File Components (SFC)](https://vuejs.org/v2/guide/single-file-components.html).
 
-Vue-CLI provides you with an powerful and easy tool to develop complex projects. So, after you have installed and run Vue-CLI as it is described in the [official Vue docs](https://vuejs.org/v2/guide/installation.html#CLI), you can install Zircle with [NPM or Yarn](#package-managers-npm-or-yarn) and add the following code to your vue-CLI project:
+Vue-cli is a powerful tool to develop complex projects. So, after you have installed and run vue-cli as it is described in the [official Vue cli docs](https://cli.vuejs.org/guide/installation.html), you can install **zircle-ui** with [NPM or Yarn](#package-managers-npm-or-yarn) and add the following code to your vue-cli project:
 
 In the `main.js` file add this code:
-```js
+```js{3-5}
 import Vue from 'vue'
 import app from './App'
 import zircle from 'zircle'
@@ -135,6 +157,7 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 ```
+
 In the `App.vue` file add this code:
 ```vue
 <template>
@@ -144,9 +167,7 @@ In the `App.vue` file add this code:
 </template>
 
 <script>
-  const home = {
-    template: `<z-view>Hello World!<z-view>`
-  }
+  import home from '/components/home'
   export default {
     components: {
       home
@@ -158,5 +179,19 @@ In the `App.vue` file add this code:
 </script>
 ```
 
-## License
+Create the `home.vue` view in the **/components** folder:
+```vue
+<template>
+  <z-view>
+    This screen was zirclelized!
+  </z-view>
+</template>
+```
+
+
+## CONTRIBUTING
+Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](http://zircle.io) some guidelines for inspiration.
+
+
+## LICENSE
 [MIT](http://opensource.org/licenses/MIT)

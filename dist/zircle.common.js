@@ -169,12 +169,12 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"47426207-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/z-canvas.vue?vue&type=template&id=8c06faf6&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"47426207-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/z-canvas.vue?vue&type=template&id=473e85dd&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"z-canvas",class:[_vm.classes, _vm.$zircle.getTheme(), _vm.$zircle.getThemeMode()],style:([_vm.$zircle.getPreviousViewName() !== '' ? {cursor: 'zoom-out'} : {}]),attrs:{"id":"z-container"},on:{"click":function($event){$event.stopPropagation();return _vm.goback($event)}}},[_c('div',{ref:"zoom",style:(_vm.zoom),attrs:{"id":"z-zoomable-layer"},on:{"transitionend":_vm.notify}},[_c('z-view-manager')],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/z-canvas.vue?vue&type=template&id=8c06faf6&
+// CONCATENATED MODULE: ./src/components/z-canvas.vue?vue&type=template&id=473e85dd&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"47426207-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/child-components/z-view-manager.vue?vue&type=template&id=4d70a21d&
 var z_view_managervue_type_template_id_4d70a21d_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition-group',{attrs:{"name":_vm.$zircle.getNavigationMode() === 'forward' ? 'z-next' : 'z-prev',"tag":"section"}},[_vm._l((_vm.views),function(view){return _c(view.component,{key:view.name,tag:"component",class:{
@@ -288,7 +288,7 @@ component.options.__file = "z-view-manager.vue"
     classes: function classes() {
       return {
         'is-full-mode': this.$zircle.getAppMode() === 'full',
-        'is-embedded-mode': this.$zircle.getAppMode() === 'embedded'
+        'is-mixed-mode': this.$zircle.getAppMode() === 'mixed'
       };
     }
   },
@@ -451,37 +451,30 @@ function calcCoords(distance, angle, parentSize) {
   };
 }
 
+function determinePosition(pos) {
+  if (store_store.state.history[store_store.state.history.length - pos]) {
+    return store_store.state.history[store_store.state.history.length - pos].position;
+  } else {
+    return {
+      X: 0,
+      Y: 0,
+      Xi: 0,
+      Yi: 0,
+      scale: 0,
+      scalei: 0
+    };
+  }
+}
+
 var position_position = {
   getCurrentPosition: function getCurrentPosition() {
     return store_store.state.history[store_store.state.history.length - 1].position;
   },
   getPreviousPosition: function getPreviousPosition() {
-    if (store_store.state.history[store_store.state.history.length - 2]) {
-      return store_store.state.history[store_store.state.history.length - 2].position;
-    } else {
-      return {
-        X: 0,
-        Y: 0,
-        Xi: 0,
-        Yi: 0,
-        scale: 0,
-        scalei: 0
-      };
-    }
+    return determinePosition(2);
   },
   getPastPosition: function getPastPosition() {
-    if (store_store.state.history[store_store.state.history.length - 3]) {
-      return store_store.state.history[store_store.state.history.length - 3].position;
-    } else {
-      return {
-        X: 0,
-        Y: 0,
-        Xi: 0,
-        Yi: 0,
-        scale: 0,
-        scalei: 0
-      };
-    }
+    return determinePosition(3);
   },
   calcViewPosition: function calcViewPosition(viewName) {
     store_store.actions.setLog('calcViewPosition() ' + viewName);
@@ -580,22 +573,21 @@ function transformViewName(view) {
 }
 
 function createRoute(path, name, component) {
-  store_store.state.router.addRoutes([{
-    path: path,
-    name: name,
-    component: component
-  }]);
-  store_store.actions.setLog('VueRouter: route added ' + name, component);
+  if (store_store.state.isRouterEnabled && store_store.state.router.resolve(path).route.matched[0] === undefined) {
+    store_store.state.router.addRoutes([{
+      path: path,
+      name: name,
+      component: component
+    }]);
+    store_store.actions.setLog('VueRouter: route added ' + name, component);
+  }
 }
 
 function parseView(data) {
   if (typeof data === 'string') {
     var name = transformViewName(data);
     var route = '/' + name;
-
-    if (store_store.state.isRouterEnabled && store_store.state.router.resolve(route).route.matched[0] === undefined) {
-      createRoute(route, name, store_store.actions.resolveComponent(store_store.actions.getComponentList(), name));
-    }
+    createRoute(route, name, store_store.actions.resolveComponent(store_store.actions.getComponentList(), name));
   } else {
     name = transformViewName(data.name);
     var params = data.params;
@@ -608,10 +600,7 @@ function parseView(data) {
       name: name,
       params: data.params
     };
-
-    if (store_store.state.isRouterEnabled && store_store.state.router.resolve(route).route.matched[0] === undefined) {
-      createRoute(path, name, store_store.actions.resolveComponent(store_store.actions.getComponentList(), name));
-    }
+    createRoute(path, name, store_store.actions.resolveComponent(store_store.actions.getComponentList(), name));
   }
 
   return {
@@ -706,7 +695,12 @@ var navigation = {
 };
 /* harmony default export */ var modules_navigation = (navigation);
 // CONCATENATED MODULE: ./src/store/modules/responsiveness.js
- // armar document.getElementById('foo').offsetWidth para cuando zrcle este embedded. para que tome por referencia al canvas o %
+
+
+function setDiameter(size) {
+  var diameter = store_store.state.diameters[size];
+  return diameter;
+}
 
 var mediaQuery = [{
   // small devices
@@ -832,43 +826,13 @@ var mediaQuery = [{
 var responsiveness = {
   getComponentWidth: function getComponentWidth(size) {
     var sizes = size.toLowerCase();
-
-    switch (sizes) {
-      case 'xxl':
-        var width = store_store.state.diameters.xxl;
-        break;
-
-      case 'extralarge':
-      case 'xl':
-        width = store_store.state.diameters.xl;
-        break;
-
-      case 'large':
-      case 'l':
-        width = store_store.state.diameters.l;
-        break;
-
-      case 'medium':
-      case 'm':
-        width = store_store.state.diameters.m;
-        break;
-
-      case 'small':
-      case 's':
-        width = store_store.state.diameters.s;
-        break;
-
-      case 'extrasmall':
-      case 'xs':
-        width = store_store.state.diameters.xs;
-        break;
-
-      case 'xxs':
-        width = store_store.state.diameters.xxs;
-        break;
-    }
-
-    return width;
+    if (sizes === 'extralarge') sizes = 'xl';
+    if (sizes === 'large') sizes = 'l';
+    if (sizes === 'medium') sizes = 'm';
+    if (sizes === 'small') sizes = 's';
+    if (sizes === 'extrasmall') sizes = 'xs';
+    var result = setDiameter(sizes);
+    return result;
   },
   getDimensions: function getDimensions() {
     if (store_store.actions.getAppMode() === 'full') {
@@ -877,7 +841,7 @@ var responsiveness = {
       }
 
       store_store.actions.setLog('getDimensions() at appMode full. z-view new diameter: ' + store_store.state.diameters.xxl);
-    } else if (store_store.actions.getAppMode() === 'embedded') {
+    } else if (store_store.actions.getAppMode() === 'mixed') {
       var vp = document.getElementById('z-container').offsetWidth;
 
       if (vp <= 319) {
@@ -896,7 +860,7 @@ var responsiveness = {
         store_store.state.diameters = mediaQuery[9].width;
       }
 
-      store_store.actions.setLog('getDimensions() at appMode embedded. z-view new diameter: ' + store_store.state.diameters.xxl);
+      store_store.actions.setLog('getDimensions() at appMode mixed. z-view new diameter: ' + store_store.state.diameters.xxl);
     }
   }
 };
@@ -916,36 +880,20 @@ var themes = {
 
 var debug = {
   setLog: function setLog(msg, type) {
-    switch (type) {
-      case 'warn':
-        var bgColor = 'yellow';
-        var color = 'black';
-        break;
+    var bgColor = '';
+    var color = '';
+    type === 'warn' ? (bgColor = 'yellow', color = 'black') : type === 'error' ? (bgColor = 'red', color = 'white') : (bgColor = 'green', color = 'white'); // eslint-disable-line
 
-      case 'error':
-        bgColor = 'red';
-        color = 'white';
-        break;
-
-      default:
-        bgColor = 'green';
-        color = 'white';
-    }
-
-    if (store_store.state.debug) {
-      if (msg === 'Navigation mode is forward' && store_store.actions.getHistoryLength() === 1) {
-        console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Initial view'); // eslint-disable-line no-console
-      } else if (msg === 'Navigation mode is forward' && store_store.actions.getHistoryLength() >= 1) {
-        console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Zoom-in to new view'); // eslint-disable-line no-console
-      } else if (msg === 'Navigation mode is backward') {
-        console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Zoom-out to previous view'); // eslint-disable-line no-console
-      }
-
+    if (store_store.state.debug && msg === 'Navigation mode is forward' && store_store.actions.getHistoryLength() === 1) {
+      console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Initial view'); // eslint-disable-line no-console
+    } else if (store_store.state.debug && msg === 'Navigation mode is forward' && store_store.actions.getHistoryLength() >= 1) {
+      console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Zoom-in to new view'); // eslint-disable-line no-console
+    } else if (store_store.state.debug && msg === 'Navigation mode is backward') {
+      console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Zoom-out to previous view'); // eslint-disable-line no-console
+    } else if (store_store.state.debug && msg === 'Navigation mode is iddle') {
+      console.groupEnd(); // eslint-disable-line no-console
+    } else if (store_store.state.debug) {
       console.log('%c z ', 'background: ' + bgColor + '; color:  ' + color + '', msg); // eslint-disable-line no-console
-
-      if (msg === 'Navigation mode is iddle') {
-        console.groupEnd(); // eslint-disable-line no-console
-      }
     }
   },
   getState: function getState() {
@@ -992,16 +940,14 @@ var app = {
     return store_store.state.appMode;
   },
   config: function config(_config) {
-    if (_config.debug === true || _config.debug === false) {
-      store_store.state.debug = _config.debug;
-    }
+    if (_config.debug === true || _config.debug === false) store_store.state.debug = _config.debug;
 
     if (store_store.state.debug === true) {
       store_store.actions.setLog('config:');
       store_store.actions.setLog('- Debug enabled');
     }
 
-    if (_config.mode === 'full' || _config.mode === 'embedded') {
+    if (_config.mode === 'full' || _config.mode === 'mixed') {
       store_store.state.appMode = _config.mode;
       store_store.actions.setLog('- Mode: ' + _config.mode);
     }
@@ -1021,7 +967,7 @@ var app = {
       store_store.state.isRouterEnabled = true;
       store_store.actions.setRouterHooks();
       store_store.actions.setLog('- VueRouter enabled');
-      if (store_store.actions.getAppMode() === 'embedded') store_store.actions.setLog('You should not use VueRouter when Zircle is in embedded mode.', 'warn');
+      if (store_store.actions.getAppMode() === 'mixed') store_store.actions.setLog('You should not use VueRouter when Zircle is in mixed mode.', 'warn');
     }
   }
 };
