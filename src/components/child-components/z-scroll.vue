@@ -42,11 +42,12 @@ export default {
         transform: 'rotate(-45deg)',
         strokeDasharray: circleLength - 2,
         strokeDashoffset: -(Math.PI * 100) * ((90 - 360) / 360),
-        strokeWidth: '3px'
+        strokeWidth: '3px',
+        fill: 'none'
       }
     },
     position () {
-      var zwidth = this.$zircle.getComponentWidth('xxl') / 2
+      var zwidth = this.$zircle.getComponentWidth(this.$parent.size) / 2
       return {
         X: (zwidth) * Math.cos(this.scrollVal * (Math.PI / 180)),
         Y: (zwidth) * Math.sin(this.scrollVal * (Math.PI / 180))

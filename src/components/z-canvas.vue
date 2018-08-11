@@ -69,6 +69,5 @@ export default {
 }
 </script>
 <style lang="sass">
-  @import url('../styles/sass/themes.sass')
-  @import url('../styles/sass/styles.sass')
+  @import '../styles/sass/themes.sass', '../styles/sass/styles.sass'
 </style>

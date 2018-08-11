@@ -30,16 +30,17 @@ exports[`z-spot.vue Has the expected html structure 1`] = `
     />
   </svg>
    
-  <section
+  <div
     class="z-label bottom"
   >
-    
-      Test label prop
+    <div
+      class="inside"
+    >
       
-    <!---->
-     
-    <!---->
-  </section>
+      Test label prop 
+      <!---->
+    </div>
+  </div>
    
   <div
     class="z-content"

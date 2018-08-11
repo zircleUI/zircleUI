@@ -8,7 +8,7 @@ const wrapper = shallowMount(zspot, {
   propsData: {
     slider: true,
     progress: 80,
-    imageSrc: './images/test.png',
+    imagePath: './images/test.png',
     label: 'Test label prop'
   },
   provide: function () {
@@ -24,7 +24,7 @@ const wrapper = shallowMount(zspot, {
   slots: {
     default: '<p> lorem text </p>',
     media: '<div>youtube video</div>',
-    imageSrc: './images/dummy.png',
+    imagePath: './images/dummy.png',
     label: 'Test label slot',
     extension: '<div></div>'
   },
@@ -35,7 +35,7 @@ const wrapper = shallowMount(zspot, {
 })
 describe('z-spot.vue', () => {
   it('Renders props when passed', () => {
-    expect(wrapper.vm.imageSrc).toEqual('./images/test.png')
+    expect(wrapper.vm.imagePath).toEqual('./images/test.png')
     expect(wrapper.vm.label).toEqual('Test label prop')
   })
 

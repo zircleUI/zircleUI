@@ -21,5 +21,6 @@ module.exports = {
   ],
   setupFiles: [
     '<rootDir>/tests/unit/setup.js'
-  ]
+  ],
+  testURL: 'http://localhost/'
 }

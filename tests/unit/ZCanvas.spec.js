@@ -16,7 +16,7 @@ const wrapper = shallowMount(zcanvas, {
 })
 describe('z-canvas.vue', () => {
   it('Renders css classes: theme, themeMode and AppMode', () => {
-    expect(wrapper.find('#z-container').classes()).toContain('theme-blue')
+    expect(wrapper.find('#z-container').classes()).toContain('theme-black')
     expect(wrapper.find('#z-container').classes()).toContain('mode-dark')
     expect(wrapper.find('#z-container').classes()).toContain('is-full-mode')
   })

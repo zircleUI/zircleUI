@@ -14,7 +14,7 @@ exports[`z-view.vue Has the expected html structure (slots, z-scroll, z-slider) 
     />
      
     <section
-      style="overflow: visible;"
+      style="border-radius: 50%; overflow: visible;"
     >
       <svg
         class="z-scroll"
@@ -25,7 +25,7 @@ exports[`z-view.vue Has the expected html structure (slots, z-scroll, z-slider) 
           cx="50"
           cy="50"
           r="51"
-          style="transform: rotate(-45deg); stroke-dasharray: 312.1592653589793; stroke-dashoffset: 235.61944901923448; stroke-width: 3px;"
+          style="transform: rotate(-45deg); stroke-dasharray: 312.1592653589793; stroke-dashoffset: 235.61944901923448; stroke-width: 3px; fill: none;"
         />
       </svg>
        
@@ -56,14 +56,17 @@ exports[`z-view.vue Has the expected html structure (slots, z-scroll, z-slider) 
       />
     </svg>
      
-    <section
+    <div
       class="z-label bottom"
     >
+      <div
+        class="inside"
+      >
+        
+        Test label prop
       
-      Test label prop
-      
-      <!---->
-    </section>
+      </div>
+    </div>
      
     <div
       class="z-content"

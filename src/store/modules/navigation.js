@@ -59,10 +59,9 @@ const navigation = {
       if (k.toLowerCase() === view) return k
     })
     if (key) {
-      console.log(list[key])
       return list[key]
     } else {
-      return Vue.component('missing',{
+      return Vue.component('missing', {
         render (h) {
           return h('z-view', view + ' not found')
         }

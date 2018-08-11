@@ -29,7 +29,7 @@
         </span>
       </div>
       <slot name="extension"></slot>
-   </div>
+  </div>
 </template>
 
 <script>

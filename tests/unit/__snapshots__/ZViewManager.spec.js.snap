@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`z-view-manager.vue Has the expected html structure 1`] = `
-<span
-  name="z-next"
-  tag="section"
-/>
-`;

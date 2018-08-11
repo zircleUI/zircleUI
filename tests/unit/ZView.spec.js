@@ -9,7 +9,7 @@ const wrapper = shallowMount(zview, {
   propsData: {
     slider: true,
     progress: 80,
-    imageSrc: './images/test.png',
+    imagePath: './images/test.png',
     label: 'Test label prop'
   },
   beforeCreate () {
@@ -26,7 +26,7 @@ const wrapper = shallowMount(zview, {
   slots: {
     default: '<p> lorem text </p>',
     media: '<div>youtube video</div>',
-    imageSrc: './images/dummy.png',
+    imagePath: './images/dummy.png',
     label: 'Test label slot',
     extension: '<div></div>'
   },
@@ -38,7 +38,7 @@ const wrapper = shallowMount(zview, {
 })
 describe('z-view.vue', () => {
   it('Renders remaining props when passed', () => {
-    expect(wrapper.vm.imageSrc).toEqual('./images/test.png')
+    expect(wrapper.vm.imagePath).toEqual('./images/test.png')
     expect(wrapper.vm.label).toEqual('Test label prop')
   })
   it('Expected data.fullView processed viewName', () => {
@@ -56,7 +56,7 @@ describe('z-view.vue', () => {
     expect(wrapper.find(zslider).exists()).toBe(true)
   })
   it('Has the expected html structure (slots, z-scroll, z-slider)', () => {
-    // Note: If props.imagesrc and or props.label are present, slots.imagesrc and slots.label wont be rendered
+    // Note: If props.imagePath and or props.label are present, slots.imagesrc and slots.label wont be rendered
     expect(wrapper.element).toMatchSnapshot()
   })
 })

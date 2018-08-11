@@ -13,14 +13,14 @@ const state = new Vue({
     // look & feel
     diameters: {xxl: 200, xl: 124, l: 76, m: 47, s: 29, xs: 18},
     appStyle: {
-      theme: 'theme-blue',
+      theme: 'theme-black',
       mode: 'mode-dark'
     },
     // pagination components
     currentPage: 0,
     items: [],
     pages: [],
-    params: '',
+    params: {},
     // debug
     debug: false
   }

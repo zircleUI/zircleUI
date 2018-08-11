@@ -26,7 +26,7 @@ export default {
     size: {
       type: String,
       default: 'xxl'
-    },
+    }
   },
   components: {
     ZSlider

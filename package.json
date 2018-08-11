@@ -1,7 +1,7 @@
 {
   "name": "zircle",
   "version": "0.9.0",
-  "description": "A lightweight front-end library for developing zoomable user interfaces",
+  "description": "A frontend library to develop zoomable user interfaces",
   "author": "Juan Martín Muda <juan.martin.muda@gmail.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,29 +12,27 @@
   },
   "keywords": [
     "zircle",
+    "vue",
     "frontend",
     "library",
-    "zoomable",
+    "javascript",
     "zui"
   ],
   "dependencies": {
-    "leaflet": "^1.3.3",
-    "smoothie": "^1.35.0",
-    "vue": "^2.5.16",
-    "vue-router": "^3.0.1"
+    "vue": "^2.5.17"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-rc.5",
-    "@vue/cli-plugin-eslint": "^3.0.0-rc.5",
-    "@vue/cli-plugin-unit-jest": "^3.0.0-rc.5",
-    "@vue/cli-service": "^3.0.0-rc.5",
-    "@vue/eslint-config-standard": "^3.0.0-rc.5",
+    "@vue/cli-plugin-babel": "^3.0.0",
+    "@vue/cli-plugin-eslint": "^3.0.0",
+    "@vue/cli-plugin-unit-jest": "^3.0.0",
+    "@vue/cli-service": "^3.0.0",
+    "@vue/eslint-config-standard": "^3.0.0",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.0.1",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
-    "vue-template-compiler": "^2.5.16"
+    "vue-template-compiler": "^2.5.17"
   },
   "repository": {
     "type": "git",
