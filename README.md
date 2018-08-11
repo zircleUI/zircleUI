@@ -48,16 +48,16 @@ In general, using **zircle-ui** should be fine if your application is highly int
 
 ---
 ## Table of contents
-- [Status](#status--beta)
-- [Documentation, examples and tutorial](#documentation--examples-and-tutorial)
+- [Status](#status-beta)
+- [Documentation, examples and tutorial](#documentation-examples-and-tutorial)
 - [Installation](#installation)
-  * [* Direct download](#--direct-download)
-  * [* Content delivery networks (CDN)](#--content-delivery-networks--cdn-)
-  * [* NPM or Yarn](#--npm-or-yarn)
+  * [Direct download](#direct-download)
+  * [Content delivery networks (CDN)](#content-delivery-networks-cdn)
+  * [NPM or Yarn](#npm-or-yarn)
 - [Quick Start](#quick-start)
-  * [* Code Sandbox](#--code-sandbox)
-  * [* Browser](#--browser)
-  * [* Single File Components and vue-cli](#--single-file-components-and-vue-cli)
+  * [Code Sandbox](#code-sandbox)
+  * [Browser](#browser)
+  * [Single File Components and vue-cli](#single-file-components-and-vue-cli)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -71,13 +71,13 @@ Please checkout [zircle.io](http://zircle.io) to learn how to use **zircle-ui**.
 
 ## Installation
 
-### * Direct download 
+### - Direct download 
 Just download **zircle-ui** from [Github](https://github.com/zircleUI/zircleUI/tree/master/dist).
 
-### * Content delivery networks (CDN)
+### - Content delivery networks (CDN)
 Include `https://unpkg.com/zircle` in your project with `<script>` tag. With CDN you will have the latest version of **zircle-ui** as soon as it is published to NPM. You can also browse the source of the npm package at [https://unpkg.com/zircle/](https://unpkg.com/zircle/) 
 
-### * NPM or Yarn
+### - NPM or Yarn
 NPM or Yarn are the recommended installation method for **zircle-ui**, if you are building medium to large scale applications. 
 
 Create a project folder and inside it run:
@@ -88,22 +88,19 @@ npm install zircle
 yarn add zircle
 ```
 
-::: tip
-- [Install Vue.js](https://vuejs.org/v2/guide/installation.html) before **zircle-ui**.
-
-- For small applications or prototyping you can directly use **zircle-ui** into a browser and for more complex apps you can use **zircle-ui** with [Single File Components (SFC)](https://vuejs.org/v2/guide/single-file-components.html). 
-:::
+> - [Install Vue.js](https://vuejs.org/v2/guide/installation.html) before **zircle-ui**.
+> - For small applications or prototyping you can directly use **zircle-ui** into a browser and for more complex apps you can use **zircle-ui** with [Single File Components (SFC)](https://vuejs.org/v2/guide/single-file-components.html). 
 
 
 ## Quick Start
 There are several options to setup and start using **zircle-ui**.
 
-### * Code Sandbox 
+### - Code Sandbox 
 The easiest way to try and start using **zircle-ui** is using the [JSFiddle sandbox](https://jsfiddle.net/tinchox5/37mr5324/) or the [Codepen sandbox](https://codepen.io/zircle/pen/MExYRv)
 
 For **zircle-ui** projects based on vue-cli 3 you can try the [CodeSandbox](https://codesandbox.io/s/my0ol78l08)
 
-### * Browser
+### - Browser
 After you have installed **zicle ui** using [direct download](#direct-download) or [CDN](#content-delivery-networks-cdn), the following starter template creates a Vue Instance and provides `<z-canvas>` component to start the development of your **zircle-ui** application.
 
 ```html
@@ -141,7 +138,7 @@ After you have installed **zicle ui** using [direct download](#direct-download) 
 </html>
 ```
 
-### * Single File Components and vue-cli
+### - Single File Components and vue-cli
 As Vue documentation explains, with the previous setup you can work very well for small to medium-sized projects. However, in more complex projects it is better tp use [Single File Components (SFC)](https://vuejs.org/v2/guide/single-file-components.html).
 
 Vue-cli is a powerful tool to develop complex projects. So, after you have installed and run vue-cli as it is described in the [official Vue cli docs](https://cli.vuejs.org/guide/installation.html), you can install **zircle-ui** with [NPM or Yarn](#package-managers-npm-or-yarn) and add the following code to your vue-cli project:
