@@ -1,6 +1,6 @@
 <p align="center">
   <a href="http://zircle.io">
-    <img src="https://github.com/zircleUI/docs/blob/gh-pages/zircle-ui-blue.png" width="300">
+    <img src="https://github.com/zircleUI/docs/blob/gh-pages/zircle-ui-blue.png" width="250">
   </a>
 </p>
 
