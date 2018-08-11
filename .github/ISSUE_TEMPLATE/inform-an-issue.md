@@ -1,6 +1,6 @@
 ---
-name: Inform an issue
-about: Guideline
+name: Issue reporting
+about: guidelines
 
 ---
 
