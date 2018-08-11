@@ -6,9 +6,10 @@
 
 <p align="center">
   A frontend library to develop zoomable user interfaces.
+  [![Maintainability](https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability)](https://codeclimate.com/github/zircleUI/zircleUI/maintainability)
 </p>
 
-> This is the development branch for the next version of Zircle
+# This is the development branch for the next version of Zircle
 
 ## What is zircle-ui?
 
