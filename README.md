@@ -64,10 +64,10 @@ In general, using **zircle-ui** should be fine if your application is highly int
 ---
 
 ## Status: BETA
-Until reach the version 1.0.0 Zircle will remains as beta. However, since 0.9.0 api changes are unlikely.
+Until reach the version 1.0.0 Zircle will remains as beta. However, since 0.9.0 API is unlikely to change.
 
 ## Documentation, examples and tutorial
-Please checkout [zircle.io](http://zircle.io) to learn how to use **zircle-ui**. For early **zircle-ui** users a **easy-to-follow migration guide** [is available here](http://zircle.io)
+Please checkout [zircle.io](http://zircle.io) to learn how to use **zircle-ui**. For early **zircle-ui** users a **easy-to-follow migration guide** [is available here](https://zircleui.github.io/docs/guide/migration.html)
 
 ## Installation
 
@@ -101,7 +101,7 @@ The easiest way to try and start using **zircle-ui** is using the [JSFiddle sand
 For **zircle-ui** projects based on vue-cli 3 you can try the [CodeSandbox](https://codesandbox.io/s/my0ol78l08)
 
 ### - Browser
-After you have installed **zicle ui** using [direct download](#direct-download) or [CDN](#content-delivery-networks-cdn), the following starter template creates a Vue Instance and provides `<z-canvas>` component to start the development of your **zircle-ui** application.
+After you have installed **zicle ui** using [direct download](#--direct-download) or [CDN](#--content-delivery-networks-cdn), the following starter template creates a Vue Instance and provides `<z-canvas>` component to start the development of your **zircle-ui** application.
 
 ```html
 <!DOCTYPE html>
@@ -139,9 +139,9 @@ After you have installed **zicle ui** using [direct download](#direct-download) 
 ```
 
 ### - Single File Components and vue-cli
-As Vue documentation explains, with the previous setup you can work very well for small to medium-sized projects. However, in more complex projects it is better tp use [Single File Components (SFC)](https://vuejs.org/v2/guide/single-file-components.html).
+As Vue documentation explains, with the previous setup you can work very well for small to medium-sized projects. However, in more complex projects it is better to use [Single File Components (SFC)](https://vuejs.org/v2/guide/single-file-components.html).
 
-Vue-cli is a powerful tool to develop complex projects. So, after you have installed and run vue-cli as it is described in the [official Vue cli docs](https://cli.vuejs.org/guide/installation.html), you can install **zircle-ui** with [NPM or Yarn](#package-managers-npm-or-yarn) and add the following code to your vue-cli project:
+Vue-cli is a powerful tool to develop complex projects. So, after you have installed and run vue-cli as it is described in the [official Vue cli docs](https://cli.vuejs.org/guide/installation.html), you can install **zircle-ui** with [NPM or Yarn](#--npm-or-yarn) and add the following code to your vue-cli project:
 
 In the `main.js` file add this code:
 ```js{3-5}
