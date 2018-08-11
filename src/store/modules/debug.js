@@ -1,19 +1,18 @@
 import store from '../store'
 const debug = {
   setLog (msg, type) {
-    switch (type) {
-      case 'warn':
-        var bgColor = 'yellow'
-        var color = 'black'
-        break
-      case 'error':
-        bgColor = 'red'
-        color = 'white'
-        break
-      default:
-        bgColor = 'green'
-        color = 'white'
-    }
+    var bgColor = ''
+    var color = ''
+    type === 'warn' ? (
+      bgColor = 'yellow',
+      color = 'black'
+    ) : type === 'error' ? (
+      bgColor = 'red',
+      color = 'white'
+    ) : (
+      bgColor = 'green',
+      color = 'white'
+    ) 
     if (store.state.debug) {
       if (msg === 'Navigation mode is forward' && store.actions.getHistoryLength() === 1) {
         console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Initial view') // eslint-disable-line no-console
