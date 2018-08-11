@@ -1,7 +1,6 @@
 import store from '../store'
 function setDiameter (size) {
   let diameter = store.state.diameters[size]
-  console.log(diameter)
   return diameter
 }
 const mediaQuery = [

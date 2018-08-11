@@ -5,10 +5,19 @@
 export default {
   components: {
     home: () => import('./demo/home'),
-    options: () => import('./demo/options')
+    docs: () => import('./demo/docs')
   },
   mounted () {
+    this.$zircle.config({
+      style: {
+        theme: 'blue'
+      }
+    })
     this.$zircle.setView('home')
   }
 }
 </script>
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
+  @import url('https://use.fontawesome.com/releases/v5.1.0/css/all.css');
+</style>
