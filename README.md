@@ -1,17 +1,14 @@
 <p align="center">
   <a href="http://zircle.io">
-    <img src="https://github.com/zircleUI/docs/blob/gh-pages/zircle-ui-blue.png" width="200">
+    <img src="https://github.com/zircleUI/docs/blob/gh-pages/zircle-ui-blue.png" width="350">
   </a>
 </p>
 
-<h3 align="center">
-  A frontend library to develop zoomable user interfaces.
-</h3>
 <p align="center">
-  <a href="https://codeclimate.com/github/zircleUI/zircleUI/maintainability"><img src="https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability" /></a>
+  A frontend library to develop zoomable user interfaces.
 </p>
 
-> **This is the development branch for the next version of zircle-ui**
+> This is the development branch for the next version of Zircle
 
 ## What is zircle-ui?
 
@@ -45,6 +42,8 @@ In general, using **zircle-ui** should be fine if your application is highly int
 **Zircle-ui** was inspired by the idea underneath some really awesome projects and articles like [prezi](https://www.prezi.com), [impress.js](https://github.com/impress/impress.js), [tizen](https://www.tizen.org/), [zoomooz](http://jaukia.github.io/zoomooz/), [creativebloq's article](https://www.creativebloq.com/create-zoomable-user-interface-css-transforms-9114269), [google maps](http://maps.google.com), [bootstrap](https://getbootstrap.com/), [UIKit](https://getuikit.com/) and [bulma](https://bulma.io) among others. 
 
 *Juan Martín Muda*
+
+---
 
 ## Contributing
 Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](http://zircle.io) some guidelines for inspiration.
@@ -160,4 +159,4 @@ In the `App.vue` file add this code:
 ```
 
 ## License
-[MIT Licensed | Copyright © 2017 - present | Juan Martín Muda](https://raw.githubusercontent.com/zircleUI/zircleUI/master/LICENSE)
+[MIT](http://opensource.org/licenses/MIT)
