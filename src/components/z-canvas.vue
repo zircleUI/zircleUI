@@ -36,7 +36,7 @@ export default {
     classes () {
       return {
         'is-full-mode': this.$zircle.getAppMode() === 'full',
-        'is-embedded-mode': this.$zircle.getAppMode() === 'embedded'
+        'is-mixed-mode': this.$zircle.getAppMode() === 'mixed'
       }
     }
   },

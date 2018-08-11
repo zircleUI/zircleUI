@@ -21,12 +21,12 @@ function transformViewName (view) {
   return view + '--' + count
 }
 function createRoute (path, name, component) {
-  if (store.state.isRouterEnabled && store.state.router.resolve(route).route.matched[0] === undefined) {
-      store.state.router.addRoutes([{path: path,
+  if (store.state.isRouterEnabled && store.state.router.resolve(path).route.matched[0] === undefined) {
+    store.state.router.addRoutes([{path: path,
       name: name,
       component: component
     }])
-  store.actions.setLog('VueRouter: route added ' + name, component)
+    store.actions.setLog('VueRouter: route added ' + name, component)
   }
 }
 function parseView (data) {
