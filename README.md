@@ -1,15 +1,17 @@
 <p align="center">
   <a href="http://zircle.io">
-    <img src="https://github.com/zircleUI/docs/blob/gh-pages/zircle-ui-blue.png" width="250">
+    <img src="https://github.com/zircleUI/docs/blob/gh-pages/zircle-ui-blue.png" width="200">
   </a>
 </p>
 
-<p align="center">
+<h3 align="center">
   A frontend library to develop zoomable user interfaces.
-  [![Maintainability](https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability)](https://codeclimate.com/github/zircleUI/zircleUI/maintainability)
+</h3>
+<p align="center">
+  <a href="https://codeclimate.com/github/zircleUI/zircleUI/maintainability"><img src="https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability" /></a>
 </p>
 
-# This is the development branch for the next version of Zircle
+> **This is the development branch for the next version of zircle-ui**
 
 ## What is zircle-ui?
 
