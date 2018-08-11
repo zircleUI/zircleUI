@@ -23,9 +23,7 @@ const debug = {
         console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Zoom-out to previous view') // eslint-disable-line no-console
       }
       console.log('%c z ', 'background: ' + bgColor + '; color:  ' + color + '', msg) // eslint-disable-line no-console
-      if (msg === 'Navigation mode is iddle') {
-        console.groupEnd() // eslint-disable-line no-console
-      }
+      if (msg === 'Navigation mode is iddle') console.groupEnd() // eslint-disable-line no-console
     }
   },
   getState () {

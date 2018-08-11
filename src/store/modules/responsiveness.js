@@ -1,5 +1,9 @@
 import store from '../store'
-// armar document.getElementById('foo').offsetWidth para cuando zrcle este embedded. para que tome por referencia al canvas o %
+function setDiameter (size) {
+  let diameter = store.state.diameters[size]
+  console.log(diameter)
+  return diameter
+}
 var mediaQuery = [
   { // small devices
     media: window.matchMedia('(max-width: 319px)'),
@@ -45,35 +49,13 @@ var mediaQuery = [
 const responsiveness = {
   getComponentWidth (size) {
     let sizes = size.toLowerCase()
-    switch (sizes) {
-      case 'xxl':
-        var width = store.state.diameters.xxl
-        break
-      case 'extralarge':
-      case 'xl':
-        width = store.state.diameters.xl
-        break
-      case 'large':
-      case 'l':
-        width = store.state.diameters.l
-        break
-      case 'medium':
-      case 'm':
-        width = store.state.diameters.m
-        break
-      case 'small':
-      case 's':
-        width = store.state.diameters.s
-        break
-      case 'extrasmall':
-      case 'xs':
-        width = store.state.diameters.xs
-        break
-      case 'xxs':
-        width = store.state.diameters.xxs
-        break
-    }
-    return width
+    if (sizes === 'extralarge') sizes = 'xl'
+    if (sizes === 'large') sizes = 'l'
+    if (sizes === 'medium') sizes = 'm'
+    if (sizes === 'small') sizes = 's'
+    if (sizes === 'extrasmall') sizes = 'xs'
+    let result = setDiameter(sizes)
+    return result
   },
   getDimensions () {
     if (store.actions.getAppMode() === 'full') {

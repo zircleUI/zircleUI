@@ -4,9 +4,7 @@ const app = {
     return store.state.appMode
   },
   config (config) {
-    if (config.debug === true || config.debug === false) {
-      store.state.debug = config.debug
-    }
+    if (config.debug === true || config.debug === false) store.state.debug = config.debug
     if (store.state.debug === true) {
       store.actions.setLog('config:')
       store.actions.setLog('- Debug enabled')
