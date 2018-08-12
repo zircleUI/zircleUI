@@ -10,7 +10,7 @@ exports[`z-view.vue Has the expected html structure (slots, z-scroll, z-slider) 
   >
     <div
       class="z-outer-circle"
-      style="width: 260px; height: 260px; margin: -130px 0px 0px -130px;"
+      style="width: 275px; height: 275px; margin: -137.5px 0px 0px -137.5px;"
     />
      
     <section
