@@ -119,9 +119,9 @@ export default {
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
-          width: width + 60 + 'px',
-          height: width + 60 + 'px',
-          margin: -((width + 60) / 2) + 'px 0 0 ' + -((width + 60) / 2) + 'px'
+          width: width + 75 + 'px',
+          height: width + 75 + 'px',
+          margin: -((width + 75) / 2) + 'px 0 0 ' + -((width + 75) / 2) + 'px'
         }
       }
     },

@@ -1,6 +1,6 @@
 <p align="center">
   <a href="http://zircle.io">
-    <img src="https://github.com/zircleUI/docs/blob/gh-pages/zircle-ui-blue.png" width="200">
+    <img src="https://raw.githubusercontent.com/zircleUI/docs/gh-pages/zircle-ui-blue.png" width="200">
   </a>
 </p>
 
@@ -19,7 +19,7 @@
 
 **Zircle-ui** is a frontend library to develop [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface). It is based on [vue.js](https://vuejs.org/) and comes with a set of componentes, such as: buttons, knobs, sliders, scroll bars, dialogues, view controllers and lists.
 
-<img src="https://github.com/zircleUI/docs/blob/gh-pages/final.gif" width="100%" style="border-radius: 6px;" alt="demo">
+<img src="https://raw.githubusercontent.com/zircleUI/docs/gh-pages/final.gif" width="100%" style="border-radius: 6px;" alt="demo">
 
 ## Features
 
