@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<a name="0.9.0"></a>
+## [0.9.0](https://github.com/zircleui/zircleUI/compare/v0.3.3...v0.9.0) (2018-08-13)
+### Changes
+With the release of **zircle-ui v0.9.0** many internal and external things have changed. As a result **zircle-ui** is now more intuitive and easy to use.
+
+Following [**this brief migration guide**](https://zircleui.github.io/docs/guide/migration.html) it will be easy for you to adatp your project to the new version of **zircle-ui**.
+
 ## [0.3.3] - 2018-01-31
 ### Fixes
 - When using using vue-router, the initial configuration of the automatic routes are now case insensitive to avoid case errors.
