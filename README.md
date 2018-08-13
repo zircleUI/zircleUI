@@ -96,9 +96,9 @@ yarn add zircle
 There are several options to setup and start using **zircle-ui**.
 
 ### - Code Sandbox 
-The easiest way to try and start using **zircle-ui** is using the [JSFiddle sandbox](https://jsfiddle.net/tinchox5/37mr5324/) or the [Codepen sandbox](https://codepen.io/zircle/pen/MExYRv)
+The easiest way to try and start using **zircle-ui** is using [JSFiddle](https://jsfiddle.net/tinchox5/37mr5324/) or [Codepen](https://codepen.io/zircle/pen/ypZdWZ)
 
-For **zircle-ui** projects based on vue-cli 3 you can try the [CodeSandbox](https://codesandbox.io/s/my0ol78l08)
+For **zircle-ui** projects based on vue-cli 3 you can try [CodeSandbox](https://codesandbox.io/s/y26p3q79k9)
 
 ### - Browser
 After you have installed **zicle ui** using [direct download](#--direct-download) or [CDN](#--content-delivery-networks-cdn), the following starter template creates a Vue Instance and provides `<z-canvas>` component to start the development of your **zircle-ui** application.
