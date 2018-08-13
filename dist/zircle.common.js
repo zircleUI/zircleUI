@@ -952,12 +952,12 @@ var app = {
       store_store.actions.setLog('- Mode: ' + _config.mode);
     }
 
-    if (_config.style.theme) {
+    if (_config.style && _config.style.theme) {
       store_store.state.appStyle.theme = 'theme-' + _config.style.theme;
       store_store.actions.setLog('- Theme: ' + _config.style.theme);
     }
 
-    if (_config.style.mode) {
+    if (_config.style && _config.style.mode) {
       store_store.state.appStyle.mode = 'mode-' + _config.style.mode;
       store_store.actions.setLog('- Theme mode: ' + _config.style.mode);
     }
