@@ -13,11 +13,11 @@ const app = {
       store.state.appMode = config.mode
       store.actions.setLog('- Mode: ' + config.mode)
     }
-    if (config.style.theme) {
+    if (config.style && config.style.theme) {
       store.state.appStyle.theme = 'theme-' + config.style.theme
       store.actions.setLog('- Theme: ' + config.style.theme)
     }
-    if (config.style.mode) {
+    if (config.style && config.style.mode) {
       store.state.appStyle.mode = 'mode-' + config.style.mode
       store.actions.setLog('- Theme mode: ' + config.style.mode)
     }
