@@ -146,7 +146,7 @@ Vue-cli is a powerful tool to develop complex projects. So, after you have insta
 In the `main.js` file add this code:
 ```js{3-5}
 import Vue from 'vue'
-import app from './App'
+import App from './App'
 import zircle from 'zircle'
 import 'zircle/dist/zircle.css'
 Vue.use(zircle)
