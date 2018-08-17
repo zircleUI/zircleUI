@@ -9,12 +9,21 @@
 
 \::placeholder
   color: inherit
+  
 .z-next-enter
   opacity: 0
+.z-prev-leave
+  opacity: 1
 .z-next-enter-active
-  animation: appear 500ms linear forwards
-.z-prev-leave-to
-  animation: disappear .5s .5s linear forwards
+  opacity: 0
+  animation-name: appear
+  animation-duration: 2000ms
+  animation-fill-mode: forwards
+.z-prev-leave-active
+  opacity: 1
+  animation-name: disappear
+  animation-duration: 1000ms
+  animation-fill-mode: forwards
 
 input
   font: inherit
@@ -131,7 +140,7 @@ input
   justify-content: center
   overflow: hidden
   border-radius: 50%
-  user-select: none
+  // user-select: none
   &.maincontent
     cursor: default
     z-index: 50
@@ -233,12 +242,14 @@ input
   cursor: zoom-out
   filter: blur(2px) opacity(20%)
   overflow: hidden
+  z-index: 0
 
 .is-previous-view
   pointer-events: none
   cursor: zoom-out
   filter: blur(2px) opacity(40%)
   overflow: hidden
+  z-index: 50
 
 .is-previous-view section[title="z-list"]
   pointer-events: none
@@ -249,6 +260,7 @@ input
 .is-current-view
   pointer-events: auto
   will-change: opacity
+  z-index: 100
 
 .z-outer-circle, .z-outer-spot
   position: absolute
