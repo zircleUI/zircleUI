@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/zircleui/zircleUI/compare/v0.9.1...v1.0.0) (2018-08-17)
+
+
+### Bug Fixes
+
+* 🐛 allow z-view scroll content zoom lvl > 1; show img bkg ([4c54565](https://github.com/zircleui/zircleUI/commit/4c54565))
+* 🐛 transition animation ([8e4a263](https://github.com/zircleui/zircleUI/commit/8e4a263))
+
+
+### Tests
+
+* 💍 Update snapshot z-view ([1854e6a](https://github.com/zircleui/zircleUI/commit/1854e6a))
+
+
+### BREAKING CHANGES
+
+* n
+
+Issues: n
+* n
+
+Issues: n
+* n
+
+Issues: n
+
+
+
 <a name="0.9.1"></a>
 ## [0.9.1](https://github.com/zircleui/zircleUI/compare/v0.9.0...v0.9.1) (2018-08-14)
 ### Chores
