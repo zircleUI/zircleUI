@@ -7,7 +7,11 @@
     @animationend="notify"
     @mouseover = "$zircle.allowBackwardNavigation(true)"
     @mouseleave = "$zircle.allowBackwardNavigation(false)">
-    <section :style="animation">
+    <div :id="fullView" v-if="$slots['image'] || imagePath" class="z-content">
+      <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
+      <slot v-if="!imagePath" name="image"></slot>
+    </div>
+    <section style="opacity: 0" :style="animation">
       <div class="z-outer-circle"  :style="responsive === true ? styles.plate : zpos.plate"></div>
       <z-scroll v-if="scrollBar" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
       <z-slider v-if="slider === true" :progress='progress'/>
@@ -126,10 +130,12 @@ export default {
       }
     },
     animation () {
-      if (this.fullView === this.$zircle.getCurrentViewName()) {
-        var zstyle = 'opacity: 0; animation: appear 490ms 510ms linear forwards'
+      if (this.fullView === this.$zircle.getCurrentViewName() && this.$zircle.getNavigationMode() === 'forward') {
+        var zstyle = 'opacity: 1; transition: opacity 1000ms linear;'
+      } else if (this.fullView === this.$zircle.getCurrentViewName() && this.$zircle.getNavigationMode() !== 'forward') {
+        var zstyle = 'opacity: 1;'
       } else {
-        zstyle = 'opacity: 0;'
+        zstyle = 'opacity: 0; transition: opacity 500ms linear;'
       }
       return zstyle
     },
@@ -169,7 +175,10 @@ export default {
       this.ffox = true
     }
     this.zpos = this.styles
-    this.isMounted = true
+    var vm = this
+    setTimeout(function () {
+      vm.isMounted = true
+    }, 1000)
   }
 }
 </script>
