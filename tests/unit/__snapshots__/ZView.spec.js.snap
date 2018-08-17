@@ -5,8 +5,21 @@ exports[`z-view.vue Has the expected html structure (slots, z-scroll, z-slider) 
   class="z-shape primary z-view"
   style="overflow: visible; width: 200px; height: 200px; margin: -100px 0px 0px -100px; transform: translate3d(0px, 0px, 0px) scale(1);"
 >
+  <div
+    class="z-content"
+    id="search--0"
+  >
+    <img
+      height="100%"
+      src="./images/test.png"
+      width="100%"
+    />
+     
+    <!---->
+  </div>
+   
   <section
-    style="opacity: 0;"
+    style="opacity: 1;"
   >
     <div
       class="z-outer-circle"
