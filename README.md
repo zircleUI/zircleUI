@@ -40,9 +40,9 @@ You can try **zircle-ui** to develop a wide range of applications, such as: dash
 In general, using **zircle-ui** should be fine if your application is highly interactive and you need to intuitively view and control information without loosing the user’s attention. 
 
 ## About zircle-ui
-**Zircle-ui** is the first [Open Source Project](https://opensource.guide/starting-a-project/) I've made and it was possible thanks to the Open Source community, specially the [Vue](https://vuejs.org) community. In retribution, I've crearted a project of the hightest quality I could within my limitations since I'm not a professional developer. 
+**Zircle-ui** is the first [Open Source Project](https://opensource.guide/starting-a-project/) I've made and it was possible thanks to the Open Source community, specially the [Vue](https://vuejs.org) community. In retribution, I've created a project of the highest quality I could within my limitations since I'm not a professional developer. 
 
-**Zircle-ui** intends to promote aproach in the universe of UIs. My main motivation is believing there is room for a new UI/UX not constrained to grid layouts or to squared shapes. 
+**Zircle-ui** intends to promote approach in the universe of UIs. My main motivation is believing there is room for a new UI/UX not constrained to grid layouts or to squared shapes. 
 
 **Zircle-ui** was inspired by the idea underneath some really awesome projects and articles like [prezi](https://www.prezi.com), [impress.js](https://github.com/impress/impress.js), [tizen](https://www.tizen.org/), [zoomooz](http://jaukia.github.io/zoomooz/), [creativebloq's article](https://www.creativebloq.com/create-zoomable-user-interface-css-transforms-9114269), [google maps](http://maps.google.com), [bootstrap](https://getbootstrap.com/), [UIKit](https://getuikit.com/) and [bulma](https://bulma.io) among others. 
 
@@ -63,16 +63,16 @@ In general, using **zircle-ui** should be fine if your application is highly int
 
 ---
 
-## Status: BETA
-Until reach the version 1.0.0 Zircle will remains as beta. However, since 0.9.0 API is unlikely to change.
+## Status: 
+Despite **zircle-ui** could be considered **stable**, it will remains as beta for a while because I would like to hear feedbacks regarding its usability.
 
 ## Documentation, examples and tutorial
-Please checkout [zircle.io](http://zircle.io) to learn how to use **zircle-ui**. For early **zircle-ui** users a **easy-to-follow migration guide** [is available here](https://zircleui.github.io/docs/guide/migration.html)
+Please checkout [**zircle.io**](http://zircle.io) to learn how to use **zircle-ui**. For early **zircle-ui** users a **easy-to-follow migration guide** [is available here](https://zircleui.github.io/docs/guide/migration.html)
 
 ## Installation
 
 ### - Direct download 
-Just download **zircle-ui** from [Github](https://github.com/zircleUI/zircleUI/tree/master/dist).
+Just download **zircle-ui** from [Github](https://github.com/zircleUI/zircleUI/tree/master/dist). You need to download the zircle.umd.js or the zircle.umd.min.js file along with the zircle.css file.
 
 ### - Content delivery networks (CDN)
 Include `https://unpkg.com/zircle` in your project with `<script>` tag. With CDN you will have the latest version of **zircle-ui** as soon as it is published to NPM. You can also browse the source of the npm package at [https://unpkg.com/zircle/](https://unpkg.com/zircle/) 
