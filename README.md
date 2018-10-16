@@ -162,7 +162,7 @@ In the `App.vue` file add this code:
 </template>
 
 <script>
-  import home from '/components/home'
+  import home from './components/home'
   export default {
     components: {
       home
