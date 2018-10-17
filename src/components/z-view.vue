@@ -133,7 +133,7 @@ export default {
       if (this.fullView === this.$zircle.getCurrentViewName() && this.$zircle.getNavigationMode() === 'forward') {
         var zstyle = 'opacity: 1; transition: opacity 1000ms linear;'
       } else if (this.fullView === this.$zircle.getCurrentViewName() && this.$zircle.getNavigationMode() !== 'forward') {
-        var zstyle = 'opacity: 1;'
+        zstyle = 'opacity: 1;'
       } else {
         zstyle = 'opacity: 0; transition: opacity 500ms linear;'
       }
