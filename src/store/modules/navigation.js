@@ -105,6 +105,18 @@ const navigation = {
       store.state.backwardNavigation = value
     }
   },
+  toView (options) {
+    if (typeof options === 'string') {
+      store.actions.setView(options)
+    } else {
+      if (!options.to) store.actions.setLog('Programmatic navigation: "to" is required ', 'error')
+      if (!options.fromSpot) store.actions.setLog('Programmatic navigation: "fromSpot" is required ', 'error')
+      if (options.fromSpot && typeof options.fromSpot !== 'object') store.actions.setLog('Programmatic navigation: "fromSpot" should be an object ', 'error')
+      if (options.params && typeof options.params !== 'object') store.actions.setLog('Programmatic navigation: "params" should be an object ', 'error')
+      if (options.to && options.fromSpot && !options.params) store.actions.setView(options.to, {position: {X: options.fromSpot.position.Xabs, Y: options.fromSpot.position.Yabs, scale: options.fromSpot.position.scale, Xi: options.fromSpot.position.Xi, Yi: options.fromSpot.position.Yi, scalei: options.fromSpot.position.scalei}})
+      if (options.to && options.fromSpot && options.params) store.actions.setView({name: options.to, params: options.params}, {position: {X: options.fromSpot.position.Xabs, Y: options.fromSpot.position.Yabs, scale: options.fromSpot.position.scale, Xi: options.fromSpot.position.Xi, Yi: options.fromSpot.position.Yi, scalei: options.fromSpot.position.scalei}})
+    }
+  },
   setView (data, options) {
     if (store.state.history.length < 6) {
       let view = parseView(data)
