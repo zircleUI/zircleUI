@@ -9,6 +9,7 @@ export default {
   },
   mounted () {
     this.$zircle.config({
+      debug: true,
       style: {
         theme: 'blue'
       }
