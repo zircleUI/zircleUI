@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/zircleui/zircleUI/compare/v1.0.2...v1.1.0) (2018-10-17)
+
+
+### Bug Fixes
+
+* 🐛 Add v-bind key in z-list ([f289982](https://github.com/zircleui/zircleUI/commit/f289982))
+* 🐛 Fix view name reference and use z-list ([35e7a94](https://github.com/zircleui/zircleUI/commit/35e7a94))
+
+
+### Features
+
+* 🎸 Add .toView() action ([ac14b35](https://github.com/zircleui/zircleUI/commit/ac14b35))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/zircleui/zircleUI/compare/v1.0.1...v1.0.2) (2018-10-16)
 
@@ -25,20 +41,6 @@ All notable changes to this project will be documented in this file. See [standa
 ### Tests
 
 * 💍 Update snapshot z-view ([1854e6a](https://github.com/zircleui/zircleUI/commit/1854e6a))
-
-
-### BREAKING CHANGES
-
-* n
-
-Issues: n
-* n
-
-Issues: n
-* n
-
-Issues: n
-
 
 
 <a name="0.9.1"></a>
