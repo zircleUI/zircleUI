@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* 🎸 Add .toView() action ([ac14b35](https://github.com/zircleui/zircleUI/commit/ac14b35))
+* 🎸 Add .toView() action ([ac14b35](https://github.com/zircleui/zircleUI/commit/ac14b35)), closes [#16](https://github.com/zircleUI/zircleUI/issues/16)
 
 
 
