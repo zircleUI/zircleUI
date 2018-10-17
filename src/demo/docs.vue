@@ -2,13 +2,17 @@
   <z-view style="border-width: 8px;">
     Documentation
     <div slot='extension'>
-      <z-spot v-for='(section, index) in sections' :key='index'
-      button
-      :angle='360 / sections.length * index'
-      :label='section.name'
-      @click.native="openUrl(section.url)" >
-        <i :class="section.icon"></i>
-      </z-spot>
+
+      <z-list :items="sections" :per-page="5">
+        <z-spot
+          button
+          slot-scope="props"
+          :index="props.index"
+          :label='props.name'
+          @click.native="openUrl(props.url)" >
+            <i :class="props.icon"></i>
+        </z-spot>
+      </z-list>
     </div>
   </z-view>
 </template>

@@ -3,16 +3,14 @@
     WELCOME TO ZIRCLE UI
     <div slot='extension'>
       <z-spot
-        slot='extension'
         :angle='45'
-        to-view='options'
+        to-view='docs'
         class='accent'
         label='Docs'>
         <i class='fas fa-book'></i>
       </z-spot>
       <z-spot
         button
-        slot='extension'
         :angle='135'
         class='accent'
         label='Github'
