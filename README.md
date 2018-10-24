@@ -23,15 +23,15 @@
 
 ## Features
 
-- **Zoomable UI/UX** Enjoy a different UI/UX with the built-in zoomable navigation.
+- **Zoomable UI/UX:** Enjoy a different UI/UX with the built-in zoomable navigation.
 
-- **Circles everywhere** Breaking away from the conventional UI with a circular UI Kit.
+- **Circles everywhere:** Breaking away from the conventional UI with a circular UI Kit.
 
-- **Responsive** zircle-ui works pretty well on mobile devices and big screens. 
+- **Responsive:** zircle-ui works pretty well on mobile devices and big screens. 
 
-- **Customizable themes** Aren't the integrated color themes enough? No problem, it is easy to create new ones.
+- **Customizable themes:** Aren't the integrated color themes enough? No problem, it is easy to create new ones.
 
-- **Zero-conf routes** Using Vue-router? Let **zircle-ui** handles the routes for you.
+- **Zero-conf routes:** Using Vue-router? Let **zircle-ui** handles the routes for you.
 
 ## When to use zircle-ui?
 
