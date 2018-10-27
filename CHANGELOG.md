@@ -9,12 +9,12 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * 🐛 Add v-bind key in z-list ([f289982](https://github.com/zircleui/zircleUI/commit/f289982))
-* 🐛 Fix view name reference and use z-list ([35e7a94](https://github.com/zircleui/zircleUI/commit/35e7a94))
+* 🐛 Demo: fix view name reference and use z-list ([35e7a94](https://github.com/zircleui/zircleUI/commit/35e7a94))
 
 
 ### Features
 
-* 🎸 Add .toView() action ([ac14b35](https://github.com/zircleui/zircleUI/commit/ac14b35))
+* 🎸 Add .toView() action ([ac14b35](https://github.com/zircleui/zircleUI/commit/ac14b35)), closes [#16](https://github.com/zircleUI/zircleUI/issues/16)
 
 
 

@@ -17,21 +17,21 @@
 
 ## What is zircle-ui?
 
-**Zircle-ui** is a frontend library to develop [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface). It is based on [vue.js](https://vuejs.org/) and comes with a set of componentes, such as: buttons, knobs, sliders, scroll bars, dialogues, view controllers and lists.
+**Zircle-ui** is a frontend library to develop [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface). It is based on [vue.js](https://vuejs.org/) and JavaScript and comes with a set of componentes, such as: buttons, knobs, sliders, scroll bars, dialogues, view controllers and lists.
 
 <img src="https://raw.githubusercontent.com/zircleUI/docs/gh-pages/final.gif" width="100%" style="border-radius: 6px;" alt="demo">
 
 ## Features
 
-- **Zoomable UI/UX** Enjoy a different UI/UX with the built-in zoomable navigation.
+- **Zoomable UI/UX:** Enjoy a different UI/UX with the built-in zoomable navigation.
 
-- **Circles everywhere** Breaking away from the conventional UI with a circular UI Kit.
+- **Circles everywhere:** Breaking away from the conventional UI with a circular UI Kit.
 
-- **Responsive** zircle-ui works pretty well on mobile devices and big screens. 
+- **Responsive:** zircle-ui works pretty well on mobile devices and big screens. 
 
-- **Customizable themes** Aren't the integrated color themes enough? No problem, it is easy to create new ones.
+- **Customizable themes:** Aren't the integrated color themes enough? No problem, it is easy to create new ones.
 
-- **Zero-conf routes** Using Vue-router? Let **zircle-ui** handles the routes for you.
+- **Zero-conf routes:** Using Vue-router? Let **zircle-ui** handles the routes for you.
 
 ## When to use zircle-ui?
 
