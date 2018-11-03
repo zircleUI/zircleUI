@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/zircleui/zircleUI/compare/v1.1.0...v1.1.1) (2018-11-03)
+
+
+### Bug Fixes
+
+* 🐛 remove duplicate slot 'image' ([b38ef1d](https://github.com/zircleui/zircleUI/commit/b38ef1d)), closes [#18](https://github.com/zircleui/zircleUI/issues/18)
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/zircleui/zircleUI/compare/v1.0.2...v1.1.0) (2018-10-17)
 
