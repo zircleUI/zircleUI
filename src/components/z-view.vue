@@ -20,10 +20,6 @@
           {{label}}
         </div>
       </div>
-      <div v-if="$slots['image'] || imagePath" class="z-content">
-        <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
-        <slot v-if="!imagePath" name="image"></slot>
-      </div>
       <div class="z-content maincontent" ref="maincontent" :class="[longContent, firefoxScroll]" @scroll.passive="scroll">
         <div ref="ztext">
           <slot></slot>
