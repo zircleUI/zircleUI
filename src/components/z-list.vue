@@ -1,5 +1,5 @@
 <template>
-  <section title="z-list">
+  <section class="z-list">
     <div v-for="(item, index) in $zircle.getCurrentPage()" :key="item[0] + '-' + index">
       <slot v-bind="item" :index=index></slot>
     </div>
