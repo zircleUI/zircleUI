@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.2"></a>
+## [1.1.2](https://github.com/zircleui/zircleUI/compare/v1.1.1...v1.1.2) (2018-11-08)
+
+
+### Bug Fixes
+
+* 🐛 avoid show title z-list on mouseover ([3f260d6](https://github.com/zircleui/zircleUI/commit/3f260d6))
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/zircleui/zircleUI/compare/v1.1.0...v1.1.1) (2018-11-03)
 
