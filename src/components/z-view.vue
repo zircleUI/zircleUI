@@ -52,7 +52,7 @@ export default {
       default: 'xxl'
     },
     label: {
-      type: [String]
+      type: [String, Number]
     },
     labelPos: {
       type: [String],

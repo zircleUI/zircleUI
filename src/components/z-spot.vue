@@ -54,7 +54,7 @@ export default {
       default: 'medium'
     },
     label: {
-      type: [String]
+      type: [String, Number]
     },
     labelPos: {
       type: [String],
