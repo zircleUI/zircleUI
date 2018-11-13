@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.3"></a>
+## [1.1.3](https://github.com/zircleui/zircleUI/compare/v1.1.2...v1.1.3) (2018-11-13)
+
+
+### Bug Fixes
+
+* 🐛 add Number type in label property ([424ac5e](https://github.com/zircleui/zircleUI/commit/424ac5e))
+
+
+
 <a name="1.1.2"></a>
 ## [1.1.2](https://github.com/zircleui/zircleUI/compare/v1.1.1...v1.1.2) (2018-11-08)
 

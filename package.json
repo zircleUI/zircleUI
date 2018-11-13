@@ -1,6 +1,6 @@
 {
   "name": "zircle",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "A frontend library to develop zoomable user interfaces",
   "author": "Juan Martín Muda <juan.martin.muda@gmail.com>",
   "main": "dist/zircle.umd.js",
