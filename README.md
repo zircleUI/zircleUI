@@ -17,7 +17,7 @@
 
 ## What is zircle-ui?
 
-**Zircle-ui** is a frontend library to develop [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface). It is based on [vue.js](https://vuejs.org/) and JavaScript and comes with a set of componentes, such as: buttons, knobs, sliders, scroll bars, dialogues, view controllers and lists.
+**Zircle-ui** is an experimental frontend library to develop [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface). It is based on [vue.js](https://vuejs.org/) and JavaScript and comes with a set of componentes to create unconventional UIs.
 
 <img src="https://raw.githubusercontent.com/zircleUI/docs/gh-pages/final.gif" width="100%" style="border-radius: 6px;" alt="demo">
 
