@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/zircleui/zircleUI/compare/v1.1.3...v1.2.0) (2018-12-05)
+
+
+### Features
+
+* 🎸 avoid using suffix for views with router enabled ([8127aa5](https://github.com/zircleui/zircleUI/commit/8127aa5)), closes [#19](https://github.com/zircleui/zircleUI/issues/19)
+
+
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/zircleui/zircleUI/compare/v1.1.2...v1.1.3) (2018-11-13)
 
