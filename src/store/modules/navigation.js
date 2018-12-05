@@ -18,7 +18,11 @@ function transformViewName (view) {
       count += 1
     }
   }
-  return view + '--' + count
+  if (store.state.isRouterEnabled) {
+    return view
+  } else {
+    return view + '--' + count
+  }
 }
 function createRoute (path, name, component) {
   if (store.state.isRouterEnabled && store.state.router.resolve(path).route.matched[0] === undefined) {
