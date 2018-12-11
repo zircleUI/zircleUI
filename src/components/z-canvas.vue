@@ -60,7 +60,11 @@ export default {
   mounted () {
     var vm = this
     // Get window dimension to set the initial width of ui components such as z-panel
-    this.$zircle.getDimensions()
+    this.$nextTick()
+    .then(function () {
+      // DOM updated
+      vm.$zircle.getDimensions()
+    })
     window.addEventListener('resize', function (event) {
       // On resize change the width of ui components
       vm.$zircle.getDimensions()
