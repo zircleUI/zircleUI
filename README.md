@@ -15,7 +15,7 @@
   <a href="https://codeclimate.com/github/zircleUI/zircleUI/maintainability"><img src="https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability" /></a>
 </p>
 
-## This is the dev branch of zircle-ui
+## 💥 This is the dev branch of zircle-ui
 
 ## Contributing
 Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](https://zircleui.github.io/docs/contribute/) some guidelines for inspiration.
