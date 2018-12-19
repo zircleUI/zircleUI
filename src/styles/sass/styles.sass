@@ -82,6 +82,8 @@ input
   top: 50%
   left: 50%
   text-align: center
+  .square &
+    border-radius: 0
   &.z-view
     z-index: 40
     will-change: transform, opacity
@@ -141,6 +143,8 @@ input
   overflow: hidden
   border-radius: 50%
   // user-select: none
+  .square &
+    border-radius: 0
   &.maincontent
     cursor: default
     z-index: 50
@@ -177,6 +181,8 @@ input
       padding-right: 5px
       background-color: var(--background-color)
       border: 1px solid transparent
+      .square &
+        border-radius: 0
   &.top
     width: 100%
     top: calc(-15% + -25px)
@@ -188,6 +194,8 @@ input
       padding-left: 5px
       padding-right: 5px
       background-color: var(--background-color)
+      .square &
+        border-radius: 0
   &.left
     width: fit-content
     margin-top: calc(50% - 12.5px)
@@ -198,6 +206,8 @@ input
       padding-left: 5px
       padding-right: 5px
       background-color: var(--background-color)
+      .square &
+        border-radius: 0
   &.right
     width: fit-content
     margin-top: calc(50% - 12.5px)
@@ -208,6 +218,8 @@ input
       padding-left: 5px
       padding-right: 5px
       background-color: var(--background-color)
+      .square &
+        border-radius: 0
 .overflow
   overflow: visible
 .z-zoom-in-cursor
@@ -232,6 +244,8 @@ input
   left: 50%
   margin: -20px 0 0 -20px
   z-index: 70
+  .square &
+    border-radius: 0
   &:hover
     cursor: grab
   &:active
@@ -269,6 +283,8 @@ input
   left: 50%
   border-radius: 50%
   overflow: hidden
+  .square &
+    border-radius: 0
 .z-outer-circle
   border-width: 1px
   border-style: dashed 
@@ -287,6 +303,8 @@ input
   border-radius: 50%
   opacity: 1
   overflow: hidden
+  .square &
+    border-radius: 0
 
 .z-dialog-transition-enter-active, .z-dialog-transition-leave-active
   transition: transform 0.3s
@@ -310,6 +328,8 @@ input
   top: 50%
   left: 50%
   border-radius: 50%
+  .square &
+    border-radius: 0
 
 .pulse-animation
   animation: pulse 350ms ease-out

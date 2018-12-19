@@ -17,6 +17,21 @@ function calcCoords (distance, angle, parentSize) {
     Yi: Yi
   }
 }
+function calcCoordsSquare (distanceX, distanceY) {
+  var X = distanceX
+  var Y = distanceY
+  var Xi = 0
+  var Yi = 0
+  X > 0 ? Xi = -Math.abs(Number(X)) : Xi = Math.abs(Number(X))
+  Y > 0 ? Yi = -Math.abs(Number(Y)) : Yi = Math.abs(Number(Y))
+  console.log(X, Y, Xi, Yi)
+  return {
+    X: X,
+    Y: Y,
+    Xi: Xi,
+    Yi: Yi
+  }
+}
 function determinePosition (pos) {
   if (store.state.history[store.state.history.length - pos]) {
     return store.state.history[store.state.history.length - pos].position
@@ -44,7 +59,7 @@ const position = {
     store.actions.setLog('calcPosition() => ' + component.componentType)
     // Variable declaration
     var parentPosition = {Xi: 0, Yi: 0, X: 0, Y: 0, scalei: 1, scale: 1}
-    var newCoords = calcCoords(component.distance, component.angle, component.$parent.size)
+    var newCoords = component.shape === 'square' ? calcCoordsSquare(component.distanceX, component.distanceY) : calcCoords(component.distance, component.angle, component.$parent.size)
     if (component.$parent.componentType === 'z-view' || component.$parent.componentType === 'z-list' || component.$parent.componentType === 'z-spot') parentPosition = { Xi: component.$parent.position.Xi, Yi: component.$parent.position.Yi, X: component.$parent.position.X, Y: component.$parent.position.Y, scalei: component.$parent.position.scalei, scale: component.$parent.position.scale }
     var newPosition = {
       X: newCoords.X,

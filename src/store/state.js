@@ -14,7 +14,8 @@ const state = new Vue({
     diameters: {xxl: 200, xl: 124, l: 76, m: 47, s: 29, xs: 18},
     appStyle: {
       theme: 'theme-black',
-      mode: 'mode-dark'
+      mode: 'mode-dark',
+      shape: 'circle'
     },
     // pagination components
     currentPage: 0,

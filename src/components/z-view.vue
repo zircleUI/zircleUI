@@ -47,6 +47,14 @@ export default {
       type: Number,
       default: 0
     },
+    distanceX: {
+      type: Number,
+      default: 100
+    },
+    distanceY: {
+      type: Number,
+      default: 100
+    },
     size: {
       type: String,
       default: 'xxl'

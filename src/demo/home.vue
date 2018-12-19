@@ -4,6 +4,8 @@
     <div slot='extension'>
       <z-spot
         :angle='45'
+        :distanceX='220'
+        :distanceY='220'
         to-view='docs'
         class='accent'
         label='Docs'>
@@ -12,6 +14,8 @@
       <z-spot
         button
         :angle='135'
+        :distanceX='-220'
+        :distanceY='220'
         class='accent'
         label='Github'
         @click.native="openUrl">

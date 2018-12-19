@@ -2,7 +2,7 @@
   <div
     id="z-container"
     class="z-canvas"
-    :class="[classes, $zircle.getTheme(), $zircle.getThemeMode()]"
+    :class="[classes, $zircle.getTheme(), $zircle.getThemeMode(), $zircle.getThemeShape()]"
     :style="[$zircle.getPreviousViewName() !== '' ? {cursor: 'zoom-out'} : {}]"
     @click.stop="goback">
       <div id="z-zoomable-layer" ref="zoom" :style="zoom" @transitionend="notify">

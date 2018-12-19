@@ -21,6 +21,10 @@ const app = {
       store.state.appStyle.mode = 'mode-' + config.style.mode
       store.actions.setLog('- Theme mode: ' + config.style.mode)
     }
+    if (config.style && config.style.shape) {
+      store.state.appStyle.shape = config.style.shape
+      store.actions.setLog('- Theme shape: ' + config.style.shape)
+    }
     if (config.router) {
       store.state.router = config.router
       store.state.isRouterEnabled = true
