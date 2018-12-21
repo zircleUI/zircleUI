@@ -17,6 +17,10 @@
 
 ## 💥 This is the dev branch of zircle-ui
 
+```bash
+npm install zircle@next
+```
+
 ## Contributing
 Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](https://zircleui.github.io/docs/contribute/) some guidelines for inspiration.
 
