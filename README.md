@@ -37,6 +37,11 @@ After cloning the repository, execute:
 ```bash
 npm install
 ```
+To work with the dev branch, run:
+
+```bash
+git checkout dev
+```
 
 ## Commonly used NPM scripts
 ```bash
