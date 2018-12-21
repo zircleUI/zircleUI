@@ -2,7 +2,7 @@
 
 exports[`z-canvas.vue Has the expected html structure 1`] = `
 <div
-  class="z-canvas is-full-mode theme-black mode-dark"
+  class="z-canvas is-full-mode theme-black mode-dark circle"
   id="z-container"
 >
   <div

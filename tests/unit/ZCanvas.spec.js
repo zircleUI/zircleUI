@@ -19,9 +19,21 @@ describe('z-canvas.vue', () => {
     expect(wrapper.find('#z-container').classes()).toContain('theme-black')
     expect(wrapper.find('#z-container').classes()).toContain('mode-dark')
     expect(wrapper.find('#z-container').classes()).toContain('is-full-mode')
+    expect(wrapper.find('#z-container').classes()).toContain('circle')
   })
   it('Has the expected html structure', () => {
     // Note: If props.imagesrc and or props.label are present, slots.imagesrc and slots.label wont be rendered
     expect(wrapper.element).toMatchSnapshot()
+  })
+  it('Defaults theme shape to circle', () => {
+    expect(localVue.prototype.$zircle.getThemeShape()).toEqual('circle')
+  })
+  it('Changes theme shape to square', () => {
+    localVue.prototype.$zircle.setThemeShapeToSquare()
+    expect(localVue.prototype.$zircle.getThemeShape()).toEqual('square')
+  })
+  it('Changes theme shape to circle', () => {
+    localVue.prototype.$zircle.setThemeShapeToCircle()
+    expect(localVue.prototype.$zircle.getThemeShape()).toEqual('circle')
   })
 })
