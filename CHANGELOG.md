@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/zircleui/zircleUI/compare/v1.2.1...v1.2.2) (2019-01-06)
-
+### Chores
+* Update package.json
 
 
 <a name="1.2.1"></a>
