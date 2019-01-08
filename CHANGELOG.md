@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.3"></a>
+## [1.2.3](https://github.com/zircleui/zircleUI/compare/v1.2.2...v1.2.3) (2019-01-08)
+
+
+### Features
+
+* 🎸 improve usability of vue-router ([93cf44a](https://github.com/zircleui/zircleUI/commit/93cf44a)), closes [#19](https://github.com/zircleui/zircleUI/issues/19)
+
+
+### BREAKING CHANGES
+
+* You have to define the routes as usualy do with vue-router, You don't
+have to use `setView` to define the initial view, There is no need to
+add the components in `$options.components`, You need to use named
+routes, More information a guide to use vue-router on [zircle docs](#)
+
+
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/zircleui/zircleUI/compare/v1.2.1...v1.2.2) (2019-01-06)
 
