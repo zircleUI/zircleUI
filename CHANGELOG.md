@@ -13,10 +13,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### BREAKING CHANGES
 
-* You have to define the routes as usualy do with vue-router, You don't
-have to use `setView` to define the initial view, There is no need to
-add the components in `$options.components`, You need to use named
-routes, More information a guide to use vue-router on [zircle docs](#)
+* You have to define the routes as usualy do with vue-router and use `named routes`
+* You don't have to use `setView` to define the initial view as now is handled by Vue-router.
+* There is no need to add the components in `$options.components`.
+* More information and guides on [zircle docs](https://zircleui.github.io/docs/guide/using-vue-router.html)
 
 
 
