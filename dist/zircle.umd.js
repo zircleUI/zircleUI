@@ -486,12 +486,12 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"42fc28b8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/z-canvas.vue?vue&type=template&id=0f98c91d&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"42fc28b8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/z-canvas.vue?vue&type=template&id=7d151d6c&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"z-canvas",class:[_vm.classes, _vm.$zircle.getTheme(), _vm.$zircle.getThemeMode()],style:([_vm.$zircle.getPreviousViewName() !== '' ? {cursor: 'zoom-out'} : {}]),attrs:{"id":"z-container"},on:{"click":function($event){$event.stopPropagation();return _vm.goback($event)}}},[_c('div',{ref:"zoom",style:(_vm.zoom),attrs:{"id":"z-zoomable-layer"},on:{"transitionend":_vm.notify}},[_c('z-view-manager')],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/z-canvas.vue?vue&type=template&id=0f98c91d&
+// CONCATENATED MODULE: ./src/components/z-canvas.vue?vue&type=template&id=7d151d6c&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"42fc28b8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/child-components/z-view-manager.vue?vue&type=template&id=4d70a21d&
 var z_view_managervue_type_template_id_4d70a21d_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition-group',{attrs:{"name":_vm.$zircle.getNavigationMode() === 'forward' ? 'z-next' : 'z-prev',"tag":"section"}},[_vm._l((_vm.views),function(view){return _c(view.component,{key:view.name,tag:"component",class:{
@@ -611,15 +611,14 @@ component.options.__file = "z-view-manager.vue"
   },
   methods: {
     notify: function notify() {
-      this.$zircle.setNavigationMode('');
+      this.$zircle.setNavigationMode('iddle');
     },
     goback: function goback() {
-      if (this.$zircle.getPreviousViewName() !== '' && this.$zircle.getBackwardNavigationState() === false) {
-        if (this.$zircle.getRouterState() === false) {
-          this.$zircle.goBack();
-        } else {
-          this.$router.back();
-        }
+      if (this.$zircle.getPreviousViewName() !== '' && this.$zircle.getBackwardNavigationState() === false && this.$zircle.getRouterState() === false) {
+        this.$zircle.goBack();
+      } else if (this.$zircle.getPreviousViewName() !== '' && this.$zircle.getBackwardNavigationState() === false && this.$zircle.getRouterState() === true) {
+        this.$zircle.setNavigationMode('backward');
+        this.$router.back();
       }
     }
   },
@@ -637,6 +636,11 @@ component.options.__file = "z-view-manager.vue"
       // On resize change the width of ui components
       vm.$zircle.getDimensions();
     });
+
+    document.onmouseleave = function () {
+      // User's mouse has left the page.
+      vm.$zircle.setNavigationMode('backward');
+    };
   }
 });
 // CONCATENATED MODULE: ./src/components/z-canvas.vue?vue&type=script&lang=js&
@@ -691,6 +695,7 @@ var state = new external_commonjs_vue_commonjs2_vue_root_Vue_default.a({
     history: [],
     backwardNavigation: false,
     componentList: {},
+    goBackView: '',
     // look & feel
     diameters: {
       xxl: 200,
@@ -718,27 +723,117 @@ var state = new external_commonjs_vue_commonjs2_vue_root_Vue_default.a({
 var object_assign = __webpack_require__("5176");
 var assign_default = /*#__PURE__*/__webpack_require__.n(object_assign);
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.replace.js
+var es6_regexp_replace = __webpack_require__("a481");
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/define-property.js
+var define_property = __webpack_require__("85f2");
+var define_property_default = /*#__PURE__*/__webpack_require__.n(define_property);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    define_property_default()(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.function.name.js
 var es6_function_name = __webpack_require__("7f7f");
 
 // CONCATENATED MODULE: ./src/store/modules/router.js
 
 
+
+
 var router = {
+  evaluateRoute: function evaluateRoute(view, position) {
+    var match = store_store.state.router.resolve(view.path).route.matched[0];
+    var component = match.components.default;
+    var name = match.name;
+    store_store.actions.setComponentList(_defineProperty({}, name, component));
+    store_store.state.history.push({
+      name: name,
+      position: position,
+      params: view.route.params,
+      component: component
+    });
+    store_store.actions.setNavigationMode('forward');
+
+    if (view.name !== name) {
+      return store_store.state.router.push({
+        name: name,
+        params: view.route.params
+      });
+    } else {
+      return store_store.state.router.push(view.route);
+    }
+  },
+  replace: function replace(view) {
+    var match = store_store.state.router.resolve(view).route.matched[0];
+    var component = match.components.default;
+    store_store.state.params = '';
+    store_store.state.history = [];
+    store_store.actions.setComponentList(_defineProperty({}, view.name, component));
+    store_store.state.history.push({
+      name: view.name,
+      position: {
+        X: 0,
+        Y: 0,
+        scale: 1,
+        Xi: 0,
+        Yi: 0,
+        scalei: 1
+      },
+      params: view.params,
+      component: component
+    });
+    store_store.actions.setNavigationMode('forward');
+    store_store.state.router.replace(view);
+    store_store.actions.setLog('replace() => ' + store_store.state.history[store_store.state.history.length - 1].name);
+  },
   getRouterState: function getRouterState() {
     return store_store.state.isRouterEnabled;
+  },
+  isFallbackView: function isFallbackView() {
+    if (store_store.actions.getFallbackView() !== store_store.actions.getCurrentViewName() && store_store.actions.getHistoryLength() === 1) return true;
+  },
+  setFallbackView: function setFallbackView(view) {
+    store_store.state.goBackView = view;
+  },
+  getFallbackView: function getFallbackView() {
+    return store_store.state.goBackView;
   },
   setRouterHooks: function setRouterHooks() {
     store_store.state.router.beforeEach(function (to, from, next) {
       if (store_store.actions.getNavigationMode() === 'forward' && store_store.state.history.length >= 1) {
         store_store.actions.setLog('VueRouter: zoom-in to ' + to.name);
         next();
-      } else {
-        if (store_store.state.history.length > 1) {
+      } else if (store_store.actions.getNavigationMode() === 'backward' && store_store.state.history.length >= 1) {
+        store_store.actions.goBack();
+        store_store.actions.setLog('VueRouter: zoom-out to ' + to.name);
+        next();
+      } else if (store_store.actions.getNavigationMode() === 'iddle' && store_store.state.history.length >= 1) {
+        if (window.onhashchange || window.onpopstate) {
           store_store.actions.goBack();
-          store_store.actions.setLog('VueRouter: zoom-out to ' + to.name);
-          next();
+          store_store.actions.setLog('VueRouter: goBack');
+        } else {
+          store_store.actions.replace({
+            name: to.name,
+            params: to.params
+          });
+          store_store.actions.setLog('VueRouter: replace url');
         }
+
+        next();
       }
     });
   }
@@ -802,8 +897,8 @@ var position_position = {
     return store_store.actions.getCurrentViewName() === viewName ? store_store.actions.getCurrentPosition() : store_store.actions.getPastPosition();
   },
   calcPosition: function calcPosition(component) {
-    store_store.actions.setLog('calcPosition() => ' + component.componentType); // Variable declaration
-
+    // store.actions.setLog('calcPosition() => ' + component.componentType)
+    // Variable declaration
     var parentPosition = {
       Xi: 0,
       Yi: 0,
@@ -896,15 +991,6 @@ function retrieveViewName(pos) {
   return viewName;
 }
 
-function papa(view, position, params) {
-  return store_store.state.history.push({
-    name: view.name,
-    position: position,
-    params: params,
-    component: store_store.actions.resolveComponent(store_store.actions.getComponentList(), view.name)
-  });
-}
-
 function transformViewName(view) {
   view = view.toLowerCase();
   var count = 0;
@@ -922,46 +1008,47 @@ function transformViewName(view) {
   }
 }
 
-function createRoute(path, name, component) {
-  if (store_store.state.isRouterEnabled && store_store.state.router.resolve(path).route.matched[0] === undefined) {
-    store_store.state.router.addRoutes([{
-      path: path,
-      name: name,
-      component: component
-    }]);
-    store_store.actions.setLog('VueRouter: route added ' + name, component);
-  }
-}
-
 function parseView(data) {
-  if (typeof data === 'string') {
-    var name = transformViewName(data);
-    var route = '/' + name;
-    createRoute(route, name, store_store.actions.resolveComponent(store_store.actions.getComponentList(), name));
-  } else {
-    name = transformViewName(data.name);
-    var params = data.params;
-    var paramPath = '';
+  var name;
+  var route;
+  var paramPath = '';
+  var path;
 
-    keys_default()(params).forEach(function (key) {
-      paramPath += '/' + key + '/:' + key;
+  if (typeof data === 'string') {
+    name = transformViewName(data);
+    route = {
+      name: name
+    };
+    path = '/' + name;
+  } else {
+    keys_default()(data.params).forEach(function (key) {
+      paramPath += '/:' + key;
     });
 
-    var path = '/' + name + paramPath;
+    name = transformViewName(data.name);
     route = {
       name: name,
       params: data.params
     };
-    createRoute(path, name, store_store.actions.resolveComponent(store_store.actions.getComponentList(), name));
+    path = '/' + name + '' + paramPath;
   }
 
   return {
     name: name,
-    route: route
+    route: route,
+    path: path
   };
 }
 
 var navigation = {
+  addToHistory: function addToHistory(view, position, params) {
+    return store_store.state.history.push({
+      name: view.name,
+      position: position,
+      params: params,
+      component: store_store.actions.resolveComponent(store_store.actions.getComponentList(), view.name)
+    });
+  },
   resolveComponent: function resolveComponent(list, view) {
     view = view.split('--')[0];
 
@@ -1001,10 +1088,8 @@ var navigation = {
     return store_store.state.history.slice(0);
   },
   setNavigationMode: function setNavigationMode(value) {
-    if (value === 'forward' || value === 'backward' || value === '') {
+    if (value === 'forward' || value === 'backward' || value === 'iddle' || value === 'replace') {
       store_store.state.navigationMode = value;
-      if (value === '') value = 'iddle';
-      store_store.actions.setLog('Navigation mode is ' + value);
     }
   },
   getNavigationMode: function getNavigationMode() {
@@ -1052,7 +1137,7 @@ var navigation = {
     }
   },
   setView: function setView(data, options) {
-    if (store_store.state.history.length < 6) {
+    if (store_store.state.history.length < 6 && store_store.state.isRouterEnabled === false) {
       var view = parseView(data);
       var position = {};
       !options ? position = {
@@ -1063,9 +1148,21 @@ var navigation = {
         Yi: 0,
         scalei: 1
       } : position = options.position;
-      papa(view, position, view.route.params);
+      store_store.actions.addToHistory(view, position, view.route.params);
       store_store.actions.setNavigationMode('forward');
-      view.route && store_store.state.isRouterEnabled === true ? store_store.state.router.push(view.route) : store_store.state.params = view.route.params;
+    } else if (store_store.state.history.length < 6 && store_store.state.isRouterEnabled === true) {
+      var _view = parseView(data);
+
+      var _position = {};
+      !options ? _position = {
+        X: 0,
+        Y: 0,
+        scale: 1,
+        Xi: 0,
+        Yi: 0,
+        scalei: 1
+      } : _position = options.position;
+      store_store.actions.evaluateRoute(_view, _position);
     } else {
       store_store.actions.setLog('Max zoom level reached');
     }
@@ -1074,7 +1171,13 @@ var navigation = {
     if (store_store.state.history.length > 1) {
       store_store.actions.setNavigationMode('backward');
       store_store.state.history.pop();
-      store_store.state.isRouterEnabled === true ? store_store.state.params = '' : store_store.state.params = store_store.state.history[store_store.state.history.length - 1].params;
+
+      if (store_store.state.isRouterEnabled === true) {
+        store_store.state.params = '';
+      } else {
+        store_store.state.params = store_store.state.history[store_store.state.history.length - 1].params;
+      }
+
       store_store.actions.setLog('goBack() => ' + store_store.state.history[store_store.state.history.length - 1].name);
     }
   }
@@ -1270,15 +1373,7 @@ var debug = {
     var color = '';
     type === 'warn' ? (bgColor = 'yellow', color = 'black') : type === 'error' ? (bgColor = 'red', color = 'white') : (bgColor = 'green', color = 'white'); // eslint-disable-line
 
-    if (store_store.state.debug && msg === 'Navigation mode is forward' && store_store.actions.getHistoryLength() === 1) {
-      console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Initial view'); // eslint-disable-line no-console
-    } else if (store_store.state.debug && msg === 'Navigation mode is forward' && store_store.actions.getHistoryLength() >= 1) {
-      console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Zoom-in to new view'); // eslint-disable-line no-console
-    } else if (store_store.state.debug && msg === 'Navigation mode is backward') {
-      console.groupCollapsed('%c Z ', 'background: gray; color:  white', 'Zoom-out to previous view'); // eslint-disable-line no-console
-    } else if (store_store.state.debug && msg === 'Navigation mode is iddle') {
-      console.groupEnd(); // eslint-disable-line no-console
-    } else if (store_store.state.debug) {
+    if (store_store.state.debug) {
       console.log('%c z ', 'background: ' + bgColor + '; color:  ' + color + '', msg); // eslint-disable-line no-console
     }
   },
@@ -1321,6 +1416,7 @@ var list_list = {
 /* harmony default export */ var modules_list = (list_list);
 // CONCATENATED MODULE: ./src/store/modules/app.js
 
+
 var app = {
   getAppMode: function getAppMode() {
     return store_store.state.appMode;
@@ -1352,7 +1448,12 @@ var app = {
       store_store.state.router = _config.router;
       store_store.state.isRouterEnabled = true;
       store_store.actions.setRouterHooks();
-      store_store.actions.setLog('- VueRouter enabled');
+      store_store.actions.setLog('- VueRouter enabled'); // console.log(store.state.router.currentRoute)
+
+      store_store.actions.setView({
+        name: store_store.state.router.currentRoute.name,
+        params: store_store.state.router.currentRoute.params
+      });
       if (store_store.actions.getAppMode() === 'mixed') store_store.actions.setLog('You should not use VueRouter when Zircle is in mixed mode.', 'warn');
     }
   }
@@ -2908,6 +3009,18 @@ module.exports = function (Constructor, NAME, next) {
 
 /***/ }),
 
+/***/ "454f":
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__("46a7");
+var $Object = __webpack_require__("584a").Object;
+module.exports = function defineProperty(it, key, desc) {
+  return $Object.defineProperty(it, key, desc);
+};
+
+
+/***/ }),
+
 /***/ "4588":
 /***/ (function(module, exports) {
 
@@ -2946,6 +3059,16 @@ module.exports = function (bitmap, value) {
     value: value
   };
 };
+
+
+/***/ }),
+
+/***/ "46a7":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__("63b6");
+// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+$export($export.S + $export.F * !__webpack_require__("8e60"), 'Object', { defineProperty: __webpack_require__("d9f6").f });
 
 
 /***/ }),
@@ -3760,12 +3883,12 @@ NAME in FProto || __webpack_require__("9e1e") && dP(FProto, NAME, {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"42fc28b8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/z-view.vue?vue&type=template&id=70e117d2&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"42fc28b8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/z-view.vue?vue&type=template&id=1716af7b&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"z-shape primary",class:[_vm.componentType],staticStyle:{"overflow":"visible"},style:(_vm.responsive === true ? _vm.styles.main : _vm.zpos.main),on:{"animationend":_vm.notify,"mouseover":function($event){_vm.$zircle.allowBackwardNavigation(true)},"mouseleave":function($event){_vm.$zircle.allowBackwardNavigation(false)}}},[(_vm.$slots['image'] || _vm.imagePath)?_c('div',{staticClass:"z-content",attrs:{"id":_vm.fullView}},[(_vm.imagePath)?_c('img',{attrs:{"src":_vm.imagePath,"width":"100%","height":"100%"}}):_vm._e(),(!_vm.imagePath)?_vm._t("image"):_vm._e()],2):_vm._e(),_c('section',{staticStyle:{"opacity":"0"},style:(_vm.animation)},[_c('div',{staticClass:"z-outer-circle",style:(_vm.responsive === true ? _vm.styles.plate : _vm.zpos.plate)}),(_vm.scrollBar)?_c('z-scroll',{staticStyle:{"overflow":"visible"},attrs:{"scrollVal":_vm.scrollVal},on:{"update:scrollVal":function($event){_vm.scrollVal=$event}}}):_vm._e(),(_vm.slider === true)?_c('z-slider',{attrs:{"progress":_vm.progress}}):_vm._e(),(_vm.label)?_c('div',{staticClass:"z-label",class:_vm.labelPos},[_c('div',{staticClass:"inside"},[_vm._v("\n        "+_vm._s(_vm.label)+"\n      ")])]):_vm._e(),_c('div',{ref:"maincontent",staticClass:"z-content maincontent",class:[_vm.longContent, _vm.firefoxScroll],on:{"&scroll":function($event){return _vm.scroll($event)}}},[_c('div',{ref:"ztext"},[_vm._t("default")],2)]),(_vm.$slots['media'])?_c('div',{staticClass:"z-content",staticStyle:{"z-index":"60"}},[_vm._t("media")],2):_vm._e(),_vm._t("extension")],2)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/z-view.vue?vue&type=template&id=70e117d2&
+// CONCATENATED MODULE: ./src/components/z-view.vue?vue&type=template&id=1716af7b&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.match.js
 var es6_regexp_match = __webpack_require__("4917");
@@ -4069,7 +4192,7 @@ component.options.__file = "z-scroll.vue"
   },
   methods: {
     notify: function notify() {
-      if (this.$zircle.getHistoryLength() === 1) this.$zircle.setNavigationMode('');
+      if (this.$zircle.getHistoryLength() === 1) this.$zircle.setNavigationMode('iddle');
     },
     scroll: function scroll() {
       if (this.scrollBar === true) {
@@ -4147,6 +4270,13 @@ module.exports = function () { /* empty */ };
 
 module.exports = {};
 
+
+/***/ }),
+
+/***/ "85f2":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("454f");
 
 /***/ }),
 
@@ -4468,6 +4598,132 @@ module.exports = Object.create || function create(O, Properties) {
 var $export = __webpack_require__("63b6");
 
 $export($export.S + $export.F, 'Object', { assign: __webpack_require__("9306") });
+
+
+/***/ }),
+
+/***/ "a481":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var anObject = __webpack_require__("cb7c");
+var toObject = __webpack_require__("4bf8");
+var toLength = __webpack_require__("9def");
+var toInteger = __webpack_require__("4588");
+var advanceStringIndex = __webpack_require__("0390");
+var regExpExec = __webpack_require__("5f1b");
+var max = Math.max;
+var min = Math.min;
+var floor = Math.floor;
+var SUBSTITUTION_SYMBOLS = /\$([$&`']|\d\d?|<[^>]*>)/g;
+var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&`']|\d\d?)/g;
+
+var maybeToString = function (it) {
+  return it === undefined ? it : String(it);
+};
+
+// @@replace logic
+__webpack_require__("214f")('replace', 2, function (defined, REPLACE, $replace, maybeCallNative) {
+  return [
+    // `String.prototype.replace` method
+    // https://tc39.github.io/ecma262/#sec-string.prototype.replace
+    function replace(searchValue, replaceValue) {
+      var O = defined(this);
+      var fn = searchValue == undefined ? undefined : searchValue[REPLACE];
+      return fn !== undefined
+        ? fn.call(searchValue, O, replaceValue)
+        : $replace.call(String(O), searchValue, replaceValue);
+    },
+    // `RegExp.prototype[@@replace]` method
+    // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@replace
+    function (regexp, replaceValue) {
+      var res = maybeCallNative($replace, regexp, this, replaceValue);
+      if (res.done) return res.value;
+
+      var rx = anObject(regexp);
+      var S = String(this);
+      var functionalReplace = typeof replaceValue === 'function';
+      if (!functionalReplace) replaceValue = String(replaceValue);
+      var global = rx.global;
+      if (global) {
+        var fullUnicode = rx.unicode;
+        rx.lastIndex = 0;
+      }
+      var results = [];
+      while (true) {
+        var result = regExpExec(rx, S);
+        if (result === null) break;
+        results.push(result);
+        if (!global) break;
+        var matchStr = String(result[0]);
+        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
+      }
+      var accumulatedResult = '';
+      var nextSourcePosition = 0;
+      for (var i = 0; i < results.length; i++) {
+        result = results[i];
+        var matched = String(result[0]);
+        var position = max(min(toInteger(result.index), S.length), 0);
+        var captures = [];
+        // NOTE: This is equivalent to
+        //   captures = result.slice(1).map(maybeToString)
+        // but for some reason `nativeSlice.call(result, 1, result.length)` (called in
+        // the slice polyfill when slicing native arrays) "doesn't work" in safari 9 and
+        // causes a crash (https://pastebin.com/N21QzeQA) when trying to debug it.
+        for (var j = 1; j < result.length; j++) captures.push(maybeToString(result[j]));
+        var namedCaptures = result.groups;
+        if (functionalReplace) {
+          var replacerArgs = [matched].concat(captures, position, S);
+          if (namedCaptures !== undefined) replacerArgs.push(namedCaptures);
+          var replacement = String(replaceValue.apply(undefined, replacerArgs));
+        } else {
+          replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
+        }
+        if (position >= nextSourcePosition) {
+          accumulatedResult += S.slice(nextSourcePosition, position) + replacement;
+          nextSourcePosition = position + matched.length;
+        }
+      }
+      return accumulatedResult + S.slice(nextSourcePosition);
+    }
+  ];
+
+    // https://tc39.github.io/ecma262/#sec-getsubstitution
+  function getSubstitution(matched, str, position, captures, namedCaptures, replacement) {
+    var tailPos = position + matched.length;
+    var m = captures.length;
+    var symbols = SUBSTITUTION_SYMBOLS_NO_NAMED;
+    if (namedCaptures !== undefined) {
+      namedCaptures = toObject(namedCaptures);
+      symbols = SUBSTITUTION_SYMBOLS;
+    }
+    return $replace.call(replacement, symbols, function (match, ch) {
+      var capture;
+      switch (ch.charAt(0)) {
+        case '$': return '$';
+        case '&': return matched;
+        case '`': return str.slice(0, position);
+        case "'": return str.slice(tailPos);
+        case '<':
+          capture = namedCaptures[ch.slice(1, -1)];
+          break;
+        default: // \d\d?
+          var n = +ch;
+          if (n === 0) return ch;
+          if (n > m) {
+            var f = floor(n / 10);
+            if (f === 0) return ch;
+            if (f <= m) return captures[f - 1] === undefined ? ch.charAt(1) : captures[f - 1] + ch.charAt(1);
+            return ch;
+          }
+          capture = captures[n - 1];
+      }
+      return capture === undefined ? '' : capture;
+    });
+  }
+});
 
 
 /***/ }),
