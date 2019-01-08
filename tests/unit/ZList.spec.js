@@ -7,7 +7,7 @@ const localVue = createLocalVue()
 localVue.use(zircle)
 const wrapper = shallowMount(zlist, {
   propsData: {
-    items: [{name: 'Apple', color: 'red'}, {name: 'Apple1', color: 'green'}],
+    items: [{ name: 'Apple', color: 'red' }, { name: 'Apple1', color: 'green' }],
     perPage: 5
   },
   provide: function () {
@@ -17,7 +17,7 @@ const wrapper = shallowMount(zlist, {
   },
   computed: {
     position: function () {
-      return {X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1}
+      return { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 }
     }
   },
   // Currently vue-test-utils is working in the implementation of scopedSlots.
@@ -32,7 +32,7 @@ const wrapper = shallowMount(zlist, {
 })
 describe('z-list.vue', () => {
   it('Renders props when passed', () => {
-    expect(wrapper.vm.items).toEqual([{name: 'Apple', color: 'red'}, {name: 'Apple1', color: 'green'}])
+    expect(wrapper.vm.items).toEqual([{ name: 'Apple', color: 'red' }, { name: 'Apple1', color: 'green' }])
     expect(wrapper.vm.perPage).toEqual(5)
   })
   it('Has the expected html structure', () => {

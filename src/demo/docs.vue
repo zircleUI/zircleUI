@@ -21,11 +21,11 @@ export default {
   data () {
     return {
       sections: [
-        {name: 'Guide', url: 'https://zircleui.github.io/docs/guide/', icon: 'fas fa-compass'},
-        {name: 'Tutorial', url: 'https://zircleui.github.io/docs/tutorial/', icon: 'fas fa-magic'},
-        {name: 'API', url: 'https://zircleui.github.io/docs/api/', icon: 'fas fa-code'},
-        {name: 'Examples', url: 'https://zircleui.github.io/docs/examples/vuejs-ecosystem.html', icon: 'fas fa-palette'},
-        {name: 'Contributing', url: 'https://zircleui.github.io/docs/contribute/', icon: 'fas fa-hands-helping'}
+        { name: 'Guide', url: 'https://zircleui.github.io/docs/guide/', icon: 'fas fa-compass' },
+        { name: 'Tutorial', url: 'https://zircleui.github.io/docs/tutorial/', icon: 'fas fa-magic' },
+        { name: 'API', url: 'https://zircleui.github.io/docs/api/', icon: 'fas fa-code' },
+        { name: 'Examples', url: 'https://zircleui.github.io/docs/examples/vuejs-ecosystem.html', icon: 'fas fa-palette' },
+        { name: 'Contributing', url: 'https://zircleui.github.io/docs/contribute/', icon: 'fas fa-hands-helping' }
       ]
     }
   },
