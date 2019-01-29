@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/zircleui/zircleUI/compare/v1.2.3...v1.2.4) (2019-01-29)
+
+
+### Bug Fixes
+
+* 🐛 avoid CSS conflicts ([3c0e4d6](https://github.com/zircleui/zircleUI/commit/3c0e4d6)), closes [#24](https://github.com/zircleui/zircleUI/issues/24)
+
+
+
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/zircleui/zircleUI/compare/v1.2.2...v1.2.3) (2019-01-08)
 
