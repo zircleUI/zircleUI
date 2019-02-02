@@ -16,7 +16,8 @@
 </p>
 
 <p align="center">
-  Like? Leave a star, it will help attract more visitors and collaborators.
+  Like it? Leave a star, it will help attract more visitors and contributors.
+  <a class="github-button" href="https://github.com/zircleUI/zircleUI" data-icon="octicon-star" data-show-count="true" aria-label="Star zircleUI/zircleUI on GitHub">Star</a>
 </p>
 
 ## What is zircle-ui?
