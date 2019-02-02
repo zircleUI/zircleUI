@@ -15,6 +15,10 @@
   <a href="https://codeclimate.com/github/zircleUI/zircleUI/maintainability"><img src="https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability" /></a>
 </p>
 
+<p align="center">
+  Like? Leave a star, it will help attract more visitors and collaborators.
+</p>
+
 ## What is zircle-ui?
 
 **Zircle-ui** is an experimental frontend library to develop [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface). It is based on [vue.js](https://vuejs.org/) and JavaScript and comes with a set of components to create unconventional user interfaces.
