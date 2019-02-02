@@ -17,7 +17,7 @@
 
 <p align="center">
   Like it? Leave a star, it will help attract more visitors and contributors.
-  <img src="https://img.shields.io/github/stars/zircleUI/zircleUI.svg?style=social">
+  <img src="https://img.shields.io/github/stars/zircleUI/zircleUI.svg?label=%E2%98%85%20Star&logo=-&style=social">
 </p>
 
 ## What is zircle-ui?
