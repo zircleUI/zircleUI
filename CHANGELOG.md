@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.5"></a>
+## [1.2.5](https://github.com/zircleui/zircleUI/compare/v1.2.4...v1.2.5) (2019-03-14)
+
+
+### Bug Fixes
+
+* 🐛 retrieve params when zoom into a new view ([7211174](https://github.com/zircleui/zircleUI/commit/7211174)), closes [#26](https://github.com/zircleui/zircleUI/issues/26)
+
+
+
 <a name="1.2.4"></a>
 ## [1.2.4](https://github.com/zircleui/zircleUI/compare/v1.2.3...v1.2.4) (2019-01-29)
 
