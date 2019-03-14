@@ -117,6 +117,7 @@ const navigation = {
       !options ? position = { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 } : position = options.position
       store.actions.addToHistory(view, position, view.route.params)
       store.actions.setNavigationMode('forward')
+      if (view.route) store.state.params = view.route.params
     } else if (store.state.history.length < 6 && store.state.isRouterEnabled === true) {
       let view = parseView(data)
       let position = {}
