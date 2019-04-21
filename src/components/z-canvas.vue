@@ -42,15 +42,14 @@ export default {
   },
   methods: {
     notify () {
-      this.$zircle.setNavigationMode('')
+      this.$zircle.setNavigationMode('iddle')
     },
     goback () {
-      if (this.$zircle.getPreviousViewName() !== '' && this.$zircle.getBackwardNavigationState() === false) {
-        if (this.$zircle.getRouterState() === false) {
-          this.$zircle.goBack()
-        } else {
-          this.$router.back()
-        }
+      if (this.$zircle.getPreviousViewName() !== '' && this.$zircle.getBackwardNavigationState() === false && this.$zircle.getRouterState() === false) {
+        this.$zircle.goBack()
+      } else if (this.$zircle.getPreviousViewName() !== '' && this.$zircle.getBackwardNavigationState() === false && this.$zircle.getRouterState() === true) {
+        this.$zircle.setNavigationMode('backward')
+        this.$router.back()
       }
     }
   },
@@ -69,6 +68,10 @@ export default {
       // On resize change the width of ui components
       vm.$zircle.getDimensions()
     })
+    document.onmouseleave = function () {
+      // User's mouse has left the page.
+      vm.$zircle.setNavigationMode('backward')
+    }
   }
 }
 </script>

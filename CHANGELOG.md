@@ -4,13 +4,48 @@ All notable changes to this project will be documented in this file. See [standa
 
 <a name="1.3.0"></a>
 ## [1.3.0](https://github.com/zircleui/zircleUI/compare/v1.2.1...v1.3.0) (2018-12-21)
-
-
-### Features
-
 * 🎸 Experimental Feature (WIP): add squared shapes ([f9d7bc0](https://github.com/zircleui/zircleUI/commit/f9d7bc0))
 
 * Thanks @alextappin !!
+
+<a name="1.2.5"></a>
+## [1.2.5](https://github.com/zircleui/zircleUI/compare/v1.2.4...v1.2.5) (2019-03-14)
+
+
+### Bug Fixes
+
+* 🐛 retrieve params when zoom into a new view ([7211174](https://github.com/zircleui/zircleUI/commit/7211174)), closes [#26](https://github.com/zircleui/zircleUI/issues/26)
+
+
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/zircleui/zircleUI/compare/v1.2.3...v1.2.4) (2019-01-29)
+
+
+### Bug Fixes
+
+* 🐛 avoid CSS conflicts ([3c0e4d6](https://github.com/zircleui/zircleUI/commit/3c0e4d6)), closes [#24](https://github.com/zircleui/zircleUI/issues/24)
+
+
+<a name="1.2.3"></a>
+## [1.2.3](https://github.com/zircleui/zircleUI/compare/v1.2.2...v1.2.3) (2019-01-08)
+
+### Features
+
+* 🎸 improve usability of vue-router ([93cf44a](https://github.com/zircleui/zircleUI/commit/93cf44a)), closes [#19](https://github.com/zircleui/zircleUI/issues/19)
+
+
+### BREAKING CHANGES
+
+* You have to define the routes as usualy do with vue-router and use `named routes`
+* You don't have to use `setView` to define the initial view as now is handled by Vue-router.
+* There is no need to add the components in `$options.components`.
+* More information and guides on [zircle docs](https://zircleui.github.io/docs/guide/using-vue-router.html)
+
+
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/zircleui/zircleUI/compare/v1.2.1...v1.2.2) (2019-01-06)
+### Chores
+* Update package.json
 
 
 <a name="1.2.1"></a>

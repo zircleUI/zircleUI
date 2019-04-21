@@ -41,7 +41,7 @@ const position = {
     return store.actions.getCurrentViewName() === viewName ? store.actions.getCurrentPosition() : store.actions.getPastPosition()
   },
   calcPosition (component) {
-    store.actions.setLog('calcPosition() => ' + component.componentType)
+    // store.actions.setLog('calcPosition() => ' + component.componentType)
     // Variable declaration
     var parentPosition = { Xi: 0, Yi: 0, X: 0, Y: 0, scalei: 1, scale: 1 }
     var newCoords = calcCoords(component.distance, component.angle, component.$parent.size)

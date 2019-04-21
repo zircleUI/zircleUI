@@ -174,7 +174,7 @@ export default {
   },
   methods: {
     notify () {
-      if (this.$zircle.getHistoryLength() === 1) this.$zircle.setNavigationMode('')
+      if (this.$zircle.getHistoryLength() === 1) this.$zircle.setNavigationMode('iddle')
     },
     scroll () {
       if (this.scrollBar === true) {

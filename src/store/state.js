@@ -10,6 +10,7 @@ const state = new Vue({
     history: [],
     backwardNavigation: false,
     componentList: {},
+    goBackView: '',
     // look & feel
     diameters: { xxl: 200, xl: 124, l: 76, m: 47, s: 29, xs: 18 },
     appStyle: {
