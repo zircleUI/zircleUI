@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.0-beta.0"></a>
+# [1.4.0-beta.0](https://github.com/zircleui/zircleUI/compare/v1.2.5...v1.4.0-beta.0) (2019-04-21)
+
+
+### Bug Fixes
+
+* 🐛 hide z-scroll on squared shapes ([f7272e7](https://github.com/zircleui/zircleUI/commit/f7272e7)), closes [#23](https://github.com/zircleui/zircleUI/issues/23)
+
+
+### Features
+
+* 🎸 Add circle or square shapes to some components ([a852f28](https://github.com/zircleui/zircleUI/commit/a852f28)), closes [#23](https://github.com/zircleui/zircleUI/issues/23)
+* 🎸 Fluid components size based on the size of z-canvas ([a3df60e](https://github.com/zircleui/zircleUI/commit/a3df60e)), closes [#28](https://github.com/zircleui/zircleUI/issues/28) [#29](https://github.com/zircleui/zircleUI/issues/29)
+
+
+
 <a name="1.3.0"></a>
 ## [1.3.0](https://github.com/zircleui/zircleUI/compare/v1.2.1...v1.3.0) (2018-12-21)
 * 🎸 Experimental Feature (WIP): add squared shapes ([f9d7bc0](https://github.com/zircleui/zircleUI/commit/f9d7bc0))
