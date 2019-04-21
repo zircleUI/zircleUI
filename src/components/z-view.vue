@@ -1,7 +1,7 @@
 <template>
   <div
     class="z-shape primary"
-    :class="[componentType]"
+    :class="[componentType, shape]"
     :style="responsive === true ? styles.main : zpos.main"
     style="overflow: visible;"
     @animationend="notify"
@@ -12,20 +12,20 @@
       <slot v-if="!imagePath" name="image"></slot>
     </div>
     <section style="opacity: 0" :style="animation">
-      <div class="z-outer-circle"  :style="responsive === true ? styles.plate : zpos.plate"></div>
-      <z-scroll v-if="scrollBar" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
-      <z-slider v-if="slider === true" :progress='progress'/>
-      <div v-if="label" class="z-label" :class="labelPos">
+      <div class="z-outer-circle" :class="[shape]"  :style="responsive === true ? styles.plate : zpos.plate"></div>
+      <z-scroll v-if="scrollBarEnabled" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
+      <z-slider v-if="sliderEnabled" :progress='progress'/>
+      <div v-if="label" class="z-label" :class="[shape, labelPos]">
         <div class="inside">
           {{label}}
         </div>
       </div>
-      <div class="z-content maincontent" ref="maincontent" :class="[longContent, firefoxScroll]" @scroll.passive="scroll">
+      <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent, firefoxScroll]" @scroll.passive="scroll">
         <div ref="ztext">
           <slot></slot>
         </div>
       </div>
-      <div v-if="$slots['media']" class="z-content" style="z-index: 60">
+      <div v-if="$slots['media']" :class="[shape]" class="z-content" style="z-index: 60">
         <slot name="media" ></slot>
       </div>
      <slot name="extension"></slot>
@@ -50,6 +50,14 @@ export default {
     size: {
       type: String,
       default: 'xxl'
+    },
+    circle: {
+      type: [Boolean],
+      default: false
+    },
+    square: {
+      type: [Boolean],
+      default: false
     },
     label: {
       type: [String, Number]
@@ -90,12 +98,29 @@ export default {
     }
   },
   computed: {
+    shape () {
+      return this.circle ? 'is-circle' : this.square ? 'is-square' : ''
+    },
+    sliderEnabled () {
+      let result
+      this.slider === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true 
+      : this.slider === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
+      : result = false
+      return result
+    },
+    scrollBarEnabled () {
+      let result
+      this.scrollBar === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true 
+      : this.scrollBar === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
+      : result = false
+      return result
+    },
     position () {
       return this.$zircle.calcViewPosition(this.fullView)
     },
     scrollBar () {
       var isScrollNeeded = false
-      if (this.isMounted === true && this.fullView === this.$zircle.getCurrentViewName() && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth(this.size) && this.$zircle.getThemeShape() === 'circle') {
+      if (this.isMounted === true && this.fullView === this.$zircle.getCurrentViewName() && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth(this.size)) {
         isScrollNeeded = true
       }
       return isScrollNeeded
@@ -137,8 +162,8 @@ export default {
     },
     longContent () {
       return {
-        'long-content': this.scrollBar === true,
-        'overflow-square': this.$zircle.getThemeShape() === 'square'
+        'long-content': this.scrollBarEnabled === true,
+        'overflow-square': this.scrollBarEnabled === false
       }
     },
     firefoxScroll () {
@@ -167,7 +192,7 @@ export default {
     }
   },
   mounted () {
-    if (navigator.userAgent.match('Firefox') && this.$zircle.getThemeShape() === 'circle') {
+    if (navigator.userAgent.match('Firefox') && this.scrollBarEnabled) {
       this.$zircle.setLog('Firefox desktop detected. Scroll events disabled')
       this.ffox = true
     }

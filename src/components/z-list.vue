@@ -3,7 +3,7 @@
     <div v-for="(item, index) in $zircle.getCurrentPage()" :key="item[0] + '-' + index">
       <slot v-bind="item" :index=index></slot>
     </div>
-    <z-pagination  v-if="$zircle.getNumberOfPages() > 1"
+    <z-pagination  v-if="$zircle.getThemeShape() === 'circle' && $zircle.getNumberOfPages() > 1"
       v-for="(page, index) in $zircle.getNumberOfPages()"
       :key="index + '_page'"
       :index="index"
@@ -13,6 +13,17 @@
       @mouseover.native = "$zircle.allowBackwardNavigation(true)"
       @mouseleave.native = "$zircle.allowBackwardNavigation(false)"
       @click.native="$zircle.setCurrentPageIndex(index)"/>
+      <div v-if="($zircle.getThemeShape() === 'square' || square) && $zircle.getNumberOfPages() > 1" style="position: absolute; width: 90%; top: 112%; height: 40px; display: flex; justify-content: space-between;">
+        <z-pagination
+        v-for="(page, index) in $zircle.getNumberOfPages()"
+        :key="index + '_page'"
+        :index="index"
+        :active="$zircle.getCurrentPageIndex()"
+        @mouseover.native = "$zircle.allowBackwardNavigation(true)"
+        @mouseleave.native = "$zircle.allowBackwardNavigation(false)"
+        @click.native="$zircle.setCurrentPageIndex(index)"/>
+
+      </div>
   </section>
 </template>
 
@@ -35,6 +46,10 @@ export default {
     items: {
       type: Array,
       required: true
+    },
+    square: {
+      type: Boolean,
+      default: false
     },
     perPage: {
       type: [Number],

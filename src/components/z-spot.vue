@@ -1,7 +1,7 @@
 <template>
   <div
     class="z-shape is-extension"
-    :class="[componentType, classes]"
+    :class="[componentType, shape, classes]"
     :role="button === true ? 'button' : ''"
     :style="responsive === true ? styles.main : zpos.main"
     @mouseover="spotin"
@@ -9,20 +9,20 @@
     @mousedown="pulse"
     @touchstart="pulse"
     @mouseup="move">
-      <div v-if="!button" ref="spot" class="z-outer-spot" :style="styles.plate"></div>
-      <div class="z-pulse" ref="pulse"></div>
-      <z-knob v-if="knob" :qty.sync="computedQty" :unit="unit" :min="min" :max="max" />
-      <z-slider v-if="slider === true" :progress='progress' />
-      <div class="z-label" :class="labelPos" :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''" v-if="label">
+      <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
+      <div class="z-pulse" :class="[shape]" ref="pulse"></div>
+      <z-knob v-if="knobEnabled" :qty.sync="computedQty" :unit="unit" :min="min" :max="max" />
+      <z-slider v-if="sliderEnabled" :progress='progress' />
+      <div class="z-label" :class="[shape,labelPos]" :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''" v-if="label">
         <div class="inside">
         {{label}} <span v-if="pos === 'outside'"> {{progressLabel}}</span>
         </div>
       </div>
-      <div class="z-content">
+      <div class="z-content" :class="[shape]" >
         <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
         <slot v-if="!imagePath" name="image"></slot>
       </div>
-      <div class="z-content" style="z-index: 10">
+      <div class="z-content" :class="[shape]"  style="z-index: 10">
         <span class="overflow">
           <span v-if="pos === 'inside' || pos === undefined ">{{progressLabel}}</span>
           <slot></slot>
@@ -52,6 +52,14 @@ export default {
     size: {
       type: String,
       default: 'medium'
+    },
+    circle: {
+      type: [Boolean],
+      default: false
+    },
+    square: {
+      type: [Boolean],
+      default: false
     },
     label: {
       type: [String, Number]
@@ -142,6 +150,20 @@ export default {
         return false
       }
     },
+    sliderEnabled () {
+      let result
+      this.slider === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true 
+      : this.slider === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
+      : result = false
+      return result
+    },
+    knobEnabled () {
+      let result
+      this.knob === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true 
+      : this.knob === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
+      : result = false
+      return result
+    },
     styles () {
       var width = this.$zircle.getComponentWidth(this.size)
       return {
@@ -164,6 +186,9 @@ export default {
         primary: this.$parent.componentType !== 'z-list',
         accent: this.$parent.componentType === 'z-list'
       }
+    },
+    shape () {
+      return this.circle ? 'is-circle' : this.square ? 'is-square' : ''
     },
     progressLabel () {
       if (this.computedQty) {

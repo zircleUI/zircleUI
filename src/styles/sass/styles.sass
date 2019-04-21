@@ -83,7 +83,11 @@ input
   left: 50%
   text-align: center
   .square &
-    border-radius: 0
+    border-radius: 5%
+  &.is-square
+      border-radius: 5%
+  &.is-circle
+      border-radius: 50%    
   &.z-view
     z-index: 40
     will-change: transform, opacity
@@ -101,8 +105,6 @@ input
           transition: border-color 300ms
     &.z-dialog
       z-index: 500
-      // opacity: 0.3
-      // overflow: hidden
     &.z-scale, &.z-spot, &.z-range
       will-change: transform, opacity
       transition: background-color 1s
@@ -120,6 +122,9 @@ input
       &:active
         cursor: grabbing
 
+.papa
+  position: relative
+  left: 0
 .z-scroll
   cursor: pointer
   &:hover
@@ -144,7 +149,11 @@ input
   border-radius: 50%
   // user-select: none
   .square &
-    border-radius: 0
+    border-radius: 5%
+  &.is-square
+      border-radius: 5%
+  &.is-circle
+      border-radius: 50%    
   &.maincontent
     cursor: default
     z-index: 50
@@ -183,8 +192,6 @@ input
       padding-right: 5px
       background-color: var(--background-color)
       border: 1px solid transparent
-      .square &
-        border-radius: 0
   &.top
     width: 100%
     top: calc(-15% + -25px)
@@ -196,8 +203,6 @@ input
       padding-left: 5px
       padding-right: 5px
       background-color: var(--background-color)
-      .square &
-        border-radius: 0
   &.left
     width: fit-content
     margin-top: calc(50% - 12.5px)
@@ -208,8 +213,6 @@ input
       padding-left: 5px
       padding-right: 5px
       background-color: var(--background-color)
-      .square &
-        border-radius: 0
   &.right
     width: fit-content
     margin-top: calc(50% - 12.5px)
@@ -220,8 +223,7 @@ input
       padding-left: 5px
       padding-right: 5px
       background-color: var(--background-color)
-      .square &
-        border-radius: 0
+
 .overflow
   overflow: visible
 .z-zoom-in-cursor
@@ -246,8 +248,6 @@ input
   left: 50%
   margin: -20px 0 0 -20px
   z-index: 70
-  .square &
-    border-radius: 0
   &:hover
     cursor: grab
   &:active
@@ -286,7 +286,11 @@ input
   border-radius: 50%
   overflow: hidden
   .square &
-    border-radius: 0
+    border-radius: 5%
+  &.is-square
+      border-radius: 5%
+  &.is-circle
+      border-radius: 50%    
 .z-outer-circle
   border-width: 1px
   border-style: dashed 
@@ -306,7 +310,11 @@ input
   opacity: 1
   overflow: hidden
   .square &
-    border-radius: 0
+    border-radius: 5%
+  &.is-square
+      border-radius: 5%
+  &.is-circle
+      border-radius: 50%    
 
 .z-dialog-transition-enter-active, .z-dialog-transition-leave-active
   transition: transform 0.3s
@@ -331,7 +339,11 @@ input
   left: 50%
   border-radius: 50%
   .square &
-    border-radius: 0
+    border-radius: 5%
+  &.is-square
+      border-radius: 5%
+  &.is-circle
+      border-radius: 50%    
 
 .pulse-animation
   animation: pulse 350ms ease-out

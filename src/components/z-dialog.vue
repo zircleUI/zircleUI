@@ -2,11 +2,11 @@
   <transition name="z-dialog-transition">
     <div
       class="z-shape is-extension primary"
-      :class="[componentType]"
+      :class="[componentType, shape]"
       :style="styles.main">
-        <z-slider v-if="selfClose" :progress="progress"></z-slider>
-        <div class="z-outer-circle" :style="styles.plate"></div>
-        <div class="z-content">
+        <z-slider v-if="selfCloseEnabled" :progress="progress"></z-slider>
+        <div class="z-outer-circle" :class="[shape]" :style="styles.plate"></div>
+        <div class="z-content" :class="[shape]">
             <slot></slot>
         </div>
       <slot name="extension"></slot>
@@ -26,6 +26,14 @@ export default {
     size: {
       type: String,
       default: 'xxl'
+    },
+    circle: {
+      type: [Boolean],
+      default: false
+    },
+    square: {
+      type: [Boolean],
+      default: false
     }
   },
   components: {
@@ -38,6 +46,16 @@ export default {
     }
   },
   computed: {
+    selfCloseEnabled () {
+      let result
+      this.selfClose === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true 
+      : this.selfClose === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
+      : result = false
+      return result
+    },
+    shape () {
+      return this.circle ? 'is-circle' : this.square ? 'is-square' : ''
+    },
     styles () {
       var zwidth = this.$zircle.getComponentWidth(this.size)
       return {
