@@ -95,7 +95,7 @@ export default {
     },
     scrollBar () {
       var isScrollNeeded = false
-      if (this.isMounted === true && this.fullView === this.$zircle.getCurrentViewName() && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth(this.size)) {
+      if (this.isMounted === true && this.fullView === this.$zircle.getCurrentViewName() && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth(this.size) && this.$zircle.getThemeShape() === 'circle') {
         isScrollNeeded = true
       }
       return isScrollNeeded
@@ -137,7 +137,8 @@ export default {
     },
     longContent () {
       return {
-        'long-content': this.scrollBar === true
+        'long-content': this.scrollBar === true,
+        'overflow-square': this.$zircle.getThemeShape() === 'square'
       }
     },
     firefoxScroll () {
@@ -166,7 +167,7 @@ export default {
     }
   },
   mounted () {
-    if (navigator.userAgent.match('Firefox')) {
+    if (navigator.userAgent.match('Firefox') && this.$zircle.getThemeShape() === 'circle') {
       this.$zircle.setLog('Firefox desktop detected. Scroll events disabled')
       this.ffox = true
     }
