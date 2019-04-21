@@ -4,11 +4,10 @@ exports[`z-spot.vue Has the expected html structure 1`] = `
 <div
   class="z-shape is-extension z-spot primary"
   role=""
-  style="width: 47px; height: 47px; margin: -23.5px 0px 0px -23.5px; transform: translate3d(0px, 0px, 0px);"
+  style="transform: translate3d(0px, 0px, 0px);"
 >
   <div
     class="z-outer-spot"
-    style="width: 62px; height: 62px; margin: -31px 0px 0px -31px;"
   />
    
   <div

@@ -13,7 +13,7 @@ const state = new Vue({
     goBackView: '',
     // look & feel
     diameters: {},
-    sizes: {xxl: 70, xl: 50, l: 40, m: 30, s: 15, xs: 10, xxs: 5 },
+    sizes: { xxl: 70, xl: 50, l: 40, m: 30, s: 15, xs: 10, xxs: 5 },
     appStyle: {
       theme: 'theme-black',
       mode: 'mode-dark',

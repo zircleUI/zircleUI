@@ -53,7 +53,7 @@ export default {
       }
     },
     compareAndNotify () {
-        this.$zircle.getDimensions()
+      this.$zircle.getDimensions()
     },
     addResizeHandlers () {
       this._resizeObject.contentDocument.defaultView.addEventListener('resize', this.compareAndNotify)
@@ -69,12 +69,12 @@ export default {
     this._resizeObject = object
     object.setAttribute('aria-hidden', 'true')
     object.setAttribute('tabindex', -1)
-    object.className = "z-resizable-object"
+    object.className = 'z-resizable-object'
     object.onload = this.addResizeHandlers
     object.type = 'text/html'
     object.data = 'about:blank'
     this.$el.appendChild(object)
-    
+
     document.onmouseleave = () => this.$zircle.setNavigationMode('backward')
   }
 }

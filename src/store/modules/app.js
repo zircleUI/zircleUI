@@ -14,13 +14,13 @@ const app = {
       store.actions.setLog('- Mode: ' + config.mode)
     }
     if (config.sizes) {
-      config.sizes.xxl ? store.state.sizes.xxl = config.sizes.xxl : ''
-      config.sizes.xl ? store.state.sizes.xl = config.sizes.xl : ''
-      config.sizes.l ? store.state.sizes.l = config.sizes.l : ''
-      config.sizes.m ? store.state.sizes.m = config.sizes.m : ''
-      config.sizes.s ? store.state.sizes.s = config.sizes.s : ''
-      config.sizes.xs ? store.state.sizes.xs = config.sizes.xs : ''
-      config.sizes.xxs ? store.state.sizes.xxs = config.sizes.xxs : ''
+      if (config.sizes.xxl) store.state.sizes.xxl = config.sizes.xxl
+      if (config.sizes.xl) store.state.sizes.xl = config.sizes.xl
+      if (config.sizes.l) store.state.sizes.l = config.sizes.l
+      if (config.sizes.m) store.state.sizes.m = config.sizes.m
+      if (config.sizes.s) store.state.sizes.s = config.sizes.s
+      if (config.sizes.xs) store.state.sizes.xs = config.sizes.xs
+      if (config.sizes.xxs) store.state.sizes.xxs = config.sizes.xxs
       store.actions.setLog('- Component sizes: ' + JSON.stringify(config.sizes))
     }
     if (config.style && config.style.theme) {

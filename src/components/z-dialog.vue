@@ -48,9 +48,9 @@ export default {
   computed: {
     selfCloseEnabled () {
       let result
-      this.selfClose === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true 
-      : this.selfClose === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-      : result = false
+      this.selfClose === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
+        : this.selfClose === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
+          : result = false
       return result
     },
     shape () {

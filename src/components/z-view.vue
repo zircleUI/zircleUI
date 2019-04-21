@@ -103,16 +103,16 @@ export default {
     },
     sliderEnabled () {
       let result
-      this.slider === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true 
-      : this.slider === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-      : result = false
+      this.slider === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
+        : this.slider === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
+          : result = false
       return result
     },
     scrollBarEnabled () {
       let result
-      this.scrollBar === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true 
-      : this.scrollBar === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-      : result = false
+      this.scrollBar === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
+        : this.scrollBar === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
+          : result = false
       return result
     },
     position () {

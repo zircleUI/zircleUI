@@ -4,7 +4,6 @@ exports[`z-dialog.vue Has the expected html structure 1`] = `
 <div
   class="z-shape is-extension primary z-dialog"
   name="z-dialog-transition"
-  style="width: 250px; height: 250px; margin: -125px 0px 0px -125px;"
 >
   <svg
     class="z-slider"
@@ -21,7 +20,6 @@ exports[`z-dialog.vue Has the expected html structure 1`] = `
    
   <div
     class="z-outer-circle"
-    style="width: 380px; height: 380px; margin: -190px 0px 0px -190px;"
   />
    
   <div

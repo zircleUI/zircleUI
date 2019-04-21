@@ -152,16 +152,16 @@ export default {
     },
     sliderEnabled () {
       let result
-      this.slider === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true 
-      : this.slider === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-      : result = false
+      this.slider === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
+        : this.slider === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
+          : result = false
       return result
     },
     knobEnabled () {
       let result
-      this.knob === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true 
-      : this.knob === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-      : result = false
+      this.knob === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
+        : this.knob === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
+          : result = false
       return result
     },
     styles () {
