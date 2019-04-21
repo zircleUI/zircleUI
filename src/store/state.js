@@ -12,7 +12,8 @@ const state = new Vue({
     componentList: {},
     goBackView: '',
     // look & feel
-    diameters: { xxl: 200, xl: 124, l: 76, m: 47, s: 29, xs: 18 },
+    diameters: {},
+    sizes: {xxl: 70, xl: 50, l: 40, m: 30, s: 15, xs: 10, xxs: 5 },
     appStyle: {
       theme: 'theme-black',
       mode: 'mode-dark',

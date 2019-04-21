@@ -51,27 +51,31 @@ export default {
         this.$zircle.setNavigationMode('backward')
         this.$router.back()
       }
+    },
+    compareAndNotify () {
+        this.$zircle.getDimensions()
+    },
+    addResizeHandlers () {
+      this._resizeObject.contentDocument.defaultView.addEventListener('resize', this.compareAndNotify)
+      this.$zircle.getDimensions()
     }
   },
   created () {
     this.$zircle.setComponentList(this.views)
   },
   mounted () {
-    var vm = this
     // Get window dimension to set the initial width of ui components such as z-panel
-    this.$nextTick()
-      .then(function () {
-      // DOM updated
-        vm.$zircle.getDimensions()
-      })
-    window.addEventListener('resize', function (event) {
-      // On resize change the width of ui components
-      vm.$zircle.getDimensions()
-    })
-    document.onmouseleave = function () {
-      // User's mouse has left the page.
-      vm.$zircle.setNavigationMode('backward')
-    }
+    const object = document.createElement('object')
+    this._resizeObject = object
+    object.setAttribute('aria-hidden', 'true')
+    object.setAttribute('tabindex', -1)
+    object.className = "z-resizable-object"
+    object.onload = this.addResizeHandlers
+    object.type = 'text/html'
+    object.data = 'about:blank'
+    this.$el.appendChild(object)
+    
+    document.onmouseleave = () => this.$zircle.setNavigationMode('backward')
   }
 }
 </script>
