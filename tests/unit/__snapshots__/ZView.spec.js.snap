@@ -88,7 +88,6 @@ exports[`z-view.vue Has the expected html structure (slots, z-scroll, z-slider) 
         <p>
            lorem text 
         </p>
-        ./images/dummy.pngTest label slot
       </div>
     </div>
      

@@ -7,10 +7,10 @@ const wrapper = shallowMount(zcanvas, {
   localVue,
   propsData: {
     views: {
-      0: {component: 'one'},
-      1: {component: 'two'},
-      2: {component: 'three'},
-      3: {component: 'four'}
+      0: { component: 'one' },
+      1: { component: 'two' },
+      2: { component: 'three' },
+      3: { component: 'four' }
     }
   }
 })

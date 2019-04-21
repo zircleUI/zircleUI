@@ -9,7 +9,7 @@ exports[`z-canvas.vue Has the expected html structure 1`] = `
     id="z-zoomable-layer"
     style="transform: scale(1) translate3d(0px, 0px, 0px);"
   >
-    <zviewmanager-stub />
+    <z-view-manager-stub />
   </div>
 </div>
 `;

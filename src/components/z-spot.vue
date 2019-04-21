@@ -46,14 +46,6 @@ export default {
       type: Number,
       default: 0
     },
-    distanceX: {
-      type: Number,
-      default: 100
-    },
-    distanceY: {
-      type: Number,
-      default: 100
-    },
     index: {
       type: Number
     },
@@ -129,8 +121,6 @@ export default {
         componentType: this.componentType,
         distance: this.$parent.componentType === 'z-list' ? this.distanceItem : this.distance,
         angle: this.$parent.componentType === 'z-list' ? this.angleItem : this.angle,
-        distanceX: this.distanceX,
-        distanceY: this.distanceY,
         size: this.size,
         $parent: this.$parent,
         shape: this.$zircle.getThemeShape()

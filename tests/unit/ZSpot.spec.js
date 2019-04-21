@@ -18,7 +18,7 @@ const wrapper = shallowMount(zspot, {
   },
   computed: {
     position: function () {
-      return {X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1}
+      return { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 }
     }
   },
   slots: {
