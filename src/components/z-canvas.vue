@@ -74,7 +74,7 @@ export default {
     object.type = 'text/html'
     object.data = 'about:blank'
     this.$el.appendChild(object)
-
+    this.compareAndNotify
     document.onmouseleave = () => this.$zircle.setNavigationMode('backward')
   }
 }
