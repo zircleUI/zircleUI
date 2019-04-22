@@ -19,7 +19,7 @@
 ## 💥 This is the dev branch of zircle-ui
 
 ```bash
-npm install zircle@next
+npm install zircle@1.4.0-beta.1
 ```
 
 ## Contributing
