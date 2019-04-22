@@ -1,5 +1,5 @@
 <template>
-  <z-view style="border-width: 8px;">
+  <z-view>
     WELCOME TO ZIRCLE UI
     <div slot='extension'>
       <z-spot
