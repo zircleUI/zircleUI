@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.0-beta.3"></a>
+# [1.4.0-beta.3](https://github.com/zircleui/zircleUI/compare/v1.4.0-beta.2...v1.4.0-beta.3) (2019-04-22)
+
+
+### Bug Fixes
+
+* 🐛 Initial sizes that weren't display ok ([986b3eb](https://github.com/zircleui/zircleUI/commit/986b3eb)), closes [#29](https://github.com/zircleui/zircleUI/issues/29)
+
+
+
 <a name="1.4.0-beta.2"></a>
 # [1.4.0-beta.2](https://github.com/zircleui/zircleUI/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2019-04-22)
 
