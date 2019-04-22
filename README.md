@@ -23,6 +23,7 @@
 ```bash
 npm install zircle@1.4.0-beta.3
 ```
+**Switch to master branch for latest estable release and documentation**
 
 ## Contributing
 Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](https://zircleui.github.io/docs/contribute/) some guidelines for inspiration.
