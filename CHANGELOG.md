@@ -4,11 +4,15 @@ All notable changes to this project will be documented in this file. See [standa
 
 # [1.4.0-rc.0](https://github.com/zircleui/zircleUI/compare/v1.4.0-beta.2...v1.4.0-rc.0) (2019-04-25)
 
+* 🐛 add nextTick to inform initial z-canvas width ([3bc9ad8](https://github.com/zircleui/zircleUI/commit/3bc9ad8)), closes [#28](https://github.com/zircleui/zircleUI/issues/28) [#29](https://github.com/zircleui/zircleUI/issues/29)
+
+<a name="1.4.0-beta.3"></a>
+# [1.4.0-beta.3](https://github.com/zircleui/zircleUI/compare/v1.4.0-beta.2...v1.4.0-beta.3) (2019-04-22)
+
 
 ### Bug Fixes
 
-* 🐛 add nextTick to inform initial z-canvas width ([3bc9ad8](https://github.com/zircleui/zircleUI/commit/3bc9ad8)), closes [#28](https://github.com/zircleui/zircleUI/issues/28) [#29](https://github.com/zircleui/zircleUI/issues/29)
-
+* 🐛 Initial sizes that weren't display ok ([986b3eb](https://github.com/zircleui/zircleUI/commit/986b3eb)), closes [#29](https://github.com/zircleui/zircleUI/issues/29)
 
 
 <a name="1.4.0-beta.2"></a>

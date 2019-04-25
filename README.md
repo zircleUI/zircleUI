@@ -14,16 +14,22 @@
   <a href="https://travis-ci.org/zircleUI/zircleUI"><img alt="Build Status" src="https://travis-ci.org/zircleUI/zircleUI.svg?branch=master"></a>
   <a href="https://www.npmjs.com/package/zircle"><img alt="downloads" src="https://img.shields.io/npm/dm/zircle.svg?style=flat"></a>
   <a href="https://codeclimate.com/github/zircleUI/zircleUI/maintainability"><img src="https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability" /></a>
+  <br> <br>
+  Like it? Leave a star, it will help to attract more visitors and contributors.<a href="https://github.com/zircleUI/zircleUI/stargazers"> <img src="https://img.shields.io/github/stars/zircleUI/zircleUI.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
 </p>
 
 ## 💥 This is the dev branch of zircle-ui
 
 ```bash
-npm install zircle@next
+npm install zircle@1.4.0-rc.0
 ```
+**Switch to master branch for latest estable release and documentation**
 
 ## Contributing
 Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](https://zircleui.github.io/docs/contribute/) some guidelines for inspiration.
+
+## Stay updated
+This is a dev branch, to be updated about what is being doing you can see the [CHANGELOG](https://github.com/zircleUI/zircleUI/blob/dev/CHANGELOG.md) and read the [issues](https://github.com/zircleUI/zircleUI/issues).
 
 ## Development Setup
 You will need Node.js version 8+ installed.

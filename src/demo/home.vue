@@ -1,15 +1,22 @@
 <template>
   <z-view>
-    11:53 PM
-    <br>
-    Monday, Oct.
-    <br>
-    <br>
-    <h1>Night mode</h1>
-    <br>
-    Outside 29˚C, sunny
-    <br>
-    Inside 25˚C
-    
+    WELCOME TO ZIRCLE UI
+    <div slot='extension'>
+      <z-spot
+        :angle='45'
+        to-view='docs'
+        class='accent'
+        label='Docs'>
+        <i class='fas fa-book'></i>
+      </z-spot>
+      <z-spot
+        button
+        :angle='135'
+        class='accent'
+        label='Github'
+        @click.native="openUrl">
+        <i class='fab fa-github'></i>
+      </z-spot>
+    </div>
   </z-view>
 </template>
