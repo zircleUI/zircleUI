@@ -486,12 +486,12 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"42fc28b8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/z-canvas.vue?vue&type=template&id=29603413&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"42fc28b8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/z-canvas.vue?vue&type=template&id=fc58c592&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"z-canvas",class:[_vm.classes, _vm.$zircle.getTheme(), _vm.$zircle.getThemeMode(), _vm.$zircle.getThemeShape()],style:([_vm.$zircle.getPreviousViewName() !== '' ? {cursor: 'zoom-out'} : {}]),attrs:{"id":"z-container"},on:{"click":function($event){$event.stopPropagation();return _vm.goback($event)}}},[_c('div',{ref:"zoom",style:(_vm.zoom),attrs:{"id":"z-zoomable-layer"},on:{"transitionend":_vm.notify}},[_c('z-view-manager')],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/z-canvas.vue?vue&type=template&id=29603413&
+// CONCATENATED MODULE: ./src/components/z-canvas.vue?vue&type=template&id=fc58c592&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"42fc28b8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/child-components/z-view-manager.vue?vue&type=template&id=4d70a21d&
 var z_view_managervue_type_template_id_4d70a21d_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition-group',{attrs:{"name":_vm.$zircle.getNavigationMode() === 'forward' ? 'z-next' : 'z-prev',"tag":"section"}},[_vm._l((_vm.views),function(view){return _c(view.component,{key:view.name,tag:"component",class:{
@@ -646,6 +646,9 @@ component.options.__file = "z-view-manager.vue"
     object.type = 'text/html';
     object.data = 'about:blank';
     this.$el.appendChild(object);
+    this.$nextTick(function () {
+      return _this.compareAndNotify;
+    });
 
     document.onmouseleave = function () {
       return _this.$zircle.setNavigationMode('backward');
@@ -708,13 +711,13 @@ var state = new external_commonjs_vue_commonjs2_vue_root_Vue_default.a({
     // look & feel
     diameters: {},
     sizes: {
-      xxl: 70,
-      xl: 50,
-      l: 40,
-      m: 30,
-      s: 15,
-      xs: 10,
-      xxs: 5
+      xxl: 55,
+      xl: 32,
+      l: 20,
+      m: 12,
+      s: 8,
+      xs: 5,
+      xxs: 2
     },
     appStyle: {
       theme: 'theme-black',
