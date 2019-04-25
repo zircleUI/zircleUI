@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.4.0-rc.0](https://github.com/zircleui/zircleUI/compare/v1.4.0-beta.2...v1.4.0-rc.0) (2019-04-25)
+
+
+### Bug Fixes
+
+* 🐛 add nextTick to inform initial z-canvas width ([3bc9ad8](https://github.com/zircleui/zircleUI/commit/3bc9ad8)), closes [#28](https://github.com/zircleui/zircleUI/issues/28) [#29](https://github.com/zircleui/zircleUI/issues/29)
+
+
+
 <a name="1.4.0-beta.2"></a>
 # [1.4.0-beta.2](https://github.com/zircleui/zircleUI/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2019-04-22)
 
