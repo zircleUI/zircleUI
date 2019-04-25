@@ -21,7 +21,7 @@
 ## 💥 This is the dev branch of zircle-ui
 
 ```bash
-npm install zircle@1.4.0-rc.0
+npm install zircle@1.4.0-rc.1
 ```
 **Switch to master branch for latest estable release and documentation**
 
