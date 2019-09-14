@@ -60,7 +60,7 @@ export default {
       progress: 0,
       scrollVal: -45,
       isMounted: false,
-      ffox: false,
+      ffox: false
     }
   },
   computed: {
@@ -136,7 +136,7 @@ export default {
       this.$zircle.setLog('Firefox desktop detected. Scroll events disabled')
       this.ffox = true
     }
-    setTimeout(() => {this.isMounted = true}, 1000)
+    setTimeout(() => { this.isMounted = true }, 1000)
     if (this.selfClose) {
       var vm = this
       this.progress = 5

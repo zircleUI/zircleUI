@@ -14,13 +14,13 @@ const state = new Vue({
     // look & feel
     diameters: {},
     sizes: {
-        xxl: 55,
-        xl: 32,
-        l: 20,
-        m: 12,
-        s: 8,
-        xs: 5,
-        xxs: 2
+      xxl: 55,
+      xl: 32,
+      l: 20,
+      m: 12,
+      s: 8,
+      xs: 5,
+      xxs: 2
     },
     appStyle: {
       theme: 'theme-black',

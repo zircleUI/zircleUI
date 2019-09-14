@@ -20,7 +20,7 @@ exports[`z-dialog.vue Has the expected html structure 1`] = `
       cx="50"
       cy="50"
       r="51"
-      style="transform: rotate(-90deg); stroke-dasharray: 320.4424506661589; stroke-dashoffset: 304.42032813285095;"
+      style="transform-origin: 50% 50%; transform: rotate(-90deg); stroke-dasharray: 320.4424506661589; stroke-dashoffset: 304.42032813285095;"
     />
   </svg>
    

@@ -15,7 +15,7 @@
   <a href="https://www.npmjs.com/package/zircle"><img alt="downloads" src="https://img.shields.io/npm/dm/zircle.svg?style=flat"></a>
   <a href="https://codeclimate.com/github/zircleUI/zircleUI/maintainability"><img src="https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability" /></a>
   <br> <br>
-  Like it? Get involved, fork it or leave a star.<a href="https://github.com/zircleUI/zircleUI/stargazers"> <img src="https://img.shields.io/github/stars/zircleUI/zircleUI.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
+  Like it? Leave a star, it will help to attract more visitors and contributors.<a href="https://github.com/zircleUI/zircleUI/stargazers"> <img src="https://img.shields.io/github/stars/zircleUI/zircleUI.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
 </p>
 
 ## 💥 This is the dev branch of zircle-ui
