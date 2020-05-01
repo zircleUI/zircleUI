@@ -34,6 +34,8 @@
 >
 > Best,
 > Martin
+>
+> More information @ [#39](https://github.com/zircleUI/zircleUI/issues/39) 
 
 ## 💥 This is the dev branch of zircle-ui
 
