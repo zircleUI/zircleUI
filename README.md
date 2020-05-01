@@ -21,6 +21,26 @@
   
 </p>
 
+## Important!
+
+> I'm currently working on **Zumly**, which is a step forward to create zoomable web apps.
+>
+> The main features of **Zumly** will be:
+>
+> - Infinite zoom transitions
+> - Standalone lightweight library
+> - Multiple instances
+>
+> **Zumly** is an open source project, but will remain private until it reaches a certain degree of maturity.
+>
+> In the meantime, [you can be one of the first to try **Zumly** by joining our mailing list](https://zumly.org). You will receive betas and guides to play with it!
+>
+> Best,
+> Martin
+
+
+
+
 ## What is zircle-ui?
 
 **Zircle-ui** is an experimental frontend library to develop [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface). It is based on [vue.js](https://vuejs.org/) and JavaScript and comes with a set of components to create unconventional user interfaces.
