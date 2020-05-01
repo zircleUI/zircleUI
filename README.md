@@ -38,7 +38,7 @@
 > Best,
 > Martin
 >
-> + info [#39](https://github.com/zircleUI/zircleUI/issues/39) 
+> More information @ [#39](https://github.com/zircleUI/zircleUI/issues/39) 
 
 
 
