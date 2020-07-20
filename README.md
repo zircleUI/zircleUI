@@ -21,24 +21,11 @@
   
 </p>
 
-## Important!
+## Breaking news!
 
-> I'm currently working on **Zumly**, which is a step forward to create zoomable web apps.
+> I've been working for some time on a new zooming UI library.  **Zumly** is now public at https://github.com/zumly/zumly
 >
-> The main features of **Zumly** will be:
->
-> - Infinite zoom transitions
-> - Standalone lightweight library
-> - Multiple instances
->
-> **Zumly** is an open source project, but will remain private until it reaches a certain degree of maturity.
->
-> In the meantime, [you can be one of the first to try **Zumly** by joining our mailing list](https://zumly.org). You will receive betas and guides to play with it!
->
-> Best,
-> Martin
->
-> More information @ [#39](https://github.com/zircleUI/zircleUI/issues/39) 
+> Give it a try!
 
 
 
