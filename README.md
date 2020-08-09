@@ -23,9 +23,9 @@
 
 ## Breaking news!
 
-> I've been working for some time on a new zooming UI library.  **Zumly** is now public at https://github.com/zumly/zumly
+> I've been working on a new zooming library called **Zumly**.
 >
-> Give it a try!
+> Give it a try at https://zumly.org!
 
 
 
