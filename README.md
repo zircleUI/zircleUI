@@ -23,9 +23,9 @@
 
 ## Breaking news!
 
-> I've been working on a new zooming library called **Zumly**.
+> I've been working on a new zooming library.
 >
-> Give it a try at https://zumly.org!
+> Give **Zumly** a try and joing our community at https://zumly.org!
 
 
 
