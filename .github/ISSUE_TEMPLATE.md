@@ -5,7 +5,7 @@ about: guidelines
 ---
 
 * What issues can I inform?
-This section is for informing a bug. If you want to propose features, ideas, etc., please open a discussion st https://github.com/zircleUI/zircleUI/discussions 
+This section is for informing a bug. If you want to propose features, ideas, etc., please open a discussion at https://github.com/zircleUI/zircleUI/discussions 
 
 You can also open an issue if the documentation is not clear enough.
 
