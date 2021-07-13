@@ -1,7 +1,7 @@
 <template>
   <z-view style="border-width: 8px;">
     WELCOME TO ZIRCLE UI
-    <div slot='extension'>
+    <template #extension>
       <z-spot
         :angle='45'
         to-view='docs'
@@ -14,16 +14,17 @@
         :angle='135'
         class='accent'
         label='Github'
-        @click.native="openUrl">
+        @click="openUrl">
         <i class='fab fa-github'></i>
       </z-spot>
-    </div>
+    </template>
   </z-view>
 </template>
 <script>
 export default {
   methods: {
     openUrl () {
+      console.log('hola')
       window.open('https://github.com/zircleUI/zircleUI', '_blank')
     }
   }
