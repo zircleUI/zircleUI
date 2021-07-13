@@ -8,10 +8,11 @@
     @mouseout="spotout"
     @mousedown="pulse"
     @touchstart="pulse"
-    @mouseup="move">
+    @mouseup="move"
+    @click="$emit('click', $event)">
       <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
       <div class="z-pulse" :class="[shape]" ref="pulse"></div>
-      <z-knob v-if="knobEnabled" :qty.sync="computedQty" :unit="unit" :min="min" :max="max" />
+      <z-knob v-if="knobEnabled" :qty="computedQty" :unit="unit" :min="min" :max="max" />
       <z-slider v-if="sliderEnabled" :progress='progress' />
       <div class="z-label" :class="[shape,labelPos]" :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''" v-if="label">
         <div class="inside">
@@ -125,7 +126,7 @@ export default {
   },
   computed: {
     position () {
-      let component = {
+      const component = {
         componentType: this.componentType,
         distance: this.$parent.componentType === 'z-list' ? this.distanceItem : this.distance,
         angle: this.$parent.componentType === 'z-list' ? this.angleItem : this.angle,
@@ -209,7 +210,7 @@ export default {
   },
   methods: {
     pulse () {
-      let pulse = this.$refs.pulse
+      const pulse = this.$refs.pulse
       pulse.classList.add('pulse-animation')
       pulse.addEventListener('animationend', function () {
         pulse.classList.remove('pulse-animation')

@@ -1,9 +1,9 @@
 import store from '../store'
 const router = {
   evaluateRoute (view, position) {
-    let match = store.state.router.resolve(view.path).route.matched[0]
-    let component = match.components.default
-    let name = match.name
+    const match = store.state.router.resolve(view.path).route.matched[0]
+    const component = match.components.default
+    const name = match.name
     store.actions.setComponentList({ [name]: component })
     store.state.history.push({ name: name, position: position, params: view.route.params, component: component })
     store.actions.setNavigationMode('forward')
@@ -14,8 +14,8 @@ const router = {
     }
   },
   replace (view) {
-    let match = store.state.router.resolve(view).route.matched[0]
-    let component = match.components.default
+    const match = store.state.router.resolve(view).route.matched[0]
+    const component = match.components.default
     store.state.params = ''
     store.state.history = []
     store.actions.setComponentList({ [view.name]: component })

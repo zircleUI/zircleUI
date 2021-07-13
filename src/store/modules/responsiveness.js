@@ -1,5 +1,4 @@
 import store from '../store'
-
 const responsiveness = {
   getComponentWidth (size) {
     let sizes = size.toLowerCase()

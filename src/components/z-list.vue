@@ -3,27 +3,18 @@
     <div v-for="(item, index) in $zircle.getCurrentPage()" :key="item[0] + '-' + index">
       <slot v-bind="item" :index=index></slot>
     </div>
-    <z-pagination  v-if="$zircle.getThemeShape() === 'circle' && $zircle.getNumberOfPages() > 1"
+
+    <template v-if="$zircle.getThemeShape() === 'circle' && $zircle.getNumberOfPages() > 1"
       v-for="(page, index) in $zircle.getNumberOfPages()"
       :key="index + '_page'"
       :index="index"
       :distance="112"
       :angle="(180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages() * ($zircle.getNumberOfPages() - index) + ((180 - (180 - (180 - ($zircle.getNumberOfPages() * 10)))) - ((180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages())) / 2"
       :active="$zircle.getCurrentPageIndex()"
-      @mouseover.native = "$zircle.allowBackwardNavigation(true)"
-      @mouseleave.native = "$zircle.allowBackwardNavigation(false)"
-      @click.native="$zircle.setCurrentPageIndex(index)"/>
-      <div v-if="($zircle.getThemeShape() === 'square' || square) && $zircle.getNumberOfPages() > 1" style="position: absolute; width: 90%; top: 112%; height: 40px; display: flex; justify-content: space-between;">
-        <z-pagination
-        v-for="(page, index) in $zircle.getNumberOfPages()"
-        :key="index + '_page'"
-        :index="index"
-        :active="$zircle.getCurrentPageIndex()"
-        @mouseover.native = "$zircle.allowBackwardNavigation(true)"
-        @mouseleave.native = "$zircle.allowBackwardNavigation(false)"
-        @click.native="$zircle.setCurrentPageIndex(index)"/>
-
-      </div>
+      @mouseover = "$zircle.allowBackwardNavigation(true)"
+      @mouseleave = "$zircle.allowBackwardNavigation(false)"
+      @click="$zircle.setCurrentPageIndex(index)"/>
+    </template>
   </section>
 </template>
 

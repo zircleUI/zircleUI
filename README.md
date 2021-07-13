@@ -100,8 +100,5 @@ npm run build:zircle
 
 ```
 
-
 ## License
 [MIT Licensed | Copyright © 2017 - present | Juan Martín Muda](https://raw.githubusercontent.com/zircleUI/zircleUI/master/LICENSE)
-
-

@@ -2,10 +2,15 @@
   <z-canvas :views="$options.components" />
 </template>
 <script>
+import { markRaw } from 'vue'
+import home from './demo/home.vue'
+import docs from './demo/docs.vue'
 export default {
   components: {
-    home: () => import('./demo/home'),
-    docs: () => import('./demo/docs')
+    // eslint-disable-next-line vue/no-unused-components
+    home: markRaw(home),
+    // eslint-disable-next-line vue/no-unused-components
+    docs: markRaw(docs)
   },
   mounted () {
     this.$zircle.config({

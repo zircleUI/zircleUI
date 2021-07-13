@@ -59,8 +59,8 @@ export default {
     },
     activated () {
       return {
-        'active': this.active === this.index,
-        'deactive': this.active < this.index || this.active > this.index
+        active: this.active === this.index,
+        deactive: this.active < this.index || this.active > this.index
       }
     },
     shape () {

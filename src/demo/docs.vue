@@ -1,19 +1,19 @@
 <template>
   <z-view style="border-width: 8px;">
     Documentation
-    <div slot='extension'>
-
+    <template v-slot:extension>
       <z-list :items="sections" :per-page="5">
+        <template v-slot:default="props">
         <z-spot
           button
-          slot-scope="props"
           :index="props.index"
           :label='props.name'
-          @click.native="openUrl(props.url)" >
+          @click="openUrl(props.url)" >
             <i :class="props.icon"></i>
         </z-spot>
+        </template>
       </z-list>
-    </div>
+    </template>
   </z-view>
 </template>
 <script>
