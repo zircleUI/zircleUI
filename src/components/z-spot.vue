@@ -191,6 +191,7 @@ export default {
     shape () {
       return this.circle ? 'is-circle' : this.square ? 'is-square' : ''
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     progressLabel () {
       if (this.computedQty) {
         let unit = ''

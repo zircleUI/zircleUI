@@ -3,8 +3,8 @@
     <div v-for="(item, index) in $zircle.getCurrentPage()" :key="item[0] + '-' + index">
       <slot v-bind="item" :index=index></slot>
     </div>
-
-    <template v-if="$zircle.getThemeShape() === 'circle' && $zircle.getNumberOfPages() > 1"
+  <template  v-if="$zircle.getThemeShape() === 'circle' && $zircle.getNumberOfPages() > 1">
+    <z-pagination
       v-for="(page, index) in $zircle.getNumberOfPages()"
       :key="index + '_page'"
       :index="index"
@@ -14,7 +14,7 @@
       @mouseover = "$zircle.allowBackwardNavigation(true)"
       @mouseleave = "$zircle.allowBackwardNavigation(false)"
       @click="$zircle.setCurrentPageIndex(index)"/>
-    </template>
+  </template>
   </section>
 </template>
 
