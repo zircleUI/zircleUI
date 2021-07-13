@@ -21,14 +21,14 @@
   
 </p>
 
+## Using Vue 3?
+Check out  [zircleui/vue3 branch](https://github.com/zircleUI/zircleUI/tree/vue3) 
+
 ## Breaking news!
 
 > I've been working on a new zooming library.
 >
 > Give **Zumly** a try and joing our community at https://zumly.org!
-
-
-
 
 ## What is zircle-ui?
 
