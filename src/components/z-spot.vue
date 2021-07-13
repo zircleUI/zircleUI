@@ -8,10 +8,11 @@
     @mouseout="spotout"
     @mousedown="pulse"
     @touchstart="pulse"
-    @mouseup="move">
+    @mouseup="move"
+    @click="$emit('click', $event)">
       <div v-if="!button" ref="spot" class="z-outer-spot" :style="styles.plate"></div>
       <div class="z-pulse" ref="pulse"></div>
-      <z-knob v-if="knob" :qty.sync="computedQty" :unit="unit" :min="min" :max="max" />
+      <z-knob v-if="knob" :qty="computedQty" :unit="unit" :min="min" :max="max" />
       <z-slider v-if="slider === true" :progress='progress' />
       <div class="z-label" :class="labelPos" :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''" v-if="label">
         <div class="inside">
@@ -117,7 +118,7 @@ export default {
   },
   computed: {
     position () {
-      let component = {
+      const component = {
         componentType: this.componentType,
         distance: this.$parent.componentType === 'z-list' ? this.distanceItem : this.distance,
         angle: this.$parent.componentType === 'z-list' ? this.angleItem : this.angle,
@@ -164,6 +165,7 @@ export default {
         accent: this.$parent.componentType === 'z-list'
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     progressLabel () {
       if (this.computedQty) {
         let unit = ''
@@ -183,7 +185,7 @@ export default {
   },
   methods: {
     pulse () {
-      let pulse = this.$refs.pulse
+      const pulse = this.$refs.pulse
       pulse.classList.add('pulse-animation')
       pulse.addEventListener('animationend', function () {
         pulse.classList.remove('pulse-animation')

@@ -1,5 +1,8 @@
 import store from '../store'
-import Vue from 'vue'
+import { createApp, h } from 'vue'
+
+const app = createApp({})
+
 function retrieveViewName (pos) {
   let viewName = ''
   if (store.state.history.length >= pos) {
@@ -48,15 +51,15 @@ const navigation = {
   },
   resolveComponent (list, view) {
     view = view.split('--')[0]
-    let key = Object.keys(list).find(function (k) {
+    const key = Object.keys(list).find(function (k) {
       if (k.toLowerCase() === view) return k
     })
     if (key) {
       return list[key]
     } else {
-      return Vue.component('missing', {
-        render (h) {
-          return h('z-view', view + ' not found')
+      return app.component('missing', {
+        render () {
+          return h('z-view', {}, `${view} not found`)
         }
       })
     }
@@ -112,14 +115,14 @@ const navigation = {
   },
   setView (data, options) {
     if (store.state.history.length < 6 && store.state.isRouterEnabled === false) {
-      let view = parseView(data)
+      const view = parseView(data)
       let position = {}
       !options ? position = { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 } : position = options.position
       store.actions.addToHistory(view, position, view.route.params)
       store.actions.setNavigationMode('forward')
       if (view.route) store.state.params = view.route.params
     } else if (store.state.history.length < 6 && store.state.isRouterEnabled === true) {
-      let view = parseView(data)
+      const view = parseView(data)
       let position = {}
       !options ? position = { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 } : position = options.position
       store.actions.evaluateRoute(view, position)
