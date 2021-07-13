@@ -1,6 +1,6 @@
 import store from '../store'
 function setDiameter (size) {
-  let diameter = store.state.diameters[size]
+  const diameter = store.state.diameters[size]
   return diameter
 }
 const mediaQuery = [
@@ -53,7 +53,7 @@ const responsiveness = {
     if (sizes === 'medium') sizes = 'm'
     if (sizes === 'small') sizes = 's'
     if (sizes === 'extrasmall') sizes = 'xs'
-    let result = setDiameter(sizes)
+    const result = setDiameter(sizes)
     return result
   },
   getDimensions () {
@@ -63,7 +63,7 @@ const responsiveness = {
       }
       store.actions.setLog('getDimensions() at appMode full. z-view new diameter: ' + store.state.diameters.xxl)
     } else if (store.actions.getAppMode() === 'mixed') {
-      let vp = document.getElementById('z-container').offsetWidth
+      const vp = document.getElementById('z-container').offsetWidth
       if (vp <= 319) {
         store.state.diameters = mediaQuery[0].width
       } else if (vp >= 320 && vp <= 374) {
