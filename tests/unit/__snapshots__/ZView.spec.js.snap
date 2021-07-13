@@ -3,7 +3,7 @@
 exports[`z-view.vue Has the expected html structure (slots, z-scroll, z-slider) 1`] = `
 <div
   class="z-shape primary z-view"
-  style="overflow: visible; width: 200px; height: 200px; margin: -100px 0px 0px -100px; transform: translate3d(0px, 0px, 0px) scale(1);"
+  style="overflow: visible; transform: translate3d(0px, 0px, 0px) scale(1);"
 >
   <div
     class="z-content"
@@ -23,7 +23,6 @@ exports[`z-view.vue Has the expected html structure (slots, z-scroll, z-slider) 
   >
     <div
       class="z-outer-circle"
-      style="width: 275px; height: 275px; margin: -137.5px 0px 0px -137.5px;"
     />
      
     <section
@@ -44,7 +43,7 @@ exports[`z-view.vue Has the expected html structure (slots, z-scroll, z-slider) 
        
       <svg
         class="z-scroll-bar"
-        style="transform-origin: 50% 50%; transform: translate3d(70.71067811865476px, -70.71067811865474px, 0px);"
+        style="transform-origin: 50% 50%; transform: translate3d(NaNpx, NaNpx, 0px);"
         xmlns="http://www.w3.org/2000/svg"
       >
         <circle

@@ -13,6 +13,16 @@ const app = {
       store.state.appMode = config.mode
       store.actions.setLog('- Mode: ' + config.mode)
     }
+    if (config.sizes) {
+      if (config.sizes.xxl) store.state.sizes.xxl = config.sizes.xxl
+      if (config.sizes.xl) store.state.sizes.xl = config.sizes.xl
+      if (config.sizes.l) store.state.sizes.l = config.sizes.l
+      if (config.sizes.m) store.state.sizes.m = config.sizes.m
+      if (config.sizes.s) store.state.sizes.s = config.sizes.s
+      if (config.sizes.xs) store.state.sizes.xs = config.sizes.xs
+      if (config.sizes.xxs) store.state.sizes.xxs = config.sizes.xxs
+      store.actions.setLog('- Component sizes: ' + JSON.stringify(config.sizes))
+    }
     if (config.style && config.style.theme) {
       store.state.appStyle.theme = 'theme-' + config.style.theme
       store.actions.setLog('- Theme: ' + config.style.theme)
@@ -20,6 +30,10 @@ const app = {
     if (config.style && config.style.mode) {
       store.state.appStyle.mode = 'mode-' + config.style.mode
       store.actions.setLog('- Theme mode: ' + config.style.mode)
+    }
+    if (config.style && config.style.shape) {
+      store.state.appStyle.shape = config.style.shape
+      store.actions.setLog('- Theme shape: ' + config.style.shape)
     }
     if (config.router) {
       store.state.router = config.router

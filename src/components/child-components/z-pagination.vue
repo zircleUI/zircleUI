@@ -2,10 +2,10 @@
   <div
     v-show="hidden === false"
     class="z-shape is-extension"
-    :class="[componentType, activated]"
+    :class="[componentType, activated, shape]"
     :style="responsive === true ? styles.main : zpos.main">
     <div
-      class="z-outer-point"
+      class="z-outer-point" :class="[shape]"
       :style="responsive === true ? styles.plate : zpos.plate">
     </div>
   </div>
@@ -63,19 +63,22 @@ export default {
         deactive: this.active < this.index || this.active > this.index
       }
     },
+    shape () {
+      return this.$zircle.getThemeShape() === 'square' ? 'papa' : ''
+    },
     styles () {
       var zwidth = this.$zircle.getComponentWidth(this.size) / 2
       return {
         main: {
           width: zwidth + 'px',
           height: zwidth + 'px',
-          margin: -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
-          transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
+          margin: this.$zircle.getThemeShape() === 'square' ? '' : -(zwidth / 2) + 'px 0 0 ' + -(zwidth / 2) + 'px',
+          transform: this.$zircle.getThemeShape() === 'square' ? '' : 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
         },
         plate: {
           width: zwidth + 12 + 'px',
           height: zwidth + 12 + 'px',
-          margin: -((zwidth + 12) / 2) + 'px 0 0 ' + -((zwidth + 12) / 2) + 'px'
+          margin: this.$zircle.getThemeShape() === 'square' ? '' : -((zwidth + 12) / 2) + 'px 0 0 ' + -((zwidth + 12) / 2) + 'px'
         }
       }
     }

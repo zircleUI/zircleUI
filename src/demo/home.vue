@@ -1,5 +1,5 @@
 <template>
-  <z-view style="border-width: 8px;">
+  <z-view>
     WELCOME TO ZIRCLE UI
     <template #extension>
       <z-spot
@@ -24,9 +24,9 @@
 export default {
   methods: {
     openUrl () {
-      console.log('hola')
       window.open('https://github.com/zircleUI/zircleUI', '_blank')
     }
   }
 }
 </script>
+

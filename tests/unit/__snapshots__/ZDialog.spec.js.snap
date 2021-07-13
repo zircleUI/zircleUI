@@ -4,8 +4,13 @@ exports[`z-dialog.vue Has the expected html structure 1`] = `
 <div
   class="z-shape is-extension primary z-dialog"
   name="z-dialog-transition"
-  style="width: 250px; height: 250px; margin: -125px 0px 0px -125px;"
 >
+  <!---->
+   
+  <div
+    class="z-outer-circle"
+  />
+   
   <svg
     class="z-slider"
     viewBox="0 0 100 100"
@@ -19,18 +24,19 @@ exports[`z-dialog.vue Has the expected html structure 1`] = `
     />
   </svg>
    
-  <div
-    class="z-outer-circle"
-    style="width: 380px; height: 380px; margin: -190px 0px 0px -190px;"
-  />
+  <!---->
    
   <div
-    class="z-content"
+    class="z-content maincontent overflow-square"
   >
-    <p>
-       lorem text 
-    </p>
+    <div>
+      <p>
+         lorem text 
+      </p>
+    </div>
   </div>
+   
+  <!---->
    
   <div />
 </div>
