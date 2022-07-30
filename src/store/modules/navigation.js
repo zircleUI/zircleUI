@@ -10,10 +10,11 @@ function retrieveViewName (pos) {
   }
   return viewName
 }
+
 function transformViewName (view) {
   view = view.toLowerCase()
-  var count = 0
-  for (var i = 1; i <= store.state.history.length; i++) {
+  let count = 0
+  for (let i = 1; i <= store.state.history.length; i++) {
     if (store.state.history[store.state.history.length - i].name.split('--')[0] === view) {
       count += 1
     }
@@ -24,6 +25,7 @@ function transformViewName (view) {
     return view + '--' + count
   }
 }
+
 function parseView (data) {
   let name
   let route
@@ -34,7 +36,9 @@ function parseView (data) {
     route = { name: name }
     path = '/' + name
   } else {
-    Object.keys(data.params).forEach(function (key) { paramPath += '/:' + key })
+    Object.keys(data.params).forEach(function (key) {
+      paramPath += '/:' + key
+    })
     name = transformViewName(data.name)
     route = { name: name, params: data.params }
     path = '/' + name + '' + paramPath
@@ -45,9 +49,15 @@ function parseView (data) {
     path
   }
 }
+
 const navigation = {
   addToHistory (view, position, params) {
-    return store.state.history.push({ name: view.name, position: position, params: params, component: store.actions.resolveComponent(store.actions.getComponentList(), view.name) })
+    return store.state.history.push({
+      name: view.name,
+      position: position,
+      params: params,
+      component: store.actions.resolveComponent(store.actions.getComponentList(), view.name)
+    })
   },
   resolveComponent (list, view) {
     view = view.split('--')[0]
@@ -104,46 +114,45 @@ const navigation = {
   toView (options) {
     if (typeof options === 'string') {
       store.actions.setView(options)
-    } else {
-      if (!options.to) store.actions.setLog('Programmatic navigation: "to" is required ', 'error')
-      if (!options.fromSpot) store.actions.setLog('Programmatic navigation: "fromSpot" is required ', 'error')
-      if (options.fromSpot && typeof options.fromSpot !== 'object') store.actions.setLog('Programmatic navigation: "fromSpot" should be an object ', 'error')
-      if (options.params && typeof options.params !== 'object') store.actions.setLog('Programmatic navigation: "params" should be an object ', 'error')
-      if (options.to && options.fromSpot) {
-        if (!options.params)
-          options.params = {}
-        const positionParams = options.fromSpot.position ? {
-          position: {
-            X: options.fromSpot.position.Xabs,
-            Y: options.fromSpot.position.Yabs,
-            scale: options.fromSpot.position.scale,
-            Xi: options.fromSpot.position.Xi,
-            Yi: options.fromSpot.position.Yi,
-            scalei: options.fromSpot.position.scalei
-          }
-        } : {}
-        store.actions.setView(
-          {
-            name: options.to,
-            params: options.params
-          },
-          positionParams
-        )
+      return
+    }
+    if (!options.to) store.actions.setLog('Programmatic navigation: "to" is required ', 'error')
+    if (!options.fromSpot) store.actions.setLog('Programmatic navigation: "fromSpot" is required ', 'error')
+    if (options.fromSpot && typeof options.fromSpot !== 'object') store.actions.setLog('Programmatic navigation: "fromSpot" should be an object ', 'error')
+    if (options.params && typeof options.params !== 'object') store.actions.setLog('Programmatic navigation: "params" should be an object ', 'error')
+    if (options.to && options.fromSpot) {
+      if (!options.params) {
+        options.params = {}
       }
+      const positionParams = options.fromSpot.position ? {
+        position: {
+          X: options.fromSpot.position.Xabs,
+          Y: options.fromSpot.position.Yabs,
+          scale: options.fromSpot.position.scale,
+          Xi: options.fromSpot.position.Xi,
+          Yi: options.fromSpot.position.Yi,
+          scalei: options.fromSpot.position.scalei
+        }
+      } : {}
+      store.actions.setView(
+        {
+          name: options.to,
+          params: options.params
+        },
+        positionParams
+      )
     }
   },
   setView (data, options) {
     if (store.state.history.length < 6 && store.state.isRouterEnabled === false) {
       const view = parseView(data)
-      let position = {}
-      !options ? position = { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 } : position = options.position
+      const position = !options ? { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 } : options.position
       store.actions.addToHistory(view, position, view.route.params)
       store.actions.setNavigationMode('forward')
       if (view.route) store.state.params = view.route.params
     } else if (store.state.history.length < 6 && store.state.isRouterEnabled === true) {
       const view = parseView(data)
-      let position = {}
-      !options ? position = { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 } : position = options.position
+      const position = !options ? { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 } : options.position
       store.actions.evaluateRoute(view, position)
     } else {
       store.actions.setLog('Max zoom level reached')
