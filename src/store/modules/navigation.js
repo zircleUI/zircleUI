@@ -1,8 +1,5 @@
 import store from '../store'
-import { createApp, h } from 'vue'
-
-const app = createApp({})
-
+import Vue from 'vue'
 function retrieveViewName (pos) {
   let viewName = ''
   if (store.state.history.length >= pos) {
@@ -10,7 +7,6 @@ function retrieveViewName (pos) {
   }
   return viewName
 }
-
 function transformViewName (view) {
   view = view.toLowerCase()
   let count = 0
@@ -25,7 +21,6 @@ function transformViewName (view) {
     return view + '--' + count
   }
 }
-
 function parseView (data) {
   let name
   let route
@@ -49,7 +44,6 @@ function parseView (data) {
     path
   }
 }
-
 const navigation = {
   addToHistory (view, position, params) {
     return store.state.history.push({
@@ -67,9 +61,9 @@ const navigation = {
     if (key) {
       return list[key]
     } else {
-      return app.component('missing', {
-        render () {
-          return h('z-view', {}, `${view} not found`)
+      return Vue.component('missing', {
+        render (h) {
+          return h('z-view', view + ' not found')
         }
       })
     }

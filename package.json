@@ -1,47 +1,23 @@
 {
   "name": "zircle",
-  "version": "1.4.0-rc.1",
+  "version": "1.4.0-rc.2",
+  "license": "MIT",
   "description": "A frontend library to develop zoomable user interfaces",
   "author": "Juan Martín Muda <juan.martin.muda@gmail.com>",
-  "license": "MIT",
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "lint": "vue-cli-service lint",
-    "build:zircle": "vue-cli-service build --target lib --name zircle ./src/index.js",
-    "test": "vue-cli-service test:unit"
-  },
   "main": "dist/zircle.umd.js",
   "module": "dist/zircle.umd.js",
   "unpkg": "dist/zircle.umd.js",
+  "jsdelivr": "dist/zircle.umd.js",
   "files": [
     "dist",
     "src"
   ],
-  "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^3.1.0"
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "lint": "vue-cli-service lint",
+    "test": "vue-cli-service test:unit",
+    "build:zircle": "vue-cli-service build --target lib --name zircle ./src/index.js"
   },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.13",
-    "@vue/cli-plugin-eslint": "^4.5.13",
-    "@vue/cli-plugin-unit-jest": "^4.5.13",
-    "@vue/cli-service": "^4.5.13",
-    "@vue/compiler-sfc": "^3.1.0",
-    "@vue/eslint-config-standard": "^5.1.2",
-    "@vue/test-utils": "^2.0",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^23.6.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-standard": "^4.1.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.35.2",
-    "sass-loader": "^7.1.0"
-  },
-  "jsdelivr": "dist/zircle.umd.js",
   "keywords": [
     "zircle",
     "vue",
@@ -49,5 +25,24 @@
     "library",
     "javascript",
     "zui"
-  ]
+  ],
+  "dependencies": {
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-plugin-unit-jest": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "sass": "^1.18.0",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.6.10"
+  }
 }

@@ -20,7 +20,6 @@
 
 <script>
 import ZPagination from './child-components/z-pagination'
-
 function chunk (myArray, chunkSize) {
   const res = []
   while (myArray.length) {
@@ -28,7 +27,6 @@ function chunk (myArray, chunkSize) {
   }
   return res
 }
-
 export default {
   name: 'z-list',
   props: {

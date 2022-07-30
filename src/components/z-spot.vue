@@ -215,6 +215,9 @@ export default {
   methods: {
     pulse () {
       const pulse = this.$refs.pulse
+      if (!pulse) {
+        return
+      }
       pulse.classList.add('pulse-animation')
       pulse.addEventListener('animationend', function () {
         pulse.classList.remove('pulse-animation')
