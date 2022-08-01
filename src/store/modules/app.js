@@ -23,6 +23,15 @@ const app = {
       xs: 5,
       xxs: 2
     }
+    store.state.minSizesInPixels = {
+      xxl: 200,
+      xl: 180,
+      l: 150,
+      m: 100,
+      s: 80,
+      xs: 50,
+      xxs: 20
+    }
     store.state.appStyle = {
       theme: 'theme-black',
       mode: 'mode-dark',
@@ -72,7 +81,10 @@ const app = {
       store.actions.setRouterHooks()
       store.actions.setLog('- VueRouter enabled')
       // console.log(store.state.router.currentRoute)
-      store.actions.setView({ name: store.state.router.currentRoute.name, params: store.state.router.currentRoute.params })
+      store.actions.setView({
+        name: store.state.router.currentRoute.name,
+        params: store.state.router.currentRoute.params
+      })
       if (store.actions.getAppMode() === 'mixed') store.actions.setLog('You should not use VueRouter when Zircle is in mixed mode.', 'warn')
     }
   }

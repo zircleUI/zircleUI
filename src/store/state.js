@@ -23,6 +23,15 @@ const state = new Vue({
       xs: 5,
       xxs: 2
     },
+    minSizesInPixels: {
+      xxl: 200,
+      xl: 180,
+      l: 150,
+      m: 100,
+      s: 80,
+      xs: 50,
+      xxs: 20
+    },
     appStyle: {
       theme: 'theme-black',
       mode: 'mode-dark',
