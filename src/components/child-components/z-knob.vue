@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     position () {
-      var diameter = this.$zircle.getComponentWidth(this.$parent.size) / 2
+      const diameter = this.$zircle.getComponentWidth(this.$parent.size) / 2
       return {
         X: (diameter - 3) * Math.cos(this.angle * (Math.PI / 180)),
         Y: (diameter - 3) * Math.sin(this.angle * (Math.PI / 180)),
@@ -55,7 +55,7 @@ export default {
       }
     },
     styles () {
-      var circleLength = 2 * Math.PI * 50
+      const circleLength = 2 * Math.PI * 50
       return {
         transformOrigin: '50% 50%',
         transform: 'rotate(0deg)',
@@ -80,19 +80,19 @@ export default {
     bar (e) {
       e = e.changedTouches ? e.changedTouches[0] : e
       const dimensions = this.$refs.bar.getBoundingClientRect()
-      var centerx = (dimensions.width / 2) + dimensions.left
-      var centery = (dimensions.height / 2) + dimensions.top
-      var posx = e.pageX
-      var posy = e.pageY
-      var deltay = centery - posy
-      var deltax = centerx - posx
-      var tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
+      const centerx = (dimensions.width / 2) + dimensions.left
+      const centery = (dimensions.height / 2) + dimensions.top
+      const posx = e.pageX
+      const posy = e.pageY
+      const deltay = centery - posy
+      const deltax = centerx - posx
+      let tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
       tangle -= 180
       tangle = Math.round(tangle)
       if (tangle < 0) tangle = 360 + tangle
-      var prevAngle = Math.round(this.angle)
-      var vm = this
-      var id = setInterval(function () {
+      let prevAngle = Math.round(this.angle)
+      const vm = this
+      const id = setInterval(function () {
         if (prevAngle > tangle) {
           prevAngle--
         } else if (prevAngle < tangle) {
@@ -108,13 +108,13 @@ export default {
       if (this.drag === true) {
         e = e.changedTouches ? e.changedTouches[0] : e
         const dimensions = this.$refs.bar.getBoundingClientRect()
-        var centerx = (dimensions.width / 2) + dimensions.left
-        var centery = (dimensions.height / 2) + dimensions.top
-        var posx = e.pageX
-        var posy = e.pageY
-        var deltay = centery - posy
-        var deltax = centerx - posx
-        var tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
+        const centerx = (dimensions.width / 2) + dimensions.left
+        const centery = (dimensions.height / 2) + dimensions.top
+        const posx = e.pageX
+        const posy = e.pageY
+        const deltay = centery - posy
+        const deltax = centerx - posx
+        let tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
         tangle -= 180
         tangle = Math.round(tangle)
         if (tangle < 0) tangle = 360 + tangle

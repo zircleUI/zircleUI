@@ -26,8 +26,7 @@ export default {
   },
   computed: {
     zoom () {
-      var pos = {}
-      this.$zircle.getHistoryLength() === 0 ? pos = { X: 0, Y: 0, Xi: 0, Yi: 0, scale: 1, scalei: 1 } : pos = this.$zircle.getCurrentPosition()
+      const pos = this.$zircle.getHistoryLength() === 0 ? { X: 0, Y: 0, Xi: 0, Yi: 0, scale: 1, scalei: 1 } : this.$zircle.getCurrentPosition()
       return {
         transform: 'scale(' + pos.scale + ') translate3d(' + pos.Xi + 'px, ' + pos.Yi + 'px, 0px)',
         transition: 'transform 1000ms ease-in-out'

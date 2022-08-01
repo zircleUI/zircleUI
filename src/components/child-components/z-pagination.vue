@@ -64,10 +64,15 @@ export default {
       }
     },
     shape () {
-      return this.$zircle.getThemeShape() === 'square' ? 'papa' : ''
+      if (this.circle) {
+        return 'is-circle'
+      } else if (this.square) {
+        return 'is-square'
+      }
+      return ''
     },
     styles () {
-      var zwidth = this.$zircle.getComponentWidth(this.size) / 2
+      const zwidth = this.$zircle.getComponentWidth(this.size) / 2
       return {
         main: {
           width: zwidth + 'px',

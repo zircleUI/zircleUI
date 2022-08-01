@@ -23,7 +23,7 @@ describe('z-dialog.vue', () => {
   })
 
   it('Has z-slider child-component', () => {
-    expect(wrapper.find(zslider).exists()).toBe(true)
+    expect(wrapper.findComponent(zslider).exists()).toBe(true)
   })
   it('Has the expected html structure', () => {
     expect(wrapper.element).toMatchSnapshot()

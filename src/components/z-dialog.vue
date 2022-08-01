@@ -5,7 +5,7 @@
       :class="[componentType, shape]"
       :style="styles.main">
         <div v-if="$slots['image'] || imagePath" class="z-content">
-          <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
+          <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
           <slot v-if="!imagePath" name="image"></slot>
         </div>
         <div class="z-outer-circle" :class="[shape]" :style="styles.plate"></div>
@@ -65,14 +65,13 @@ export default {
   },
   computed: {
     scrollBarEnabled () {
-      let result
-      this.scrollBar === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.scrollBar === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.scrollBar === true && (
+        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
+        (this.circle === true && this.$zircle.getThemeShape() === 'square')
+      )
     },
     scrollBar () {
-      var isScrollNeeded = false
+      let isScrollNeeded = false
       if (this.isMounted === true && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth(this.size)) {
         isScrollNeeded = true
       }
@@ -90,17 +89,21 @@ export default {
       }
     },
     selfCloseEnabled () {
-      let result
-      this.selfClose === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.selfClose === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.selfClose === true && (
+        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
+        (this.circle === true && this.$zircle.getThemeShape() === 'square')
+      )
     },
     shape () {
-      return this.circle ? 'is-circle' : this.square ? 'is-square' : ''
+      if (this.circle) {
+        return 'is-circle'
+      } else if (this.square) {
+        return 'is-square'
+      }
+      return ''
     },
     styles () {
-      var zwidth = this.$zircle.getComponentWidth(this.size)
+      const zwidth = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: zwidth + 50 + 'px',
@@ -118,7 +121,7 @@ export default {
   methods: {
     scroll () {
       if (this.scrollBar === true) {
-        var container = this.$refs.maincontent
+        const container = this.$refs.maincontent
         this.scrollVal = -45 + ((container.scrollTop * 100 / (container.scrollHeight - container.clientHeight)) * 86 / 100)
       }
     }
@@ -126,7 +129,7 @@ export default {
   watch: {
     scrollVal () {
       if (this.scrollBar === true) {
-        var container = this.$refs.maincontent
+        const container = this.$refs.maincontent
         container.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (container.scrollHeight - container.clientHeight) / 100
       }
     }
@@ -138,9 +141,9 @@ export default {
     }
     setTimeout(() => { this.isMounted = true }, 1000)
     if (this.selfClose) {
-      var vm = this
+      const vm = this
       this.progress = 5
-      var id = setInterval(function () {
+      const id = setInterval(function () {
         if (vm.progress >= 100) {
           clearInterval(id)
           vm.$emit('done')

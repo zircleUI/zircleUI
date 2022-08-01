@@ -7,9 +7,10 @@ exports[`z-view.vue Has the expected html structure (slots, z-scroll, z-slider) 
 >
   <div
     class="z-content"
-    id="search--0"
+    id="search--1"
   >
     <img
+      alt="content custom image"
       height="100%"
       src="./images/test.png"
       width="100%"
