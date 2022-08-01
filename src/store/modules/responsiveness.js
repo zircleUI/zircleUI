@@ -1,4 +1,5 @@
 import store from '../store'
+
 const responsiveness = {
   getComponentWidth (size) {
     let sizes = size.toLowerCase()
@@ -11,16 +12,17 @@ const responsiveness = {
   },
   getDimensions () {
     const container = document.getElementById('z-container').offsetWidth
-    const size = store.state.sizes
-    store.state.diameters = {
-      xxl: container * (size.xxl / 100),
-      xl: container * (size.xl / 100),
-      l: container * (size.l / 100),
-      m: container * (size.m / 100),
-      s: container * (size.s / 100),
-      xs: container * (size.xs / 100),
-      xxs: container * (size.xxs / 100)
+    const sizes = store.state.sizes
+    const minSizes = store.state.minSizesInPixels
+    const diameters = {}
+    for (const size in sizes) {
+      diameters[size] = container * (sizes[size] / 100)
+      if (diameters[size] < minSizes[size]) {
+        diameters[size] = minSizes[size]
+      }
     }
+
+    store.state.diameters = diameters
     store.actions.setLog('Size change detected on z-canvas')
   }
 }
