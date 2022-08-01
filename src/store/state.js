@@ -33,7 +33,6 @@ const state = reactive({
     params: {},
     // debug
     debug: false
-  }
 })
 
 export default state

@@ -109,15 +109,40 @@ const navigation = {
       if (!options.fromSpot) store.actions.setLog('Programmatic navigation: "fromSpot" is required ', 'error')
       if (options.fromSpot && typeof options.fromSpot !== 'object') store.actions.setLog('Programmatic navigation: "fromSpot" should be an object ', 'error')
       if (options.params && typeof options.params !== 'object') store.actions.setLog('Programmatic navigation: "params" should be an object ', 'error')
-      if (options.to && options.fromSpot && !options.params) store.actions.setView(options.to, { position: { X: options.fromSpot.position.Xabs, Y: options.fromSpot.position.Yabs, scale: options.fromSpot.position.scale, Xi: options.fromSpot.position.Xi, Yi: options.fromSpot.position.Yi, scalei: options.fromSpot.position.scalei } })
-      if (options.to && options.fromSpot && options.params) store.actions.setView({ name: options.to, params: options.params }, { position: { X: options.fromSpot.position.Xabs, Y: options.fromSpot.position.Yabs, scale: options.fromSpot.position.scale, Xi: options.fromSpot.position.Xi, Yi: options.fromSpot.position.Yi, scalei: options.fromSpot.position.scalei } })
+      if (options.to && options.fromSpot) {
+        if (!options.params)
+          options.params = {}
+        const positionParams = options.fromSpot.position ? {
+          position: {
+            X: options.fromSpot.position.Xabs,
+            Y: options.fromSpot.position.Yabs,
+            scale: options.fromSpot.position.scale,
+            Xi: options.fromSpot.position.Xi,
+            Yi: options.fromSpot.position.Yi,
+            scalei: options.fromSpot.position.scalei
+          }
+        } : {}
+        store.actions.setView(
+          {
+            name: options.to,
+            params: options.params
+          },
+          positionParams
+        )
+      }
     }
   },
   setView (data, options) {
     if (store.state.history.length < 6 && store.state.isRouterEnabled === false) {
       const view = parseView(data)
-      let position = {}
-      !options ? position = { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 } : position = options.position
+      const position = !options || (options.position && options.position.scale === 0) ? {
+        X: 0,
+        Y: 0,
+        scale: 1,
+        Xi: 0,
+        Yi: 0,
+        scalei: 1
+      } : options.position
       store.actions.addToHistory(view, position, view.route.params)
       store.actions.setNavigationMode('forward')
       if (view.route) store.state.params = view.route.params
