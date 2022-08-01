@@ -10,8 +10,8 @@ const responsiveness = {
     return store.state.diameters[sizes]
   },
   getDimensions () {
-    let container = document.getElementById('z-container').offsetWidth
-    let size = store.state.sizes
+    const container = document.getElementById('z-container').offsetWidth
+    const size = store.state.sizes
     store.state.diameters = {
       xxl: container * (size.xxl / 100),
       xl: container * (size.xl / 100),
@@ -21,7 +21,7 @@ const responsiveness = {
       xs: container * (size.xs / 100),
       xxs: container * (size.xxs / 100)
     }
-    store.actions.setLog(`Size change detected on z-canvas`)
+    store.actions.setLog('Size change detected on z-canvas')
   }
 }
 export default responsiveness

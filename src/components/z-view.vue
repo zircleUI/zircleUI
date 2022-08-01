@@ -8,7 +8,7 @@
     @mouseover = "$zircle.allowBackwardNavigation(true)"
     @mouseleave = "$zircle.allowBackwardNavigation(false)">
     <div :id="fullView" v-if="$slots['image'] || imagePath" class="z-content">
-      <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
+      <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
       <slot v-if="!imagePath" name="image"></slot>
     </div>
     <section style="opacity: 0" :style="animation">
@@ -99,27 +99,30 @@ export default {
   },
   computed: {
     shape () {
-      return this.circle ? 'is-circle' : this.square ? 'is-square' : ''
+      if (this.circle) {
+        return 'is-circle'
+      } else if (this.square) {
+        return 'is-square'
+      }
+      return ''
     },
     sliderEnabled () {
-      let result
-      this.slider === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.slider === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.slider === true && (
+        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
+        (this.circle === true && this.$zircle.getThemeShape() === 'square')
+      )
     },
     scrollBarEnabled () {
-      let result
-      this.scrollBar === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.scrollBar === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.scrollBar === true && (
+        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
+        (this.circle === true && this.$zircle.getThemeShape() === 'square')
+      )
     },
     position () {
       return this.$zircle.calcViewPosition(this.fullView)
     },
     scrollBar () {
-      var isScrollNeeded = false
+      let isScrollNeeded = false
       if (this.isMounted === true && this.fullView === this.$zircle.getCurrentViewName() && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth(this.size)) {
         isScrollNeeded = true
       }
@@ -135,7 +138,7 @@ export default {
       }
     },
     styles () {
-      var width = this.$zircle.getComponentWidth(this.size)
+      const width = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: width + 'px',
@@ -152,13 +155,11 @@ export default {
     },
     animation () {
       if (this.fullView === this.$zircle.getCurrentViewName() && this.$zircle.getNavigationMode() === 'forward') {
-        var zstyle = 'opacity: 1; transition: opacity 1000ms linear;'
+        return 'opacity: 1; transition: opacity 1000ms linear;'
       } else if (this.fullView === this.$zircle.getCurrentViewName() && this.$zircle.getNavigationMode() !== 'forward') {
-        zstyle = 'opacity: 1;'
-      } else {
-        zstyle = 'opacity: 0; transition: opacity 500ms linear;'
+        return 'opacity: 1;'
       }
-      return zstyle
+      return 'opacity: 0; transition: opacity 500ms linear;'
     },
     longContent () {
       return {
@@ -178,7 +179,7 @@ export default {
     },
     scroll () {
       if (this.scrollBar === true) {
-        var container = this.$refs.maincontent
+        const container = this.$refs.maincontent
         this.scrollVal = -45 + ((container.scrollTop * 100 / (container.scrollHeight - container.clientHeight)) * 86 / 100)
       }
     }
@@ -186,7 +187,7 @@ export default {
   watch: {
     scrollVal () {
       if (this.scrollBar === true) {
-        var container = this.$refs.maincontent
+        const container = this.$refs.maincontent
         container.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (container.scrollHeight - container.clientHeight) / 100
       }
     }
@@ -197,7 +198,7 @@ export default {
       this.ffox = true
     }
     this.zpos = this.styles
-    var vm = this
+    const vm = this
     setTimeout(function () {
       vm.isMounted = true
     }, 1000)

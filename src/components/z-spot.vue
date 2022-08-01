@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="z-content" :class="[shape]" >
-        <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
+        <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
         <slot v-if="!imagePath" name="image"></slot>
       </div>
       <div class="z-content" :class="[shape]"  style="z-index: 10">
@@ -152,21 +152,19 @@ export default {
       }
     },
     sliderEnabled () {
-      let result
-      this.slider === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.slider === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.slider === true && (
+        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
+        (this.circle === true && this.$zircle.getThemeShape() === 'square')
+      )
     },
     knobEnabled () {
-      let result
-      this.knob === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.knob === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.knob === true && (
+        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
+        (this.circle === true && this.$zircle.getThemeShape() === 'square')
+      )
     },
     styles () {
-      var width = this.$zircle.getComponentWidth(this.size)
+      const width = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: width + 'px',
@@ -189,14 +187,20 @@ export default {
       }
     },
     shape () {
-      return this.circle ? 'is-circle' : this.square ? 'is-square' : ''
+      if (this.circle) {
+        return 'is-circle'
+      } else if (this.square) {
+        return 'is-square'
+      }
+      return ''
     },
     progressLabel () {
       if (this.computedQty) {
         let unit = ''
-        this.unit ? unit = this.unit : unit = ''
+        unit = this.unit ? this.unit : ''
         return this.qty + '' + unit
       }
+      return ''
     },
     computedQty: {
       get: function () {

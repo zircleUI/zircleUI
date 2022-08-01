@@ -1,14 +1,15 @@
 <template>
-   <transition-group :name="$zircle.getNavigationMode() === 'forward' ? 'z-next' : 'z-prev'" tag="section">
-      <component v-for="(view, i) in views"
+  <transition-group :name="$zircle.getNavigationMode() === 'forward' ? 'z-next' : 'z-prev'" tag="section">
+    <component
+      v-for="(view, i) in views"
       :is="view.component"
       :class="{
         'is-current-view': $zircle.getCurrentViewName() === view.name,
         'is-previous-view': $zircle.getPreviousViewName() === view.name,
         'is-past-view': $zircle.getPastViewName() === view.name
       }"
-      :key="i">
-      </component>
+      :key="`${view.name}-${i}`">
+    </component>
   </transition-group>
 </template>
 <script>

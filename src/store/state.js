@@ -1,5 +1,7 @@
-import { reactive } from 'vue'
-const state = reactive({
+import Vue from 'vue'
+
+const state = new Vue({
+  data: {
     // app Mode
     appMode: 'full',
     // navigation

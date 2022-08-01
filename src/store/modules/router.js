@@ -5,10 +5,10 @@ const router = {
     const component = match.components.default
     const name = match.name
     store.actions.setComponentList({ [name]: component })
-    store.state.history.push({ name: name, position: position, params: view.route.params, component: component })
+    store.state.history.push({ name, position, params: view.route.params, component })
     store.actions.setNavigationMode('forward')
     if (view.name !== name) {
-      return store.state.router.push({ name: name, params: view.route.params })
+      return store.state.router.push({ name, params: view.route.params })
     } else {
       return store.state.router.push(view.route)
     }
@@ -19,7 +19,7 @@ const router = {
     store.state.params = ''
     store.state.history = []
     store.actions.setComponentList({ [view.name]: component })
-    store.state.history.push({ name: view.name, position: { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 }, params: view.params, component: component })
+    store.state.history.push({ name: view.name, position: { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 }, params: view.params, component })
     store.actions.setNavigationMode('forward')
     store.state.router.replace(view)
     store.actions.setLog('replace() => ' + store.state.history[store.state.history.length - 1].name)
@@ -37,7 +37,7 @@ const router = {
     return store.state.goBackView
   },
   setRouterHooks () {
-    store.state.router.beforeEach((to, from, next) => {
+    store.state.router.beforeEach((to, _from, next) => {
       if (store.actions.getNavigationMode() === 'forward' && store.state.history.length >= 1) {
         store.actions.setLog('VueRouter: zoom-in to ' + to.name)
         next()

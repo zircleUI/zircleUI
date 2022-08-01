@@ -1,9 +1,15 @@
 import store from '../store'
 const debug = {
   setLog (msg, type) {
-    var bgColor = ''
-    var color = ''
-    type === 'warn' ? (bgColor = 'yellow', color = 'black') : type === 'error' ? (bgColor = 'red', color = 'white') : (bgColor = 'green', color = 'white') // eslint-disable-line
+    let bgColor = 'green'
+    if (type === 'warn') {
+      bgColor = 'yellow'
+    } else if (type === 'error') {
+      bgColor = 'red'
+    }
+
+    const color = (type === 'warn') ? 'black' : 'white'
+
     if (store.state.debug) {
       console.log('%c z ', 'background: ' + bgColor + '; color:  ' + color + '', msg) // eslint-disable-line no-console
     }
