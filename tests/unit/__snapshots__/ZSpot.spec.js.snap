@@ -45,6 +45,7 @@ exports[`z-spot.vue Has the expected html structure 1`] = `
     class="z-content"
   >
     <img
+      alt="content custom image"
       height="100%"
       src="./images/test.png"
       width="100%"
