@@ -3,6 +3,37 @@ const app = {
   getAppMode () {
     return store.state.appMode
   },
+  resetConfig () {
+    store.state.appMode = 'full'
+    store.state.navigationMode = 'forward'
+    store.state.isRouterEnabled = false
+    store.state.router = {}
+    store.state.history = []
+    store.state.backwardNavigation = false
+    store.state.componentList = {}
+    store.state.goBackView = ''
+    store.state.lastView = ''
+    store.state.diameters = {}
+    store.state.sizes = {
+      xxl: 55,
+      xl: 32,
+      l: 20,
+      m: 12,
+      s: 8,
+      xs: 5,
+      xxs: 2
+    }
+    store.state.appStyle = {
+      theme: 'theme-black',
+      mode: 'mode-dark',
+      shape: 'circle'
+    }
+    store.state.currentPage = 0
+    store.state.items = []
+    store.state.pages = []
+    store.state.params = {}
+    store.state.debug = false
+  },
   config (config) {
     if (config.debug === true || config.debug === false) store.state.debug = config.debug
     if (store.state.debug === true) {
