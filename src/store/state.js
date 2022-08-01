@@ -35,6 +35,7 @@ const state = new Vue({
     params: {},
     // debug
     debug: false
+  }
 })
 
 export default state
