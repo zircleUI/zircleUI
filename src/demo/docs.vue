@@ -1,10 +1,12 @@
 <template>
-  <z-view style="border-width: 8px;">
+  <z-view size="l" style="border-width: 8px;">
     Documentation
     <template v-slot:extension>
       <z-list :items="sections" :per-page="5">
         <template v-slot:default="props">
         <z-spot
+          distance="60"
+          size="xs"
           button
           :index="props.index"
           :label='props.name'

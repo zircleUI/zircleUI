@@ -1,8 +1,9 @@
 <template>
-  <z-view>
+  <z-view size="xl">
     WELCOME TO ZIRCLE UI
     <template #extension>
       <z-spot
+        size="xs"
         :angle='45'
         to-view='docs'
         class='accent'
@@ -10,6 +11,7 @@
         <i class='fas fa-book'></i>
       </z-spot>
       <z-spot
+        size="xs"
         button
         :angle='135'
         class='accent'
