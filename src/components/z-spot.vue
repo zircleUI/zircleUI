@@ -151,17 +151,20 @@ export default {
         return false
       }
     },
+    shape () {
+      if (this.circle) {
+        return 'is-circle'
+      } else if (this.square) {
+        return 'is-square'
+      } else {
+        return 'is-circle'
+      }
+    },
     sliderEnabled () {
-      return this.slider === true && (
-        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
-        (this.circle === true && this.$zircle.getThemeShape() === 'square')
-      )
+      return this.slider === true && this.shape === 'is-circle'
     },
     knobEnabled () {
-      return this.knob === true && (
-        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
-        (this.circle === true && this.$zircle.getThemeShape() === 'square')
-      )
+      return this.knob === true && this.shape === 'is-circle'
     },
     styles () {
       const width = this.$zircle.getComponentWidth(this.size)
@@ -185,14 +188,6 @@ export default {
         primary: this.$parent.componentType !== 'z-list',
         accent: this.$parent.componentType === 'z-list'
       }
-    },
-    shape () {
-      if (this.circle) {
-        return 'is-circle'
-      } else if (this.square) {
-        return 'is-square'
-      }
-      return ''
     },
     progressLabel () {
       if (this.computedQty) {

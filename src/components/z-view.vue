@@ -103,20 +103,15 @@ export default {
         return 'is-circle'
       } else if (this.square) {
         return 'is-square'
+      } else {
+        return 'is-circle'
       }
-      return ''
     },
     sliderEnabled () {
-      return this.slider === true && (
-        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
-        (this.circle === true && this.$zircle.getThemeShape() === 'square')
-      )
+      return this.slider === true && this.shape === 'is-circle'
     },
     scrollBarEnabled () {
-      return this.scrollBar === true && (
-        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
-        (this.circle === true && this.$zircle.getThemeShape() === 'square')
-      )
+      return this.scrollBar === true && this.shape === 'is-circle'
     },
     position () {
       return this.$zircle.calcViewPosition(this.fullView)
@@ -163,13 +158,12 @@ export default {
     },
     longContent () {
       return {
-        'long-content': this.scrollBarEnabled === true,
-        'overflow-square': this.scrollBarEnabled === false
+        'overflow-square': this.scrollBar === true && this.shape === 'is-square'
       }
     },
     firefoxScroll () {
       return {
-        'z-scroll-disabled-for-firefox': this.scrollBar === true && this.ffox === true
+        'z-scroll-disabled-for-firefox': this.scrollBarEnabled === true && this.ffox === true
       }
     }
   },

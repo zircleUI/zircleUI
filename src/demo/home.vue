@@ -1,5 +1,5 @@
 <template>
-  <z-view size="xl">
+  <z-view size="xl" square>
     WELCOME TO ZIRCLE UI
     <template #extension>
       <z-spot
@@ -12,6 +12,7 @@
       </z-spot>
       <z-spot
         size="xs"
+        square
         button
         :angle='135'
         class='accent'

@@ -79,13 +79,7 @@ export default {
     },
     longContent () {
       return {
-        'long-content': this.scrollBarEnabled === true,
-        'overflow-square': this.scrollBarEnabled === false
-      }
-    },
-    firefoxScroll () {
-      return {
-        'z-scroll-disabled-for-firefox': this.scrollBar === true && this.ffox === true
+        'overflow-square': this.scrollBar === true && this.shape === 'is-square'
       }
     },
     selfCloseEnabled () {
@@ -99,8 +93,9 @@ export default {
         return 'is-circle'
       } else if (this.square) {
         return 'is-square'
+      } else {
+        return 'is-circle'
       }
-      return ''
     },
     styles () {
       const zwidth = this.$zircle.getComponentWidth(this.size)
@@ -135,10 +130,6 @@ export default {
     }
   },
   mounted () {
-    if (navigator.userAgent.match('Firefox') && this.scrollBarEnabled) {
-      this.$zircle.setLog('Firefox desktop detected. Scroll events disabled')
-      this.ffox = true
-    }
     setTimeout(() => { this.isMounted = true }, 1000)
     if (this.selfClose) {
       const vm = this
