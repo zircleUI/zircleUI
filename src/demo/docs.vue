@@ -5,7 +5,7 @@
       <z-list :items="sections" :per-page="5">
         <template v-slot:default="props">
         <z-spot
-          distance="60"
+          :distance="60"
           size="xs"
           button
           :index="props.index"
