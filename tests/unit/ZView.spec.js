@@ -41,14 +41,10 @@ describe('z-view.vue', () => {
     expect(wrapper.vm.imagePath).toEqual('./images/test.png')
     expect(wrapper.vm.label).toEqual('Test label prop')
   })
-  it('Expected data.fullView processed viewName', () => {
-    expect(wrapper.vm.fullView).toEqual('search--0')
-  })
   it('Expected to be responsive', () => {
     expect(wrapper.vm.responsive).toEqual(true)
   })
-  it('Has z-scroll component and longtext class activated because of scrollBar true', () => {
-    expect(wrapper.findComponent('.maincontent').classes()).toContain('long-content')
+  it('Has z-scroll component activated because of scrollBar true', () => {
     expect(wrapper.findComponent(zscroll).exists()).toBe(true)
   })
   it('Has z-slider component and progress 80%', () => {

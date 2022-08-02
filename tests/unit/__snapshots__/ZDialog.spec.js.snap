@@ -5,12 +5,12 @@ exports[`z-dialog.vue Has the expected html structure 1`] = `
   name="z-dialog-transition"
 >
   <div
-    class="z-shape is-extension primary z-dialog"
+    class="z-shape is-extension primary z-dialog is-circle"
   >
     <!---->
      
     <div
-      class="z-outer-circle"
+      class="z-outer-circle is-circle"
     />
      
     <svg
@@ -29,7 +29,7 @@ exports[`z-dialog.vue Has the expected html structure 1`] = `
     <!---->
      
     <div
-      class="z-content maincontent overflow-square"
+      class="z-content maincontent is-circle"
     >
       <div>
         <p>
