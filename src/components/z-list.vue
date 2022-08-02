@@ -14,7 +14,7 @@
         :active="$zircle.getCurrentPageIndex()"
         @mouseover="$zircle.allowBackwardNavigation(true)"
         @mouseleave="$zircle.allowBackwardNavigation(false)"
-        @click="$zircle.setCurrentPageIndex(index)"/>
+        @click.native="$zircle.setCurrentPageIndex(index)"/>
     </template>
   </section>
 </template>
