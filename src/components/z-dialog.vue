@@ -11,7 +11,7 @@
         <div class="z-outer-circle" :class="[shape]" :style="styles.plate"></div>
         <z-slider v-if="selfCloseEnabled" :progress="progress"></z-slider>
         <z-scroll v-if="scrollBarEnabled" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
-        <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent, firefoxScroll]" @scroll.passive="scroll">
+        <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent]" @scroll.passive="scroll">
           <div ref="ztext">
             <slot></slot>
           </div>

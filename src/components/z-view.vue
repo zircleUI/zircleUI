@@ -20,7 +20,7 @@
           {{label}}
         </div>
       </div>
-      <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent, firefoxScroll]" @scroll.passive="scroll">
+      <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent]" @scroll.passive="scroll">
         <div ref="ztext">
           <slot></slot>
         </div>
@@ -160,11 +160,6 @@ export default {
       return {
         'overflow-square': this.scrollBar === true && this.shape === 'is-square'
       }
-    },
-    firefoxScroll () {
-      return {
-        'z-scroll-disabled-for-firefox': this.scrollBarEnabled === true && this.ffox === true
-      }
     }
   },
   methods: {
@@ -187,10 +182,6 @@ export default {
     }
   },
   mounted () {
-    if (navigator.userAgent.match('Firefox') && this.scrollBarEnabled) {
-      this.$zircle.setLog('Firefox desktop detected. Scroll events disabled')
-      this.ffox = true
-    }
     this.zpos = this.styles
     const vm = this
     setTimeout(function () {
