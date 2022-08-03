@@ -88,6 +88,7 @@ export default {
       scrollVal: -45,
       zpos: {},
       isMounted: false,
+      ffox: false,
       fullView: this.$zircle.getNavigationMode() === 'forward' ? this.$zircle.getCurrentViewName() : this.$zircle.getPastViewName()
     }
   },
@@ -98,10 +99,13 @@ export default {
   },
   computed: {
     shape () {
-      if (this.square) {
+      if (this.circle) {
+        return 'is-circle'
+      } else if (this.square) {
         return 'is-square'
+      } else {
+        return 'is-circle'
       }
-      return 'is-circle'
     },
     sliderEnabled () {
       return this.slider === true && this.shape === 'is-circle'
