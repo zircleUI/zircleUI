@@ -1,5 +1,6 @@
 import store from '../store'
 import Vue from 'vue'
+import { createUniqueKey } from '../utils'
 
 function retrieveViewName (pos) {
   let viewName = ''
@@ -51,6 +52,7 @@ function parseView (data) {
 const navigation = {
   addToHistory (view, position, params) {
     return store.state.history.push({
+      uniqueKey: createUniqueKey(),
       name: view.name,
       position,
       params,

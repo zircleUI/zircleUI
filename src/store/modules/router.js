@@ -1,11 +1,19 @@
 import store from '../store'
+import { createUniqueKey } from '../utils'
+
 const router = {
   evaluateRoute (view, position) {
     const match = store.state.router.resolve(view.path).route.matched[0]
     const component = match.components.default
     const name = match.name
     store.actions.setComponentList({ [name]: component })
-    store.state.history.push({ name, position, params: view.route.params, component })
+    store.state.history.push({
+      uniqueKey: createUniqueKey(),
+      name,
+      position,
+      params: view.route.params,
+      component
+    })
     store.actions.setNavigationMode('forward')
     if (view.name !== name) {
       return store.state.router.push({ name, params: view.route.params })
@@ -19,7 +27,13 @@ const router = {
     store.state.params = ''
     store.state.history = []
     store.actions.setComponentList({ [view.name]: component })
-    store.state.history.push({ name: view.name, position: { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 }, params: view.params, component })
+    store.state.history.push({
+      uniqueKey: createUniqueKey(),
+      name: view.name,
+      position: { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 },
+      params: view.params,
+      component
+    })
     store.actions.setNavigationMode('forward')
     store.state.router.replace(view)
     store.actions.setLog('replace() => ' + store.state.history[store.state.history.length - 1].name)
