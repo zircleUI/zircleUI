@@ -5,17 +5,30 @@
 // import { markRaw } from 'vue'
 import home from './demo/home.vue'
 import docs from './demo/docs.vue'
+import components from './demo/components.vue'
+import zcanvas from './demo/zcanvas.vue'
+import zview from './demo/zview.vue'
+import zlist from './demo/zlist.vue'
+import zspot from './demo/zspot.vue'
+import zdialog from './demo/zdialog.vue'
+
 export default {
   components: {
     /* eslint-disable vue/no-unused-components */
     home,
-    docs
+    docs,
+    components,
+    zview,
+    zspot,
+    zlist,
+    zdialog,
+    zcanvas
   },
   mounted () {
     this.$zircle.config({
       debug: true,
       style: {
-        theme: 'blue'
+        theme: 'white'
       }
     })
     this.$zircle.setView('home')

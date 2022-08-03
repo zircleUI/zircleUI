@@ -1,6 +1,6 @@
 <template>
-  <z-view size="xl" square>
-    WELCOME TO ZIRCLE UI
+  <z-view size="xl">
+    Z-SPOT
     <template #extension>
       <z-spot
         size="xs"
