@@ -152,13 +152,10 @@ export default {
       }
     },
     shape () {
-      if (this.circle) {
-        return 'is-circle'
-      } else if (this.square) {
+      if (this.square) {
         return 'is-square'
-      } else {
-        return 'is-circle'
       }
+      return 'is-circle'
     },
     sliderEnabled () {
       return this.slider === true && this.shape === 'is-circle'
