@@ -9,27 +9,33 @@
     @mousedown="pulse"
     @touchstart="pulse"
     @mouseup="move"
-    @click="$emit('click', $event)">
-      <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
-      <div class="z-pulse" :class="[shape]" ref="pulse"></div>
-      <z-knob v-if="knobEnabled" :qty="computedQty" :unit="unit" :min="min" :max="max" />
-      <z-slider v-if="sliderEnabled" :progress='progress' />
-      <div class="z-label" :class="[shape,labelPos]" :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''" v-if="label">
-        <div class="inside">
-        {{label}} <span v-if="pos === 'outside'"> {{progressLabel}}</span>
-        </div>
+    @click="$emit('click', $event)"
+  >
+    <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
+    <div class="z-pulse" :class="[shape]" ref="pulse"></div>
+    <z-knob v-if="knobEnabled" :qty="computedQty" :unit="unit" :min="min" :max="max"/>
+    <z-slider v-if="sliderEnabled" :progress='progress'/>
+    <div
+      class="z-label"
+      :class="[shape,labelPos]"
+      :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''"
+      v-if="label"
+    >
+      <div class="inside">
+        {{ label }} <span v-if="pos === 'outside'"> {{ progressLabel }}</span>
       </div>
-      <div class="z-content" :class="[shape]" >
-        <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
-        <slot v-if="!imagePath" name="image"></slot>
-      </div>
-      <div class="z-content" :class="[shape]"  style="z-index: 10">
-        <span class="overflow">
-          <span v-if="pos === 'inside' || pos === undefined ">{{progressLabel}}</span>
-          <slot></slot>
-        </span>
-      </div>
-      <slot name="extension"></slot>
+    </div>
+    <div class="z-content" :class="[shape]">
+      <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
+      <slot v-if="!imagePath" name="image"></slot>
+    </div>
+    <div class="z-content" :class="[shape]" style="z-index: 10">
+      <span class="overflow">
+        <span v-if="pos === 'inside' || pos === undefined ">{{ progressLabel }}</span>
+        <slot></slot>
+      </span>
+    </div>
+    <slot name="extension"></slot>
   </div>
 </template>
 
@@ -148,13 +154,7 @@ export default {
       return this.$zircle.getNumberOfItemsInCurrentPage() === 1 ? 0 : this.distance
     },
     responsive () {
-      if (this.view === this.$zircle.getCurrentViewName()) {
-        // eslint-disable-next-line
-        this.zpos = this.styles
-        return true
-      } else {
-        return false
-      }
+      return this.view === this.$zircle.getCurrentViewName()
     },
     shape () {
       if (this.square) {
