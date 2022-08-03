@@ -3,7 +3,7 @@ import store from '@/store/store'
 export const createUniqueKey = () => Date.now().toString(36) + Math.random().toString(36).substring(2)
 
 export function retrieveViewName (pos) {
-  if (store.state.history.length <= pos) {
+  if (store.state.history.length < pos || pos < 1) {
     return ''
   }
   return store.state.history[store.state.history.length - pos].name
