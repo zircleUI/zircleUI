@@ -124,6 +124,11 @@ export default {
       val: 0
     }
   },
+  watch: {
+    responsive () {
+      this.zpos = this.styles
+    }
+  },
   computed: {
     position () {
       const component = {
