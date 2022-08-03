@@ -1,53 +1,6 @@
 import store from '../store'
 import Vue from 'vue'
-import { createUniqueKey } from '../utils'
-
-function retrieveViewName (pos) {
-  let viewName = ''
-  if (store.state.history.length >= pos) {
-    viewName = store.state.history[store.state.history.length - pos].name
-  }
-  return viewName
-}
-
-function transformViewName (view) {
-  view = view.toLowerCase()
-  let count = 0
-  for (let i = 1; i <= store.state.history.length; i++) {
-    if (store.state.history[store.state.history.length - i].name.split('--')[0] === view) {
-      count += 1
-    }
-  }
-  if (store.state.isRouterEnabled) {
-    return view
-  } else {
-    return view + '--' + count
-  }
-}
-
-function parseView (data) {
-  let name
-  let route
-  let paramPath = ''
-  let path
-  if (typeof data === 'string') {
-    name = transformViewName(data)
-    route = { name }
-    path = '/' + name
-  } else {
-    Object.keys(data.params).forEach(function (key) {
-      paramPath += '/:' + key
-    })
-    name = transformViewName(data.name)
-    route = { name, params: data.params }
-    path = '/' + name + '' + paramPath
-  }
-  return {
-    name,
-    route,
-    path
-  }
-}
+import { createUniqueKey, parseView, retrieveViewName } from '../utils'
 
 const navigation = {
   addToHistory (view, position, params) {
