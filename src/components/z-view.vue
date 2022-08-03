@@ -88,7 +88,6 @@ export default {
       scrollVal: -45,
       zpos: {},
       isMounted: false,
-      ffox: false,
       fullView: this.$zircle.getNavigationMode() === 'forward' ? this.$zircle.getCurrentViewName() : this.$zircle.getPastViewName()
     }
   },

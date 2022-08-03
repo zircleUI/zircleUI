@@ -59,8 +59,7 @@ export default {
       componentType: this.$options.name,
       progress: 0,
       scrollVal: -45,
-      isMounted: false,
-      ffox: false
+      isMounted: false
     }
   },
   computed: {
