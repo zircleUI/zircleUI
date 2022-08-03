@@ -1,56 +1,11 @@
 import store from '../store'
 import Vue from 'vue'
-
-function retrieveViewName (pos) {
-  let viewName = ''
-  if (store.state.history.length >= pos) {
-    viewName = store.state.history[store.state.history.length - pos].name
-  }
-  return viewName
-}
-
-function transformViewName (view) {
-  view = view.toLowerCase()
-  let count = 0
-  for (let i = 1; i <= store.state.history.length; i++) {
-    if (store.state.history[store.state.history.length - i].name.split('--')[0] === view) {
-      count += 1
-    }
-  }
-  if (store.state.isRouterEnabled) {
-    return view
-  } else {
-    return view + '--' + count
-  }
-}
-
-function parseView (data) {
-  let name
-  let route
-  let paramPath = ''
-  let path
-  if (typeof data === 'string') {
-    name = transformViewName(data)
-    route = { name }
-    path = '/' + name
-  } else {
-    Object.keys(data.params).forEach(function (key) {
-      paramPath += '/:' + key
-    })
-    name = transformViewName(data.name)
-    route = { name, params: data.params }
-    path = '/' + name + '' + paramPath
-  }
-  return {
-    name,
-    route,
-    path
-  }
-}
+import { createUniqueKey, parseView, retrieveViewName } from '../utils'
 
 const navigation = {
   addToHistory (view, position, params) {
     return store.state.history.push({
+      uniqueKey: createUniqueKey(),
       name: view.name,
       position,
       params,
@@ -110,22 +65,37 @@ const navigation = {
   toView (options) {
     if (typeof options === 'string') {
       store.actions.setView(options)
-    } else {
-      if (!options.to) store.actions.setLog('Programmatic navigation: "to" is required ', 'error')
-      if (!options.fromSpot) store.actions.setLog('Programmatic navigation: "fromSpot" is required ', 'error')
-      if (options.fromSpot && typeof options.fromSpot !== 'object') store.actions.setLog('Programmatic navigation: "fromSpot" should be an object ', 'error')
-      if (options.params && typeof options.params !== 'object') store.actions.setLog('Programmatic navigation: "params" should be an object ', 'error')
-      if (options.to && options.fromSpot) {
-        if (!options.params) options.params = {}
-        const positionParams = options.fromSpot.position ? { position: { X: options.fromSpot.position.Xabs, Y: options.fromSpot.position.Yabs, scale: options.fromSpot.position.scale, Xi: options.fromSpot.position.Xi, Yi: options.fromSpot.position.Yi, scalei: options.fromSpot.position.scalei } } : {}
-        store.actions.setView(
-          {
-            name: options.to,
-            params: options.params
-          },
-          positionParams
-        )
+      return
+    }
+    if (!options.to) store.actions.setLog('Programmatic navigation: "to" is required ', 'error')
+    if (!options.fromSpot) store.actions.setLog('Programmatic navigation: "fromSpot" is required ', 'error')
+    if (options.fromSpot && typeof options.fromSpot !== 'object') store.actions.setLog('Programmatic navigation: "fromSpot" should be an object ', 'error')
+    if (options.params && typeof options.params !== 'object') store.actions.setLog('Programmatic navigation: "params" should be an object ', 'error')
+    if (options.to && options.fromSpot) {
+      if (!options.params) {
+        options.params = {}
       }
+      const positionParams = (
+        options.fromSpot.position
+          ? {
+              position: {
+                X: options.fromSpot.position.Xabs,
+                Y: options.fromSpot.position.Yabs,
+                scale: options.fromSpot.position.scale,
+                Xi: options.fromSpot.position.Xi,
+                Yi: options.fromSpot.position.Yi,
+                scalei: options.fromSpot.position.scalei
+              }
+            }
+          : {}
+      )
+      store.actions.setView(
+        {
+          name: options.to,
+          params: options.params
+        },
+        positionParams
+      )
     }
   },
   setView (data, options) {
