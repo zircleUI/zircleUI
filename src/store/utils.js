@@ -3,45 +3,37 @@ import store from '@/store/store'
 export const createUniqueKey = () => Date.now().toString(36) + Math.random().toString(36).substring(2)
 
 export function retrieveViewName (pos) {
-  let viewName = ''
-  if (store.state.history.length >= pos) {
-    viewName = store.state.history[store.state.history.length - pos].name
+  if (store.state.history.length <= pos) {
+    return ''
   }
-  return viewName
+  return store.state.history[store.state.history.length - pos].name
 }
 
 export function transformViewName (view) {
   view = view.toLowerCase()
   let count = 0
-  for (let i = 1; i <= store.state.history.length; i++) {
-    if (store.state.history[store.state.history.length - i].name.split('--')[0] === view) {
-      count += 1
-    }
+
+  if (!store.state.isRouterEnabled) {
+    count = store.state.history.filter((historicView) => historicView.name.startsWith(view)).length
+    view += '--' + count
   }
-  if (store.state.isRouterEnabled) {
-    return view
-  } else {
-    return view + '--' + count
-  }
+  return view
 }
 
 export function parseView (data) {
-  let name
-  let route
-  let paramPath = ''
-  let path
-  if (typeof data === 'string') {
-    name = transformViewName(data)
-    route = { name }
-    path = '/' + name
-  } else {
+  const baseName = (typeof data === 'object') ? data.name : data
+  const name = transformViewName(baseName)
+  const route = { name, params: data.params }
+  let path = '/' + name
+
+  if (typeof data === 'object' && typeof data.params === 'object') {
+    let paramPath = ''
     Object.keys(data.params).forEach(function (key) {
       paramPath += '/:' + key
     })
-    name = transformViewName(data.name)
-    route = { name, params: data.params }
-    path = '/' + name + '' + paramPath
+    path += paramPath
   }
+
   return {
     name,
     route,
