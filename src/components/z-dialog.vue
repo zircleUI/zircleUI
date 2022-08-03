@@ -59,7 +59,8 @@ export default {
       componentType: this.$options.name,
       progress: 0,
       scrollVal: -45,
-      isMounted: false
+      isMounted: false,
+      ffox: false
     }
   },
   computed: {
@@ -88,10 +89,13 @@ export default {
       )
     },
     shape () {
-      if (this.square) {
+      if (this.circle) {
+        return 'is-circle'
+      } else if (this.square) {
         return 'is-square'
+      } else {
+        return 'is-circle'
       }
-      return 'is-circle'
     },
     styles () {
       const zwidth = this.$zircle.getComponentWidth(this.size)

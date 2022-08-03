@@ -1,18 +1,19 @@
 <template>
   <transition-group :name="$zircle.getNavigationMode() === 'forward' ? 'z-next' : 'z-prev'" tag="section">
     <component
-      v-for="view in views"
+      v-for="(view, i) in views"
       :is="view.component"
       :class="{
         'is-current-view': $zircle.getCurrentViewName() === view.name,
         'is-previous-view': $zircle.getPreviousViewName() === view.name,
         'is-past-view': $zircle.getPastViewName() === view.name
       }"
-      :key="view.uniqueKey">
+      :key="`${view.name}_${i}}`">
     </component>
   </transition-group>
 </template>
 <script>
+/* eslint-disable */
 export default {
   name: 'z-view-manager',
   computed: {
