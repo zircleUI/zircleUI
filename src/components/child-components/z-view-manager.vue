@@ -8,7 +8,7 @@
         'is-previous-view': $zircle.getPreviousViewName() === view.name,
         'is-past-view': $zircle.getPastViewName() === view.name
       }"
-      :key="i">
+      :key="`${view.name}_${i}}`">
     </component>
   </transition-group>
 </template>
