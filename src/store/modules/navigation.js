@@ -129,18 +129,33 @@ const navigation = {
     }
   },
   setView (data, options) {
-    if (store.state.history.length < 6 && store.state.isRouterEnabled === false) {
-      const view = parseView(data)
-      const position = !options ? { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 } : options.position
+    if (store.state.history.length >= 6) {
+      store.actions.setLog('Max zoom level reached')
+      return
+    }
+
+    const view = parseView(data)
+    const position = (
+      !options || (options.position && options.position.scale === 0)
+        ? {
+            X: 0,
+            Y: 0,
+            scale: 1,
+            Xi: 0,
+            Yi: 0,
+            scalei: 1
+          }
+        : options.position
+    )
+
+    if (store.state.isRouterEnabled === false) {
       store.actions.addToHistory(view, position, view.route.params)
       store.actions.setNavigationMode('forward')
-      if (view.route) store.state.params = view.route.params
-    } else if (store.state.history.length < 6 && store.state.isRouterEnabled === true) {
-      const view = parseView(data)
-      const position = !options ? { X: 0, Y: 0, scale: 1, Xi: 0, Yi: 0, scalei: 1 } : options.position
-      store.actions.evaluateRoute(view, position)
+      if (view.route) {
+        store.state.params = view.route.params
+      }
     } else {
-      store.actions.setLog('Max zoom level reached')
+      store.actions.evaluateRoute(view, position)
     }
   },
   goBack () {
