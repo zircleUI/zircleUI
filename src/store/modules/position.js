@@ -45,7 +45,16 @@ const position = {
     // Variable declaration
     let parentPosition = { Xi: 0, Yi: 0, X: 0, Y: 0, scalei: 1, scale: 1 }
     const newCoords = calcCoords(component.distance, component.angle, component.$parent.size)
-    if (component.$parent.componentType === 'z-view' || component.$parent.componentType === 'z-list' || component.$parent.componentType === 'z-spot') parentPosition = { Xi: component.$parent.position.Xi, Yi: component.$parent.position.Yi, X: component.$parent.position.X, Y: component.$parent.position.Y, scalei: component.$parent.position.scalei, scale: component.$parent.position.scale }
+    if (['z-view', 'z-list', 'z-spot'].includes(component.$parent.componentType)) {
+      parentPosition = {
+        Xi: component.$parent.position.Xi,
+        Yi: component.$parent.position.Yi,
+        X: component.$parent.position.X,
+        Y: component.$parent.position.Y,
+        scalei: component.$parent.position.scalei,
+        scale: component.$parent.position.scale
+      }
+    }
     return {
       X: newCoords.X,
       Y: newCoords.Y,
