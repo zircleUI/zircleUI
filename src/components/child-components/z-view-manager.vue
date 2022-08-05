@@ -16,7 +16,6 @@
   </transition-group>
 </template>
 <script>
-/* eslint-disable */
 export default {
   name: 'z-view-manager',
   computed: {
@@ -26,4 +25,3 @@ export default {
   }
 }
 </script>
-
