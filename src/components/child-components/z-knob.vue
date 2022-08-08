@@ -72,9 +72,6 @@ export default {
     }
   },
   watch: {
-    qty () {
-      this.angle = Math.round(((this.qty - this.min) * 360) / (this.max - this.min))
-    }
   },
   methods: {
     bar (e) {
@@ -91,8 +88,7 @@ export default {
       tangle = Math.round(tangle)
       if (tangle < 0) tangle = 360 + tangle
       let prevAngle = Math.round(this.angle)
-      const vm = this
-      const id = setInterval(function () {
+      const id = setInterval(() => {
         if (prevAngle > tangle) {
           prevAngle--
         } else if (prevAngle < tangle) {
@@ -100,8 +96,8 @@ export default {
         } else {
           clearInterval(id)
         }
-        vm.angle = prevAngle
-        vm.$emit('update:qty', Math.round((prevAngle / 360) * (vm.max - vm.min)) + vm.min)
+        this.angle = prevAngle
+        this.$emit('update:qty', Math.round((prevAngle / 360) * (this.max - this.min)) + this.min)
       }, 0)
     },
     handleBar (e) {
@@ -125,7 +121,6 @@ export default {
   },
   mounted () {
     this.angle = Math.round(((this.qty - this.min) * 360) / (this.max - this.min))
-    this.$emit('update:qty', this.qty)
   }
 }
 </script>
