@@ -50,13 +50,6 @@ export default {
         this.$zircle.setNavigationMode('backward')
         this.$router.back()
       }
-    },
-    compareAndNotify () {
-      this.$zircle.getDimensions()
-    },
-    addResizeHandlers () {
-      this._resizeObject.contentDocument.defaultView.addEventListener('resize', this.compareAndNotify)
-      this.$zircle.getDimensions()
     }
   },
   created () {
@@ -64,17 +57,8 @@ export default {
   },
   mounted () {
     // Get window dimension to set the initial width of ui components such as z-panel
-    const object = document.createElement('object')
-    this._resizeObject = object
-    object.setAttribute('aria-hidden', 'true')
-    object.setAttribute('tabindex', -1)
-    object.className = 'z-resizable-object'
-    object.onload = this.addResizeHandlers
-    object.type = 'text/html'
-    object.data = 'about:blank'
-    this.$el.appendChild(object)
-    this.$nextTick(() => this.compareAndNotify)
-    document.onmouseleave = () => this.$zircle.setNavigationMode('backward')
+    this.$nextTick().then(() => this.$zircle.getDimensions())
+    window.addEventListener('resize', () => this.$zircle.getDimensions())
   }
 }
 </script>
