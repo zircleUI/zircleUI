@@ -90,6 +90,7 @@ export default {
   },
   mounted () {
     this.zpos = this.styles
+    console.log(this.$zircle.getComponentWidth(this.$parent.size) + this.$zircle.getComponentWidth(this.size))
   }
 }
 </script>
