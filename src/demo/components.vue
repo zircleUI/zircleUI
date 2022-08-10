@@ -2,7 +2,7 @@
   <z-view size="l" style="border-width: 8px;">
     Components
     <template v-slot:extension>
-      <z-list :items="sections" :per-page="2">
+      <z-list :items="sections" :per-page="5">
         <template v-slot:default="props">
         <z-spot
           :distance="60"

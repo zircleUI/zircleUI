@@ -3,40 +3,91 @@
     Z-SPOT
     <template #extension>
       <z-spot
-        size="xs"
+        size="s"
         :angle='45'
-        to-view='docs'
         class='accent'
-        label='Docs'>
-        <i class='fas fa-book'></i>
+        label='sun'>
+        <z-spot
+        slot="extension"
+        size="xs"
+        :angle='earth'
+        :distance='270'
+        class='accent'
+        label='earth'>
+        <z-spot
+          slot="extension"
+          size="xxs"
+          :distance='160'
+          :angle='moon'
+          >
+        </z-spot>
+      </z-spot>
+      </z-spot>
+       <z-spot
+        square
+        size="s"
+        :angle='270'
+        button
+        class='accent'
+        label='button'>
+        2
       </z-spot>
       <z-spot
         size="xs"
-        square
+        :angle='270'
         button
-        :angle='135'
+        :distance='190'
         class='accent'
-        label='Github'
-        @click="openUrl">
-        <i class='fab fa-github'></i>
+        label='button'>
+        1
       </z-spot>
        <z-spot
-        size="xs"
-        :angle='270'
-        to-view='components'
-        class='accent'
-        label='Components'>
-        <i class='fas fa-book'></i>
+        size="m"
+        :angle='180'
+        :distance='170'
+        knob
+        v-bind.sync='temp'
+        label='knob plus'>
+        <z-spot
+        slot="extension"
+        size="s"
+        :angle='150'
+        :distance='200'
+        knob
+        :qty.sync='knob'
+        label='basic knob'>
+      </z-spot>
       </z-spot>
     </template>
   </z-view>
 </template>
 <script>
 export default {
+  data () {
+    return {
+      knob: 48,
+      dialog: true,
+      temp: { qty: 56, unit: 'C', min: -14, max: 100 },
+      earth: 60,
+      moon: 160
+    }
+  },
+  computed: {
+  },
   methods: {
     openUrl () {
       window.open('https://github.com/zircleUI/zircleUI', '_blank')
     }
+  },
+  mounted () {
+    let start
+    const Animacion = (relojInterno) => {
+      if (!start) start = relojInterno
+      this.earth = (relojInterno / 60) - start
+      this.moon = (relojInterno / 30) - start
+      window.requestAnimationFrame(Animacion)
+    }
+    window.requestAnimationFrame(Animacion)
   }
 }
 </script>
