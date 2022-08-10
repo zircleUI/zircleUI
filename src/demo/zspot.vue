@@ -38,13 +38,14 @@
         button
         :distance='190'
         class='accent'
+        @click="show"
         label='button'>
         1
       </z-spot>
        <z-spot
         size="m"
         :angle='180'
-        :distance='170'
+        :distance='150'
         knob
         v-bind.sync='temp'
         label='knob plus'>
@@ -77,6 +78,10 @@ export default {
   methods: {
     openUrl () {
       window.open('https://github.com/zircleUI/zircleUI', '_blank')
+    },
+    show () {
+      const panel = document.querySelector('.panel')
+      panel.style.display === 'none' ? panel.style.display = 'block' : panel.style.display = 'none'
     }
   },
   mounted () {

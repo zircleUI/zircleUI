@@ -1,5 +1,8 @@
 <template>
-  <z-canvas :views="$options.components" />
+  <section>
+    <div class="panel" style="display: none; width: 200px; height: 80%; border: 1px solid red">test</div>
+    <z-canvas :views="$options.components" />
+  </section>
 </template>
 <script>
 // import { markRaw } from 'vue'
