@@ -2,14 +2,12 @@
   <z-view size="xl">
     Z-DIALOG
     <template #extension>
-      <z-spot
-        size="xs"
-        :angle='45'
-        to-view='docs'
-        class='accent'
-        label='Docs'>
-        <i class='fas fa-book'></i>
-      </z-spot>
+      <z-dialog
+        v-if="dialog"
+        self-close
+        @done= "dialog = false">
+        self close dialog
+    </z-dialog>
       <z-spot
         size="xs"
         square
