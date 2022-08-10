@@ -25,12 +25,25 @@
       </z-spot>
        <z-spot
         square
-        size="s"
-        :angle='270'
-        button
-        class='accent'
-        label='button'>
+        size="m"
+        :angle='-30'
+        :distance="200">
         2
+        <template v-slot:extension>
+      <z-list :items="sections" :per-page="3">
+        <template v-slot:default="props">
+        <z-spot
+          :distance="30"
+          size="xs"
+          :to-view='props.view'
+          :index="props.index"
+          :label='props.name'
+          >
+            <i :class="props.icon"></i>
+        </z-spot>
+        </template>
+      </z-list>
+    </template>
       </z-spot>
       <z-spot
         size="xs"
@@ -70,7 +83,14 @@ export default {
       dialog: true,
       temp: { qty: 56, unit: 'C', min: -14, max: 100 },
       earth: 60,
-      moon: 160
+      moon: 160,
+      sections: [
+        { name: 'Z-View', view: 'zview', icon: 'fas fa-compass' },
+        { name: 'Z-List', view: 'zlist', icon: 'fas fa-magic' },
+        { name: 'Z-Spot', view: 'zspot', icon: 'fas fa-code' },
+        { name: 'Z-Dialog', view: 'zdialog', icon: 'fas fa-palette' },
+        { name: 'Z-Canvas', view: 'zcanvas', icon: 'fas fa-palette' }
+      ]
     }
   },
   computed: {
