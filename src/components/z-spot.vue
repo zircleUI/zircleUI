@@ -184,9 +184,9 @@ export default {
     },
     classes () {
       return {
-        'z-zoom-in-cursor': this.componentType === 'z-spot' && this.toView !== undefined,
         primary: this.$parent.componentType !== 'z-list',
-        accent: this.$parent.componentType === 'z-list'
+        accent: this.$parent.componentType === 'z-list',
+        'z-no-zoom-cursor': this.componentType === 'z-spot' && this.toView === undefined
       }
     },
     progressLabel () {
