@@ -1,10 +1,10 @@
 <template>
-  <z-view size="xl">
-    Z-SPOT
+  <z-view size="xl" style="background-color: transparent">
+   Milky Way
     <template #extension>
       <z-spot
         size="s"
-        :angle='45'
+        :angle=orbit.qty
         class='accent'
         label='sun'>
         <z-spot
@@ -29,21 +29,6 @@
         :angle='-30'
         :distance="200">
         2
-        <template v-slot:extension>
-      <z-list :items="sections" :per-page="3">
-        <template v-slot:default="props">
-        <z-spot
-          :distance="30"
-          size="xs"
-          :to-view='props.view'
-          :index="props.index"
-          :label='props.name'
-          >
-            <i :class="props.icon"></i>
-        </z-spot>
-        </template>
-      </z-list>
-    </template>
       </z-spot>
       <z-spot
         size="xs"
@@ -60,7 +45,7 @@
         :angle='180'
         :distance='150'
         knob
-        v-bind.sync='temp'
+        v-bind.sync='orbit'
         label='knob plus'>
         <z-spot
         slot="extension"
@@ -81,7 +66,7 @@ export default {
     return {
       knob: 48,
       dialog: true,
-      temp: { qty: 56, unit: 'C', min: -14, max: 100 },
+      orbit: { qty: 56, unit: '˚', min: 0, max: 360 },
       earth: 60,
       moon: 160,
       sections: [
@@ -108,8 +93,8 @@ export default {
     let start
     const Animacion = (relojInterno) => {
       if (!start) start = relojInterno
-      this.earth = (relojInterno / 60) - start
-      this.moon = (relojInterno / 30) - start
+      this.earth = (relojInterno / 60) * (this.knob / 15) - start
+      this.moon = (relojInterno / 30) * (this.knob / 15) - start
       window.requestAnimationFrame(Animacion)
     }
     window.requestAnimationFrame(Animacion)
