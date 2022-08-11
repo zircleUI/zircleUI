@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint --fix",
     "build:zircle": "vue-cli-service build --target lib --name zircle ./src/index.js",
     "test": "vue-cli-service test:unit"
   },

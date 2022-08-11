@@ -2,9 +2,8 @@
   <div>
     <transition-group name="head" appear>
       <div :key="view" class="title z-header">{{ title }}</div>
-       <div :key="view + 1" class="panel" style="display: none; width: 200px; height: 80%; border: 1px solid red">test</div>
+      <div :key="view + 1" class="panel" style="display: none; width: 200px; height: 80%; border: 1px solid red">test</div>
     </transition-group>
-
     <z-canvas :views="$options.components" />
   </div>
 </template>
@@ -25,11 +24,17 @@ export default {
   },
   computed: {
     view () {
-      return this.$zircle.getCurrentViewName()
+      return this.$zircle.getCurrentViewName().slice(0, -3)
     },
     title () {
-      const view = this.view.charAt(0).toUpperCase() + this.view.slice(1, -3)
-      return view
+      switch (this.view) {
+        case 'home':
+          return 'Welcome to Zircle\'s demo'
+        case 'components':
+          return 'MIni showcase'
+        default:
+          return 'opps'
+      }
     }
   },
   components: {
@@ -55,18 +60,6 @@ export default {
 }
 </script>
 <style>
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700");
-@import url("https://use.fontawesome.com/releases/v5.3.1/css/all.css");
-.title {
-  text-align: center
-}
-.head-enter {
-  opacity: 0;
-  color: red
-}
+@import url("../public/index.css");
 
-.head-enter-active {
-  transition: opacity 2s 0.8s;
-  color: green
-}
 </style>

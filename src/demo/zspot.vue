@@ -25,10 +25,19 @@
       </z-spot>
        <z-spot
         square
-        size="m"
+        size="xs"
         :angle='-30'
+         @click="pause"
         :distance="200">
-        2
+        ||
+      </z-spot>
+      <z-spot
+        square
+        size="xs"
+        :angle='-60'
+         @click="start"
+        :distance="200">
+        >
       </z-spot>
       <z-spot
         size="xs"
@@ -69,6 +78,7 @@ export default {
       orbit: { qty: 56, unit: '˚', min: 0, max: 360 },
       earth: 60,
       moon: 160,
+      paused: false,
       sections: [
         { name: 'Z-View', view: 'zview', icon: 'fas fa-compass' },
         { name: 'Z-List', view: 'zlist', icon: 'fas fa-magic' },
@@ -87,17 +97,23 @@ export default {
     show () {
       const panel = document.querySelector('.panel')
       panel.style.display === 'none' ? panel.style.display = 'block' : panel.style.display = 'none'
+    },
+    pause () {
+      this.paused = !this.paused
+    },
+    start () {
+      let start
+      const Animacion = (relojInterno) => {
+        if (!start) start = relojInterno
+        this.earth = (relojInterno / 60) * (this.knob / 15) - start
+        this.moon = (relojInterno / 30) * (this.knob / 15) - start
+        if (!this.paused) window.requestAnimationFrame(Animacion)
+      }
+      window.requestAnimationFrame(Animacion)
     }
   },
   mounted () {
-    let start
-    const Animacion = (relojInterno) => {
-      if (!start) start = relojInterno
-      this.earth = (relojInterno / 60) * (this.knob / 15) - start
-      this.moon = (relojInterno / 30) * (this.knob / 15) - start
-      window.requestAnimationFrame(Animacion)
-    }
-    window.requestAnimationFrame(Animacion)
+    this.start()
   }
 }
 </script>

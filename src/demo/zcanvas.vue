@@ -6,7 +6,7 @@
         size="xs"
         :angle='45'
         to-view='docs'
-        class='accent'
+        class=''
         label='Docs'>
         <i class='fas fa-book'></i>
       </z-spot>
@@ -15,7 +15,7 @@
         square
         button
         :angle='135'
-        class='accent'
+        class=''
         label='Github'
         @click="openUrl">
         <i class='fab fa-github'></i>
@@ -24,7 +24,7 @@
         size="xs"
         :angle='270'
         to-view='components'
-        class='accent'
+        class=''
         label='Components'>
         <i class='fas fa-book'></i>
       </z-spot>
