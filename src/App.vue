@@ -2,7 +2,7 @@
   <div>
     <transition-group name="head" appear>
       <div :key="view" class="title z-header">{{ title }}</div>
-      <div :key="view + 1" class="panel" style="display: none; width: 200px; height: 80%; border: 1px solid red">test</div>
+      <div :key="view + 1" class="panel" style="display: none;">test</div>
     </transition-group>
     <z-canvas :views="$options.components" />
   </div>

@@ -106,7 +106,7 @@ export default {
       const Animacion = (relojInterno) => {
         if (!start) start = relojInterno
         this.earth = (relojInterno / 60) * (this.knob / 15) - start
-        this.moon = (relojInterno / 30) * (this.knob / 15) - start
+        this.moon = (relojInterno / 10) * (this.knob / 15) - start
         if (!this.paused) window.requestAnimationFrame(Animacion)
       }
       window.requestAnimationFrame(Animacion)
