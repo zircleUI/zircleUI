@@ -8,7 +8,7 @@
         v-for="(page, index) in $zircle.getNumberOfPages()"
         :key="index + '_page'"
         :index="index"
-        :distance="$zircle.getComponentWidth(size) + $zircle.getComponentWidth('l') + 10"
+        :distance="$zircle.getComponentWidth(size) + $zircle.getComponentWidth('xs') + 10"
         :angle="(180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages() * ($zircle.getNumberOfPages() - index) + ((180 - (180 - (180 - ($zircle.getNumberOfPages() * 10)))) - ((180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages())) / 2"
         :active="$zircle.getCurrentPageIndex()"
         @mouseover="$zircle.allowBackwardNavigation(true)"
