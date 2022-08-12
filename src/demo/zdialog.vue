@@ -1,6 +1,6 @@
 <template>
   <z-view size="xl">
-    Z-DIALOG
+    <img slot=image src='../../public/sun.png' alt="">
     <template #extension>
       <z-dialog
         v-if="dialog"

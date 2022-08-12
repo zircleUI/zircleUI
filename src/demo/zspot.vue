@@ -1,26 +1,31 @@
 <template>
-  <z-view size="xl" style="background-color: transparent">
+  <z-view size="xxl" class="shade">
    Milky Way
     <template #extension>
       <z-spot
         size="s"
         :angle=orbit.qty
         class='accent'
-        to-view="home"
+        style='border: none'
+        to-view="zdialog"
         label='sun'>
+        <img slot=image src='../../public/sun.png' alt="">
         <z-spot
         slot="extension"
         size="xs"
         :angle='earth'
         :distance='270'
         class='accent'
+        style='border: none'
         label='earth'>
+         <img slot=image src='../../public/earth.png' alt="">
         <z-spot
           slot="extension"
           size="xxs"
           :distance='160'
-          :angle='moon'
-          >
+          style='border: none'
+          :angle='moon'>
+          <img slot=image src='../../public/moon.png' alt="">
         </z-spot>
       </z-spot>
       </z-spot>

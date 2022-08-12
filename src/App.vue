@@ -40,6 +40,8 @@ export default {
           return 'Welcome to Zircle\'s demo'
         case 'components':
           return 'MIni showcase'
+        case 'zspot':
+          return 'An eclectic showcase'
         default:
           return 'opps'
       }
