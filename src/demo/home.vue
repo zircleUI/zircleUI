@@ -1,32 +1,22 @@
 <template>
   <z-view size="xl" square>
-    WELCOME TO ZIRCLE UI
     <template #extension>
       <z-spot
         size="xs"
         :angle='45'
+        :distance='160'
         to-view='docs'
         class='accent'
         label='Docs'>
         <i class='fas fa-book'></i>
       </z-spot>
-      <z-spot
-        size="xs"
-        square
-        button
-        :angle='135'
-        class='accent'
-        label='Github'
-        @click="openUrl">
-        <i class='fab fa-github'></i>
-      </z-spot>
        <z-spot
-        size="xs"
-        :angle='270'
-        to-view='components'
-        class='accent'
-        label='Components'>
-        <i class='fas fa-book'></i>
+        size="m"
+        :angle='0'
+        :distance='0'
+        class="shade"
+        to-view='zspot'
+        label='click me!'>
       </z-spot>
     </template>
   </z-view>

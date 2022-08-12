@@ -6,6 +6,7 @@
         size="s"
         :angle=orbit.qty
         class='accent'
+        to-view="home"
         label='sun'>
         <z-spot
         slot="extension"

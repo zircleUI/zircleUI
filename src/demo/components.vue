@@ -1,5 +1,5 @@
 <template>
-  <z-view size="l" style="border-width: 8px;">
+  <z-view size="xl" style="border-width: 8px;">
     Components
     <template v-slot:extension>
       <z-list :items="sections" size="l" :per-page="3">
