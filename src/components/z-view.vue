@@ -8,7 +8,7 @@
     @mouseover = "$zircle.allowBackwardNavigation(true)"
     @mouseleave = "$zircle.allowBackwardNavigation(false)">
     <div :id="fullView" v-if="$slots['image'] || imagePath" class="z-content">
-      <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
+      <img v-if="imagePath" :src="imagePath" width="100%" alt="content custom image"/>
       <slot v-if="!imagePath" name="image"></slot>
     </div>
     <section style="opacity: 0" :style="animation">
