@@ -1,7 +1,7 @@
 <template>
   <z-view size="xl" square
-  label="Sun, Earth & Moon"
-  label-pos="top">
+          label="Sun, Earth & Moon"
+          label-pos="top">
     <template #extension>
       <z-spot
         size="xs"
@@ -12,7 +12,7 @@
         label='Docs'>
         <i class='fas fa-book'></i>
       </z-spot>
-       <z-spot
+      <z-spot
         size="m"
         :angle='0'
         :distance='0'
@@ -23,6 +23,7 @@
     </template>
   </z-view>
 </template>
+
 <script>
 export default {
   methods: {

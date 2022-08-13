@@ -5,14 +5,15 @@
     :class="[classes, $zircle.getTheme(), $zircle.getThemeMode(), $zircle.getThemeShape()]"
     :style="[$zircle.getPreviousViewName() !== '' ? {cursor: 'zoom-out'} : {}]"
     @click.stop="goback">
-      <div id="z-zoomable-layer" ref="zoom" :style="zoom" @transitionend="notify">
-        <z-view-manager />
-      </div>
+    <div id="z-zoomable-layer" ref="zoom" :style="zoom" @transitionend="notify">
+      <z-view-manager/>
+    </div>
   </div>
 </template>
+
 <script>
-/* eslint-disable no-new */
 import ZViewManager from './child-components/z-view-manager'
+
 export default {
   name: 'z-canvas',
   props: {
@@ -26,7 +27,16 @@ export default {
   },
   computed: {
     zoom () {
-      const pos = this.$zircle.getHistoryLength() === 0 ? { X: 0, Y: 0, Xi: 0, Yi: 0, scale: 1, scalei: 1 } : this.$zircle.getCurrentPosition()
+      const pos = this.$zircle.getHistoryLength() === 0
+        ? {
+            X: 0,
+            Y: 0,
+            Xi: 0,
+            Yi: 0,
+            scale: 1,
+            scalei: 1
+          }
+        : this.$zircle.getCurrentPosition()
       return {
         transform: 'scale(' + pos.scale + ') translate3d(' + pos.Xi + 'px, ' + pos.Yi + 'px, 0px)',
         transition: 'transform 1000ms ease-in-out'
@@ -63,5 +73,5 @@ export default {
 }
 </script>
 <style lang="sass">
-  @import '../styles/sass/themes.sass', '../styles/sass/styles.sass'
+@import '../styles/sass/themes.sass', '../styles/sass/styles.sass'
 </style>

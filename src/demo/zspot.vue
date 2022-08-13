@@ -11,30 +11,30 @@
         label='sun'
         image-path='./sun.png'>
         <z-spot
-        slot="extension"
-        size="s"
-        :angle='earth'
-        :distance='200'
-        style='border: none'
-        class="transparent"
-        label='earth'
-        image-path='./earth.png'>
-        <z-spot
           slot="extension"
-          size="xs"
-          :distance='160'
+          size="s"
+          :angle='earth'
+          :distance='200'
           style='border: none'
           class="transparent"
-          :angle='moon'
-          image-path='./moon.png'>
+          label='earth'
+          image-path='./earth.png'>
+          <z-spot
+            slot="extension"
+            size="xs"
+            :distance='160'
+            style='border: none'
+            class="transparent"
+            :angle='moon'
+            image-path='./moon.png'>
+          </z-spot>
         </z-spot>
       </z-spot>
-      </z-spot>
-       <z-spot
+      <z-spot
         square
         size="xs"
         :angle='-30'
-         @click="pause"
+        @click="pause"
         :distance="200">
         ||
       </z-spot>
@@ -42,7 +42,7 @@
         square
         size="xs"
         :angle='-60'
-         @click="start"
+        @click="start"
         :distance="200">
         >
       </z-spot>
@@ -55,7 +55,7 @@
         label='button'>
         1
       </z-spot>
-       <z-spot
+      <z-spot
         size="m"
         :angle='180'
         :distance='150'
@@ -63,18 +63,19 @@
         v-bind.sync='orbit'
         label='knob plus'>
         <z-spot
-        slot="extension"
-        size="s"
-        :angle='150'
-        :distance='200'
-        knob
-        :qty.sync='knob'
-        label='basic knob'>
-      </z-spot>
+          slot="extension"
+          size="s"
+          :angle='150'
+          :distance='200'
+          knob
+          :qty.sync='knob'
+          label='basic knob'>
+        </z-spot>
       </z-spot>
     </template>
   </z-view>
 </template>
+
 <script>
 export default {
   data () {
@@ -93,8 +94,7 @@ export default {
       ]
     }
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     openUrl () {
       window.open('https://github.com/zircleUI/zircleUI', '_blank')

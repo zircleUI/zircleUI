@@ -1,4 +1,5 @@
 import store from '../store'
+
 const debug = {
   setLog (msg, type) {
     let bgColor = 'green'

@@ -16,6 +16,7 @@
     </template>
   </z-view>
 </template>
+
 <script>
 export default {
   methods: {

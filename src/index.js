@@ -20,8 +20,6 @@ const zircle = {
   }
 }
 
-export default zircle
-
 let GlobalVue = null
 if (typeof window !== 'undefined') {
   GlobalVue = window.Vue
@@ -31,3 +29,5 @@ if (typeof window !== 'undefined') {
 if (GlobalVue) {
   GlobalVue.use(zircle)
 }
+
+export default zircle

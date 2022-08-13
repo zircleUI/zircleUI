@@ -20,7 +20,7 @@
         @click="openUrl">
         <i class='fab fa-github'></i>
       </z-spot>
-       <z-spot
+      <z-spot
         size="xs"
         :angle='270'
         to-view='components'
@@ -31,6 +31,7 @@
     </template>
   </z-view>
 </template>
+
 <script>
 export default {
   methods: {

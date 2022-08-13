@@ -5,19 +5,19 @@
     :style="responsive === true ? styles.main : zpos.main"
     style="overflow: visible;"
     @animationend="notify"
-    @mouseover = "$zircle.allowBackwardNavigation(true)"
-    @mouseleave = "$zircle.allowBackwardNavigation(false)">
+    @mouseover="$zircle.allowBackwardNavigation(true)"
+    @mouseleave="$zircle.allowBackwardNavigation(false)">
     <div :id="fullView" v-if="$slots['image'] || imagePath" class="z-content">
       <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
       <slot v-if="!imagePath" name="image"></slot>
     </div>
     <section style="opacity: 0" :style="animation">
-      <div class="z-outer-circle" :class="[shape]"  :style="responsive === true ? styles.plate : zpos.plate"></div>
+      <div class="z-outer-circle" :class="[shape]" :style="responsive === true ? styles.plate : zpos.plate"></div>
       <z-scroll v-if="scrollBarEnabled" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
       <z-slider v-if="sliderEnabled" :progress='progress'/>
       <div v-if="label" class="z-label" :class="[shape, labelPos]">
         <div class="inside">
-          {{label}}
+          {{ label }}
         </div>
       </div>
       <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent]" @scroll.passive="scroll">
@@ -26,16 +26,17 @@
         </div>
       </div>
       <div v-if="$slots['media']" :class="[shape]" class="z-content" style="z-index: 60">
-        <slot name="media" ></slot>
+        <slot name="media"></slot>
       </div>
-     <slot name="extension"></slot>
-   </section>
+      <slot name="extension"></slot>
+    </section>
   </div>
 </template>
 
 <script>
 import ZSlider from './child-components/z-slider'
 import ZScroll from './child-components/z-scroll'
+
 export default {
   name: 'z-view',
   props: {

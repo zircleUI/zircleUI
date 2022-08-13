@@ -4,20 +4,21 @@
     <template v-slot:extension>
       <z-list :items="sections" size="l" :per-page="3">
         <template v-slot:default="props">
-        <z-spot
-          :distance="120"
-          size="xs"
-          :to-view='props.view'
-          :index="props.index"
-          :label='props.name'
+          <z-spot
+            :distance="120"
+            size="xs"
+            :to-view='props.view'
+            :index="props.index"
+            :label='props.name'
           >
             <i :class="props.icon"></i>
-        </z-spot>
+          </z-spot>
         </template>
       </z-list>
     </template>
   </z-view>
 </template>
+
 <script>
 export default {
   data () {
