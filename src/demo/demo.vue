@@ -41,7 +41,7 @@
         button
         @click.stop="isRunning ? pause() : play()"
         :label="isRunning ? 'pause' : 'play'">
-        {{isRunning ? '||' : '>'}}
+        {{ isRunning ? '||' : '>' }}
       </z-spot>
       <z-spot
         size="m"
@@ -68,13 +68,10 @@ export default {
       isRunning: true
     }
   },
-  computed: {},
   methods: {
     show () {
       const panel = document.querySelector('.panel')
-      panel.style.display === 'none'
-        ? (panel.style.display = 'block')
-        : (panel.style.display = 'none')
+      panel.style.display = (panel.style.display === 'none') ? 'block' : 'none'
     },
     play () {
       this.isRunning = true
