@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Google+Sans:300,400,500,700');
 @import url('https://use.fontawesome.com/releases/v5.1.0/css/all.css');
 body {
-  font-family: 'Google Sans';
+  font-family: 'Google Sans', serif;
   color: #8a8f94;
 }
 
@@ -34,7 +34,7 @@ body {
 .panel {
   margin-top: 5%;
   margin-right: 5%;
-  right: 0%;
+  right: 0;
   position: absolute;
   line-height: 1.8;
   width: 300px;
