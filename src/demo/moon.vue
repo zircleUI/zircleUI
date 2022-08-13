@@ -4,6 +4,7 @@
   class="transparent">
   </z-view>
 </template>
+
 <script>
 export default {
   methods: {
@@ -18,7 +19,7 @@ export default {
     show () {
       const panel = document.querySelector('.panel')
       panel.style.display = 'block'
-      const text = `
+      panel.innerHTML = `
       <b>Characteristics of the Moon</b><br>
       <b>Age:</b> 4.527 Billion Years<br>
       <b>Mass:</b> 73,476,730,924,573,500 million kg (0.0123 x Earth)<br>
@@ -28,7 +29,6 @@ export default {
 
       <a href='https://theplanets.org/the-moon/' target='_blank'>Source</a>
       `
-      panel.innerHTML = text
     }
   },
   mounted () {
