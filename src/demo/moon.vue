@@ -1,7 +1,8 @@
 <template>
-  <z-view size="xxl"
-  image-path="./moon.png"
-  class="transparent">
+  <z-view
+    size="xxl"
+    image-path="./moon.png"
+    class="transparent">
   </z-view>
 </template>
 

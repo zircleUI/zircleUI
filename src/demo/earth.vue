@@ -1,7 +1,8 @@
 <template>
-  <z-view size="xxl"
-  image-path="./earth.png"
-  class="transparent">
+  <z-view
+    size="xxl"
+    image-path="./earth.png"
+    class="transparent">
     <z-spot
       slot="extension"
       size="m"
@@ -16,6 +17,7 @@
     </z-spot>
   </z-view>
 </template>
+
 <script>
 export default {
   data () {
@@ -36,7 +38,7 @@ export default {
     show () {
       const panel = document.querySelector('.panel')
       panel.style.display = 'block'
-      const text = `
+      panel.innerHTML = `
       <b>Characteristics of Earth</b><br>
       <b>Mass:</b> 5,972,190,000,000,000 billion kg<br>
       <b>Equatorial Circumference:</b>40,030 km<br>
