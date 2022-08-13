@@ -80,7 +80,6 @@ export default {
   data () {
     return {
       knob: 48,
-      dialog: true,
       orbit: { qty: 56, unit: '˚', min: 0, max: 360 },
       earth: 60,
       moon: 160,

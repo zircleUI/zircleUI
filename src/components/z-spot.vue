@@ -120,8 +120,7 @@ export default {
       componentType: this.$options.name,
       zpos: {},
       innerpos: {},
-      extrainfo: '',
-      val: 0
+      extrainfo: ''
     }
   },
   computed: {
