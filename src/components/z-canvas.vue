@@ -57,8 +57,8 @@ export default {
   },
   mounted () {
     // Get window dimension to set the initial width of ui components such as z-panel
-    this.$nextTick().then(() => this.$zircle.getDimensions())
-    window.addEventListener('resize', () => this.$zircle.getDimensions())
+    this.$nextTick().then(() => this.$zircle.updateDiameters())
+    window.addEventListener('resize', () => this.$zircle.updateDiameters())
   }
 }
 </script>

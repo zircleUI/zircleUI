@@ -3,6 +3,9 @@ const app = {
   getAppMode () {
     return store.state.appMode
   },
+  isUsingPercentSizes () {
+    return store.state.usePercentSizes
+  },
   resetConfig () {
     store.state.appMode = 'full'
     store.state.navigationMode = 'forward'
@@ -14,7 +17,8 @@ const app = {
     store.state.goBackView = ''
     store.state.lastView = ''
     store.state.diameters = {}
-    store.state.sizes = {
+    store.state.usePercentSizes = false
+    store.state.percentSizes = {
       xxl: 55,
       xl: 32,
       l: 20,
@@ -52,6 +56,10 @@ const app = {
     if (config.mode === 'full' || config.mode === 'mixed') {
       store.state.appMode = config.mode
       store.actions.setLog('- Mode: ' + config.mode)
+    }
+    if (typeof config.usePercentSizes === 'boolean') {
+      store.state.usePercentSizes = config.usePercentSizes
+      store.actions.setLog(`- Percent sizes ${config.usePercentSizes ? 'ON' : 'OFF'}`)
     }
     if (config.sizes) {
       if (config.sizes.xxl) store.state.sizes.xxl = config.sizes.xxl
