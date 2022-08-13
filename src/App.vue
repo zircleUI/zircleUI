@@ -16,7 +16,6 @@
   </div>
 </template>
 <script>
-// import { markRaw } from 'vue'
 import pkg from '../package.json'
 import home from './demo/home.vue'
 import docs from './demo/docs.vue'
