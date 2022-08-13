@@ -49,7 +49,6 @@ export default {
 
       <a href='https://theplanets.org/earth/' target='_blank'>Source</a>
       `
-      panel.innerHTML = text
     },
     play () {
       this.isRunning = true
