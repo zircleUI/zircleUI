@@ -1,6 +1,7 @@
 <template>
   <div>
-    <span style="z-index:999; position: absolute; top: 10px; right: 10px; font-weight: 500; font-size: 13px" >v{{packageVersion}}</span>
+    <span
+      style="z-index:999; position: absolute; top: 10px; right: 10px; font-weight: 500; font-size: 13px">v{{ packageVersion }}</span>
     <transition-group name="head" appear>
       <div :key="view" class="title z-header" :class="view === 'home' ? 'home' : ''">{{ title }}
       <br>
@@ -8,13 +9,14 @@
       </div>
       <div :key="view + 1" class="panel" style="display: none;">test</div>
       <div :key="view + 2" class="footer">
-        <span style="font-size: 13px" >
+        <span style="font-size: 13px">
         <b>Tip: </b> use filter to change coding language & time period</span>
       </div>
     </transition-group>
-    <z-canvas :views="$options.components" />
+    <z-canvas :views="$options.components"/>
   </div>
 </template>
+
 <script>
 import pkg from '../package.json'
 import home from './demo/home.vue'
