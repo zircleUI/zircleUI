@@ -1,9 +1,5 @@
-/* eslint-disable */ 
 import store from '../store'
-function setDiameter (size) {
-  const diameter = store.state.diameters[size]
-  return diameter
-}
+
 const mediaQuery = [
   { // small devices
     media: window.matchMedia('(max-width: 319px)'),
@@ -47,39 +43,42 @@ const mediaQuery = [
   }
 ]
 const responsiveness = {
-  getComponentWidth(size) {
-    let sizes = size.toLowerCase()
-    if (sizes === 'extralarge') sizes = 'xl'
-    if (sizes === 'large') sizes = 'l'
-    if (sizes === 'medium') sizes = 'm'
-    if (sizes === 'small') sizes = 's'
-    if (sizes === 'extrasmall') sizes = 'xs'
-    let result = setDiameter(sizes)
-    return result
+  getComponentWidth (size) {
+    size = size.toLowerCase()
+    if (size === 'extralarge') size = 'xl'
+    if (size === 'large') size = 'l'
+    if (size === 'medium') size = 'm'
+    if (size === 'small') size = 's'
+    if (size === 'extrasmall') size = 'xs'
+    return store.state.diameters[size]
   },
-  getDimensions() {
+  getDimensions () {
     if (store.actions.getAppMode() === 'full') {
-      for (var i = 0; i < mediaQuery.length; i++) {
-        if (mediaQuery[i].media.matches) store.state.diameters = mediaQuery[i].width
+      for (const element of mediaQuery) {
+        if (element.media.matches) {
+          store.state.diameters = element.width
+        }
       }
       store.actions.setLog('getDimensions() at appMode full. z-view new diameter: ' + store.state.diameters.xxl)
     } else if (store.actions.getAppMode() === 'mixed') {
       const vp = document.getElementById('z-container').getBoundingClientRect().width
-      if (vp <= 319) {
-        store.state.diameters = mediaQuery[0].width
-      } else if (vp >= 320 && vp <= 374) {
-        store.state.diameters = mediaQuery[1].width
-      } else if (vp >= 375 && vp <= 767) {
-        store.state.diameters = mediaQuery[2].width
-      } else if (vp >= 768 && vp <= 991) {
-        store.state.diameters = mediaQuery[4].width
-      } else if (vp >= 992 && vp <= 1199) {
-        store.state.diameters = mediaQuery[6].width
-      } else if (vp >= 1200 && vp <= 1799) {
-        store.state.diameters = mediaQuery[8].width
-      } else if (vp >= 1800) {
-        store.state.diameters = mediaQuery[9].width
+
+      let mediaQueryIndex = 0
+      if (vp >= 1800) {
+        mediaQueryIndex = 9
+      } else if (vp >= 1200) {
+        mediaQueryIndex = 8
+      } else if (vp >= 992) {
+        mediaQueryIndex = 6
+      } else if (vp >= 768) {
+        mediaQueryIndex = 4
+      } else if (vp >= 375) {
+        mediaQueryIndex = 2
+      } else if (vp >= 320) {
+        mediaQueryIndex = 1
       }
+
+      store.state.diameters = mediaQuery[mediaQueryIndex].width
       store.actions.setLog('getDimensions() at appMode mixed. z-view new diameter: ' + store.state.diameters.xxl)
     }
   }
