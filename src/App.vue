@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span class="version" >v{{pkg.version}}</span>
+    <span class="version" >v{{packageVersion}}</span>
     <transition-group name="head" appear>
       <div :key="view" class="title z-header" :class="view === 'home' ? 'home' : ''">{{ txt.title }}
         <br>
@@ -27,7 +27,7 @@ import sun from './demo/sun.vue'
 export default {
   data () {
     return {
-      pkg
+      packageVersion: pkg.version
     }
   },
   computed: {
@@ -95,7 +95,7 @@ export default {
   }
 }
 </script>
+
 <style>
 @import url("../public/index.css");
-
 </style>
