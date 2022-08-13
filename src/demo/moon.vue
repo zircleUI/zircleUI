@@ -31,8 +31,6 @@ export default {
       <b>Apparent Magnitude:</b> −26.74<br>
       `
     }
-  },
-  mounted () {
   }
 }
 </script>

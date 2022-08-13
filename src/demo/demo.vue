@@ -15,15 +15,15 @@
         :angle='earth'
         :distance='200'
         class="transparent"
-        @mouseover.native="pause"
-        @mouseleave="start"
-        to-view="earth"
-        label='earth'
-        image-path='./earth.png'>
-        <z-spot
-          slot="extension"
-          size="xs"
-          :distance='160'
+          @mouseover.native="pause"
+          @mouseleave="start"
+          to-view="earth"
+          label='earth'
+          image-path='./earth.png'>
+          <z-spot
+            slot="extension"
+            size="xs"
+            :distance='160'
           class="transparent"
           :angle='moon'
           image-path='./moon.png'>
@@ -75,7 +75,6 @@
     </template>
   </z-view>
 </template>
-
 <script>
 export default {
   data () {

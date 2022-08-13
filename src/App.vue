@@ -1,11 +1,20 @@
 <template>
   <div>
     <span
-      style="z-index:999; position: absolute; top: 10px; right: 10px; font-weight: 500; font-size: 13px">v{{ packageVersion }}</span>
+      style="z-index:999; position: absolute; top: 10px; right: 10px; font-weight: 500; font-size: 13px">
+      v{{
+        packageVersion
+      }}
+    </span>
     <transition-group name="head" appear>
       <div :key="view" class="title z-header" :class="view === 'home' ? 'home' : ''">{{ title }}
-      <br>
-      <div style="line-height: 0.9em; font-weight: 300; font-size: 20px; color: #8a8f94"><br><span style="text-transform: capitalize">Sun, Earth & Moon</span></div>
+        <br>
+        <div style="line-height: 0.9em; font-weight: 300; font-size: 20px; color: #8a8f94">
+          <br>
+          <span style="text-transform: capitalize">
+            Sun, Earth & Moon
+          </span>
+        </div>
       </div>
       <div :key="view + 1" class="panel" style="display: none;">test</div>
       <div :key="view + 2" class="footer">
