@@ -5,7 +5,7 @@
       xmlns="http://www.w3.org/2000/svg"
       class="z-scroll"
       @click.prevent="point">
-        <circle r="51" cx="50" cy="50" :style="arcStyle"></circle>
+      <circle r="51" cx="50" cy="50" :style="arcStyle"></circle>
     </svg>
     <svg
       v-show="hidden === false"
@@ -18,7 +18,7 @@
       @mousedown="drag = true"
       @mousemove.prevent="slide"
       @mouseup="drag = false">
-        <circle r="10" cx="20" cy="20" class="z-scroll-handlebar"></circle>
+      <circle r="10" cx="20" cy="20" class="z-scroll-handlebar"></circle>
     </svg>
   </section>
 </template>

@@ -1,4 +1,5 @@
 import store from '../store'
+
 const themes = {
   getTheme () {
     return store.state.appStyle.theme

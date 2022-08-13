@@ -12,9 +12,10 @@
       <div :key="view + 1" class="panel" style="display: none;"></div>
       <div :key="view + 2" class="footer" v-if="txt.footer"><b>Tip:</b> {{txt.footer}}</div>
     </transition-group>
-    <z-canvas :views="$options.components" />
+    <z-canvas :views="$options.components"/>
   </div>
 </template>
+
 <script>
 import pkg from '../package.json'
 import home from './demo/home.vue'

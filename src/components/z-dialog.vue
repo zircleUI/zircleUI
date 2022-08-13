@@ -4,21 +4,21 @@
       class="z-shape is-extension primary"
       :class="[componentType, shape]"
       :style="styles.main">
-        <div v-if="$slots['image'] || imagePath" class="z-content">
-          <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
-          <slot v-if="!imagePath" name="image"></slot>
+      <div v-if="$slots['image'] || imagePath" class="z-content">
+        <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
+        <slot v-if="!imagePath" name="image"></slot>
+      </div>
+      <div class="z-outer-circle" :class="[shape]" :style="styles.plate"></div>
+      <z-slider v-if="selfCloseEnabled" :progress="progress"></z-slider>
+      <z-scroll v-if="scrollBarEnabled" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
+      <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent]" @scroll.passive="scroll">
+        <div ref="ztext">
+          <slot></slot>
         </div>
-        <div class="z-outer-circle" :class="[shape]" :style="styles.plate"></div>
-        <z-slider v-if="selfCloseEnabled" :progress="progress"></z-slider>
-        <z-scroll v-if="scrollBarEnabled" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
-        <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent]" @scroll.passive="scroll">
-          <div ref="ztext">
-            <slot></slot>
-          </div>
-        </div>
-        <div v-if="$slots['media']" :class="[shape]" class="z-content" style="z-index: 60">
-          <slot name="media" ></slot>
-        </div>
+      </div>
+      <div v-if="$slots['media']" :class="[shape]" class="z-content" style="z-index: 60">
+        <slot name="media"></slot>
+      </div>
       <slot name="extension"></slot>
     </div>
   </transition>
@@ -27,6 +27,7 @@
 <script>
 import ZSlider from './child-components/z-slider'
 import ZScroll from './child-components/z-scroll'
+
 export default {
   name: 'z-dialog',
   props: {
@@ -127,7 +128,9 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => { this.isMounted = true }, 1000)
+    setTimeout(() => {
+      this.isMounted = true
+    }, 1000)
     if (this.selfClose) {
       const vm = this
       this.progress = 5
