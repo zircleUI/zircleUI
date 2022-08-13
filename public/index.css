@@ -2,7 +2,6 @@
 @import url('https://use.fontawesome.com/releases/v5.1.0/css/all.css');
 body {
   font-family: 'Google Sans', serif;
-  font-weight: 300;
   color: #8a8f94;
 }
 .title {
@@ -17,13 +16,7 @@ body {
   line-height: 1.02em;
   pointer-events: none !important;
 }
-.z-header {
-  z-index: 999;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-weight: 500;
-}
+
 .panel {
   margin-top: 5%;
   margin-right: 5%;
