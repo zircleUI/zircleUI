@@ -8,7 +8,7 @@
     @mouseout="spotout"
     @mousedown="pulse"
     @touchstart="pulse"
-    @mouseup="move"
+    @mouseup.stop="move"
     @click="$emit('click', $event)">
       <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
       <div class="z-pulse" :class="[shape]" ref="pulse"></div>
