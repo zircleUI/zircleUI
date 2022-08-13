@@ -1,7 +1,8 @@
 <template>
-  <z-view size="xxl"
-  image-path="./sun.png"
-  class="transparent">
+  <z-view
+    size="xxl"
+    image-path="./sun.png"
+    class="transparent">
     <template #extension>
       <z-spot
         size="xs"
@@ -23,8 +24,8 @@ export default {
     },
     show () {
       const panel = document.querySelector('.panel')
-      panel.style.display === 'none' ? panel.style.display = 'block' : panel.style.display = 'none'
-      const text = `
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none'
+      panel.innerHTML = `
       <b>Characteristics of the Sun</b><br>
       <b>Age:</b> 4.6 Billion Years<br>
       <b>Type:</b> Yellow Dwarf (G2V)<br>
@@ -39,10 +40,7 @@ export default {
       <b>Sunlight Travel Time:</b> 8 minutes to reach Earth<br>
       <b>Apparent Magnitude:</b> −26.74<br>
       `
-      panel.innerHTML = text
     }
-  },
-  mounted () {
   }
 }
 </script>
