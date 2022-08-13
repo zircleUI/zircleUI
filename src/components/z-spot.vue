@@ -202,7 +202,6 @@ export default {
         return this.qty
       },
       set: function (newValue) {
-        // this.val = newValue
         this.$emit('update:qty', newValue)
       }
     }

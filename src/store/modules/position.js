@@ -41,8 +41,6 @@ const position = {
     return store.actions.getCurrentViewName() === viewName ? store.actions.getCurrentPosition() : store.actions.getPastPosition()
   },
   calcPosition (component) {
-    // store.actions.setLog('calcPosition() => ' + component.componentType)
-    // Variable declaration
     let parentPosition = { Xi: 0, Yi: 0, X: 0, Y: 0, scalei: 1, scale: 1 }
     const newCoords = calcCoords(component.distance, component.angle, component.$parent.size)
     if (component.$parent.componentType === 'z-view' || component.$parent.componentType === 'z-list' || component.$parent.componentType === 'z-spot') parentPosition = { Xi: component.$parent.position.Xi, Yi: component.$parent.position.Yi, X: component.$parent.position.X, Y: component.$parent.position.Y, scalei: component.$parent.position.scalei, scale: component.$parent.position.scale }
