@@ -98,7 +98,6 @@ const app = {
       store.state.isRouterEnabled = true
       store.actions.setRouterHooks()
       store.actions.setLog('- VueRouter enabled')
-      // console.log(store.state.router.currentRoute)
       store.actions.setView({
         name: store.state.router.currentRoute.name,
         params: store.state.router.currentRoute.params
