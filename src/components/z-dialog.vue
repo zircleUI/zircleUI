@@ -89,13 +89,10 @@ export default {
       )
     },
     shape () {
-      if (this.circle) {
-        return 'is-circle'
-      } else if (this.square) {
+      if (this.square) {
         return 'is-square'
-      } else {
-        return 'is-circle'
       }
+      return 'is-circle'
     },
     styles () {
       const zwidth = this.$zircle.getComponentWidth(this.size)
