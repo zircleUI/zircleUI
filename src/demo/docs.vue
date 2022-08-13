@@ -1,6 +1,6 @@
 <template>
   <z-view size="xl" style="border-width: 8px;">
-    Documentation
+    Links for docs & resources
     <template v-slot:extension>
       <z-list :items="sections" :per-page="5">
         <template v-slot:default="props">

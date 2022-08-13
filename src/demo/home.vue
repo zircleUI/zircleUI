@@ -1,24 +1,22 @@
 <template>
-  <z-view size="xl" square
-  label="Sun, Earth & Moon"
-  label-pos="top">
+  <z-view size="xl" square>
     <template #extension>
       <z-spot
         size="xs"
         :angle='45'
-        :distance='160'
+        :distance='130'
         to-view='docs'
-        class='accent'
-        label='Docs'>
-        <i class='fas fa-book'></i>
+        class='shade'
+        label='doc & resources'>
+        <i class="fas fa-question-circle"></i>
       </z-spot>
        <z-spot
         size="m"
         :angle='0'
         :distance='0'
         class="shade"
-        to-view='zspot'>
-        Zoom me
+        to-view='demo'>
+        <b>Zoom me</b>
       </z-spot>
     </template>
   </z-view>

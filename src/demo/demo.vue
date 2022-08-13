@@ -5,9 +5,8 @@
         size="l"
         :angle=orbit.qty
         :distance="0"
-        style='border: none'
         class="transparent"
-        to-view="zdialog"
+        to-view="sun"
         label='sun'
         image-path='./sun.png'>
         <z-spot
@@ -15,15 +14,16 @@
         size="s"
         :angle='earth'
         :distance='200'
-        style='border: none'
         class="transparent"
+        @mouseover.native="pause"
+        @mouseleave="start"
+        to-view="earth"
         label='earth'
         image-path='./earth.png'>
         <z-spot
           slot="extension"
           size="xs"
           :distance='160'
-          style='border: none'
           class="transparent"
           :angle='moon'
           image-path='./moon.png'>
@@ -120,7 +120,7 @@ export default {
         if (!start) start = relojInterno
         // this.earth = (relojInterno / 60) * (this.knob / 15) - start
         this.moon = (relojInterno / 20) * (this.knob / 15) - start
-        if (!this.paused) window.requestAnimationFrame(Animacion1)
+        window.requestAnimationFrame(Animacion1)
       }
       window.requestAnimationFrame(Animacion1)
     }
