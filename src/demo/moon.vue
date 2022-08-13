@@ -1,6 +1,6 @@
 <template>
   <z-view size="xxl"
-  image-path="./sun.png"
+  image-path="./moon.png"
   class="transparent">
   </z-view>
 </template>
@@ -19,15 +19,14 @@ export default {
       const panel = document.querySelector('.panel')
       panel.style.display = 'block'
       const text = `
-      <b>Characteristics of the Sun</b><br>
-      <b>Age:</b> 4.6 Billion Years<br>
-      <b>Type:</b> Yellow Dwarf (G2V)<br>
-      <b>Mass:</b> 1,989,100,000,000,000,000, 000 billion kg (333,060 x Earth)<br>
-      <b>Diameter:</b> 1,392,684 km (109 x Earth)<br>
-      <b>Circumference at the Equator:</b> 4,370,005.6 km<br>
-      <b>Surface Temperature:</b> 5,500 °C<br><br>
+      <b>Characteristics of the Moon</b><br>
+      <b>Age:</b> 4.527 Billion Years<br>
+      <b>Mass:</b> 73,476,730,924,573,500 million kg (0.0123 x Earth)<br>
+      <b>Diameter:</b> 3,475 km<br>
+      <b>Circumference at the Equator:</b> 10,917 km<br>
+      <b>Surface Temperature:</b> -233 to 123 °C<br><br>
 
-      <a href='https://theplanets.org/the-sun/' target='_blank'>Source</a>
+      <a href='https://theplanets.org/the-moon/' target='_blank'>Source</a>
       `
       panel.innerHTML = text
     }

@@ -7,9 +7,6 @@
 <script>
 export default {
   methods: {
-    openUrl () {
-      window.open('https://github.com/zircleUI/zircleUI', '_blank')
-    },
     hide () {
       const panel = document.querySelector('.panel')
       panel.style.display = 'none'

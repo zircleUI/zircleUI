@@ -84,22 +84,12 @@ export default {
       orbit: { qty: 56, unit: '˚', min: 0, max: 360 },
       earth: 60,
       moon: 160,
-      paused: false,
-      sections: [
-        { name: 'Z-View', view: 'zview', icon: 'fas fa-compass' },
-        { name: 'Z-List', view: 'zlist', icon: 'fas fa-magic' },
-        { name: 'Z-Spot', view: 'zspot', icon: 'fas fa-code' },
-        { name: 'Z-Dialog', view: 'zdialog', icon: 'fas fa-palette' },
-        { name: 'Z-Canvas', view: 'zcanvas', icon: 'fas fa-palette' }
-      ]
+      paused: false
     }
   },
   computed: {
   },
   methods: {
-    openUrl () {
-      window.open('https://github.com/zircleUI/zircleUI', '_blank')
-    },
     show () {
       const panel = document.querySelector('.panel')
       panel.style.display === 'none' ? panel.style.display = 'block' : panel.style.display = 'none'
@@ -111,7 +101,7 @@ export default {
       let start
       const Animacion = (relojInterno) => {
         if (!start) start = relojInterno
-        this.earth = (relojInterno / 60) * (this.knob / 15) - start
+        this.earth = (relojInterno / 120) * (this.knob / 15) - start
         // this.moon = (relojInterno / 20) * (this.knob / 15) - start
         if (!this.paused) window.requestAnimationFrame(Animacion)
       }
@@ -119,7 +109,7 @@ export default {
       const Animacion1 = (relojInterno) => {
         if (!start) start = relojInterno
         // this.earth = (relojInterno / 60) * (this.knob / 15) - start
-        this.moon = (relojInterno / 20) * (this.knob / 15) - start
+        this.moon = (relojInterno / 60) * (this.knob / 15) - start
         window.requestAnimationFrame(Animacion1)
       }
       window.requestAnimationFrame(Animacion1)
