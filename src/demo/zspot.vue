@@ -1,31 +1,32 @@
 <template>
   <z-view size="xxl" class="shade">
-   Milky Way
     <template #extension>
       <z-spot
-        size="s"
+        size="l"
         :angle=orbit.qty
-        class='accent'
+        :distance="0"
         style='border: none'
+        class="transparent"
         to-view="zdialog"
-        label='sun'>
-        <img slot=image src='../../public/sun.png' alt="">
+        label='sun'
+        image-path='./sun.png'>
         <z-spot
         slot="extension"
-        size="xs"
+        size="s"
         :angle='earth'
-        :distance='270'
-        class='accent'
+        :distance='200'
         style='border: none'
-        label='earth'>
-         <img slot=image src='../../public/earth.png' alt="">
+        class="transparent"
+        label='earth'
+        image-path='./earth.png'>
         <z-spot
           slot="extension"
-          size="xxs"
+          size="xs"
           :distance='160'
           style='border: none'
-          :angle='moon'>
-          <img slot=image src='../../public/moon.png' alt="">
+          class="transparent"
+          :angle='moon'
+          image-path='./moon.png'>
         </z-spot>
       </z-spot>
       </z-spot>
@@ -50,7 +51,6 @@
         :angle='270'
         button
         :distance='190'
-        class='accent'
         @click="show"
         label='button'>
         1
@@ -112,10 +112,17 @@ export default {
       const Animacion = (relojInterno) => {
         if (!start) start = relojInterno
         this.earth = (relojInterno / 60) * (this.knob / 15) - start
-        this.moon = (relojInterno / 10) * (this.knob / 15) - start
+        // this.moon = (relojInterno / 20) * (this.knob / 15) - start
         if (!this.paused) window.requestAnimationFrame(Animacion)
       }
       window.requestAnimationFrame(Animacion)
+      const Animacion1 = (relojInterno) => {
+        if (!start) start = relojInterno
+        // this.earth = (relojInterno / 60) * (this.knob / 15) - start
+        this.moon = (relojInterno / 20) * (this.knob / 15) - start
+        if (!this.paused) window.requestAnimationFrame(Animacion1)
+      }
+      window.requestAnimationFrame(Animacion1)
     }
   },
   mounted () {

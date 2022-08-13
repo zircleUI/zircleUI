@@ -25,20 +25,21 @@ body {
   font-weight: 500;
 }
 .panel {
-    margin-top: 5%;
-    margin-right: 5%;
-    right: 0%;
-    position: absolute;
-  width: 200px;
+  margin-top: 5%;
+  margin-right: 5%;
+  right: 0%;
+  position: absolute;
+  line-height: 1.8;
+  width: 300px;
+  max-height: 600px;
   z-index: 9999;
-  height: 80%;
-  background-color: rgba(82, 78, 212, 0.3);
+  color:  #454545;
+  box-shadow: #454545;
+  background-color: rgba(255, 255, 255, 0.516);
   border-radius: 5px;
-  line-height: 1;
   backdrop-filter: blur(10px);
-  max-width: 50%;
-  max-height: 50%;
-  padding: 20px 40px;
+  padding: 20px;
+  overflow: scroll
 }
 .footer {
   margin-left: 5%;

@@ -1,5 +1,7 @@
 <template>
-  <z-view size="xl" square>
+  <z-view size="xl" square
+  label="Sun, Earth & Moon"
+  label-pos="top">
     <template #extension>
       <z-spot
         size="xs"
@@ -15,8 +17,8 @@
         :angle='0'
         :distance='0'
         class="shade"
-        to-view='zspot'
-        label='click me!'>
+        to-view='zspot'>
+        Zoom me
       </z-spot>
     </template>
   </z-view>

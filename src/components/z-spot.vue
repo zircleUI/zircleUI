@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="z-content" :class="[shape]" >
-        <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
+        <img v-if="imagePath" :src="imagePath" width="100%"  alt="content custom image"/>
         <slot v-if="!imagePath" name="image"></slot>
       </div>
       <div class="z-content" :class="[shape]"  style="z-index: 10">
