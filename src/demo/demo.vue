@@ -101,7 +101,7 @@ export default {
     },
     show () {
       const panel = document.querySelector('.panel')
-      panel.style.display === 'none' ? panel.style.display = 'block' : panel.style.display = 'none'
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none'
     },
     pause () {
       this.paused = !this.paused
