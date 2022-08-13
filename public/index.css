@@ -32,7 +32,7 @@ body {
   border-radius: 5px;
   backdrop-filter: blur(10px);
   padding: 20px;
-  overflow: scroll
+  overflow: auto;
 }
 .footer {
   margin-left: 5%;
