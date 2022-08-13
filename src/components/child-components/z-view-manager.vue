@@ -1,6 +1,7 @@
 <template>
-   <transition-group :name="$zircle.getNavigationMode() === 'forward' ? 'z-next' : 'z-prev'" tag="section">
-      <component v-for="view in views"
+  <transition-group :name="$zircle.getNavigationMode() === 'forward' ? 'z-next' : 'z-prev'" tag="section">
+    <component
+      v-for="view in views"
       :is="view.component"
       :class="{
         'is-current-view': $zircle.getCurrentViewName() === view.name && $zircle.getRouterState() === false,
@@ -8,16 +9,16 @@
         'is-past-view': $zircle.getPastViewName() === view.name
       }"
       :key="view.name">
-      </component>
-      <router-view
-        v-if="$zircle.getRouterState() === true && $zircle.getHistoryLength() >= 1"
-        class="is-current-view"
-        :key="$zircle.getCurrentViewName()">
-      </router-view>
+    </component>
+    <router-view
+      v-if="$zircle.getRouterState() === true && $zircle.getHistoryLength() >= 1"
+      class="is-current-view"
+      :key="$zircle.getCurrentViewName()">
+    </router-view>
   </transition-group>
 </template>
+
 <script>
-/* eslint-disable */
 export default {
   name: 'z-view-manager',
   computed: {
@@ -27,4 +28,3 @@ export default {
   }
 }
 </script>
-

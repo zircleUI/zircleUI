@@ -1,4 +1,5 @@
 import store from '../store'
+
 const app = {
   getAppMode () {
     return store.state.appMode

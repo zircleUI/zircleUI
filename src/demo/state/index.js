@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 const state = new Vue({
   data: {
     language: '',

@@ -45,16 +45,16 @@ const position = {
   },
   calcPosition (component) {
     const parentPosition =
-        ['z-view', 'z-list', 'z-spot'].includes(component.$parent.componentType)
-          ? {
-              Xi: component.$parent.position.Xi,
-              Yi: component.$parent.position.Yi,
-              X: component.$parent.position.X,
-              Y: component.$parent.position.Y,
-              scalei: component.$parent.position.scalei,
-              scale: component.$parent.position.scale
-            }
-          : { Xi: 0, Yi: 0, X: 0, Y: 0, scalei: 1, scale: 1 }
+      ['z-view', 'z-list', 'z-spot'].includes(component.$parent.componentType)
+        ? {
+            Xi: component.$parent.position.Xi,
+            Yi: component.$parent.position.Yi,
+            X: component.$parent.position.X,
+            Y: component.$parent.position.Y,
+            scalei: component.$parent.position.scalei,
+            scale: component.$parent.position.scale
+          }
+        : { Xi: 0, Yi: 0, X: 0, Y: 0, scalei: 1, scale: 1 }
     const newCoords = calcCoords(component.distance, component.angle, component.$parent.size)
     return {
       X: newCoords.X,
