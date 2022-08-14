@@ -3,17 +3,17 @@
     <svg
       viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="z-range-bar"
       ref="bar"
-      @click.prevent="bar">
+      @click.stop="bar">
         <circle r="52" cx="50" cy="50" :style="[styles]"></circle>
     </svg>
     <svg
       xmlns="http://www.w3.org/2000/svg" class="z-range-bar-bar"
       :style="circleStyle"
       @touchstart="drag = true"
-      @touchmove.prevent="handleBar"
+      @touchmove.stop="handleBar"
       @touchend="drag = false"
       @mousedown="drag = true"
-      @mousemove.prevent="handleBar"
+      @mousemove.stop="handleBar"
       @mouseup="drag = false">
         <circle r="8" cx="20" cy="20" class="z-range-bar-handlebar"></circle>
     </svg>
