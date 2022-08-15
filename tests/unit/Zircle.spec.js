@@ -1,5 +1,6 @@
 import { createLocalVue } from '@vue/test-utils'
 import zircle from '@/index'
+
 const localVue = createLocalVue()
 localVue.use(zircle)
 const componentList = Object.keys(localVue.options.components).length
