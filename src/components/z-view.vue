@@ -122,13 +122,7 @@ export default {
       return isScrollNeeded
     },
     responsive () {
-      if (this.fullView === this.$zircle.getCurrentViewName()) {
-        // eslint-disable-next-line
-        this.zpos = this.styles
-        return true
-      } else {
-        return false
-      }
+      return this.fullView === this.$zircle.getCurrentViewName()
     },
     styles () {
       const width = this.$zircle.getComponentWidth(this.size)
@@ -172,6 +166,11 @@ export default {
     }
   },
   watch: {
+    responsive (isResponsive) {
+      if (isResponsive) {
+        this.zpos = this.styles
+      }
+    },
     scrollVal () {
       if (this.scrollBar === true) {
         const container = this.$refs.maincontent
