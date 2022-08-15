@@ -68,7 +68,7 @@ export default {
         const progress = timeElapsedSinceStart / 7000 * 1
         const safeProgress = Math.min(progress.toFixed(3), 1) // 2 decimal points
         const newPosition = -(safeProgress * distance)
-        // we need to rogress to reach 100%
+        // we need to progress to reach 100%
         if (this.isRunning && safeProgress !== 1) {
           this.moon = newPosition + offset
           requestAnimationFrame(moonOrbit)
