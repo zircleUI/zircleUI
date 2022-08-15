@@ -25,7 +25,7 @@ export default {
     return {
       earth: 60,
       moon: 160,
-      paused: false
+      isRunning: false
     }
   },
   methods: {
