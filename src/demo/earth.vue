@@ -65,7 +65,7 @@ export default {
       const moonOrbit = (timestamp) => {
         startTime = startTime || timestamp // set startTime is null
         const timeElapsedSinceStart = timestamp - startTime
-        const progress = timeElapsedSinceStart / 7000 * 1
+        const progress = timeElapsedSinceStart / 7000
         const safeProgress = Math.min(progress.toFixed(3), 1) // 2 decimal points
         const newPosition = -(safeProgress * distance)
         // we need to progress to reach 100%
