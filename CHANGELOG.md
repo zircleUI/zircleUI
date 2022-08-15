@@ -1,6 +1,114 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.4.0](https://github.com/zircleUI/zircleUI/compare/v1.4.0-rc.0...v1.4.0) (2022-08-15)
+
+
+### Features
+
+* 🎸 add some features of z-view to z-dialog ([3508932](https://github.com/zircleUI/zircleUI/commit/350893250ccff91e2cf070e520e142b988c49f8b)), closes [#30](https://github.com/zircleUI/zircleUI/issues/30)
+* **app:** add reset config action to reinitialize all parameters ([0a25f34](https://github.com/zircleUI/zircleUI/commit/0a25f34a0616a2e27d77b5702507c7db43e6699e))
+* demo finished ([b798ecd](https://github.com/zircleUI/zircleUI/commit/b798ecdcc1509ba216649b3ec8837d87dfc7b6d3))
+* **history:** add uniqueKey property when pushing a new view in history ([9bb51e3](https://github.com/zircleUI/zircleUI/commit/9bb51e379dffdfdb6d262e1d9d2a4cb9179982d3))
+* improve demo ([1876aee](https://github.com/zircleUI/zircleUI/commit/1876aeedf3296eedc175c28911240d820325208f))
+* **responsiveness:** use minSizesInPixels in getDimensions method in order to have a min size on each circle ([55549c6](https://github.com/zircleUI/zircleUI/commit/55549c6b892afdb6aee2b5eeb9e68e37ab38480e))
+* **store:** add minSizesInPixels property in state.js ([f450a09](https://github.com/zircleUI/zircleUI/commit/f450a090e9af74b2d1c44262e2059f69ac7fdd3b))
+* **store:** add utils file with createUniqueKey function ([04c2521](https://github.com/zircleUI/zircleUI/commit/04c2521d58110f0a0279ea21f740738b1341dcb0))
+
+
+### Bug Fixes
+
+* 🐛 Initial sizes that weren't display ok ([986b3eb](https://github.com/zircleUI/zircleUI/commit/986b3eb06cd0c23e74f78c3c9cac37d63714ca19)), closes [#29](https://github.com/zircleUI/zircleUI/issues/29)
+* add curly brace ([12e414a](https://github.com/zircleUI/zircleUI/commit/12e414a5457fe2fd32d0b34d3e1d6d7fc653b04c))
+* change key index ([5646dc5](https://github.com/zircleUI/zircleUI/commit/5646dc5a4fd5e912683f3501fae2134880c2f1ff))
+* cursor ([d9b1699](https://github.com/zircleUI/zircleUI/commit/d9b1699163e0ddd23e52b9dc8019d6d4775d6a01))
+* default pagination distance ([5039c4e](https://github.com/zircleUI/zircleUI/commit/5039c4ef425660de336070700dc82f4ea085f95d))
+* delete firefox references ([d9d82e9](https://github.com/zircleUI/zircleUI/commit/d9d82e9c90aab3ff85e2fb8204410d174573d772))
+* distance property ([27a0d83](https://github.com/zircleUI/zircleUI/commit/27a0d83eeb2d3f0738721c127a8b9f839c071eae))
+* downgrade for vue2 implementation ([fc71c28](https://github.com/zircleUI/zircleUI/commit/fc71c28f966a56ea1d64710ab804314d51c64697))
+* event propagation ([db5a3ce](https://github.com/zircleUI/zircleUI/commit/db5a3ce7ec3f7316517cd72e075b02368773e025))
+* event propagation on nested components ([d63e513](https://github.com/zircleUI/zircleUI/commit/d63e513bcbbcc75183b543208308460afb85b402))
+* image slot size ([62daf15](https://github.com/zircleUI/zircleUI/commit/62daf15407b9a69a4d4f5d8fdf03250bda713a3b))
+* **jest:** configure @babel/eslint-parser (to replace the deprecated babel-eslint package) ([2741520](https://github.com/zircleUI/zircleUI/commit/2741520c809627568427374152cccf6545f384f6))
+* lint warn ([edb53e2](https://github.com/zircleUI/zircleUI/commit/edb53e26e91555edd08069aa92fe51cee6921cd5))
+* **navigation:** verify toView fromSpot position before use it ([8f7b280](https://github.com/zircleUI/zircleUI/commit/8f7b280655f06a3a980be5cde72cf7259cccf758))
+* **navigation:** when setting a new view, use default value of position if scale is 0 ([c086107](https://github.com/zircleUI/zircleUI/commit/c086107274e7f69a58f77099aa7d4f198d39a95d))
+* pagination distance ([7286d16](https://github.com/zircleUI/zircleUI/commit/7286d16a9f7cbba4e99bcd0d1863078d3f00423d))
+* remove watch qty prop ([cda1f5c](https://github.com/zircleUI/zircleUI/commit/cda1f5c2a4b53e11719960f07274f06ca1064340))
+* resp ([2d266c7](https://github.com/zircleUI/zircleUI/commit/2d266c7f8de6ec8725de6d83a91295da6febdd97))
+* **retrieveViewName:** correctly verify pos parameter ([60a805d](https://github.com/zircleUI/zircleUI/commit/60a805d18b55548fc454f6f0686c9232057ca563))
+* shape and scroll behaivour ([21db220](https://github.com/zircleUI/zircleUI/commit/21db2209e5dd575601b6c4212ecca4bc11fa361c))
+* **state:** remove extra brace ([e357677](https://github.com/zircleUI/zircleUI/commit/e357677dd3e4b7600454f4d7e406eb19c4d756e6))
+* WIP position ([f2c8344](https://github.com/zircleUI/zircleUI/commit/f2c8344b958ea09462d364e9ed4c2bc2dcf0b3c0))
+* z-knob bind prop ([f404fda](https://github.com/zircleUI/zircleUI/commit/f404fda055fada53d553a96560b7232eef85d006))
+* z-pagination click native ([f7394db](https://github.com/zircleUI/zircleUI/commit/f7394db2812ea75549aa223b6e4fe9a83ecfe6f1))
+* zoom levels and element position ([ae524bd](https://github.com/zircleUI/zircleUI/commit/ae524bd7c148408cee437047847ab410e7874ac9))
+* zoom out ([f9c11aa](https://github.com/zircleUI/zircleUI/commit/f9c11aabc3f115057ce4800b7e278db30d70e213))
+
+# [1.4.0-rc.1](https://github.com/zircleui/zircleUI/compare/v1.4.0-rc.0...v1.4.0-rc.1) (2019-04-25)
+
+
+### Bug Fixes
+
+* 🐛 Initial sizes that weren't display ok ([986b3eb](https://github.com/zircleui/zircleUI/commit/986b3eb)), closes [#29](https://github.com/zircleui/zircleUI/issues/29)
+
+
+### Features
+
+* 🎸 add some features of z-view to z-dialog ([3508932](https://github.com/zircleui/zircleUI/commit/3508932)), closes [#30](https://github.com/zircleui/zircleUI/issues/30)
+
+
+
+# [1.4.0-rc.0](https://github.com/zircleui/zircleUI/compare/v1.4.0-beta.2...v1.4.0-rc.0) (2019-04-25)
+
+* 🐛 add nextTick to inform initial z-canvas width ([3bc9ad8](https://github.com/zircleui/zircleUI/commit/3bc9ad8)), closes [#28](https://github.com/zircleui/zircleUI/issues/28) [#29](https://github.com/zircleui/zircleUI/issues/29)
+
+<a name="1.4.0-beta.3"></a>
+# [1.4.0-beta.3](https://github.com/zircleui/zircleUI/compare/v1.4.0-beta.2...v1.4.0-beta.3) (2019-04-22)
+
+
+### Bug Fixes
+
+* 🐛 Initial sizes that weren't display ok ([986b3eb](https://github.com/zircleui/zircleUI/commit/986b3eb)), closes [#29](https://github.com/zircleui/zircleUI/issues/29)
+
+
+<a name="1.4.0-beta.2"></a>
+# [1.4.0-beta.2](https://github.com/zircleui/zircleUI/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2019-04-22)
+
+
+### Bug Fixes
+
+* 🐛 Initial sizes ([fff2092](https://github.com/zircleui/zircleUI/commit/fff2092)), closes [#29](https://github.com/zircleui/zircleUI/issues/29)
+
+
+
+<a name="1.4.0-beta.1"></a>
+# [1.4.0-beta.1](https://github.com/zircleui/zircleUI/compare/v1.4.0-beta.0...v1.4.0-beta.1) (2019-04-22)
+
+
+
+<a name="1.4.0-beta.0"></a>
+# [1.4.0-beta.0](https://github.com/zircleui/zircleUI/compare/v1.2.5...v1.4.0-beta.0) (2019-04-21)
+
+
+### Bug Fixes
+
+* 🐛 hide z-scroll on squared shapes ([f7272e7](https://github.com/zircleui/zircleUI/commit/f7272e7)), closes [#23](https://github.com/zircleui/zircleUI/issues/23)
+
+
+### Features
+
+* 🎸 Add circle or square shapes to some components ([a852f28](https://github.com/zircleui/zircleUI/commit/a852f28)), closes [#23](https://github.com/zircleui/zircleUI/issues/23)
+* 🎸 Fluid components size based on the size of z-canvas ([a3df60e](https://github.com/zircleui/zircleUI/commit/a3df60e)), closes [#28](https://github.com/zircleui/zircleUI/issues/28) [#29](https://github.com/zircleui/zircleUI/issues/29)
+
+
+
+<a name="1.3.0"></a>
+## [1.3.0](https://github.com/zircleui/zircleUI/compare/v1.2.1...v1.3.0) (2018-12-21)
+* 🎸 Experimental Feature (WIP): add squared shapes ([f9d7bc0](https://github.com/zircleui/zircleUI/commit/f9d7bc0))
+
+* Thanks @alextappin !!
 
 <a name="1.2.5"></a>
 ## [1.2.5](https://github.com/zircleui/zircleUI/compare/v1.2.4...v1.2.5) (2019-03-14)
@@ -9,7 +117,6 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * 🐛 retrieve params when zoom into a new view ([7211174](https://github.com/zircleui/zircleUI/commit/7211174)), closes [#26](https://github.com/zircleui/zircleUI/issues/26)
-
 
 
 <a name="1.2.4"></a>
@@ -21,10 +128,8 @@ All notable changes to this project will be documented in this file. See [standa
 * 🐛 avoid CSS conflicts ([3c0e4d6](https://github.com/zircleui/zircleUI/commit/3c0e4d6)), closes [#24](https://github.com/zircleui/zircleUI/issues/24)
 
 
-
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/zircleui/zircleUI/compare/v1.2.2...v1.2.3) (2019-01-08)
-
 
 ### Features
 
@@ -37,7 +142,6 @@ All notable changes to this project will be documented in this file. See [standa
 * You don't have to use `setView` to define the initial view as now is handled by Vue-router.
 * There is no need to add the components in `$options.components`.
 * More information and guides on [zircle docs](https://zircleui.github.io/docs/guide/using-vue-router.html)
-
 
 
 <a name="1.2.2"></a>

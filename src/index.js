@@ -6,7 +6,7 @@ import ZSpot from './components/z-spot.vue'
 import ZDialog from './components/z-dialog.vue'
 
 const zircle = {
-  install (Vue, options) {
+  install (Vue) {
     Object.defineProperty(Vue.prototype, '$zircle', {
       get () {
         return store.actions

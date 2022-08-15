@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css?family=Google+Sans:300,400,500,700');
+@import url('https://use.fontawesome.com/releases/v5.1.0/css/all.css');
+body {
+  font-family: 'Google Sans';
+  color: #8a8f94;
+}
+
+.version {
+  z-index: 999;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-weight: 500;
+  font-size: 13px;
+}
+.title {
+  margin-left: 5%;
+  position: absolute;
+  width: 90%;
+  color: #454545;
+  font-weight: 700;
+  font-size: 32px;
+  z-index: 9999;
+  opacity: 1;
+  line-height: 1.02em;
+  pointer-events: none !important;
+}
+.subtitle {
+  line-height: 0.9em;
+  font-weight: 300;
+  font-size: 20px;
+  color: #8a8f94;
+}
+.panel {
+  margin-top: 5%;
+  margin-right: 5%;
+  right: 0%;
+  position: absolute;
+  line-height: 1.8;
+  width: 300px;
+  max-height: 600px;
+  z-index: 9999;
+  color: #454545;
+  box-shadow: #454545;
+  background-color: rgba(255, 255, 255, 0.516);
+  border-radius: 5px;
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  overflow: scroll;
+}
+.footer {
+  margin-left: 5%;
+  position: absolute;
+  bottom: 20px;
+  width: 90%;
+  font-size: 15px;
+  pointer-events: none !important;
+  color: #454545;
+  z-index: 9999;
+  opacity: 1;
+  text-align: center;
+  font-weight: 300;
+}
+.title.home {
+  text-align: center;
+}
+.head-enter {
+  opacity: 0;
+}
+.head-enter-active {
+  transition: opacity 2s 0.8s;
+}
+
+.theme-github {
+  --shade-color: #8a8f94;
+  --primary-color: #454545;
+  --accent-color: #454545;
+}
+a {
+  color: #5484f8;
+}
+.title > a {
+  text-decoration: none;
+}
+.z-canvas {
+  background-color: white !important;
+}
+#app {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+/*
+  ##Device = Desktops landscape
+  ##Screen = 1281px to higher resolution desktops
+*/
+@media (min-width: 1281px) and (orientation: landscape) {
+  .title.other {
+    text-align: center;
+    top: 80px;
+    font-size: 40px !important;
+  }
+  .title.home {
+    text-align: center;
+    top: 80px;
+    font-size: 40px !important;
+  }
+  .footer {
+    line-height: 1.5em;
+  }
+  .z-label .inside,
+  .pos,
+  .sub-label {
+    font-size: 18px !important;
+  }
+}
+@media (min-width: 1281px) and (orientation: portrait) {
+  .title.other {
+    text-align: center;
+    top: 380px;
+    font-size: 40px !important;
+  }
+  .title.home {
+    text-align: center;
+    top: 380px;
+    font-size: 40px !important;
+  }
+  .z-label .inside,
+  .pos,
+  .sub-label {
+    font-size: 16px !important;
+  }
+}
+/*
+  ##Device = Laptops, Desktops landscape
+  ##Screen = B/w 1025px to 1280px
+*/
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .title.other {
+    text-align: center;
+    top: 50px;
+    font-size: 40px !important;
+  }
+  .title.home {
+    text-align: center;
+    top: 50px;
+    font-size: 40px !important;
+  }
+  .footer {
+    line-height: 1.5em;
+  }
+  .z-label .inside,
+  .pos {
+    font-size: 13px !important;
+  }
+}
+/*
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+@media (width: 375px) and (orientation: portrait) {
+  .title.other {
+    text-align: center;
+    top: 40px;
+    font-size: 25px !important;
+  }
+  .title.home {
+    text-align: center;
+    top: 40px;
+  }
+  .footer {
+    line-height: 0.5em;
+  }
+}
+/*
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .title.other {
+    text-align: center;
+    top: 220px;
+  }
+  .title.home {
+    text-align: center;
+    top: 220px;
+  }
+  .z-label .inside,
+  .pos {
+    font-size: 13px !important;
+  }
+}
+/*
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .title.other {
+    text-align: center;
+    top: 50px;
+  }
+  .title.home {
+    text-align: center;
+    top: 50px;
+  }
+  .footer {
+    line-height: 1.5em;
+  }
+  .z-label .inside,
+  .pos {
+    font-size: 13px !important;
+  }
+}
+/* iphone x */
+@media (width: 812px) and (height: 375px) {
+  .title.other {
+    text-align: left;
+    margin-left: 30px;
+    font-size: 18px;
+    width: 30%;
+    top: calc(5vh);
+  }
+  .title.home {
+    text-align: left;
+    margin-left: 28px;
+    top: calc(5vh);
+    width: 45%;
+  }
+  .footer {
+    text-align: left;
+    margin-left: 20px;
+    font-size: 15px;
+    width: 30%;
+    line-height: 1.5em;
+  }
+}
+/* pixel xl */
+@media (width: 823px) and (height: 411px) {
+  .title.other {
+    text-align: left;
+    margin-left: 28px;
+    font-size: 18px;
+    width: 30%;
+    top: calc(5vh);
+  }
+  .title.home {
+    text-align: left;
+    margin-left: 28px;
+    top: calc(5vh);
+    width: 45%;
+  }
+  .footer {
+    text-align: left;
+    margin-left: 20px;
+    font-size: 15px;
+    width: 30%;
+    line-height: 1.5em;
+  }
+}
+/*
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+@media (min-width: 481px) and (max-width: 767px) {
+  .title.other {
+    text-align: left;
+    margin-left: 30px;
+    font-size: 25px;
+    width: 30%;
+    top: calc(5vh);
+  }
+  .title.home {
+    text-align: left;
+    margin-left: 18px;
+    font-size: 25px;
+    top: calc(5vh);
+    width: 40%;
+  }
+  .footer {
+    text-align: left;
+    margin-left: 20px;
+    font-size: 15px;
+    width: 30%;
+    line-height: 1.5em;
+  }
+  .z-label .inside,
+  .pos {
+    font-size: 13px !important;
+  }
+}
+/*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+@media (min-width: 320px) and (max-width: 480px) {
+  .title.other {
+    text-align: center;
+    top: calc(10px + 5vh);
+  }
+  .title.home {
+    top: 40px;
+  }
+  .footer {
+    line-height: 0.5em;
+  }
+  .z-label .inside,
+  .pos {
+    font-size: 13px !important;
+  }
+}

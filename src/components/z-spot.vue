@@ -1,28 +1,29 @@
 <template>
   <div
     class="z-shape is-extension"
-    :class="[componentType, classes]"
+    :class="[componentType, shape, classes]"
     :role="button === true ? 'button' : ''"
     :style="responsive === true ? styles.main : zpos.main"
     @mouseover="spotin"
     @mouseout="spotout"
     @mousedown="pulse"
     @touchstart="pulse"
-    @mouseup="move">
-      <div v-if="!button" ref="spot" class="z-outer-spot" :style="styles.plate"></div>
-      <div class="z-pulse" ref="pulse"></div>
+    @mouseup.stop="move"
+    @click="$emit('click', $event)">
+      <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
+      <div class="z-pulse" :class="[shape]" ref="pulse"></div>
       <z-knob v-if="knob" :qty.sync="computedQty" :unit="unit" :min="min" :max="max" />
-      <z-slider v-if="slider === true" :progress='progress' />
-      <div class="z-label" :class="labelPos" :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''" v-if="label">
+      <z-slider v-if="slider" :progress='progress' />
+      <div class="z-label" :class="[shape,labelPos]" :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''" v-if="label">
         <div class="inside">
         {{label}} <span v-if="pos === 'outside'"> {{progressLabel}}</span>
         </div>
       </div>
-      <div class="z-content">
-        <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
+      <div class="z-content" :class="[shape]" >
+        <img v-if="imagePath" :src="imagePath" width="100%"  alt="content custom image"/>
         <slot v-if="!imagePath" name="image"></slot>
       </div>
-      <div class="z-content" style="z-index: 10">
+      <div class="z-content" :class="[shape]"  style="z-index: 10">
         <span class="overflow">
           <span v-if="pos === 'inside' || pos === undefined ">{{progressLabel}}</span>
           <slot></slot>
@@ -52,6 +53,14 @@ export default {
     size: {
       type: String,
       default: 'medium'
+    },
+    circle: {
+      type: [Boolean],
+      default: false
+    },
+    square: {
+      type: [Boolean],
+      default: false
     },
     label: {
       type: [String, Number]
@@ -117,12 +126,13 @@ export default {
   },
   computed: {
     position () {
-      let component = {
+      const component = {
         componentType: this.componentType,
         distance: this.$parent.componentType === 'z-list' ? this.distanceItem : this.distance,
         angle: this.$parent.componentType === 'z-list' ? this.angleItem : this.angle,
         size: this.size,
-        $parent: this.$parent
+        $parent: this.$parent,
+        shape: this.$zircle.getThemeShape()
       }
       return this.$zircle.calcPosition(component)
     },
@@ -141,8 +151,23 @@ export default {
         return false
       }
     },
+    shape () {
+      if (this.circle) {
+        return 'is-circle'
+      } else if (this.square) {
+        return 'is-square'
+      } else {
+        return 'is-circle'
+      }
+    },
+    sliderEnabled () {
+      return this.slider === true && this.shape === 'is-circle'
+    },
+    knobEnabled () {
+      return this.knob === true && this.shape === 'is-circle'
+    },
     styles () {
-      var width = this.$zircle.getComponentWidth(this.size)
+      const width = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: width + 'px',
@@ -159,17 +184,18 @@ export default {
     },
     classes () {
       return {
-        'z-zoom-in-cursor': this.componentType === 'z-spot' && this.toView !== undefined,
         primary: this.$parent.componentType !== 'z-list',
-        accent: this.$parent.componentType === 'z-list'
+        accent: this.$parent.componentType === 'z-list',
+        'z-no-zoom-cursor': this.componentType === 'z-spot' && this.toView === undefined
       }
     },
     progressLabel () {
       if (this.computedQty) {
         let unit = ''
-        this.unit ? unit = this.unit : unit = ''
+        unit = this.unit ? this.unit : ''
         return this.qty + '' + unit
       }
+      return ''
     },
     computedQty: {
       get: function () {
@@ -183,7 +209,7 @@ export default {
   },
   methods: {
     pulse () {
-      let pulse = this.$refs.pulse
+      const pulse = this.$refs.pulse
       pulse.classList.add('pulse-animation')
       pulse.addEventListener('animationend', function () {
         pulse.classList.remove('pulse-animation')

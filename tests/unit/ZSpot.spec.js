@@ -41,7 +41,7 @@ describe('z-spot.vue', () => {
 
   it('Has z-slider component and progress 80%', () => {
     expect(wrapper.vm.progress).toEqual(80)
-    expect(wrapper.find(zslider).exists()).toBe(true)
+    expect(wrapper.findComponent(zslider).exists()).toBe(true)
   })
   it('Has the expected html structure', () => {
     // Note: If props.imagesrc and or props.label are present, slots.imagesrc and slots.label wont be rendered

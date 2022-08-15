@@ -2,17 +2,16 @@
 
 exports[`z-spot.vue Has the expected html structure 1`] = `
 <div
-  class="z-shape is-extension z-spot primary"
+  class="z-shape is-extension z-spot is-circle primary z-no-zoom-cursor"
   role=""
-  style="width: 47px; height: 47px; margin: -23.5px 0px 0px -23.5px; transform: translate3d(0px, 0px, 0px);"
+  style="transform: translate3d(0px, 0px, 0px);"
 >
   <div
-    class="z-outer-spot"
-    style="width: 62px; height: 62px; margin: -31px 0px 0px -31px;"
+    class="z-outer-spot is-circle"
   />
    
   <div
-    class="z-pulse"
+    class="z-pulse is-circle"
   />
    
   <!---->
@@ -31,7 +30,7 @@ exports[`z-spot.vue Has the expected html structure 1`] = `
   </svg>
    
   <div
-    class="z-label bottom"
+    class="z-label is-circle bottom"
   >
     <div
       class="inside"
@@ -43,10 +42,10 @@ exports[`z-spot.vue Has the expected html structure 1`] = `
   </div>
    
   <div
-    class="z-content"
+    class="z-content is-circle"
   >
     <img
-      height="100%"
+      alt="content custom image"
       src="./images/test.png"
       width="100%"
     />
@@ -55,7 +54,7 @@ exports[`z-spot.vue Has the expected html structure 1`] = `
   </div>
    
   <div
-    class="z-content"
+    class="z-content is-circle"
     style="z-index: 10;"
   >
     <span

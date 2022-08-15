@@ -1,37 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`z-dialog.vue Has the expected html structure 1`] = `
-<div
-  class="z-shape is-extension primary z-dialog"
+<transition-stub
   name="z-dialog-transition"
-  style="width: 250px; height: 250px; margin: -125px 0px 0px -125px;"
 >
-  <svg
-    class="z-slider"
-    viewBox="0 0 100 100"
-    xmlns="http://www.w3.org/2000/svg"
+  <div
+    class="z-shape is-extension primary z-dialog is-circle"
   >
-    <circle
-      cx="50"
-      cy="50"
-      r="51"
-      style="transform-origin: 50% 50%; transform: rotate(-90deg); stroke-dasharray: 320.4424506661589; stroke-dashoffset: 304.42032813285095;"
+    <!---->
+     
+    <div
+      class="z-outer-circle is-circle"
     />
-  </svg>
-   
-  <div
-    class="z-outer-circle"
-    style="width: 380px; height: 380px; margin: -190px 0px 0px -190px;"
-  />
-   
-  <div
-    class="z-content"
-  >
-    <p>
-       lorem text 
-    </p>
+     
+    <svg
+      class="z-slider"
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="50"
+        cy="50"
+        r="51"
+        style="transform-origin: 50% 50%; transform: rotate(-90deg); stroke-dasharray: 320.4424506661589; stroke-dashoffset: 304.42032813285095; stroke-width: 3;"
+      />
+    </svg>
+     
+    <!---->
+     
+    <div
+      class="z-content maincontent is-circle"
+    >
+      <div>
+        <p>
+           lorem text 
+        </p>
+      </div>
+    </div>
+     
+    <!---->
+     
+    <div />
   </div>
-   
-  <div />
-</div>
+</transition-stub>
 `;

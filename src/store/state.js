@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 const state = new Vue({
   data: {
     // app Mode
@@ -12,10 +13,29 @@ const state = new Vue({
     componentList: {},
     goBackView: '',
     // look & feel
-    diameters: { xxl: 200, xl: 124, l: 76, m: 47, s: 29, xs: 18 },
+    diameters: {},
+    sizes: {
+      xxl: 55,
+      xl: 32,
+      l: 20,
+      m: 12,
+      s: 8,
+      xs: 5,
+      xxs: 2
+    },
+    minSizesInPixels: {
+      xxl: 200,
+      xl: 180,
+      l: 150,
+      m: 100,
+      s: 80,
+      xs: 50,
+      xxs: 20
+    },
     appStyle: {
       theme: 'theme-black',
-      mode: 'mode-dark'
+      mode: 'mode-dark',
+      shape: 'circle'
     },
     // pagination components
     currentPage: 0,

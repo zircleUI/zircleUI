@@ -2,12 +2,22 @@
   <transition name="z-dialog-transition">
     <div
       class="z-shape is-extension primary"
-      :class="[componentType]"
+      :class="[componentType, shape]"
       :style="styles.main">
-        <z-slider v-if="selfClose" :progress="progress"></z-slider>
-        <div class="z-outer-circle" :style="styles.plate"></div>
-        <div class="z-content">
+        <div v-if="$slots['image'] || imagePath" class="z-content">
+          <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
+          <slot v-if="!imagePath" name="image"></slot>
+        </div>
+        <div class="z-outer-circle" :class="[shape]" :style="styles.plate"></div>
+        <z-slider v-if="selfCloseEnabled" :progress="progress"></z-slider>
+        <z-scroll v-if="scrollBarEnabled" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
+        <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent]" @scroll.passive="scroll">
+          <div ref="ztext">
             <slot></slot>
+          </div>
+        </div>
+        <div v-if="$slots['media']" :class="[shape]" class="z-content" style="z-index: 60">
+          <slot name="media" ></slot>
         </div>
       <slot name="extension"></slot>
     </div>
@@ -16,6 +26,7 @@
 
 <script>
 import ZSlider from './child-components/z-slider'
+import ZScroll from './child-components/z-scroll'
 export default {
   name: 'z-dialog',
   props: {
@@ -26,20 +37,68 @@ export default {
     size: {
       type: String,
       default: 'xxl'
+    },
+    circle: {
+      type: [Boolean],
+      default: false
+    },
+    imagePath: {
+      type: [String]
+    },
+    square: {
+      type: [Boolean],
+      default: false
     }
   },
   components: {
-    ZSlider
+    ZSlider,
+    ZScroll
   },
   data () {
     return {
       componentType: this.$options.name,
-      progress: 0
+      progress: 0,
+      scrollVal: -45,
+      isMounted: false,
+      ffox: false
     }
   },
   computed: {
+    scrollBarEnabled () {
+      return this.scrollBar === true && (
+        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
+        (this.circle === true && this.$zircle.getThemeShape() === 'square')
+      )
+    },
+    scrollBar () {
+      let isScrollNeeded = false
+      if (this.isMounted === true && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth(this.size)) {
+        isScrollNeeded = true
+      }
+      return isScrollNeeded
+    },
+    longContent () {
+      return {
+        'overflow-square': this.scrollBar === true && this.shape === 'is-square'
+      }
+    },
+    selfCloseEnabled () {
+      return this.selfClose === true && (
+        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
+        (this.circle === true && this.$zircle.getThemeShape() === 'square')
+      )
+    },
+    shape () {
+      if (this.circle) {
+        return 'is-circle'
+      } else if (this.square) {
+        return 'is-square'
+      } else {
+        return 'is-circle'
+      }
+    },
     styles () {
-      var zwidth = this.$zircle.getComponentWidth(this.size)
+      const zwidth = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: zwidth + 50 + 'px',
@@ -54,11 +113,28 @@ export default {
       }
     }
   },
+  methods: {
+    scroll () {
+      if (this.scrollBar === true) {
+        const container = this.$refs.maincontent
+        this.scrollVal = -45 + ((container.scrollTop * 100 / (container.scrollHeight - container.clientHeight)) * 86 / 100)
+      }
+    }
+  },
+  watch: {
+    scrollVal () {
+      if (this.scrollBar === true) {
+        const container = this.$refs.maincontent
+        container.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (container.scrollHeight - container.clientHeight) / 100
+      }
+    }
+  },
   mounted () {
+    setTimeout(() => { this.isMounted = true }, 1000)
     if (this.selfClose) {
-      var vm = this
+      const vm = this
       this.progress = 5
-      var id = setInterval(function () {
+      const id = setInterval(function () {
         if (vm.progress >= 100) {
           clearInterval(id)
           vm.$emit('done')

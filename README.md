@@ -26,7 +26,7 @@ Check out  [zircleui/vue3 branch](https://github.com/zircleUI/zircleUI/tree/vue3
 
 ## Breaking news!
 
-> I've been working on a new zooming library.
+> I've been working on a new zooming engine.
 >
 > Give **Zumly** a try and joing our community at https://zumly.org!
 
@@ -42,7 +42,7 @@ Check out  [zircleui/vue3 branch](https://github.com/zircleUI/zircleUI/tree/vue3
 
 - **Circles everywhere:** Breaking away from the conventional UI with a circular UI Kit.
 
-- **Responsive:** zircle-ui works pretty well on mobile devices and big screens. 
+- **Responsive:** zircle-ui works pretty well on mobile devices and big screens. 
 
 - **Customizable themes:** Aren't the integrated color themes enough? No problem, it is easy to create new ones.
 
@@ -90,7 +90,7 @@ Please checkout [**zircle.io**](http://zircle.io) to learn how to use **zircle-u
 Just download **zircle-ui** from [Github](https://github.com/zircleUI/zircleUI/tree/master/dist). You need to download the zircle.umd.js or the zircle.umd.min.js file along with the zircle.css file.
 
 ### - Content delivery networks (CDN)
-Include `https://unpkg.com/zircle` in your project with `<script>` tag. With CDN you will have the latest version of **zircle-ui** as soon as it is published to NPM. You can also browse the source of the npm package at [https://unpkg.com/zircle/](https://unpkg.com/zircle/) 
+Include `https://unpkg.com/zircle` in your project with `<script>` tag. With CDN you will have the latest version of **zircle-ui** as soon as it is published to NPM. You can also browse the source of the npm package at [https://unpkg.com/zircle/](https://unpkg.com/zircle/) 
 
 ### - NPM or Yarn
 NPM or Yarn are the recommended installation method for **zircle-ui**, if you are building medium to large scale applications. 
@@ -152,7 +152,7 @@ After you have installed **zicle ui** using [direct download](#--direct-download
 ```
 
 ### - Single File Components and vue-cli
-As Vue documentation explains, with the previous setup you can work very well for small to medium-sized projects. However, in more complex projects it is better to use [Single File Components (SFC)](https://vuejs.org/v2/guide/single-file-components.html).
+As Vue documentation explains, with the previous setup you can work very well for small to medium-sized projects. However, in more complex projects it is better to use [Single File Components (SFC)](https://vuejs.org/v2/guide/single-file-components.html).
 
 Vue-cli is a powerful tool to develop complex projects. So, after you have installed and run vue-cli as it is described in the [official Vue cli docs](https://cli.vuejs.org/guide/installation.html), you can install **zircle-ui** with [NPM or Yarn](#--npm-or-yarn) and add the following code to your vue-cli project:
 

@@ -42,18 +42,14 @@ describe('z-view.vue', () => {
     expect(wrapper.vm.label).toEqual('Test label prop')
   })
   it('Expected data.fullView processed viewName', () => {
-    expect(wrapper.vm.fullView).toEqual('search--0')
+    expect(wrapper.vm.fullView).toEqual('search--1')
   })
   it('Expected to be responsive', () => {
     expect(wrapper.vm.responsive).toEqual(true)
   })
-  it('Has z-scroll component and longtext class activated because of scrollBar true', () => {
-    expect(wrapper.find('.maincontent').classes()).toContain('long-content')
-    expect(wrapper.find(zscroll).exists()).toBe(true)
-  })
   it('Has z-slider component and progress 80%', () => {
     expect(wrapper.vm.progress).toEqual(80)
-    expect(wrapper.find(zslider).exists()).toBe(true)
+    expect(wrapper.findComponent(zslider).exists()).toBe(true)
   })
   it('Has the expected html structure (slots, z-scroll, z-slider)', () => {
     // Note: If props.imagePath and or props.label are present, slots.imagesrc and slots.label wont be rendered

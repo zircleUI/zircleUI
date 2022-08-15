@@ -1,31 +1,31 @@
 <template>
   <div
     class="z-shape primary"
-    :class="[componentType]"
+    :class="[componentType, shape]"
     :style="responsive === true ? styles.main : zpos.main"
     style="overflow: visible;"
     @animationend="notify"
     @mouseover = "$zircle.allowBackwardNavigation(true)"
     @mouseleave = "$zircle.allowBackwardNavigation(false)">
     <div :id="fullView" v-if="$slots['image'] || imagePath" class="z-content">
-      <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
+      <img v-if="imagePath" :src="imagePath" width="100%" alt="content custom image"/>
       <slot v-if="!imagePath" name="image"></slot>
     </div>
     <section style="opacity: 0" :style="animation">
-      <div class="z-outer-circle"  :style="responsive === true ? styles.plate : zpos.plate"></div>
-      <z-scroll v-if="scrollBar" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
-      <z-slider v-if="slider === true" :progress='progress'/>
-      <div v-if="label" class="z-label" :class="labelPos">
+      <div class="z-outer-circle" :class="[shape]"  :style="responsive === true ? styles.plate : zpos.plate"></div>
+      <z-scroll v-if="scrollBarEnabled" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
+      <z-slider v-if="sliderEnabled" :progress='progress'/>
+      <div v-if="label" class="z-label" :class="[shape, labelPos]">
         <div class="inside">
           {{label}}
         </div>
       </div>
-      <div class="z-content maincontent" ref="maincontent" :class="[longContent, firefoxScroll]" @scroll.passive="scroll">
+      <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent]" @scroll.passive="scroll">
         <div ref="ztext">
           <slot></slot>
         </div>
       </div>
-      <div v-if="$slots['media']" class="z-content" style="z-index: 60">
+      <div v-if="$slots['media']" :class="[shape]" class="z-content" style="z-index: 60">
         <slot name="media" ></slot>
       </div>
      <slot name="extension"></slot>
@@ -50,6 +50,14 @@ export default {
     size: {
       type: String,
       default: 'xxl'
+    },
+    circle: {
+      type: [Boolean],
+      default: false
+    },
+    square: {
+      type: [Boolean],
+      default: false
     },
     label: {
       type: [String, Number]
@@ -90,11 +98,26 @@ export default {
     }
   },
   computed: {
+    shape () {
+      if (this.circle) {
+        return 'is-circle'
+      } else if (this.square) {
+        return 'is-square'
+      } else {
+        return 'is-circle'
+      }
+    },
+    sliderEnabled () {
+      return this.slider === true && this.shape === 'is-circle'
+    },
+    scrollBarEnabled () {
+      return this.scrollBar === true && this.shape === 'is-circle'
+    },
     position () {
       return this.$zircle.calcViewPosition(this.fullView)
     },
     scrollBar () {
-      var isScrollNeeded = false
+      let isScrollNeeded = false
       if (this.isMounted === true && this.fullView === this.$zircle.getCurrentViewName() && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth(this.size)) {
         isScrollNeeded = true
       }
@@ -110,7 +133,7 @@ export default {
       }
     },
     styles () {
-      var width = this.$zircle.getComponentWidth(this.size)
+      const width = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: width + 'px',
@@ -127,22 +150,15 @@ export default {
     },
     animation () {
       if (this.fullView === this.$zircle.getCurrentViewName() && this.$zircle.getNavigationMode() === 'forward') {
-        var zstyle = 'opacity: 1; transition: opacity 1000ms linear;'
+        return 'opacity: 1; transition: opacity 1000ms linear;'
       } else if (this.fullView === this.$zircle.getCurrentViewName() && this.$zircle.getNavigationMode() !== 'forward') {
-        zstyle = 'opacity: 1;'
-      } else {
-        zstyle = 'opacity: 0; transition: opacity 500ms linear;'
+        return 'opacity: 1;'
       }
-      return zstyle
+      return 'opacity: 0; transition: opacity 500ms linear;'
     },
     longContent () {
       return {
-        'long-content': this.scrollBar === true
-      }
-    },
-    firefoxScroll () {
-      return {
-        'z-scroll-disabled-for-firefox': this.scrollBar === true && this.ffox === true
+        'overflow-square': this.scrollBar === true && this.shape === 'is-square'
       }
     }
   },
@@ -152,7 +168,7 @@ export default {
     },
     scroll () {
       if (this.scrollBar === true) {
-        var container = this.$refs.maincontent
+        const container = this.$refs.maincontent
         this.scrollVal = -45 + ((container.scrollTop * 100 / (container.scrollHeight - container.clientHeight)) * 86 / 100)
       }
     }
@@ -160,18 +176,14 @@ export default {
   watch: {
     scrollVal () {
       if (this.scrollBar === true) {
-        var container = this.$refs.maincontent
+        const container = this.$refs.maincontent
         container.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (container.scrollHeight - container.clientHeight) / 100
       }
     }
   },
   mounted () {
-    if (navigator.userAgent.match('Firefox')) {
-      this.$zircle.setLog('Firefox desktop detected. Scroll events disabled')
-      this.ffox = true
-    }
     this.zpos = this.styles
-    var vm = this
+    const vm = this
     setTimeout(function () {
       vm.isMounted = true
     }, 1000)

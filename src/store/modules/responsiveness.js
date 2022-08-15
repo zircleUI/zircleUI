@@ -1,6 +1,7 @@
+/* eslint-disable */ 
 import store from '../store'
 function setDiameter (size) {
-  let diameter = store.state.diameters[size]
+  const diameter = store.state.diameters[size]
   return diameter
 }
 const mediaQuery = [
@@ -46,7 +47,7 @@ const mediaQuery = [
   }
 ]
 const responsiveness = {
-  getComponentWidth (size) {
+  getComponentWidth(size) {
     let sizes = size.toLowerCase()
     if (sizes === 'extralarge') sizes = 'xl'
     if (sizes === 'large') sizes = 'l'
@@ -56,14 +57,14 @@ const responsiveness = {
     let result = setDiameter(sizes)
     return result
   },
-  getDimensions () {
+  getDimensions() {
     if (store.actions.getAppMode() === 'full') {
       for (var i = 0; i < mediaQuery.length; i++) {
         if (mediaQuery[i].media.matches) store.state.diameters = mediaQuery[i].width
       }
       store.actions.setLog('getDimensions() at appMode full. z-view new diameter: ' + store.state.diameters.xxl)
     } else if (store.actions.getAppMode() === 'mixed') {
-      let vp = document.getElementById('z-container').offsetWidth
+      const vp = document.getElementById('z-container').getBoundingClientRect().width
       if (vp <= 319) {
         store.state.diameters = mediaQuery[0].width
       } else if (vp >= 320 && vp <= 374) {

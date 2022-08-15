@@ -1,19 +1,21 @@
 <template>
-  <z-view style="border-width: 8px;">
-    Documentation
-    <div slot='extension'>
-
+  <z-view size="xl" style="border-width: 8px;">
+    Links for docs & resources
+    <template v-slot:extension>
       <z-list :items="sections" :per-page="5">
+        <template v-slot:default="props">
         <z-spot
+          :distance="60"
+          size="s"
           button
-          slot-scope="props"
           :index="props.index"
           :label='props.name'
-          @click.native="openUrl(props.url)" >
+          @click="openUrl(props.url)" >
             <i :class="props.icon"></i>
         </z-spot>
+        </template>
       </z-list>
-    </div>
+    </template>
   </z-view>
 </template>
 <script>
@@ -25,7 +27,7 @@ export default {
         { name: 'Tutorial', url: 'https://zircleui.github.io/docs/tutorial/', icon: 'fas fa-magic' },
         { name: 'API', url: 'https://zircleui.github.io/docs/api/', icon: 'fas fa-code' },
         { name: 'Examples', url: 'https://zircleui.github.io/docs/examples/vuejs-ecosystem.html', icon: 'fas fa-palette' },
-        { name: 'Contributing', url: 'https://zircleui.github.io/docs/contribute/', icon: 'fas fa-hands-helping' }
+        { name: 'Repo', url: 'https://github.com/zircleUI/zircleUI', icon: 'fab fa-github' }
       ]
     }
   },
