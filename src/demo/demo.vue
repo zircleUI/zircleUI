@@ -88,7 +88,7 @@ export default {
         startTime = startTime || timestamp // set startTime is null
         const timeElapsedSinceStart = timestamp - startTime
         const progress = timeElapsedSinceStart / 10000 * this.speed.qty
-        const safeProgress = Math.min(progress.toFixed(3), 1) // 2 decimal points
+        const safeProgress = Math.min(Number(progress.toFixed(3)), 1) // 2 decimal points
         const newPosition = -(safeProgress * distance)
         // we need to progress to reach 100%
         if (this.isRunning && safeProgress !== 1) {
@@ -109,7 +109,7 @@ export default {
         startTime = startTime || timestamp // set startTime is null
         const timeElapsedSinceStart = timestamp - startTime
         const progress = timeElapsedSinceStart / 7000 * this.speed.qty
-        const safeProgress = Math.min(progress.toFixed(3), 1) // 2 decimal points
+        const safeProgress = Math.min(Number(progress.toFixed(3)), 1) // 2 decimal points
         const newPosition = -(safeProgress * distance)
         // we need to progress to reach 100%
         if (safeProgress !== 1) {
