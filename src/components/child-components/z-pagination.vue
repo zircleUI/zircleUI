@@ -46,13 +46,7 @@ export default {
   },
   computed: {
     responsive () {
-      if (this.view === this.$zircle.getCurrentViewName()) {
-        // eslint-disable-next-line
-        this.zpos = this.styles
-        return true
-      } else {
-        return false
-      }
+      return this.view === this.$zircle.getCurrentViewName()
     },
     position () {
       return this.$zircle.calcPosition(this)
@@ -83,6 +77,13 @@ export default {
           height: zwidth + 12 + 'px',
           margin: this.$zircle.getThemeShape() === 'square' ? '' : -((zwidth + 12) / 2) + 'px 0 0 ' + -((zwidth + 12) / 2) + 'px'
         }
+      }
+    }
+  },
+  watch: {
+    responsive (isResponsive) {
+      if (isResponsive) {
+        this.zpos = this.styles
       }
     }
   },

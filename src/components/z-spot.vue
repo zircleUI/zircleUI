@@ -145,13 +145,7 @@ export default {
       return this.$zircle.getNumberOfItemsInCurrentPage() === 1 ? 0 : this.distance
     },
     responsive () {
-      if (this.view === this.$zircle.getCurrentViewName()) {
-        // eslint-disable-next-line
-        this.zpos = this.styles
-        return true
-      } else {
-        return false
-      }
+      return this.view === this.$zircle.getCurrentViewName()
     },
     shape () {
       if (this.square) {
@@ -202,6 +196,13 @@ export default {
       },
       set: function (newValue) {
         this.$emit('update:qty', newValue)
+      }
+    }
+  },
+  watch: {
+    responsive (isResponsive) {
+      if (isResponsive) {
+        this.zpos = this.styles
       }
     }
   },
