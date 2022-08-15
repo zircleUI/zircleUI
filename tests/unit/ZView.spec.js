@@ -3,6 +3,7 @@ import zview from '@/components/z-view.vue'
 import zscroll from '@/components/child-components/z-scroll.vue'
 import zslider from '@/components/child-components/z-slider.vue'
 import zircle from '@/index'
+
 const localVue = createLocalVue()
 localVue.use(zircle)
 const wrapper = shallowMount(zview, {
