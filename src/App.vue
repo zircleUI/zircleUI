@@ -1,16 +1,16 @@
 <template>
   <div>
-    <span style="z-index:999; position: absolute; top: 10px; right: 10px; font-weight: 500; font-size: 13px" >v{{pkg.version}}</span>
+    <span class="version" >v{{pkg.version}}</span>
     <transition-group name="head" appear>
-      <div :key="view" class="title z-header" :class="view === 'home' ? 'home' : ''">{{ title }}
-      <br>
-      <div style="line-height: 0.9em; font-weight: 300; font-size: 20px; color: #8a8f94"><br><span style="text-transform: capitalize">Sun, Earth & Moon</span></div>
+      <div :key="view" class="title z-header" :class="view === 'home' ? 'home' : ''">{{ txt.title }}
+        <br>
+        <div class="subtitle">
+          <br>
+          <span>{{txt.subtitle}}</span>
+        </div>
       </div>
-      <div :key="view + 1" class="panel" style="display: none;">test</div>
-      <div :key="view + 2" class="footer">
-        <span style="font-size: 13px" >
-        <b>Tip: </b> use filter to change coding language & time period</span>
-      </div>
+      <div :key="view + 1" class="panel" style="display: none;"></div>
+      <div :key="view + 2" class="footer" v-if="txt.footer"><b>Tip:</b> {{txt.footer}}</div>
     </transition-group>
     <z-canvas :views="$options.components" />
   </div>
@@ -35,20 +35,44 @@ export default {
     view () {
       return this.$zircle.getCurrentViewName().slice(0, -3)
     },
-    title () {
+    txt () {
       switch (this.view) {
         case 'home':
-          return 'Welcome to Zircle\'s demo'
+          return {
+            title: 'Welcome to Zircle\'s demo',
+            subtitle: 'Sun, Earth & Moon',
+            footer: 'click/touch on circles!'
+          }
         case 'sun':
-          return 'Sun profile'
+          return {
+            title: 'Sun profile',
+            subtitle: 'Sun, Earth & Moon',
+            footer: ''
+          }
         case 'earth':
-          return 'Earth profile'
+          return {
+            title: 'Earth profile',
+            subtitle: 'Sun, Earth & Moon',
+            footer: 'zoom the Moon!'
+          }
         case 'moon':
-          return 'Moon profile'
+          return {
+            title: 'Moon profile',
+            subtitle: 'Sun, Earth & Moon',
+            footer: ''
+          }
         case 'demo':
-          return 'An eclectic showcase'
+          return {
+            title: '',
+            subtitle: 'Sun, Earth & Moon',
+            footer: 'zoom the Sun & the Earth!'
+          }
         default:
-          return 'opps'
+          return {
+            title: 'oops',
+            subtitle: '',
+            footer: ''
+          }
       }
     }
   },

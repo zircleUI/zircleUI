@@ -4,6 +4,15 @@ body {
   font-family: 'Google Sans';
   color: #8a8f94;
 }
+
+.version {
+  z-index: 999;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-weight: 500;
+  font-size: 13px;
+}
 .title {
   margin-left: 5%;
   position: absolute;
@@ -16,7 +25,12 @@ body {
   line-height: 1.02em;
   pointer-events: none !important;
 }
-
+.subtitle {
+  line-height: 0.9em;
+  font-weight: 300;
+  font-size: 20px;
+  color: #8a8f94;
+}
 .panel {
   margin-top: 5%;
   margin-right: 5%;
@@ -26,25 +40,26 @@ body {
   width: 300px;
   max-height: 600px;
   z-index: 9999;
-  color:  #454545;
+  color: #454545;
   box-shadow: #454545;
   background-color: rgba(255, 255, 255, 0.516);
   border-radius: 5px;
   backdrop-filter: blur(10px);
   padding: 20px;
-  overflow: scroll
+  overflow: scroll;
 }
 .footer {
   margin-left: 5%;
   position: absolute;
   bottom: 20px;
   width: 90%;
-  font-size: 32px;
+  font-size: 15px;
   pointer-events: none !important;
   color: #454545;
   z-index: 9999;
   opacity: 1;
   text-align: center;
+  font-weight: 300;
 }
 .title.home {
   text-align: center;

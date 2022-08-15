@@ -8,7 +8,7 @@
       :distance='160'
       class="transparent"
       @mouseover.native="pause"
-      @mouseleave="start"
+      @mouseleave.native="play"
       to-view="moon"
       :angle='moon'
       label="moon"
@@ -22,7 +22,6 @@ export default {
     return {
       knob: 48,
       dialog: true,
-      orbit: { qty: 56, unit: '˚', min: 0, max: 360 },
       earth: 60,
       moon: 160,
       paused: false
@@ -50,26 +49,44 @@ export default {
       `
       panel.innerHTML = text
     },
-    pause () {
-      this.paused = !this.paused
+    play () {
+      this.isRunning = true
+      this.animateMoon()
     },
-    start () {
-      let start
-      const Animacion1 = (relojInterno) => {
-        if (!start) start = relojInterno
-        this.moon = (relojInterno / 80) * (this.knob / 15) - start
-        if (!this.paused) window.requestAnimationFrame(Animacion1)
+    pause () {
+      this.isRunning = false
+      this.animateMoon()
+    },
+    animateMoon () {
+      let startTime
+      const offset = this.moon
+      const distance = 360// 60FP
+      const moonOrbit = (timestamp) => {
+        startTime = startTime || timestamp // set startTime is null
+        const timeElapsedSinceStart = timestamp - startTime
+        const progress = timeElapsedSinceStart / 7000 * 1
+        const safeProgress = Math.min(progress.toFixed(3), 1) // 2 decimal points
+        const newPosition = -(safeProgress * distance)
+        // we need to rogress to reach 100%
+        if (this.isRunning && safeProgress !== 1) {
+          this.moon = newPosition + offset
+          requestAnimationFrame(moonOrbit)
+        } else if (this.isRunning && safeProgress === 1) {
+          this.moon = offset
+          this.play()
+        }
       }
-      window.requestAnimationFrame(Animacion1)
+      requestAnimationFrame(moonOrbit)
     }
   },
   mounted () {
-    this.start()
+    this.play()
     setTimeout(() => {
       this.show()
     }, 1500)
   },
   destroyed () {
+    this.pause()
     this.hide()
   }
 }
