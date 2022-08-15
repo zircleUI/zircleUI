@@ -10,29 +10,31 @@
         label="sun"
         image-path="./sun.png"
       >
-        <z-spot
-          slot="extension"
-          size="s"
-          :angle="earth"
-          :distance="200"
-          class="transparent"
-          @mouseover.native="pause"
-          @mouseleave.native="play"
-          @click.native="pause"
-          to-view="earth"
-          label="earth"
-          image-path="./earth.png"
-        >
+        <template #extension>
           <z-spot
-            slot="extension"
-            size="xs"
-            :distance="160"
+            size="s"
+            :angle="earth"
+            :distance="200"
             class="transparent"
-            :angle="moon"
-            image-path="./moon.png"
+            @mouseover.native="pause"
+            @mouseleave.native="play"
+            @click.native="pause"
+            to-view="earth"
+            label="earth"
+            image-path="./earth.png"
           >
+            <template #extension>
+              <z-spot
+                size="xs"
+                :distance="160"
+                class="transparent"
+                :angle="moon"
+                image-path="./moon.png"
+              >
+              </z-spot>
+            </template>
           </z-spot>
-        </z-spot>
+        </template>
       </z-spot>
       <z-spot
         size="m"
@@ -54,6 +56,7 @@
     </template>
   </z-view>
 </template>
+
 <script>
 export default {
   data () {
