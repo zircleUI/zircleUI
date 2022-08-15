@@ -16,10 +16,10 @@ const wrapper = shallowMount(zcanvas, {
 })
 describe('z-canvas.vue', () => {
   it('Renders css classes: theme, themeMode and AppMode', () => {
-    expect(wrapper.findComponent('#z-container').classes()).toContain('theme-black')
-    expect(wrapper.findComponent('#z-container').classes()).toContain('mode-dark')
-    expect(wrapper.findComponent('#z-container').classes()).toContain('is-full-mode')
-    expect(wrapper.findComponent('#z-container').classes()).toContain('circle')
+    expect(wrapper.find('#z-container').classes()).toContain('theme-black')
+    expect(wrapper.find('#z-container').classes()).toContain('mode-dark')
+    expect(wrapper.find('#z-container').classes()).toContain('is-full-mode')
+    expect(wrapper.find('#z-container').classes()).toContain('circle')
   })
   it('Has the expected html structure', () => {
     // Note: If props.imagesrc and or props.label are present, slots.imagesrc and slots.label wont be rendered

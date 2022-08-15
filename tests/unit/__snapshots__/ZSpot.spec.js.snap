@@ -2,7 +2,7 @@
 
 exports[`z-spot.vue Has the expected html structure 1`] = `
 <div
-  class="z-shape is-extension z-spot is-circle primary"
+  class="z-shape is-extension z-spot is-circle primary z-no-zoom-cursor"
   role=""
   style="transform: translate3d(0px, 0px, 0px);"
 >
@@ -46,7 +46,6 @@ exports[`z-spot.vue Has the expected html structure 1`] = `
   >
     <img
       alt="content custom image"
-      height="100%"
       src="./images/test.png"
       width="100%"
     />

@@ -11,12 +11,5 @@ exports[`z-canvas.vue Has the expected html structure 1`] = `
   >
     <z-view-manager-stub />
   </div>
-  <object
-    aria-hidden="true"
-    class="z-resizable-object"
-    data="about:blank"
-    tabindex="-1"
-    type="text/html"
-  />
 </div>
 `;

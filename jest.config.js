@@ -16,10 +16,11 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
-  setupFilesAfterEnv: ['<rootDir>jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/tests/unit/setup.js'],
   snapshotSerializers: [
     'jest-serializer-vue'
   ],
+  testEnvironment: 'jsdom',
   testMatch: [
     '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)'
   ],
