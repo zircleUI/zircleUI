@@ -3,18 +3,19 @@
     size="xxl"
     image-path="./earth.png"
     class="transparent">
-    <z-spot
-      slot="extension"
-      size="m"
-      :distance='160'
-      class="transparent"
-      @mouseover.native="pause"
-      @mouseleave.native="play"
-      to-view="moon"
-      :angle='moon'
-      label="moon"
-      image-path='./moon.png'>
-    </z-spot>
+    <template #extension>
+      <z-spot
+        size="m"
+        :distance='160'
+        class="transparent"
+        @mouseover.native="pause"
+        @mouseleave.native="play"
+        to-view="moon"
+        :angle='moon'
+        label="moon"
+        image-path='./moon.png'>
+      </z-spot>
+    </template>
   </z-view>
 </template>
 

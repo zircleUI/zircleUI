@@ -5,6 +5,7 @@
     class="transparent">
   </z-view>
 </template>
+
 <script>
 export default {
   methods: {
