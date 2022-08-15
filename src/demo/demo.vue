@@ -61,13 +61,9 @@
 export default {
   data () {
     return {
-      dialog: true,
       speed: { qty: 1, unit: 'x', min: 1, max: 5 },
       earth: 160,
       moon: 160,
-      year: 0,
-      month: 0,
-      init: null,
       isRunning: true
     }
   },
