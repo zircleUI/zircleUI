@@ -23,8 +23,6 @@
 export default {
   data () {
     return {
-      knob: 48,
-      dialog: true,
       earth: 60,
       moon: 160,
       paused: false
