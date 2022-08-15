@@ -8,8 +8,8 @@ function calcCoords (distance, angle, parentSize) {
   if (distance !== 0) {
     X = ((store.actions.getComponentWidth(parentSize) / 2) * distance / 100) * Math.cos(angle * (Math.PI / 180))
     Y = ((store.actions.getComponentWidth(parentSize) / 2) * distance / 100) * Math.sin(angle * (Math.PI / 180))
-    Xi = X > 0 ? -Math.abs(Number(X)) : Math.abs(Number(X))
-    Yi = Y > 0 ? -Math.abs(Number(Y)) : Math.abs(Number(Y))
+    Xi = -X
+    Yi = -Y
   }
   return {
     X,
@@ -31,7 +31,7 @@ function determinePosition (pos) {
 
 const position = {
   getCurrentPosition () {
-    return store.state.history[store.state.history.length - 1].position
+    return determinePosition(1)
   },
   getPreviousPosition () {
     return determinePosition(2)
