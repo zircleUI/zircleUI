@@ -86,6 +86,8 @@ export default {
     sun
   },
   mounted () {
+    document.body.style.zoom = 1 / window.devicePixelRatio
+
     this.$zircle.config({
       debug: true,
       style: {
