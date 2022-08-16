@@ -2,6 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import zdialog from '@/components/z-dialog.vue'
 import zslider from '@/components/child-components/z-slider.vue'
 import zircle from '@/index'
+
 const localVue = createLocalVue()
 localVue.use(zircle)
 const wrapper = shallowMount(zdialog, {

@@ -1,22 +1,22 @@
 <template>
   <div>
-    <span class="version" >v{{pkg.version}}</span>
+    <span class="version">v{{ packageVersion }}</span>
     <transition-group name="head" appear>
       <div :key="view" class="title z-header" :class="view === 'home' ? 'home' : ''">{{ txt.title }}
         <br>
         <div class="subtitle">
           <br>
-          <span>{{txt.subtitle}}</span>
+          <span>{{ txt.subtitle }}</span>
         </div>
       </div>
       <div :key="view + 1" class="panel" style="display: none;"></div>
-      <div :key="view + 2" class="footer" v-if="txt.footer"><b>Tip:</b> {{txt.footer}}</div>
+      <div :key="view + 2" class="footer" v-if="txt.footer"><b>Tip:</b> {{ txt.footer }}</div>
     </transition-group>
-    <z-canvas :views="$options.components" />
+    <z-canvas :views="$options.components"/>
   </div>
 </template>
+
 <script>
-// import { markRaw } from 'vue'
 import pkg from '../package.json'
 import home from './demo/home.vue'
 import docs from './demo/docs.vue'
@@ -28,7 +28,7 @@ import sun from './demo/sun.vue'
 export default {
   data () {
     return {
-      pkg
+      packageVersion: pkg.version
     }
   },
   computed: {
@@ -98,7 +98,7 @@ export default {
   }
 }
 </script>
+
 <style>
 @import url("../public/index.css");
-
 </style>

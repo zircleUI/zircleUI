@@ -10,32 +10,35 @@
     @touchstart="pulse"
     @mouseup.stop="move"
     @click="$emit('click', $event)">
-      <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
-      <div class="z-pulse" :class="[shape]" ref="pulse"></div>
-      <z-knob v-if="knob" :qty.sync="computedQty" :unit="unit" :min="min" :max="max" />
-      <z-slider v-if="slider" :progress='progress' />
-      <div class="z-label" :class="[shape,labelPos]" :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''" v-if="label">
-        <div class="inside">
-        {{label}} <span v-if="pos === 'outside'"> {{progressLabel}}</span>
-        </div>
+    <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
+    <div class="z-pulse" :class="[shape]" ref="pulse"></div>
+    <z-knob v-if="knob" :qty.sync="computedQty" :unit="unit" :min="min" :max="max"/>
+    <z-slider v-if="slider" :progress='progress'/>
+    <div class="z-label" :class="[shape,labelPos]"
+         :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''"
+         v-if="label">
+      <div class="inside">
+        {{ label }} <span v-if="pos === 'outside'"> {{ progressLabel }}</span>
       </div>
-      <div class="z-content" :class="[shape]" >
-        <img v-if="imagePath" :src="imagePath" width="100%"  alt="content custom image"/>
-        <slot v-if="!imagePath" name="image"></slot>
-      </div>
-      <div class="z-content" :class="[shape]"  style="z-index: 10">
+    </div>
+    <div class="z-content" :class="[shape]">
+      <img v-if="imagePath" :src="imagePath" width="100%" alt="content custom image"/>
+      <slot v-if="!imagePath" name="image"></slot>
+    </div>
+    <div class="z-content" :class="[shape]" style="z-index: 10">
         <span class="overflow">
-          <span v-if="pos === 'inside' || pos === undefined ">{{progressLabel}}</span>
+          <span v-if="pos === 'inside' || pos === undefined ">{{ progressLabel }}</span>
           <slot></slot>
         </span>
-      </div>
-      <slot name="extension"></slot>
+    </div>
+    <slot name="extension"></slot>
   </div>
 </template>
 
 <script>
 import ZSlider from './child-components/z-slider'
 import ZKnob from './child-components/z-knob'
+
 export default {
   name: 'z-spot',
   props: {
@@ -120,8 +123,7 @@ export default {
       componentType: this.$options.name,
       zpos: {},
       innerpos: {},
-      extrainfo: '',
-      val: 0
+      extrainfo: ''
     }
   },
   computed: {
@@ -143,22 +145,13 @@ export default {
       return this.$zircle.getNumberOfItemsInCurrentPage() === 1 ? 0 : this.distance
     },
     responsive () {
-      if (this.view === this.$zircle.getCurrentViewName()) {
-        // eslint-disable-next-line
-        this.zpos = this.styles
-        return true
-      } else {
-        return false
-      }
+      return this.view === this.$zircle.getCurrentViewName()
     },
     shape () {
-      if (this.circle) {
-        return 'is-circle'
-      } else if (this.square) {
+      if (this.square) {
         return 'is-square'
-      } else {
-        return 'is-circle'
       }
+      return 'is-circle'
     },
     sliderEnabled () {
       return this.slider === true && this.shape === 'is-circle'
@@ -202,8 +195,14 @@ export default {
         return this.qty
       },
       set: function (newValue) {
-        // this.val = newValue
         this.$emit('update:qty', newValue)
+      }
+    }
+  },
+  watch: {
+    responsive (isResponsive) {
+      if (isResponsive) {
+        this.zpos = this.styles
       }
     }
   },

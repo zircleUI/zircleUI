@@ -1,4 +1,5 @@
 import store from '../store'
+
 const debug = {
   setLog (msg, type) {
     let bgColor = 'green'
@@ -13,9 +14,6 @@ const debug = {
     if (store.state.debug) {
       console.log('%c z ', 'background: ' + bgColor + '; color:  ' + color + '', msg) // eslint-disable-line no-console
     }
-  },
-  getState () {
-    return store.state.$data
   }
 }
 export default debug

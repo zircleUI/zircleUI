@@ -3,6 +3,7 @@ import zlist from '@/components/z-list.vue'
 import zlistpagination from '@/components/child-components/z-pagination.vue'
 import zlistitem from '@/components/z-spot.vue'
 import zircle from '@/index'
+
 const localVue = createLocalVue()
 localVue.use(zircle)
 const wrapper = shallowMount(zlist, {

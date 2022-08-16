@@ -10,7 +10,7 @@
         label='doc & resources'>
         <i class="fas fa-question-circle"></i>
       </z-spot>
-       <z-spot
+      <z-spot
         size="m"
         :angle='0'
         :distance='0'
@@ -21,6 +21,7 @@
     </template>
   </z-view>
 </template>
+
 <script>
 export default {
   methods: {

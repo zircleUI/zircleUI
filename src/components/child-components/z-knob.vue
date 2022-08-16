@@ -4,7 +4,7 @@
       viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="z-range-bar"
       ref="bar"
       @click.stop="bar">
-        <circle r="52" cx="50" cy="50" :style="[styles]"></circle>
+      <circle r="52" cx="50" cy="50" :style="[styles]"></circle>
     </svg>
     <svg
       xmlns="http://www.w3.org/2000/svg" class="z-range-bar-bar"
@@ -15,7 +15,7 @@
       @mousedown="drag = true"
       @mousemove.stop="handleBar"
       @mouseup="drag = false">
-        <circle r="8" cx="20" cy="20" class="z-range-bar-handlebar"></circle>
+      <circle r="8" cx="20" cy="20" class="z-range-bar-handlebar"></circle>
     </svg>
   </section>
 </template>
@@ -70,8 +70,6 @@ export default {
         transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px)'
       }
     }
-  },
-  watch: {
   },
   methods: {
     bar (e) {

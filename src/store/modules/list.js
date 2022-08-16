@@ -1,4 +1,5 @@
 import store from '../store'
+
 const list = {
   setPages (value) {
     store.state.pages = value
