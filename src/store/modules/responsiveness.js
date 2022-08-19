@@ -2,7 +2,8 @@ import store from '../store'
 import {
   updateDiametersInPercent,
   updateDiametersInFullMode,
-  updateDiametersInMixedMode
+  updateDiametersInMixedMode,
+  updateDiametersDependsOnPixelRatio
 } from '@/store/utils/responsiveness'
 
 const responsiveness = {
@@ -23,6 +24,8 @@ const responsiveness = {
     } else if (store.actions.getAppMode() === 'mixed') {
       updateDiametersInMixedMode()
     }
+
+    updateDiametersDependsOnPixelRatio()
   }
 }
 

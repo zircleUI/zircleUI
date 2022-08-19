@@ -43,13 +43,30 @@ const mediaQuery = [
   }
 ]
 
+const pixelsGapByPixelRatio = {
+  0.75: 8,
+  0.8: 5,
+  0.9: 20,
+  0.9375: 32,
+  1: 2,
+  1.1: 20,
+  1.125: 16,
+  1.25: 8,
+  1.375: 16,
+  1.5: 4,
+  1.5625: 32,
+  1.75: 8,
+  1.875: 16,
+  2: 2
+}
+
 export function updateDiametersInPercent () {
-  const container = document.getElementById('z-container').getBoundingClientRect().width
+  const containerWidth = Math.round(document.getElementById('z-container').getBoundingClientRect().width)
   const sizes = store.state.percentSizes
   const minSizes = store.state.minSizesInPixels
   const diameters = {}
   for (const size in sizes) {
-    diameters[size] = parseInt((container * (sizes[size] / 100)))
+    diameters[size] = Math.round(containerWidth * (sizes[size] / 100))
     if (diameters[size] < minSizes[size]) {
       diameters[size] = minSizes[size]
     }
@@ -87,4 +104,21 @@ export function updateDiametersInMixedMode () {
 
   store.state.diameters = mediaQuery[mediaQueryIndex].width
   store.actions.setLog('updateDiameters() at appMode mixed. z-view new xxl diameter: ' + store.state.diameters.xxl)
+}
+
+export function updateDiametersDependsOnPixelRatio () {
+  if (pixelsGapByPixelRatio[window.devicePixelRatio] === undefined) {
+    store.actions.setLog('updateDiametersDependsOnPixelRatio() not found ' + window.devicePixelRatio)
+    return
+  }
+  const sizes = Object.assign({}, store.state.diameters)
+  for (const size in sizes) {
+    sizes[size] -= sizes[size] % (pixelsGapByPixelRatio[window.devicePixelRatio] ?? 1)
+    if (sizes[size] <= 0) {
+      sizes[size] = pixelsGapByPixelRatio[window.devicePixelRatio]
+    }
+  }
+  store.state.diameters = sizes
+
+  store.actions.setLog('updateDiametersDependsOnPixelRatio() z-view new xxl diameter: ' + store.state.diameters.xxl)
 }
