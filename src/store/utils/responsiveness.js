@@ -49,12 +49,11 @@ export function updateDiametersInPercent () {
   const minSizes = store.state.minSizesInPixels
   const diameters = {}
   for (const size in sizes) {
-    diameters[size] = (sizes[size] * 100) / container
+    diameters[size] = parseInt((container * (sizes[size] / 100)))
     if (diameters[size] < minSizes[size]) {
       diameters[size] = minSizes[size]
     }
   }
-
   store.state.diameters = diameters
   store.actions.setLog('updateDiameters() using percent. z-view new xxl diameter: ' + store.state.diameters.xxl)
 }
