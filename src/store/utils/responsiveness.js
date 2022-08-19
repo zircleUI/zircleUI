@@ -62,7 +62,7 @@ export function updateDiametersInPercent () {
 export function updateDiametersInFullMode () {
   for (const element of mediaQuery) {
     if (element.media.matches) {
-      store.state.diameters = { xxl: 450, xl: 278, l: 172, m: 106, s: 66, xs: 41, xxs: 20 }
+      store.state.diameters = element.width
     }
   }
   store.actions.setLog('updateDiameters() at appMode full. z-view new xxl diameter: ' + store.state.diameters.xxl)
@@ -86,6 +86,6 @@ export function updateDiametersInMixedMode () {
     mediaQueryIndex = 1
   }
 
-  store.state.diameters = { xxl: 450, xl: 278, l: 172, m: 106, s: 66, xs: 41, xxs: 20 }
+  store.state.diameters = mediaQuery[mediaQueryIndex].width
   store.actions.setLog('updateDiameters() at appMode mixed. z-view new xxl diameter: ' + store.state.diameters.xxl)
 }
