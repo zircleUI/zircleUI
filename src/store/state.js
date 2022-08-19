@@ -18,9 +18,9 @@ const state = new Vue({
     percentSizes: {
       xxl: 30,
       xl: 20,
-      l: 15,
+      l: 16,
       m: 8,
-      s: 5,
+      s: 6,
       xs: 4,
       xxs: 2
     },

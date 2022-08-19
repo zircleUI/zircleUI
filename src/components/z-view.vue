@@ -130,13 +130,13 @@ export default {
         main: {
           width: width + 'px',
           height: width + 'px',
-          margin: -(width / 2) + 'px 0 0 ' + -(width / 2) + 'px',
+          margin: -width / 2 + 'px 0 0 ' + -width / 2 + 'px',
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
-          width: width + 75 + 'px',
-          height: width + 75 + 'px',
-          margin: -((width + 75) / 2) + 'px 0 0 ' + -((width + 75) / 2) + 'px'
+          width: width + 74 + 'px',
+          height: width + 74 + 'px',
+          margin: -((width + 74) / 2) + 'px 0 0 ' + -((width + 74) / 2) + 'px'
         }
       }
     },
