@@ -61,7 +61,12 @@ const pixelsGapByPixelRatio = {
 }
 
 export function updateDiametersInPercent () {
-  const containerWidth = Math.round(document.getElementById('z-container').getBoundingClientRect().width)
+  const container = document.getElementById('z-container')
+  if (!container) {
+    store.state.diameters = mediaQuery[0].width
+    return
+  }
+  const containerWidth = Math.round(container.getBoundingClientRect().width)
   const sizes = store.state.percentSizes
   const minSizes = store.state.minSizesInPixels
   const diameters = {}
