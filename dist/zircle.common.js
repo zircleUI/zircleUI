@@ -216,6 +216,60 @@ module.exports = !STRICT_METHOD ? function forEach(callbackfn /* , thisArg */) {
 
 /***/ }),
 
+/***/ 8457:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var bind = __webpack_require__(9974);
+var call = __webpack_require__(6916);
+var toObject = __webpack_require__(7908);
+var callWithSafeIterationClosing = __webpack_require__(3411);
+var isArrayIteratorMethod = __webpack_require__(7659);
+var isConstructor = __webpack_require__(4411);
+var lengthOfArrayLike = __webpack_require__(6244);
+var createProperty = __webpack_require__(6135);
+var getIterator = __webpack_require__(8554);
+var getIteratorMethod = __webpack_require__(1246);
+
+var $Array = Array;
+
+// `Array.from` method implementation
+// https://tc39.es/ecma262/#sec-array.from
+module.exports = function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
+  var O = toObject(arrayLike);
+  var IS_CONSTRUCTOR = isConstructor(this);
+  var argumentsLength = arguments.length;
+  var mapfn = argumentsLength > 1 ? arguments[1] : undefined;
+  var mapping = mapfn !== undefined;
+  if (mapping) mapfn = bind(mapfn, argumentsLength > 2 ? arguments[2] : undefined);
+  var iteratorMethod = getIteratorMethod(O);
+  var index = 0;
+  var length, result, step, iterator, next, value;
+  // if the target is not iterable or it's an array with the default iterator - use a simple case
+  if (iteratorMethod && !(this === $Array && isArrayIteratorMethod(iteratorMethod))) {
+    iterator = getIterator(O, iteratorMethod);
+    next = iterator.next;
+    result = IS_CONSTRUCTOR ? new this() : [];
+    for (;!(step = call(next, iterator)).done; index++) {
+      value = mapping ? callWithSafeIterationClosing(iterator, mapfn, [step.value, index], true) : step.value;
+      createProperty(result, index, value);
+    }
+  } else {
+    length = lengthOfArrayLike(O);
+    result = IS_CONSTRUCTOR ? new this(length) : $Array(length);
+    for (;length > index; index++) {
+      value = mapping ? mapfn(O[index], index) : O[index];
+      createProperty(result, index, value);
+    }
+  }
+  result.length = index;
+  return result;
+};
+
+
+/***/ }),
+
 /***/ 1318:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
@@ -455,6 +509,69 @@ module.exports = function (originalArray, length) {
 
 /***/ }),
 
+/***/ 3411:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var anObject = __webpack_require__(9670);
+var iteratorClose = __webpack_require__(9212);
+
+// call something on iterator step with safe closing on error
+module.exports = function (iterator, fn, value, ENTRIES) {
+  try {
+    return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
+  } catch (error) {
+    iteratorClose(iterator, 'throw', error);
+  }
+};
+
+
+/***/ }),
+
+/***/ 7072:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var wellKnownSymbol = __webpack_require__(5112);
+
+var ITERATOR = wellKnownSymbol('iterator');
+var SAFE_CLOSING = false;
+
+try {
+  var called = 0;
+  var iteratorWithReturn = {
+    next: function () {
+      return { done: !!called++ };
+    },
+    'return': function () {
+      SAFE_CLOSING = true;
+    }
+  };
+  iteratorWithReturn[ITERATOR] = function () {
+    return this;
+  };
+  // eslint-disable-next-line es-x/no-array-from, no-throw-literal -- required for testing
+  Array.from(iteratorWithReturn, function () { throw 2; });
+} catch (error) { /* empty */ }
+
+module.exports = function (exec, SKIP_CLOSING) {
+  if (!SKIP_CLOSING && !SAFE_CLOSING) return false;
+  var ITERATION_SUPPORT = false;
+  try {
+    var object = {};
+    object[ITERATOR] = function () {
+      return {
+        next: function () {
+          return { done: ITERATION_SUPPORT = true };
+        }
+      };
+    };
+    exec(object);
+  } catch (error) { /* empty */ }
+  return ITERATION_SUPPORT;
+};
+
+
+/***/ }),
+
 /***/ 4326:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
@@ -501,6 +618,27 @@ module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
     : CORRECT_ARGUMENTS ? classofRaw(O)
     // ES3 arguments fallback
     : (result = classofRaw(O)) == 'Object' && isCallable(O.callee) ? 'Arguments' : result;
+};
+
+
+/***/ }),
+
+/***/ 7741:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var uncurryThis = __webpack_require__(1702);
+
+var $Error = Error;
+var replace = uncurryThis(''.replace);
+
+var TEST = (function (arg) { return String($Error(arg).stack); })('zxcasd');
+var V8_OR_CHAKRA_STACK_ENTRY = /\n\s*at [^:]*:[^\n]*/;
+var IS_V8_OR_CHAKRA_STACK = V8_OR_CHAKRA_STACK_ENTRY.test(TEST);
+
+module.exports = function (stack, dropEntries) {
+  if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error.prepareStackTrace) {
+    while (dropEntries--) stack = replace(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
+  } return stack;
 };
 
 
@@ -974,6 +1112,23 @@ module.exports = [
 
 /***/ }),
 
+/***/ 2914:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var fails = __webpack_require__(7293);
+var createPropertyDescriptor = __webpack_require__(9114);
+
+module.exports = !fails(function () {
+  var error = Error('a');
+  if (!('stack' in error)) return true;
+  // eslint-disable-next-line es-x/no-object-defineproperty -- safe
+  Object.defineProperty(error, 'stack', createPropertyDescriptor(1, 7));
+  return error.stack !== 7;
+});
+
+
+/***/ }),
+
 /***/ 2109:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
@@ -1259,6 +1414,45 @@ module.exports = function (namespace, method) {
 
 /***/ }),
 
+/***/ 1246:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var classof = __webpack_require__(648);
+var getMethod = __webpack_require__(8173);
+var Iterators = __webpack_require__(7497);
+var wellKnownSymbol = __webpack_require__(5112);
+
+var ITERATOR = wellKnownSymbol('iterator');
+
+module.exports = function (it) {
+  if (it != undefined) return getMethod(it, ITERATOR)
+    || getMethod(it, '@@iterator')
+    || Iterators[classof(it)];
+};
+
+
+/***/ }),
+
+/***/ 8554:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var call = __webpack_require__(6916);
+var aCallable = __webpack_require__(9662);
+var anObject = __webpack_require__(9670);
+var tryToString = __webpack_require__(6330);
+var getIteratorMethod = __webpack_require__(1246);
+
+var $TypeError = TypeError;
+
+module.exports = function (argument, usingIterator) {
+  var iteratorMethod = arguments.length < 2 ? getIteratorMethod(argument) : usingIterator;
+  if (aCallable(iteratorMethod)) return anObject(call(iteratorMethod, argument));
+  throw $TypeError(tryToString(argument) + ' is not iterable');
+};
+
+
+/***/ }),
+
 /***/ 8173:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
@@ -1468,6 +1662,23 @@ module.exports = store.inspectSource;
 
 /***/ }),
 
+/***/ 8340:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var isObject = __webpack_require__(111);
+var createNonEnumerableProperty = __webpack_require__(8880);
+
+// `InstallErrorCause` abstract operation
+// https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
+module.exports = function (O, options) {
+  if (isObject(options) && 'cause' in options) {
+    createNonEnumerableProperty(O, 'cause', options.cause);
+  }
+};
+
+
+/***/ }),
+
 /***/ 9909:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
@@ -1539,6 +1750,23 @@ module.exports = {
   has: has,
   enforce: enforce,
   getterFor: getterFor
+};
+
+
+/***/ }),
+
+/***/ 7659:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var wellKnownSymbol = __webpack_require__(5112);
+var Iterators = __webpack_require__(7497);
+
+var ITERATOR = wellKnownSymbol('iterator');
+var ArrayPrototype = Array.prototype;
+
+// check on default Array iterator
+module.exports = function (it) {
+  return it !== undefined && (Iterators.Array === it || ArrayPrototype[ITERATOR] === it);
 };
 
 
@@ -1713,6 +1941,36 @@ module.exports = USE_SYMBOL_AS_UID ? function (it) {
 } : function (it) {
   var $Symbol = getBuiltIn('Symbol');
   return isCallable($Symbol) && isPrototypeOf($Symbol.prototype, $Object(it));
+};
+
+
+/***/ }),
+
+/***/ 9212:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var call = __webpack_require__(6916);
+var anObject = __webpack_require__(9670);
+var getMethod = __webpack_require__(8173);
+
+module.exports = function (iterator, kind, value) {
+  var innerResult, innerError;
+  anObject(iterator);
+  try {
+    innerResult = getMethod(iterator, 'return');
+    if (!innerResult) {
+      if (kind === 'throw') throw value;
+      return value;
+    }
+    innerResult = call(innerResult, iterator);
+  } catch (error) {
+    innerError = true;
+    innerResult = error;
+  }
+  if (kind === 'throw') throw value;
+  if (innerError) throw innerResult;
+  anObject(innerResult);
+  return value;
 };
 
 
@@ -1910,6 +2168,18 @@ var inspectSource = __webpack_require__(2788);
 var WeakMap = global.WeakMap;
 
 module.exports = isCallable(WeakMap) && /native code/.test(inspectSource(WeakMap));
+
+
+/***/ }),
+
+/***/ 6277:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var toString = __webpack_require__(1340);
+
+module.exports = function (argument, $default) {
+  return argument === undefined ? arguments.length < 2 ? '' : $default : toString(argument);
+};
 
 
 /***/ }),
@@ -2435,6 +2705,22 @@ module.exports = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
 var global = __webpack_require__(7854);
 
 module.exports = global;
+
+
+/***/ }),
+
+/***/ 2626:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var defineProperty = (__webpack_require__(3070).f);
+
+module.exports = function (Target, Source, key) {
+  key in Target || defineProperty(Target, key, {
+    configurable: true,
+    get: function () { return Source[key]; },
+    set: function (it) { Source[key] = it; }
+  });
+};
 
 
 /***/ }),
@@ -3185,6 +3471,80 @@ module.exports = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u
 
 /***/ }),
 
+/***/ 9191:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var getBuiltIn = __webpack_require__(5005);
+var hasOwn = __webpack_require__(2597);
+var createNonEnumerableProperty = __webpack_require__(8880);
+var isPrototypeOf = __webpack_require__(7976);
+var setPrototypeOf = __webpack_require__(7674);
+var copyConstructorProperties = __webpack_require__(9920);
+var proxyAccessor = __webpack_require__(2626);
+var inheritIfRequired = __webpack_require__(9587);
+var normalizeStringArgument = __webpack_require__(6277);
+var installErrorCause = __webpack_require__(8340);
+var clearErrorStack = __webpack_require__(7741);
+var ERROR_STACK_INSTALLABLE = __webpack_require__(2914);
+var DESCRIPTORS = __webpack_require__(9781);
+var IS_PURE = __webpack_require__(1913);
+
+module.exports = function (FULL_NAME, wrapper, FORCED, IS_AGGREGATE_ERROR) {
+  var STACK_TRACE_LIMIT = 'stackTraceLimit';
+  var OPTIONS_POSITION = IS_AGGREGATE_ERROR ? 2 : 1;
+  var path = FULL_NAME.split('.');
+  var ERROR_NAME = path[path.length - 1];
+  var OriginalError = getBuiltIn.apply(null, path);
+
+  if (!OriginalError) return;
+
+  var OriginalErrorPrototype = OriginalError.prototype;
+
+  // V8 9.3- bug https://bugs.chromium.org/p/v8/issues/detail?id=12006
+  if (!IS_PURE && hasOwn(OriginalErrorPrototype, 'cause')) delete OriginalErrorPrototype.cause;
+
+  if (!FORCED) return OriginalError;
+
+  var BaseError = getBuiltIn('Error');
+
+  var WrappedError = wrapper(function (a, b) {
+    var message = normalizeStringArgument(IS_AGGREGATE_ERROR ? b : a, undefined);
+    var result = IS_AGGREGATE_ERROR ? new OriginalError(a) : new OriginalError();
+    if (message !== undefined) createNonEnumerableProperty(result, 'message', message);
+    if (ERROR_STACK_INSTALLABLE) createNonEnumerableProperty(result, 'stack', clearErrorStack(result.stack, 2));
+    if (this && isPrototypeOf(OriginalErrorPrototype, this)) inheritIfRequired(result, this, WrappedError);
+    if (arguments.length > OPTIONS_POSITION) installErrorCause(result, arguments[OPTIONS_POSITION]);
+    return result;
+  });
+
+  WrappedError.prototype = OriginalErrorPrototype;
+
+  if (ERROR_NAME !== 'Error') {
+    if (setPrototypeOf) setPrototypeOf(WrappedError, BaseError);
+    else copyConstructorProperties(WrappedError, BaseError, { name: true });
+  } else if (DESCRIPTORS && STACK_TRACE_LIMIT in OriginalError) {
+    proxyAccessor(WrappedError, OriginalError, STACK_TRACE_LIMIT);
+    proxyAccessor(WrappedError, OriginalError, 'prepareStackTrace');
+  }
+
+  copyConstructorProperties(WrappedError, OriginalError);
+
+  if (!IS_PURE) try {
+    // Safari 13- bug: WebAssembly errors does not have a proper `.name`
+    if (OriginalErrorPrototype.name !== ERROR_NAME) {
+      createNonEnumerableProperty(OriginalErrorPrototype, 'name', ERROR_NAME);
+    }
+    OriginalErrorPrototype.constructor = WrappedError;
+  } catch (error) { /* empty */ }
+
+  return WrappedError;
+};
+
+
+/***/ }),
+
 /***/ 9826:
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
@@ -3210,6 +3570,56 @@ $({ target: 'Array', proto: true, forced: SKIPS_HOLES }, {
 
 // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 addToUnscopables(FIND);
+
+
+/***/ }),
+
+/***/ 1038:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(2109);
+var from = __webpack_require__(8457);
+var checkCorrectnessOfIteration = __webpack_require__(7072);
+
+var INCORRECT_ITERATION = !checkCorrectnessOfIteration(function (iterable) {
+  // eslint-disable-next-line es-x/no-array-from -- required for testing
+  Array.from(iterable);
+});
+
+// `Array.from` method
+// https://tc39.es/ecma262/#sec-array.from
+$({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
+  from: from
+});
+
+
+/***/ }),
+
+/***/ 6699:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(2109);
+var $includes = (__webpack_require__(1318).includes);
+var fails = __webpack_require__(7293);
+var addToUnscopables = __webpack_require__(1223);
+
+// FF99+ bug
+var BROKEN_ON_SPARSE = fails(function () {
+  return !Array(1).includes();
+});
+
+// `Array.prototype.includes` method
+// https://tc39.es/ecma262/#sec-array.prototype.includes
+$({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+  includes: function includes(el /* , fromIndex = 0 */) {
+    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+addToUnscopables('includes');
 
 
 /***/ }),
@@ -3409,6 +3819,69 @@ $({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
     O.length = len - actualDeleteCount + insertCount;
     return A;
   }
+});
+
+
+/***/ }),
+
+/***/ 1703:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+/* eslint-disable no-unused-vars -- required for functions `.length` */
+var $ = __webpack_require__(2109);
+var global = __webpack_require__(7854);
+var apply = __webpack_require__(2104);
+var wrapErrorConstructorWithCause = __webpack_require__(9191);
+
+var WEB_ASSEMBLY = 'WebAssembly';
+var WebAssembly = global[WEB_ASSEMBLY];
+
+var FORCED = Error('e', { cause: 7 }).cause !== 7;
+
+var exportGlobalErrorCauseWrapper = function (ERROR_NAME, wrapper) {
+  var O = {};
+  O[ERROR_NAME] = wrapErrorConstructorWithCause(ERROR_NAME, wrapper, FORCED);
+  $({ global: true, constructor: true, arity: 1, forced: FORCED }, O);
+};
+
+var exportWebAssemblyErrorCauseWrapper = function (ERROR_NAME, wrapper) {
+  if (WebAssembly && WebAssembly[ERROR_NAME]) {
+    var O = {};
+    O[ERROR_NAME] = wrapErrorConstructorWithCause(WEB_ASSEMBLY + '.' + ERROR_NAME, wrapper, FORCED);
+    $({ target: WEB_ASSEMBLY, stat: true, constructor: true, arity: 1, forced: FORCED }, O);
+  }
+};
+
+// https://github.com/tc39/proposal-error-cause
+exportGlobalErrorCauseWrapper('Error', function (init) {
+  return function Error(message) { return apply(init, this, arguments); };
+});
+exportGlobalErrorCauseWrapper('EvalError', function (init) {
+  return function EvalError(message) { return apply(init, this, arguments); };
+});
+exportGlobalErrorCauseWrapper('RangeError', function (init) {
+  return function RangeError(message) { return apply(init, this, arguments); };
+});
+exportGlobalErrorCauseWrapper('ReferenceError', function (init) {
+  return function ReferenceError(message) { return apply(init, this, arguments); };
+});
+exportGlobalErrorCauseWrapper('SyntaxError', function (init) {
+  return function SyntaxError(message) { return apply(init, this, arguments); };
+});
+exportGlobalErrorCauseWrapper('TypeError', function (init) {
+  return function TypeError(message) { return apply(init, this, arguments); };
+});
+exportGlobalErrorCauseWrapper('URIError', function (init) {
+  return function URIError(message) { return apply(init, this, arguments); };
+});
+exportWebAssemblyErrorCauseWrapper('CompileError', function (init) {
+  return function CompileError(message) { return apply(init, this, arguments); };
+});
+exportWebAssemblyErrorCauseWrapper('LinkError', function (init) {
+  return function LinkError(message) { return apply(init, this, arguments); };
+});
+exportWebAssemblyErrorCauseWrapper('RuntimeError', function (init) {
+  return function RuntimeError(message) { return apply(init, this, arguments); };
 });
 
 
@@ -3711,6 +4184,49 @@ var exec = __webpack_require__(2261);
 // https://tc39.es/ecma262/#sec-regexp.prototype.exec
 $({ target: 'RegExp', proto: true, forced: /./.exec !== exec }, {
   exec: exec
+});
+
+
+/***/ }),
+
+/***/ 7601:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+// TODO: Remove from `core-js@4` since it's moved to entry points
+__webpack_require__(4916);
+var $ = __webpack_require__(2109);
+var call = __webpack_require__(6916);
+var uncurryThis = __webpack_require__(1702);
+var isCallable = __webpack_require__(614);
+var isObject = __webpack_require__(111);
+
+var DELEGATES_TO_EXEC = function () {
+  var execCalled = false;
+  var re = /[ac]/;
+  re.exec = function () {
+    execCalled = true;
+    return /./.exec.apply(this, arguments);
+  };
+  return re.test('abc') === true && execCalled;
+}();
+
+var $TypeError = TypeError;
+var un$Test = uncurryThis(/./.test);
+
+// `RegExp.prototype.test` method
+// https://tc39.es/ecma262/#sec-regexp.prototype.test
+$({ target: 'RegExp', proto: true, forced: !DELEGATES_TO_EXEC }, {
+  test: function (str) {
+    var exec = this.exec;
+    if (!isCallable(exec)) return un$Test(this, str);
+    var result = call(exec, this, str);
+    if (result !== null && !isObject(result)) {
+      throw new $TypeError('RegExp exec method returned something other than an Object or null');
+    }
+    return !!result;
+  }
 });
 
 
@@ -4682,22 +5198,23 @@ var state = new (external_commonjs_vue_commonjs2_vue_root_Vue_default())({
     goBackView: '',
     // look & feel
     diameters: {},
-    sizes: {
-      xxl: 55,
-      xl: 32,
-      l: 20,
-      m: 12,
-      s: 8,
-      xs: 5,
+    usePercentSizes: false,
+    percentSizes: {
+      xxl: 30,
+      xl: 20,
+      l: 16,
+      m: 8,
+      s: 6,
+      xs: 4,
       xxs: 2
     },
     minSizesInPixels: {
-      xxl: 200,
-      xl: 180,
-      l: 150,
-      m: 100,
-      s: 80,
-      xs: 50,
+      xxl: 180,
+      xl: 150,
+      l: 100,
+      m: 80,
+      s: 50,
+      xs: 30,
       xxs: 20
     },
     appStyle: {
@@ -4829,8 +5346,8 @@ var router = {
   }
 };
 /* harmony default export */ var modules_router = (router);
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
-var es_number_constructor = __webpack_require__(9653);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.includes.js
+var es_array_includes = __webpack_require__(6699);
 ;// CONCATENATED MODULE: ./src/store/modules/position.js
 
 
@@ -4844,8 +5361,8 @@ function calcCoords(distance, angle, parentSize) {
   if (distance !== 0) {
     X = store_store.actions.getComponentWidth(parentSize) / 2 * distance / 100 * Math.cos(angle * (Math.PI / 180));
     Y = store_store.actions.getComponentWidth(parentSize) / 2 * distance / 100 * Math.sin(angle * (Math.PI / 180));
-    Xi = X > 0 ? -Math.abs(Number(X)) : Math.abs(Number(X));
-    Yi = Y > 0 ? -Math.abs(Number(Y)) : Math.abs(Number(Y));
+    Xi = -X;
+    Yi = -Y;
   }
 
   return {
@@ -4873,7 +5390,7 @@ function determinePosition(pos) {
 
 var position = {
   getCurrentPosition: function getCurrentPosition() {
-    return store_store.state.history[store_store.state.history.length - 1].position;
+    return determinePosition(1);
   },
   getPreviousPosition: function getPreviousPosition() {
     return determinePosition(2);
@@ -4886,9 +5403,14 @@ var position = {
     return store_store.actions.getCurrentViewName() === viewName ? store_store.actions.getCurrentPosition() : store_store.actions.getPastPosition();
   },
   calcPosition: function calcPosition(component) {
-    // store.actions.setLog('calcPosition() => ' + component.componentType)
-    // Variable declaration
-    var parentPosition = {
+    var parentPosition = ['z-view', 'z-list', 'z-spot'].includes(component.$parent.componentType) ? {
+      Xi: component.$parent.position.Xi,
+      Yi: component.$parent.position.Yi,
+      X: component.$parent.position.X,
+      Y: component.$parent.position.Y,
+      scalei: component.$parent.position.scalei,
+      scale: component.$parent.position.scale
+    } : {
       Xi: 0,
       Yi: 0,
       X: 0,
@@ -4897,14 +5419,6 @@ var position = {
       scale: 1
     };
     var newCoords = calcCoords(component.distance, component.angle, component.$parent.size);
-    if (component.$parent.componentType === 'z-view' || component.$parent.componentType === 'z-list' || component.$parent.componentType === 'z-spot') parentPosition = {
-      Xi: component.$parent.position.Xi,
-      Yi: component.$parent.position.Yi,
-      X: component.$parent.position.X,
-      Y: component.$parent.position.Y,
-      scalei: component.$parent.position.scalei,
-      scale: component.$parent.position.scale
-    };
     return {
       X: newCoords.X,
       Y: newCoords.Y,
@@ -5096,29 +5610,33 @@ var navigation = {
   toView: function toView(options) {
     if (typeof options === 'string') {
       store_store.actions.setView(options);
-    } else {
-      if (!options.to) store_store.actions.setLog('Programmatic navigation: "to" is required ', 'error');
-      if (!options.fromSpot) store_store.actions.setLog('Programmatic navigation: "fromSpot" is required ', 'error');
-      if (options.fromSpot && _typeof(options.fromSpot) !== 'object') store_store.actions.setLog('Programmatic navigation: "fromSpot" should be an object ', 'error');
-      if (options.params && _typeof(options.params) !== 'object') store_store.actions.setLog('Programmatic navigation: "params" should be an object ', 'error');
+      return;
+    }
 
-      if (options.to && options.fromSpot) {
-        if (!options.params) options.params = {};
-        var positionParams = options.fromSpot.position ? {
-          position: {
-            X: options.fromSpot.position.Xabs,
-            Y: options.fromSpot.position.Yabs,
-            scale: options.fromSpot.position.scale,
-            Xi: options.fromSpot.position.Xi,
-            Yi: options.fromSpot.position.Yi,
-            scalei: options.fromSpot.position.scalei
-          }
-        } : {};
-        store_store.actions.setView({
-          name: options.to,
-          params: options.params
-        }, positionParams);
+    if (!options.to) store_store.actions.setLog('Programmatic navigation: "to" is required ', 'error');
+    if (!options.fromSpot) store_store.actions.setLog('Programmatic navigation: "fromSpot" is required ', 'error');
+    if (options.fromSpot && _typeof(options.fromSpot) !== 'object') store_store.actions.setLog('Programmatic navigation: "fromSpot" should be an object ', 'error');
+    if (options.params && _typeof(options.params) !== 'object') store_store.actions.setLog('Programmatic navigation: "params" should be an object ', 'error');
+
+    if (options.to && options.fromSpot) {
+      if (!options.params) {
+        options.params = {};
       }
+
+      var positionParams = options.fromSpot.position ? {
+        position: {
+          X: options.fromSpot.position.Xabs,
+          Y: options.fromSpot.position.Yabs,
+          scale: options.fromSpot.position.scale,
+          Xi: options.fromSpot.position.Xi,
+          Yi: options.fromSpot.position.Yi,
+          scalei: options.fromSpot.position.scalei
+        }
+      } : {};
+      store_store.actions.setView({
+        name: options.to,
+        params: options.params
+      }, positionParams);
     }
   },
   setView: function setView(data, options) {
@@ -5128,7 +5646,7 @@ var navigation = {
     }
 
     var view = parseView(data);
-    var position = !options || options.position && options.position.scale === 0 ? {
+    var position = !options || !options.position || options.position.scale === 0 ? {
       X: 0,
       Y: 0,
       scale: 1,
@@ -5164,14 +5682,108 @@ var navigation = {
   }
 };
 /* harmony default export */ var modules_navigation = (navigation);
-;// CONCATENATED MODULE: ./src/store/modules/responsiveness.js
-/* eslint-disable */
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.error.cause.js
+var es_error_cause = __webpack_require__(1703);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.from.js
+var es_array_from = __webpack_require__(1038);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.test.js
+var es_regexp_test = __webpack_require__(7601);
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
 
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
 
-function setDiameter(size) {
-  var diameter = store_store.state.diameters[size];
-  return diameter;
+  return arr2;
 }
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+
+
+
+
+
+
+
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
+
+
+
+
+
+
+
+
+
+function _createForOfIteratorHelper(o, allowArrayLike) {
+  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+
+  if (!it) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+
+      var F = function F() {};
+
+      return {
+        s: F,
+        n: function n() {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function e(_e) {
+          throw _e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function s() {
+      it = it.call(o);
+    },
+    n: function n() {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function e(_e2) {
+      didErr = true;
+      err = _e2;
+    },
+    f: function f() {
+      try {
+        if (!normalCompletion && it["return"] != null) it["return"]();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
+}
+;// CONCATENATED MODULE: ./src/store/utils/responsiveness.js
+
+
 
 var mediaQuery = [{
   // small devices
@@ -5180,10 +5792,10 @@ var mediaQuery = [{
     xxl: 200,
     xl: 124,
     l: 76,
-    m: 47,
-    s: 29,
+    m: 48,
+    s: 30,
     xs: 18,
-    xxs: 9
+    xxs: 10
   }
 }, {
   // medium
@@ -5194,7 +5806,7 @@ var mediaQuery = [{
     l: 88,
     m: 54,
     s: 34,
-    xs: 21,
+    xs: 20,
     xxs: 10
   }
 }, {
@@ -5202,22 +5814,22 @@ var mediaQuery = [{
   media: window.matchMedia('(min-width: 375px) and (orientation: portrait)'),
   width: {
     xxl: 260,
-    xl: 161,
-    l: 99,
-    m: 61,
+    xl: 160,
+    l: 100,
+    m: 62,
     s: 38,
-    xs: 23,
-    xxs: 11
+    xs: 22,
+    xxs: 12
   }
 }, {
   // medium - large devices landscape
   media: window.matchMedia('(min-width: 375px) and (orientation: landscape)'),
   width: {
     xxl: 270,
-    xl: 167,
-    l: 103,
+    xl: 168,
+    l: 104,
     m: 64,
-    s: 39,
+    s: 40,
     xs: 24,
     xxs: 12
   }
@@ -5229,8 +5841,8 @@ var mediaQuery = [{
     xl: 210,
     l: 130,
     m: 80,
-    s: 50,
-    xs: 31,
+    s: 52,
+    xs: 32,
     xxs: 14
   }
 }, {
@@ -5240,10 +5852,10 @@ var mediaQuery = [{
     xxl: 360,
     xl: 222,
     l: 138,
-    m: 85,
-    s: 53,
+    m: 86,
+    s: 54,
     xs: 32,
-    xxs: 15
+    xxs: 14
   }
 }, {
   // desktop or large tablets portrait
@@ -5252,8 +5864,8 @@ var mediaQuery = [{
     xxl: 420,
     xl: 260,
     l: 160,
-    m: 99,
-    s: 61,
+    m: 100,
+    s: 62,
     xs: 38,
     xxs: 16
   }
@@ -5264,8 +5876,8 @@ var mediaQuery = [{
     xxl: 420,
     xl: 260,
     l: 160,
-    m: 99,
-    s: 61,
+    m: 100,
+    s: 62,
     xs: 38,
     xxs: 16
   }
@@ -5278,7 +5890,7 @@ var mediaQuery = [{
     l: 172,
     m: 106,
     s: 66,
-    xs: 41,
+    xs: 42,
     xxs: 20
   }
 }, {
@@ -5290,49 +5902,169 @@ var mediaQuery = [{
     l: 172,
     m: 106,
     s: 66,
-    xs: 41,
+    xs: 42,
     xxs: 20
   }
 }];
+var pixelsGapByPixelRatio = {
+  0.25: 24,
+  0.3125: 32,
+  0.3333: 9,
+  0.375: 16,
+  0.4166: 24,
+  0.5: 4,
+  0.625: 16,
+  0.6666: 3,
+  0.75: 8,
+  0.8: 5,
+  0.8333: 12,
+  0.9: 20,
+  0.9375: 32,
+  1: 2,
+  1.1: 20,
+  1.125: 16,
+  1.2: 5,
+  1.25: 8,
+  1.35: 40,
+  1.375: 16,
+  1.5: 4,
+  1.5625: 32,
+  1.65: 40,
+  1.75: 8,
+  1.875: 16,
+  2: 2,
+  2.1875: 32,
+  2.25: 8,
+  2.5: 4,
+  2.625: 16,
+  3: 2,
+  3.125: 16,
+  3.75: 8,
+  4: 1,
+  4.5: 4,
+  5: 2,
+  6: 1,
+  6.25: 8,
+  7.5: 4
+};
+function updateDiametersInPercent() {
+  var container = document.getElementById('z-container');
+
+  if (!container) {
+    store_store.state.diameters = mediaQuery[0].width;
+    return;
+  }
+
+  var containerWidth = Math.round(container.getBoundingClientRect().width);
+  var sizes = store_store.state.percentSizes;
+  var minSizes = store_store.state.minSizesInPixels;
+  var diameters = {};
+
+  for (var size in sizes) {
+    diameters[size] = Math.round(containerWidth * (sizes[size] / 100));
+
+    if (diameters[size] < minSizes[size]) {
+      diameters[size] = minSizes[size];
+    }
+  }
+
+  store_store.state.diameters = diameters;
+  store_store.actions.setLog('updateDiameters() using percent. z-view new xxl diameter: ' + store_store.state.diameters.xxl);
+}
+function updateDiametersInFullMode() {
+  var _iterator = _createForOfIteratorHelper(mediaQuery),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var element = _step.value;
+
+      if (element.media.matches) {
+        store_store.state.diameters = element.width;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  store_store.actions.setLog('updateDiameters() at appMode full. z-view new xxl diameter: ' + store_store.state.diameters.xxl);
+}
+function updateDiametersInMixedMode() {
+  var container = document.getElementById('z-container');
+
+  if (!container) {
+    store_store.state.diameters = mediaQuery[0].width;
+    return;
+  }
+
+  var vp = container.getBoundingClientRect().width;
+  var mediaQueryIndex = 0;
+
+  if (vp >= 1800) {
+    mediaQueryIndex = 9;
+  } else if (vp >= 1200) {
+    mediaQueryIndex = 8;
+  } else if (vp >= 992) {
+    mediaQueryIndex = 6;
+  } else if (vp >= 768) {
+    mediaQueryIndex = 4;
+  } else if (vp >= 375) {
+    mediaQueryIndex = 2;
+  } else if (vp >= 320) {
+    mediaQueryIndex = 1;
+  }
+
+  store_store.state.diameters = mediaQuery[mediaQueryIndex].width;
+  store_store.actions.setLog('updateDiameters() at appMode mixed. z-view new xxl diameter: ' + store_store.state.diameters.xxl);
+}
+function updateDiametersDependsOnPixelRatio() {
+  var roundedPixelRatio = Math.round(window.devicePixelRatio * 10000) / 10000;
+
+  if (pixelsGapByPixelRatio[roundedPixelRatio] === undefined) {
+    store_store.actions.setLog('updateDiametersDependsOnPixelRatio() not found ' + roundedPixelRatio);
+    return;
+  }
+
+  var sizes = Object.assign({}, store_store.state.diameters);
+
+  for (var size in sizes) {
+    var _pixelsGapByPixelRati;
+
+    sizes[size] -= sizes[size] % ((_pixelsGapByPixelRati = pixelsGapByPixelRatio[roundedPixelRatio]) !== null && _pixelsGapByPixelRati !== void 0 ? _pixelsGapByPixelRati : 1);
+
+    if (sizes[size] <= 0) {
+      sizes[size] = pixelsGapByPixelRatio[roundedPixelRatio];
+    }
+  }
+
+  store_store.state.diameters = sizes;
+  store_store.actions.setLog('updateDiametersDependsOnPixelRatio() ' + roundedPixelRatio + ' / z-view new xxl diameter: ' + store_store.state.diameters.xxl);
+}
+;// CONCATENATED MODULE: ./src/store/modules/responsiveness.js
+
+
 var responsiveness = {
   getComponentWidth: function getComponentWidth(size) {
-    var sizes = size.toLowerCase();
-    if (sizes === 'extralarge') sizes = 'xl';
-    if (sizes === 'large') sizes = 'l';
-    if (sizes === 'medium') sizes = 'm';
-    if (sizes === 'small') sizes = 's';
-    if (sizes === 'extrasmall') sizes = 'xs';
-    var result = setDiameter(sizes);
-    return result;
+    size = size.toLowerCase();
+    if (size === 'extralarge') size = 'xl';
+    if (size === 'large') size = 'l';
+    if (size === 'medium') size = 'm';
+    if (size === 'small') size = 's';
+    if (size === 'extrasmall') size = 'xs';
+    return store_store.state.diameters[size];
   },
-  getDimensions: function getDimensions() {
-    if (store_store.actions.getAppMode() === 'full') {
-      for (var i = 0; i < mediaQuery.length; i++) {
-        if (mediaQuery[i].media.matches) store_store.state.diameters = mediaQuery[i].width;
-      }
-
-      store_store.actions.setLog('getDimensions() at appMode full. z-view new diameter: ' + store_store.state.diameters.xxl);
+  updateDiameters: function updateDiameters() {
+    if (store_store.state.usePercentSizes) {
+      updateDiametersInPercent();
+    } else if (store_store.actions.getAppMode() === 'full') {
+      updateDiametersInFullMode();
     } else if (store_store.actions.getAppMode() === 'mixed') {
-      var vp = document.getElementById('z-container').getBoundingClientRect().width;
-
-      if (vp <= 319) {
-        store_store.state.diameters = mediaQuery[0].width;
-      } else if (vp >= 320 && vp <= 374) {
-        store_store.state.diameters = mediaQuery[1].width;
-      } else if (vp >= 375 && vp <= 767) {
-        store_store.state.diameters = mediaQuery[2].width;
-      } else if (vp >= 768 && vp <= 991) {
-        store_store.state.diameters = mediaQuery[4].width;
-      } else if (vp >= 992 && vp <= 1199) {
-        store_store.state.diameters = mediaQuery[6].width;
-      } else if (vp >= 1200 && vp <= 1799) {
-        store_store.state.diameters = mediaQuery[8].width;
-      } else if (vp >= 1800) {
-        store_store.state.diameters = mediaQuery[9].width;
-      }
-
-      store_store.actions.setLog('getDimensions() at appMode mixed. z-view new diameter: ' + store_store.state.diameters.xxl);
+      updateDiametersInMixedMode();
     }
+
+    updateDiametersDependsOnPixelRatio();
   }
 };
 /* harmony default export */ var modules_responsiveness = (responsiveness);
@@ -5425,6 +6157,9 @@ var app = {
   getAppMode: function getAppMode() {
     return store_store.state.appMode;
   },
+  isUsingPercentSizes: function isUsingPercentSizes() {
+    return store_store.state.usePercentSizes;
+  },
   resetConfig: function resetConfig() {
     store_store.state.appMode = 'full';
     store_store.state.navigationMode = 'forward';
@@ -5436,7 +6171,8 @@ var app = {
     store_store.state.goBackView = '';
     store_store.state.lastView = '';
     store_store.state.diameters = {};
-    store_store.state.sizes = {
+    store_store.state.usePercentSizes = false;
+    store_store.state.percentSizes = {
       xxl: 55,
       xl: 32,
       l: 20,
@@ -5478,15 +6214,31 @@ var app = {
       store_store.actions.setLog('- Mode: ' + _config.mode);
     }
 
-    if (_config.sizes) {
-      if (_config.sizes.xxl) store_store.state.sizes.xxl = _config.sizes.xxl;
-      if (_config.sizes.xl) store_store.state.sizes.xl = _config.sizes.xl;
-      if (_config.sizes.l) store_store.state.sizes.l = _config.sizes.l;
-      if (_config.sizes.m) store_store.state.sizes.m = _config.sizes.m;
-      if (_config.sizes.s) store_store.state.sizes.s = _config.sizes.s;
-      if (_config.sizes.xs) store_store.state.sizes.xs = _config.sizes.xs;
-      if (_config.sizes.xxs) store_store.state.sizes.xxs = _config.sizes.xxs;
-      store_store.actions.setLog('- Component sizes: ' + JSON.stringify(_config.sizes));
+    if (typeof _config.usePercentSizes === 'boolean') {
+      store_store.state.usePercentSizes = _config.usePercentSizes;
+      store_store.actions.setLog("- Percent sizes ".concat(_config.usePercentSizes ? 'ON' : 'OFF'));
+    }
+
+    if (_config.percentSizes) {
+      if (_config.percentSizes.xxl) store_store.state.percentSizes.xxl = _config.percentSizes.xxl;
+      if (_config.percentSizes.xl) store_store.state.percentSizes.xl = _config.percentSizes.xl;
+      if (_config.percentSizes.l) store_store.state.percentSizes.l = _config.percentSizes.l;
+      if (_config.percentSizes.m) store_store.state.percentSizes.m = _config.percentSizes.m;
+      if (_config.percentSizes.s) store_store.state.percentSizes.s = _config.percentSizes.s;
+      if (_config.percentSizes.xs) store_store.state.percentSizes.xs = _config.percentSizes.xs;
+      if (_config.percentSizes.xxs) store_store.state.percentSizes.xxs = _config.percentSizes.xxs;
+      store_store.actions.setLog('- Component percentSizes: ' + JSON.stringify(_config.percentSizes));
+    }
+
+    if (_config.minSizesInPixels) {
+      if (_config.minSizesInPixels.xxl) store_store.state.minSizesInPixels.xxl = _config.minSizesInPixels.xxl;
+      if (_config.minSizesInPixels.xl) store_store.state.minSizesInPixels.xl = _config.minSizesInPixels.xl;
+      if (_config.minSizesInPixels.l) store_store.state.minSizesInPixels.l = _config.minSizesInPixels.l;
+      if (_config.minSizesInPixels.m) store_store.state.minSizesInPixels.m = _config.minSizesInPixels.m;
+      if (_config.minSizesInPixels.s) store_store.state.minSizesInPixels.s = _config.minSizesInPixels.s;
+      if (_config.minSizesInPixels.xs) store_store.state.minSizesInPixels.xs = _config.minSizesInPixels.xs;
+      if (_config.minSizesInPixels.xxs) store_store.state.minSizesInPixels.xxs = _config.minSizesInPixels.xxs;
+      store_store.actions.setLog('- Component minSizesInPixels: ' + JSON.stringify(_config.minSizesInPixels));
     }
 
     if (_config.style && _config.style.theme) {
@@ -5508,8 +6260,7 @@ var app = {
       store_store.state.router = _config.router;
       store_store.state.isRouterEnabled = true;
       store_store.actions.setRouterHooks();
-      store_store.actions.setLog('- VueRouter enabled'); // console.log(store.state.router.currentRoute)
-
+      store_store.actions.setLog('- VueRouter enabled');
       store_store.actions.setView({
         name: store_store.state.router.currentRoute.name,
         params: store_store.state.router.currentRoute.params
@@ -5539,7 +6290,7 @@ var store = {
   actions: store_actions
 };
 /* harmony default export */ var store_store = (store);
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-canvas.vue?vue&type=template&id=01c29b47&
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-canvas.vue?vue&type=template&id=670e1f73&
 var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
@@ -5573,10 +6324,10 @@ var render = function render() {
 
 var staticRenderFns = [];
 
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-view-manager.vue?vue&type=template&id=60a3a18d&
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-view-manager.vue?vue&type=template&id=60b33bdd&
 
 
-var z_view_managervue_type_template_id_60a3a18d_render = function render() {
+var z_view_managervue_type_template_id_60b33bdd_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -5601,14 +6352,12 @@ var z_view_managervue_type_template_id_60a3a18d_render = function render() {
   }) : _vm._e()], 2);
 };
 
-var z_view_managervue_type_template_id_60a3a18d_staticRenderFns = [];
+var z_view_managervue_type_template_id_60b33bdd_staticRenderFns = [];
 
-;// CONCATENATED MODULE: ./src/components/child-components/z-view-manager.vue?vue&type=template&id=60a3a18d&
+;// CONCATENATED MODULE: ./src/components/child-components/z-view-manager.vue?vue&type=template&id=60b33bdd&
 
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-view-manager.vue?vue&type=script&lang=js&
 
-
-/* eslint-disable */
 /* harmony default export */ var z_view_managervue_type_script_lang_js_ = ({
   name: 'z-view-manager',
   computed: {
@@ -5727,8 +6476,8 @@ function normalizeComponent(
 ;
 var component = normalizeComponent(
   child_components_z_view_managervue_type_script_lang_js_,
-  z_view_managervue_type_template_id_60a3a18d_render,
-  z_view_managervue_type_template_id_60a3a18d_staticRenderFns,
+  z_view_managervue_type_template_id_60b33bdd_render,
+  z_view_managervue_type_template_id_60b33bdd_staticRenderFns,
   false,
   null,
   null,
@@ -5738,7 +6487,6 @@ var component = normalizeComponent(
 
 /* harmony default export */ var z_view_manager = (component.exports);
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-canvas.vue?vue&type=script&lang=js&
-/* eslint-disable no-new */
 
 /* harmony default export */ var z_canvasvue_type_script_lang_js_ = ({
   name: 'z-canvas',
@@ -5794,19 +6542,19 @@ var component = normalizeComponent(
 
     // Get window dimension to set the initial width of ui components such as z-panel
     this.$nextTick().then(function () {
-      return _this.$zircle.getDimensions();
+      return _this.$zircle.updateDiameters();
     });
     window.addEventListener('resize', function () {
-      return _this.$zircle.getDimensions();
+      return _this.$zircle.updateDiameters();
     });
   }
 });
 ;// CONCATENATED MODULE: ./src/components/z-canvas.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_z_canvasvue_type_script_lang_js_ = (z_canvasvue_type_script_lang_js_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-27.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-27.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-27.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-27.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-canvas.vue?vue&type=style&index=0&id=01c29b47&prod&lang=sass&
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-27.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-27.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-27.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-27.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-canvas.vue?vue&type=style&index=0&id=670e1f73&prod&lang=sass&
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/components/z-canvas.vue?vue&type=style&index=0&id=01c29b47&prod&lang=sass&
+;// CONCATENATED MODULE: ./src/components/z-canvas.vue?vue&type=style&index=0&id=670e1f73&prod&lang=sass&
 
 ;// CONCATENATED MODULE: ./src/components/z-canvas.vue
 
@@ -5829,8 +6577,8 @@ var z_canvas_component = normalizeComponent(
 )
 
 /* harmony default export */ var z_canvas = (z_canvas_component.exports);
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-view.vue?vue&type=template&id=5a01e63f&
-var z_viewvue_type_template_id_5a01e63f_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-view.vue?vue&type=template&id=d334001c&
+var z_viewvue_type_template_id_d334001c_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -5914,10 +6662,12 @@ var z_viewvue_type_template_id_5a01e63f_render = function render() {
   }, [_vm._t("media")], 2) : _vm._e(), _vm._t("extension")], 2)]);
 };
 
-var z_viewvue_type_template_id_5a01e63f_staticRenderFns = [];
+var z_viewvue_type_template_id_d334001c_staticRenderFns = [];
 
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-slider.vue?vue&type=template&id=c1f48c4c&
-var z_slidervue_type_template_id_c1f48c4c_render = function render() {
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
+var es_number_constructor = __webpack_require__(9653);
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-slider.vue?vue&type=template&id=b74ee264&
+var z_slidervue_type_template_id_b74ee264_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -5937,7 +6687,7 @@ var z_slidervue_type_template_id_c1f48c4c_render = function render() {
   })]);
 };
 
-var z_slidervue_type_template_id_c1f48c4c_staticRenderFns = [];
+var z_slidervue_type_template_id_b74ee264_staticRenderFns = [];
 
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-slider.vue?vue&type=script&lang=js&
 
@@ -5989,8 +6739,8 @@ var z_slidervue_type_template_id_c1f48c4c_staticRenderFns = [];
 ;
 var z_slider_component = normalizeComponent(
   child_components_z_slidervue_type_script_lang_js_,
-  z_slidervue_type_template_id_c1f48c4c_render,
-  z_slidervue_type_template_id_c1f48c4c_staticRenderFns,
+  z_slidervue_type_template_id_b74ee264_render,
+  z_slidervue_type_template_id_b74ee264_staticRenderFns,
   false,
   null,
   null,
@@ -5999,8 +6749,8 @@ var z_slider_component = normalizeComponent(
 )
 
 /* harmony default export */ var z_slider = (z_slider_component.exports);
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-scroll.vue?vue&type=template&id=aa852f22&
-var z_scrollvue_type_template_id_aa852f22_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-scroll.vue?vue&type=template&id=9db4b322&
+var z_scrollvue_type_template_id_9db4b322_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -6071,7 +6821,7 @@ var z_scrollvue_type_template_id_aa852f22_render = function render() {
   })])]);
 };
 
-var z_scrollvue_type_template_id_aa852f22_staticRenderFns = [];
+var z_scrollvue_type_template_id_9db4b322_staticRenderFns = [];
 
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-scroll.vue?vue&type=script&lang=js&
 
@@ -6161,8 +6911,8 @@ var z_scrollvue_type_template_id_aa852f22_staticRenderFns = [];
 ;
 var z_scroll_component = normalizeComponent(
   child_components_z_scrollvue_type_script_lang_js_,
-  z_scrollvue_type_template_id_aa852f22_render,
-  z_scrollvue_type_template_id_aa852f22_staticRenderFns,
+  z_scrollvue_type_template_id_9db4b322_render,
+  z_scrollvue_type_template_id_9db4b322_staticRenderFns,
   false,
   null,
   null,
@@ -6239,13 +6989,11 @@ var z_scroll_component = normalizeComponent(
   },
   computed: {
     shape: function shape() {
-      if (this.circle) {
-        return 'is-circle';
-      } else if (this.square) {
+      if (this.square) {
         return 'is-square';
-      } else {
-        return 'is-circle';
       }
+
+      return 'is-circle';
     },
     sliderEnabled: function sliderEnabled() {
       return this.slider === true && this.shape === 'is-circle';
@@ -6266,13 +7014,7 @@ var z_scroll_component = normalizeComponent(
       return isScrollNeeded;
     },
     responsive: function responsive() {
-      if (this.fullView === this.$zircle.getCurrentViewName()) {
-        // eslint-disable-next-line
-        this.zpos = this.styles;
-        return true;
-      } else {
-        return false;
-      }
+      return this.fullView === this.$zircle.getCurrentViewName();
     },
     styles: function styles() {
       var width = this.$zircle.getComponentWidth(this.size);
@@ -6280,13 +7022,13 @@ var z_scroll_component = normalizeComponent(
         main: {
           width: width + 'px',
           height: width + 'px',
-          margin: -(width / 2) + 'px 0 0 ' + -(width / 2) + 'px',
+          margin: -width / 2 + 'px 0 0 ' + -width / 2 + 'px',
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
-          width: width + 75 + 'px',
-          height: width + 75 + 'px',
-          margin: -((width + 75) / 2) + 'px 0 0 ' + -((width + 75) / 2) + 'px'
+          width: width + 74 + 'px',
+          height: width + 74 + 'px',
+          margin: -((width + 74) / 2) + 'px 0 0 ' + -((width + 74) / 2) + 'px'
         }
       };
     },
@@ -6317,6 +7059,11 @@ var z_scroll_component = normalizeComponent(
     }
   },
   watch: {
+    responsive: function responsive(isResponsive) {
+      if (isResponsive) {
+        this.zpos = this.styles;
+      }
+    },
     scrollVal: function scrollVal() {
       if (this.scrollBar === true) {
         var container = this.$refs.maincontent;
@@ -6344,8 +7091,8 @@ var z_scroll_component = normalizeComponent(
 ;
 var z_view_component = normalizeComponent(
   components_z_viewvue_type_script_lang_js_,
-  z_viewvue_type_template_id_5a01e63f_render,
-  z_viewvue_type_template_id_5a01e63f_staticRenderFns,
+  z_viewvue_type_template_id_d334001c_render,
+  z_viewvue_type_template_id_d334001c_staticRenderFns,
   false,
   null,
   null,
@@ -6397,8 +7144,8 @@ var z_listvue_type_template_id_05e6ebb7_staticRenderFns = [];
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.splice.js
 var es_array_splice = __webpack_require__(561);
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-pagination.vue?vue&type=template&id=577f14ca&
-var z_paginationvue_type_template_id_577f14ca_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-pagination.vue?vue&type=template&id=2d1af9c4&
+var z_paginationvue_type_template_id_2d1af9c4_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -6419,7 +7166,7 @@ var z_paginationvue_type_template_id_577f14ca_render = function render() {
   })]);
 };
 
-var z_paginationvue_type_template_id_577f14ca_staticRenderFns = [];
+var z_paginationvue_type_template_id_2d1af9c4_staticRenderFns = [];
 
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-pagination.vue?vue&type=script&lang=js&
 
@@ -6458,13 +7205,7 @@ var z_paginationvue_type_template_id_577f14ca_staticRenderFns = [];
   },
   computed: {
     responsive: function responsive() {
-      if (this.view === this.$zircle.getCurrentViewName()) {
-        // eslint-disable-next-line
-        this.zpos = this.styles;
-        return true;
-      } else {
-        return false;
-      }
+      return this.view === this.$zircle.getCurrentViewName();
     },
     position: function position() {
       return this.$zircle.calcPosition(this);
@@ -6476,13 +7217,11 @@ var z_paginationvue_type_template_id_577f14ca_staticRenderFns = [];
       };
     },
     shape: function shape() {
-      if (this.circle) {
-        return 'is-circle';
-      } else if (this.square) {
+      if (this.square) {
         return 'is-square';
       }
 
-      return '';
+      return 'is-circle';
     },
     styles: function styles() {
       var zwidth = this.$zircle.getComponentWidth(this.size) / 2;
@@ -6501,6 +7240,13 @@ var z_paginationvue_type_template_id_577f14ca_staticRenderFns = [];
       };
     }
   },
+  watch: {
+    responsive: function responsive(isResponsive) {
+      if (isResponsive) {
+        this.zpos = this.styles;
+      }
+    }
+  },
   mounted: function mounted() {
     this.zpos = this.styles;
   }
@@ -6517,8 +7263,8 @@ var z_paginationvue_type_template_id_577f14ca_staticRenderFns = [];
 ;
 var z_pagination_component = normalizeComponent(
   child_components_z_paginationvue_type_script_lang_js_,
-  z_paginationvue_type_template_id_577f14ca_render,
-  z_paginationvue_type_template_id_577f14ca_staticRenderFns,
+  z_paginationvue_type_template_id_2d1af9c4_render,
+  z_paginationvue_type_template_id_2d1af9c4_staticRenderFns,
   false,
   null,
   null,
@@ -6611,8 +7357,8 @@ var z_list_component = normalizeComponent(
 )
 
 /* harmony default export */ var z_list = (z_list_component.exports);
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-spot.vue?vue&type=template&id=37496fbc&
-var z_spotvue_type_template_id_37496fbc_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-spot.vue?vue&type=template&id=c53ead30&
+var z_spotvue_type_template_id_c53ead30_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -6687,10 +7433,10 @@ var z_spotvue_type_template_id_37496fbc_render = function render() {
   }, [_vm.pos === 'inside' || _vm.pos === undefined ? _c('span', [_vm._v(_vm._s(_vm.progressLabel))]) : _vm._e(), _vm._t("default")], 2)]), _vm._t("extension")], 2);
 };
 
-var z_spotvue_type_template_id_37496fbc_staticRenderFns = [];
+var z_spotvue_type_template_id_c53ead30_staticRenderFns = [];
 
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-knob.vue?vue&type=template&id=b6406ad4&
-var z_knobvue_type_template_id_b6406ad4_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-knob.vue?vue&type=template&id=0659ea6d&
+var z_knobvue_type_template_id_0659ea6d_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -6752,7 +7498,7 @@ var z_knobvue_type_template_id_b6406ad4_render = function render() {
   })])]);
 };
 
-var z_knobvue_type_template_id_b6406ad4_staticRenderFns = [];
+var z_knobvue_type_template_id_0659ea6d_staticRenderFns = [];
 
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/child-components/z-knob.vue?vue&type=script&lang=js&
 
@@ -6807,7 +7553,6 @@ var z_knobvue_type_template_id_b6406ad4_staticRenderFns = [];
       };
     }
   },
-  watch: {},
   methods: {
     bar: function bar(e) {
       var _this = this;
@@ -6874,8 +7619,8 @@ var z_knobvue_type_template_id_b6406ad4_staticRenderFns = [];
 ;
 var z_knob_component = normalizeComponent(
   child_components_z_knobvue_type_script_lang_js_,
-  z_knobvue_type_template_id_b6406ad4_render,
-  z_knobvue_type_template_id_b6406ad4_staticRenderFns,
+  z_knobvue_type_template_id_0659ea6d_render,
+  z_knobvue_type_template_id_0659ea6d_staticRenderFns,
   false,
   null,
   null,
@@ -6973,8 +7718,7 @@ var z_knob_component = normalizeComponent(
       componentType: this.$options.name,
       zpos: {},
       innerpos: {},
-      extrainfo: '',
-      val: 0
+      extrainfo: ''
     };
   },
   computed: {
@@ -6996,22 +7740,14 @@ var z_knob_component = normalizeComponent(
       return this.$zircle.getNumberOfItemsInCurrentPage() === 1 ? 0 : this.distance;
     },
     responsive: function responsive() {
-      if (this.view === this.$zircle.getCurrentViewName()) {
-        // eslint-disable-next-line
-        this.zpos = this.styles;
-        return true;
-      } else {
-        return false;
-      }
+      return this.view === this.$zircle.getCurrentViewName();
     },
     shape: function shape() {
-      if (this.circle) {
-        return 'is-circle';
-      } else if (this.square) {
+      if (this.square) {
         return 'is-square';
-      } else {
-        return 'is-circle';
       }
+
+      return 'is-circle';
     },
     sliderEnabled: function sliderEnabled() {
       return this.slider === true && this.shape === 'is-circle';
@@ -7056,8 +7792,14 @@ var z_knob_component = normalizeComponent(
         return this.qty;
       },
       set: function set(newValue) {
-        // this.val = newValue
         this.$emit('update:qty', newValue);
+      }
+    }
+  },
+  watch: {
+    responsive: function responsive(isResponsive) {
+      if (isResponsive) {
+        this.zpos = this.styles;
       }
     }
   },
@@ -7106,8 +7848,8 @@ var z_knob_component = normalizeComponent(
 ;
 var z_spot_component = normalizeComponent(
   components_z_spotvue_type_script_lang_js_,
-  z_spotvue_type_template_id_37496fbc_render,
-  z_spotvue_type_template_id_37496fbc_staticRenderFns,
+  z_spotvue_type_template_id_c53ead30_render,
+  z_spotvue_type_template_id_c53ead30_staticRenderFns,
   false,
   null,
   null,
@@ -7116,8 +7858,8 @@ var z_spot_component = normalizeComponent(
 )
 
 /* harmony default export */ var z_spot = (z_spot_component.exports);
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-dialog.vue?vue&type=template&id=0a3fb409&
-var z_dialogvue_type_template_id_0a3fb409_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-dialog.vue?vue&type=template&id=3cb73980&
+var z_dialogvue_type_template_id_3cb73980_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -7181,7 +7923,7 @@ var z_dialogvue_type_template_id_0a3fb409_render = function render() {
   }, [_vm._t("media")], 2) : _vm._e(), _vm._t("extension")], 2)]);
 };
 
-var z_dialogvue_type_template_id_0a3fb409_staticRenderFns = [];
+var z_dialogvue_type_template_id_3cb73980_staticRenderFns = [];
 
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-dialog.vue?vue&type=script&lang=js&
 
@@ -7245,13 +7987,11 @@ var z_dialogvue_type_template_id_0a3fb409_staticRenderFns = [];
       return this.selfClose === true && (this.square === false && this.$zircle.getThemeShape() === 'circle' || this.circle === true && this.$zircle.getThemeShape() === 'square');
     },
     shape: function shape() {
-      if (this.circle) {
-        return 'is-circle';
-      } else if (this.square) {
+      if (this.square) {
         return 'is-square';
-      } else {
-        return 'is-circle';
       }
+
+      return 'is-circle';
     },
     styles: function styles() {
       var zwidth = this.$zircle.getComponentWidth(this.size);
@@ -7318,8 +8058,8 @@ var z_dialogvue_type_template_id_0a3fb409_staticRenderFns = [];
 ;
 var z_dialog_component = normalizeComponent(
   components_z_dialogvue_type_script_lang_js_,
-  z_dialogvue_type_template_id_0a3fb409_render,
-  z_dialogvue_type_template_id_0a3fb409_staticRenderFns,
+  z_dialogvue_type_template_id_3cb73980_render,
+  z_dialogvue_type_template_id_3cb73980_staticRenderFns,
   false,
   null,
   null,
@@ -7349,7 +8089,6 @@ var zircle = {
     Vue.component('z-dialog', z_dialog);
   }
 };
-/* harmony default export */ var src_0 = (zircle);
 var GlobalVue = null;
 
 if (typeof window !== 'undefined') {
@@ -7361,6 +8100,8 @@ if (typeof window !== 'undefined') {
 if (GlobalVue) {
   GlobalVue.use(zircle);
 }
+
+/* harmony default export */ var src_0 = (zircle);
 ;// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
