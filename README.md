@@ -82,7 +82,7 @@ In general, using **zircle-ui** should be fine if your application is highly int
 Despite **zircle-ui** could be considered **stable**, it will remains as beta for a while because I would like to hear feedbacks regarding its usability.
 
 ## Documentation, examples and tutorial
-Please checkout [**zircle.io**](http://zircle.io) to learn how to use **zircle-ui**. For early **zircle-ui** users a **easy-to-follow migration guide** [is available here](https://zircleui.github.io/docs/guide/migration.html)
+Please checkout [**https://zircleui.github.io/docs/**](https://zircleui.github.io/docs/) to learn how to use **zircle-ui**. For early **zircle-ui** users a **easy-to-follow migration guide** [is available here](https://zircleui.github.io/docs/guide/migration.html)
 
 ## Installation
 
