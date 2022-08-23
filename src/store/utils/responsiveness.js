@@ -43,13 +43,60 @@ const mediaQuery = [
   }
 ]
 
+const pixelsGapByPixelRatio = {
+  0.25: 24,
+  0.3125: 32,
+  0.3333: 9,
+  0.375: 16,
+  0.4166: 24,
+  0.5: 4,
+  0.625: 16,
+  0.6666: 3,
+  0.75: 8,
+  0.8: 5,
+  0.8333: 12,
+  0.9: 20,
+  0.9375: 32,
+  1: 2,
+  1.1: 20,
+  1.125: 16,
+  1.2: 5,
+  1.25: 8,
+  1.35: 40,
+  1.375: 16,
+  1.5: 4,
+  1.5625: 32,
+  1.65: 40,
+  1.75: 8,
+  1.875: 16,
+  2: 2,
+  2.1875: 32,
+  2.25: 8,
+  2.5: 4,
+  2.625: 16,
+  3: 2,
+  3.125: 16,
+  3.75: 8,
+  4: 1,
+  4.5: 4,
+  5: 2,
+  6: 1,
+  6.25: 8,
+  7.5: 4
+}
+
 export function updateDiametersInPercent () {
-  const container = document.getElementById('z-container').getBoundingClientRect().width
+  const container = document.getElementById('z-container')
+  if (!container) {
+    store.state.diameters = mediaQuery[0].width
+    return
+  }
+  const containerWidth = Math.round(container.getBoundingClientRect().width)
   const sizes = store.state.percentSizes
   const minSizes = store.state.minSizesInPixels
   const diameters = {}
   for (const size in sizes) {
-    diameters[size] = parseInt((container * (sizes[size] / 100)))
+    diameters[size] = Math.round(containerWidth * (sizes[size] / 100))
     if (diameters[size] < minSizes[size]) {
       diameters[size] = minSizes[size]
     }
@@ -68,8 +115,13 @@ export function updateDiametersInFullMode () {
 }
 
 export function updateDiametersInMixedMode () {
-  const vp = document.getElementById('z-container').getBoundingClientRect().width
-  /* eslint-disable */
+  const container = document.getElementById('z-container')
+  if (!container) {
+    store.state.diameters = mediaQuery[0].width
+    return
+  }
+  const vp = container.getBoundingClientRect().width
+
   let mediaQueryIndex = 0
   if (vp >= 1800) {
     mediaQueryIndex = 9
@@ -87,4 +139,23 @@ export function updateDiametersInMixedMode () {
 
   store.state.diameters = mediaQuery[mediaQueryIndex].width
   store.actions.setLog('updateDiameters() at appMode mixed. z-view new xxl diameter: ' + store.state.diameters.xxl)
+}
+
+export function updateDiametersDependsOnPixelRatio () {
+  const roundedPixelRatio = Math.round(window.devicePixelRatio * 10000) / 10000
+
+  if (pixelsGapByPixelRatio[roundedPixelRatio] === undefined) {
+    store.actions.setLog('updateDiametersDependsOnPixelRatio() not found ' + roundedPixelRatio)
+    return
+  }
+  const sizes = Object.assign({}, store.state.diameters)
+  for (const size in sizes) {
+    sizes[size] -= sizes[size] % (pixelsGapByPixelRatio[roundedPixelRatio] ?? 1)
+    if (sizes[size] <= 0) {
+      sizes[size] = pixelsGapByPixelRatio[roundedPixelRatio]
+    }
+  }
+  store.state.diameters = sizes
+
+  store.actions.setLog('updateDiametersDependsOnPixelRatio() ' + roundedPixelRatio + ' / z-view new xxl diameter: ' + store.state.diameters.xxl)
 }
