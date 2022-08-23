@@ -2,6 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import zspot from '@/components/z-spot.vue'
 import zslider from '@/components/child-components/z-slider.vue'
 import zircle from '@/index'
+
 const localVue = createLocalVue()
 localVue.use(zircle)
 const wrapper = shallowMount(zspot, {

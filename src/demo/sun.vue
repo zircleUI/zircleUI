@@ -1,9 +1,11 @@
 <template>
-  <z-view size="xxl"
-  image-path="./sun.png"
-  class="transparent">
+  <z-view
+    size="xxl"
+    image-path="./sun.png"
+    class="transparent">
   </z-view>
 </template>
+
 <script>
 export default {
   methods: {
@@ -15,7 +17,7 @@ export default {
     show () {
       const panel = document.querySelector('.panel')
       panel.style.display = 'block'
-      const text = `
+      panel.innerHTML = `
       <b>Characteristics of the Sun</b><br>
       <b>Age:</b> 4.6 Billion Years<br>
       <b>Type:</b> Yellow Dwarf (G2V)<br>
@@ -26,7 +28,6 @@ export default {
 
       <a href='https://theplanets.org/the-sun/' target='_blank'>Source</a>
       `
-      panel.innerHTML = text
     }
   },
   mounted () {

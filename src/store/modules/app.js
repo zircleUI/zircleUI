@@ -1,7 +1,11 @@
 import store from '../store'
+
 const app = {
   getAppMode () {
     return store.state.appMode
+  },
+  isUsingPercentSizes () {
+    return store.state.usePercentSizes
   },
   resetConfig () {
     store.state.appMode = 'full'
@@ -14,7 +18,8 @@ const app = {
     store.state.goBackView = ''
     store.state.lastView = ''
     store.state.diameters = {}
-    store.state.sizes = {
+    store.state.usePercentSizes = false
+    store.state.percentSizes = {
       xxl: 55,
       xl: 32,
       l: 20,
@@ -53,15 +58,29 @@ const app = {
       store.state.appMode = config.mode
       store.actions.setLog('- Mode: ' + config.mode)
     }
-    if (config.sizes) {
-      if (config.sizes.xxl) store.state.sizes.xxl = config.sizes.xxl
-      if (config.sizes.xl) store.state.sizes.xl = config.sizes.xl
-      if (config.sizes.l) store.state.sizes.l = config.sizes.l
-      if (config.sizes.m) store.state.sizes.m = config.sizes.m
-      if (config.sizes.s) store.state.sizes.s = config.sizes.s
-      if (config.sizes.xs) store.state.sizes.xs = config.sizes.xs
-      if (config.sizes.xxs) store.state.sizes.xxs = config.sizes.xxs
-      store.actions.setLog('- Component sizes: ' + JSON.stringify(config.sizes))
+    if (typeof config.usePercentSizes === 'boolean') {
+      store.state.usePercentSizes = config.usePercentSizes
+      store.actions.setLog(`- Percent sizes ${config.usePercentSizes ? 'ON' : 'OFF'}`)
+    }
+    if (config.percentSizes) {
+      if (config.percentSizes.xxl) store.state.percentSizes.xxl = config.percentSizes.xxl
+      if (config.percentSizes.xl) store.state.percentSizes.xl = config.percentSizes.xl
+      if (config.percentSizes.l) store.state.percentSizes.l = config.percentSizes.l
+      if (config.percentSizes.m) store.state.percentSizes.m = config.percentSizes.m
+      if (config.percentSizes.s) store.state.percentSizes.s = config.percentSizes.s
+      if (config.percentSizes.xs) store.state.percentSizes.xs = config.percentSizes.xs
+      if (config.percentSizes.xxs) store.state.percentSizes.xxs = config.percentSizes.xxs
+      store.actions.setLog('- Component percentSizes: ' + JSON.stringify(config.percentSizes))
+    }
+    if (config.minSizesInPixels) {
+      if (config.minSizesInPixels.xxl) store.state.minSizesInPixels.xxl = config.minSizesInPixels.xxl
+      if (config.minSizesInPixels.xl) store.state.minSizesInPixels.xl = config.minSizesInPixels.xl
+      if (config.minSizesInPixels.l) store.state.minSizesInPixels.l = config.minSizesInPixels.l
+      if (config.minSizesInPixels.m) store.state.minSizesInPixels.m = config.minSizesInPixels.m
+      if (config.minSizesInPixels.s) store.state.minSizesInPixels.s = config.minSizesInPixels.s
+      if (config.minSizesInPixels.xs) store.state.minSizesInPixels.xs = config.minSizesInPixels.xs
+      if (config.minSizesInPixels.xxs) store.state.minSizesInPixels.xxs = config.minSizesInPixels.xxs
+      store.actions.setLog('- Component minSizesInPixels: ' + JSON.stringify(config.minSizesInPixels))
     }
     if (config.style && config.style.theme) {
       store.state.appStyle.theme = 'theme-' + config.style.theme
@@ -80,7 +99,6 @@ const app = {
       store.state.isRouterEnabled = true
       store.actions.setRouterHooks()
       store.actions.setLog('- VueRouter enabled')
-      // console.log(store.state.router.currentRoute)
       store.actions.setView({
         name: store.state.router.currentRoute.name,
         params: store.state.router.currentRoute.params

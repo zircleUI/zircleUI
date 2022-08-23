@@ -5,19 +5,19 @@
     :style="responsive === true ? styles.main : zpos.main"
     style="overflow: visible;"
     @animationend="notify"
-    @mouseover = "$zircle.allowBackwardNavigation(true)"
-    @mouseleave = "$zircle.allowBackwardNavigation(false)">
+    @mouseover="$zircle.allowBackwardNavigation(true)"
+    @mouseleave="$zircle.allowBackwardNavigation(false)">
     <div :id="fullView" v-if="$slots['image'] || imagePath" class="z-content">
       <img v-if="imagePath" :src="imagePath" width="100%" alt="content custom image"/>
       <slot v-if="!imagePath" name="image"></slot>
     </div>
     <section style="opacity: 0" :style="animation">
-      <div class="z-outer-circle" :class="[shape]"  :style="responsive === true ? styles.plate : zpos.plate"></div>
+      <div class="z-outer-circle" :class="[shape]" :style="responsive === true ? styles.plate : zpos.plate"></div>
       <z-scroll v-if="scrollBarEnabled" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
       <z-slider v-if="sliderEnabled" :progress='progress'/>
       <div v-if="label" class="z-label" :class="[shape, labelPos]">
         <div class="inside">
-          {{label}}
+          {{ label }}
         </div>
       </div>
       <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent]" @scroll.passive="scroll">
@@ -26,16 +26,17 @@
         </div>
       </div>
       <div v-if="$slots['media']" :class="[shape]" class="z-content" style="z-index: 60">
-        <slot name="media" ></slot>
+        <slot name="media"></slot>
       </div>
-     <slot name="extension"></slot>
-   </section>
+      <slot name="extension"></slot>
+    </section>
   </div>
 </template>
 
 <script>
 import ZSlider from './child-components/z-slider'
 import ZScroll from './child-components/z-scroll'
+
 export default {
   name: 'z-view',
   props: {
@@ -99,13 +100,10 @@ export default {
   },
   computed: {
     shape () {
-      if (this.circle) {
-        return 'is-circle'
-      } else if (this.square) {
+      if (this.square) {
         return 'is-square'
-      } else {
-        return 'is-circle'
       }
+      return 'is-circle'
     },
     sliderEnabled () {
       return this.slider === true && this.shape === 'is-circle'
@@ -124,13 +122,7 @@ export default {
       return isScrollNeeded
     },
     responsive () {
-      if (this.fullView === this.$zircle.getCurrentViewName()) {
-        // eslint-disable-next-line
-        this.zpos = this.styles
-        return true
-      } else {
-        return false
-      }
+      return this.fullView === this.$zircle.getCurrentViewName()
     },
     styles () {
       const width = this.$zircle.getComponentWidth(this.size)
@@ -138,13 +130,13 @@ export default {
         main: {
           width: width + 'px',
           height: width + 'px',
-          margin: -(width / 2) + 'px 0 0 ' + -(width / 2) + 'px',
+          margin: -width / 2 + 'px 0 0 ' + -width / 2 + 'px',
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
-          width: width + 75 + 'px',
-          height: width + 75 + 'px',
-          margin: -((width + 75) / 2) + 'px 0 0 ' + -((width + 75) / 2) + 'px'
+          width: width + 74 + 'px',
+          height: width + 74 + 'px',
+          margin: -((width + 74) / 2) + 'px 0 0 ' + -((width + 74) / 2) + 'px'
         }
       }
     },
@@ -174,6 +166,11 @@ export default {
     }
   },
   watch: {
+    responsive (isResponsive) {
+      if (isResponsive) {
+        this.zpos = this.styles
+      }
+    },
     scrollVal () {
       if (this.scrollBar === true) {
         const container = this.$refs.maincontent

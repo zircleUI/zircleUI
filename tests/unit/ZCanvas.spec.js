@@ -1,6 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import zcanvas from '@/components/z-canvas.vue'
 import zircle from '@/index'
+
 const localVue = createLocalVue()
 localVue.use(zircle)
 const wrapper = shallowMount(zcanvas, {

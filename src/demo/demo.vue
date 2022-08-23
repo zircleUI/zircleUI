@@ -10,71 +10,76 @@
         label="sun"
         image-path="./sun.png"
       >
-        <z-spot
-          slot="extension"
-          size="s"
-          :angle="earth"
-          :distance="200"
-          class="transparent"
-          @mouseover.native="pause"
-          @mouseleave.native="play"
-          @click.native="pause"
-          to-view="earth"
-          label="earth"
-          image-path="./earth.png"
-        >
+        <template #extension>
           <z-spot
-            slot="extension"
-            size="xs"
-            :distance="160"
+            size="s"
+            :angle="earth"
+            :distance="200"
             class="transparent"
-            :angle="moon"
-            image-path="./moon.png"
+            @mouseover.native="pause"
+            @mouseleave.native="play"
+            @click.native="pause"
+            to-view="earth"
+            label="earth"
+            image-path="./earth.png"
           >
+            <template #extension>
+              <z-spot
+                size="xxs"
+                :distance="160"
+                class="transparent"
+                :angle="moon"
+                image-path="./moon.png"
+              >
+              </z-spot>
+            </template>
           </z-spot>
-        </z-spot>
+        </template>
       </z-spot>
       <z-spot
         size="m"
         :angle="135"
-        :distance="150"
+        :distance="170"
         button
         @click.stop="isRunning ? pause() : play()"
         :label="isRunning ? 'pause' : 'play'">
-        {{isRunning ? '||' : '>'}}
+        {{ isRunning ? '||' : '>' }}
       </z-spot>
       <z-spot
         size="m"
         :angle="45"
-        :distance="150"
+        :distance="170"
         knob
         v-bind.sync="speed"
         label="speed">
       </z-spot>
+      <z-spot
+        button
+        size="m"
+        :angle="225"
+        :distance="170"
+        @click="togglePercentSizes"
+        label="Percent sizes">
+        {{ $zircle.isUsingPercentSizes() ? 'ON' : 'OFF' }}
+      </z-spot>
     </template>
   </z-view>
 </template>
+
 <script>
 export default {
   data () {
     return {
-      dialog: true,
       speed: { qty: 1, unit: 'x', min: 1, max: 5 },
       earth: 160,
       moon: 160,
-      year: 0,
-      month: 0,
-      init: null,
       isRunning: true
     }
   },
-  computed: {},
   methods: {
     show () {
       const panel = document.querySelector('.panel')
-      panel.style.display === 'none'
-        ? (panel.style.display = 'block')
-        : (panel.style.display = 'none')
+      panel.style.display = (panel.style.display === 'none') ? 'block' : 'none'
     },
     play () {
       this.isRunning = true
@@ -92,9 +97,9 @@ export default {
         startTime = startTime || timestamp // set startTime is null
         const timeElapsedSinceStart = timestamp - startTime
         const progress = timeElapsedSinceStart / 10000 * this.speed.qty
-        const safeProgress = Math.min(progress.toFixed(3), 1) // 2 decimal points
+        const safeProgress = Math.min(Number(progress.toFixed(3)), 1) // 2 decimal points
         const newPosition = -(safeProgress * distance)
-        // we need to rogress to reach 100%
+        // we need to progress to reach 100%
         if (this.isRunning && safeProgress !== 1) {
           this.earth = newPosition + offset
           requestAnimationFrame(earthOrbit)
@@ -113,9 +118,9 @@ export default {
         startTime = startTime || timestamp // set startTime is null
         const timeElapsedSinceStart = timestamp - startTime
         const progress = timeElapsedSinceStart / 7000 * this.speed.qty
-        const safeProgress = Math.min(progress.toFixed(3), 1) // 2 decimal points
+        const safeProgress = Math.min(Number(progress.toFixed(3)), 1) // 2 decimal points
         const newPosition = -(safeProgress * distance)
-        // we need to rogress to reach 100%
+        // we need to progress to reach 100%
         if (safeProgress !== 1) {
           this.moon = newPosition + offset
           requestAnimationFrame(moonOrbit)
@@ -125,6 +130,10 @@ export default {
         }
       }
       requestAnimationFrame(moonOrbit)
+    },
+    togglePercentSizes () {
+      this.$zircle.config({ usePercentSizes: !this.$zircle.isUsingPercentSizes() })
+      this.$zircle.updateDiameters()
     }
   },
   mounted () {

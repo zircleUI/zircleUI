@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/zircleUI/zircleUI/compare/v1.4.0...v1.5.0) (2022-08-23)
+
+
+### Features
+
+* **demo:** add button to switch usePercentSizes in demo ([c321800](https://github.com/zircleUI/zircleUI/commit/c3218008a21b28b4ae06097f451339b8c7ea9dd9))
+* **percent-sizes:** allow using percent sizes thanks to new usePercentSizes prop and rename "getDimensions" method by "updateDiameters" ([4f9ff0e](https://github.com/zircleUI/zircleUI/commit/4f9ff0e23d0f40668ead3138222a140cadfe51f0))
+
+
+### Bug Fixes
+
+* avoid decimals on dinamic percent sizes ([21249aa](https://github.com/zircleUI/zircleUI/commit/21249aa6834b744bc47ff1b8c2d1d174eb78a38b))
+* **config:** add management of percentSizes and minSizesInPixels in config method ([5b72f64](https://github.com/zircleUI/zircleUI/commit/5b72f6490bb531cdad9da1b52fc2f9ed6e168b62))
+* **demo:** remove forgotten line in earth component ([2a2d141](https://github.com/zircleUI/zircleUI/commit/2a2d14162a56437549748d71ad9fc65398e2e43a))
+* **devicePixelRatio:** add updateDiametersDependsOnPixelRatio method to fix positions issues link to browsers zoom and OS scale ([6f48ddc](https://github.com/zircleUI/zircleUI/commit/6f48ddc48a152e6b596b67dfd43685f4b422b550))
+* **earth:** rename paused prop by isRunning ([1bb5fa9](https://github.com/zircleUI/zircleUI/commit/1bb5fa90df757701b74abfa182e8ae4ba5357fd3))
+* position bug using percentSizes ([62c7c7c](https://github.com/zircleUI/zircleUI/commit/62c7c7cc211d8c371bac251ee0687cc5932143d3))
+* re add getState() ([d2455b5](https://github.com/zircleUI/zircleUI/commit/d2455b5018d6f73ef74c146b517a0d6d8fe8807c))
+* remove static values ([ca0a90b](https://github.com/zircleUI/zircleUI/commit/ca0a90bb6a7def24eaa4caafed248a11fcdc7518))
+* **responsiveness:** add values in pixelsGapByPixelRatio constant ([5d7ed83](https://github.com/zircleUI/zircleUI/commit/5d7ed83da88ed9a324285fa9db3f1b014cf7824e))
+* **updateDiametersInPercent:** verify container before use it ([d4335b8](https://github.com/zircleUI/zircleUI/commit/d4335b841b922134e353377097a64d6eaa88b027))
+* **zoom:** adapt body zoom to pixel ratio in order to fix positions issues due to OS display scale ([1969a25](https://github.com/zircleUI/zircleUI/commit/1969a25e5a391960227fb009ff8c2f86c0a64319))
+
 ## [1.4.0](https://github.com/zircleUI/zircleUI/compare/v1.4.0-rc.0...v1.4.0) (2022-08-15)
 
 
