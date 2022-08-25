@@ -8,7 +8,7 @@
         v-for="(page, index) in $zircle.getNumberOfPages()"
         :key="index + '_page'"
         :index="index"
-        :distance="$zircle.getComponentWidth(size) + $zircle.getComponentWidth('xs') + 10"
+        :distance="distance"
         :angle="(180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages() * ($zircle.getNumberOfPages() - index) + ((180 - (180 - (180 - ($zircle.getNumberOfPages() * 10)))) - ((180 - (180 - ($zircle.getNumberOfPages() * 10))) / $zircle.getNumberOfPages())) / 2"
         :active="$zircle.getCurrentPageIndex()"
         @mouseover="$zircle.allowBackwardNavigation(true)"
@@ -61,6 +61,10 @@ export default {
   computed: {
     position () {
       return this.$zircle.calcViewPosition(this.$parent.fullView)
+    },
+    distance () {
+      const distanceInPixels = this.$zircle.getComponentWidth(this.size) + this.$zircle.getComponentWidth('xs') + 10
+      return distanceInPixels * 100 / this.$zircle.getComponentWidth(this.size)
     },
     collectionCopy () {
       return this.items.slice(0)
