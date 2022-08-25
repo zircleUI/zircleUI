@@ -1,6 +1,6 @@
 {
   "name": "zircle",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A frontend library to develop zoomable user interfaces",
   "author": "Juan Martín Muda <juan.martin.muda@gmail.com>",
   "license": "MIT",

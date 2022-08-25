@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/zircleUI/zircleUI/compare/v1.5.0...v1.5.1) (2022-08-25)
+
+
+### Bug Fixes
+
+* **z-list:** fix z-pagination distance in z-list using percentage instead of pixels ([6de3f16](https://github.com/zircleUI/zircleUI/commit/6de3f16435ed59a43061bcdd5dd8dba47906b6e9))
+
 ## [1.5.0](https://github.com/zircleUI/zircleUI/compare/v1.4.0...v1.5.0) (2022-08-23)
 
 
