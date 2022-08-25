@@ -51,22 +51,36 @@ const app = {
     store.state = initialState
   },
   config (config) {
-    // debug
-    if (typeof config.debug === 'boolean' && store.state.debug) store.state.debug = config.debug && store.actions.setLog('- Debug enabled')
-    // App mode
-    if (config.mode === 'full' || config.mode === 'mixed') store.state.appMode = config.mode && store.actions.setLog('- Mode: ' + config.mode)
-    // Percent Sizes
-    if (typeof config.usePercentSizes === 'boolean' && config.usePercentSizes) store.state.usePercentSizes = config.usePercentSizes && store.actions.setLog('- Percent sizes ON')
-    //
-    if (config.percentSizes) store.state.percentSizes = config.percentSizes && store.actions.setLog('- Component percentSizes: ' + JSON.stringify(config.percentSizes))
-    //
-    if (config.minSizesInPixels) store.state.minSizesInPixels = config.minSizesInPixels && store.actions.setLog('- Component minSizesInPixels: ' + JSON.stringify(config.minSizesInPixels))
-    // Theme
-    if (config.style && config.style.theme) store.state.appStyle.theme = 'theme-' + config.style.theme && store.actions.setLog('- Theme: ' + config.style.theme)
-    // Style Mode
-    if (config.style && config.style.mode) store.state.appStyle.mode = 'mode-' + config.style.mode && store.actions.setLog('- Theme mode: ' + config.style.mode)
-    // Style shape
-    if (config.style && config.style.shape) store.state.appStyle.shape = config.style.shape && store.actions.setLog('- Theme shape: ' + config.style.shape)
+    if (typeof config.debug === 'boolean') store.state.debug = config.debug
+    if (store.state.debug === true) store.actions.setLog('- Debug enabled')
+    if (config.mode === 'full' || config.mode === 'mixed') {
+      store.state.appMode = config.mode
+      store.actions.setLog('- Mode: ' + config.mode)
+    }
+    if (typeof config.usePercentSizes === 'boolean') {
+      store.state.usePercentSizes = config.usePercentSizes
+      store.actions.setLog(`- Percent sizes ${config.usePercentSizes ? 'ON' : 'OFF'}`)
+    }
+    if (config.percentSizes) {
+      store.state.percentSizes = config.percentSizes
+      store.actions.setLog('- Component percentSizes: ' + JSON.stringify(config.percentSizes))
+    }
+    if (config.minSizesInPixels) {
+      store.state.minSizesInPixels = config.minSizesInPixels
+      store.actions.setLog('- Component minSizesInPixels: ' + JSON.stringify(config.minSizesInPixels))
+    }
+    if (config.style && config.style.theme) {
+      store.state.appStyle.theme = 'theme-' + config.style.theme
+      store.actions.setLog('- Theme: ' + config.style.theme)
+    }
+    if (config.style && config.style.mode) {
+      store.state.appStyle.mode = 'mode-' + config.style.mode
+      store.actions.setLog('- Theme mode: ' + config.style.mode)
+    }
+    if (config.style && config.style.shape) {
+      store.state.appStyle.shape = config.style.shape
+      store.actions.setLog('- Theme shape: ' + config.style.shape)
+    }
     if (config.router) {
       store.state.router = config.router
       store.state.isRouterEnabled = true
