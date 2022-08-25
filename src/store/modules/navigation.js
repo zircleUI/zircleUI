@@ -117,9 +117,7 @@ const navigation = {
     if (options.fromSpot && typeof options.fromSpot !== 'object') store.actions.setLog('Programmatic navigation: "fromSpot" should be an object ', 'error')
     if (options.params && typeof options.params !== 'object') store.actions.setLog('Programmatic navigation: "params" should be an object ', 'error')
     if (options.to && options.fromSpot) {
-      if (!options.params) {
-        options.params = {}
-      }
+      if (!options.params) options.params = {}
       const positionParams = options.fromSpot.position
         ? {
             position: {
@@ -146,7 +144,6 @@ const navigation = {
       store.actions.setLog('Max zoom level reached')
       return
     }
-
     const view = parseView(data)
     const position = (
       !options || !options.position || options.position.scale === 0
@@ -164,9 +161,7 @@ const navigation = {
     if (store.state.isRouterEnabled === false) {
       store.actions.addToHistory(view, position, view.route.params)
       store.actions.setNavigationMode('forward')
-      if (view.route) {
-        store.state.params = view.route.params
-      }
+      if (view.route) store.state.params = view.route.params
     } else {
       store.actions.evaluateRoute(view, position)
     }
