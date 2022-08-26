@@ -16,9 +16,9 @@
             :angle="earth"
             :distance="200"
             class="transparent"
-            @mouseover.native="pause"
-            @mouseleave.native="play"
-            @click.native="pause"
+            @mouseover="pause"
+            @mouseleave="play"
+            @click="pause"
             to-view="earth"
             label="earth"
             image-path="./earth.png"
@@ -46,11 +46,11 @@
         {{ isRunning ? '||' : '>' }}
       </z-spot>
       <z-spot
+        v-bind.sync="speed"
         size="m"
         :angle="45"
         :distance="170"
         knob
-        v-bind.sync="speed"
         label="speed">
       </z-spot>
       <z-spot

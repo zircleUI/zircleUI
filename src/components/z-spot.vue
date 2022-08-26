@@ -12,7 +12,7 @@
     @click="$emit('click', $event)">
     <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
     <div class="z-pulse" :class="[shape]" ref="pulse"></div>
-    <z-knob v-if="knob" :qty.sync="computedQty" :unit="unit" :min="min" :max="max"/>
+    <z-knob v-if="knob" v-model:qty="computedQty" :unit="unit" :min="min" :max="max"/>
     <z-slider v-if="slider" :progress='progress'/>
     <div class="z-label" :class="[shape,labelPos]"
          :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''"

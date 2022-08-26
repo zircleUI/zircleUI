@@ -8,8 +8,8 @@
         size="m"
         :distance='160'
         class="transparent"
-        @mouseover.native="pause"
-        @mouseleave.native="play"
+        @mouseover="pause"
+        @mouseleave="play"
         to-view="moon"
         :angle='moon'
         label="moon"

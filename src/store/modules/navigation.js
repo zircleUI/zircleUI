@@ -1,5 +1,7 @@
 import store from '../store'
-import Vue from 'vue'
+import { createApp, h } from 'vue'
+
+const app = createApp({})
 
 function retrieveViewName (pos) {
   let viewName = ''
@@ -64,7 +66,7 @@ const navigation = {
       return list[key]
     } else {
       return Vue.component('missing', {
-        render (h) {
+        render () {
           return h('z-view', view + ' not found')
         }
       })

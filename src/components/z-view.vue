@@ -13,7 +13,7 @@
     </div>
     <section style="opacity: 0" :style="animation">
       <div class="z-outer-circle" :class="[shape]" :style="responsive === true ? styles.plate : zpos.plate"></div>
-      <z-scroll v-if="scrollBarEnabled" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
+      <z-scroll v-if="scrollBarEnabled" v-model="scrollVal" style="overflow: visible;"/>
       <z-slider v-if="sliderEnabled" :progress='progress'/>
       <div v-if="label" class="z-label" :class="[shape, labelPos]">
         <div class="inside">
