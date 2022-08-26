@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { markRaw } from 'vue'
 import pkg from '../package.json'
 import home from './demo/home.vue'
 import docs from './demo/docs.vue'
@@ -78,12 +79,12 @@ export default {
   },
   components: {
     /* eslint-disable vue/no-unused-components */
-    home,
-    docs,
-    earth,
-    moon,
-    demo,
-    sun
+    home: markRaw(home),
+    docs: markRaw(docs),
+    earth: markRaw(earth),
+    moon: markRaw(moon),
+    demo: markRaw(demo),
+    sun: markRaw(sun)
   },
   mounted () {
     this.$zircle.config({

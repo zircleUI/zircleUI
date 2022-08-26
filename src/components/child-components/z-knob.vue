@@ -9,8 +9,8 @@
     <svg
       xmlns="http://www.w3.org/2000/svg" class="z-range-bar-bar"
       :style="circleStyle"
-      @touchstart="drag = true"
-      @touchmove.stop="handleBar"
+      @touchstart.passive="drag = true"
+      @touchmove.stop.passive="handleBar"
       @touchend="drag = false"
       @mousedown="drag = true"
       @mousemove.stop="handleBar"

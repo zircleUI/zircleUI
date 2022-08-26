@@ -8,7 +8,7 @@
         class="transparent"
         to-view="sun"
         label="sun"
-        image-path="./sun.png"
+        image-path="sun.png"
       >
         <template #extension>
           <z-spot
@@ -46,7 +46,7 @@
         {{ isRunning ? '||' : '>' }}
       </z-spot>
       <z-spot
-        v-bind.sync="speed"
+        v-model="speed"
         size="m"
         :angle="45"
         :distance="170"
@@ -140,7 +140,7 @@ export default {
     this.play()
     this.animateMoon()
   },
-  destroyed () {
+  unmounted () {
     this.pause()
   }
 }

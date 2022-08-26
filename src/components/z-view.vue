@@ -8,7 +8,7 @@
     @mouseover="$zircle.allowBackwardNavigation(true)"
     @mouseleave="$zircle.allowBackwardNavigation(false)">
     <div :id="fullView" v-if="$slots['image'] || imagePath" class="z-content">
-      <img v-if="imagePath" :src="imagePath" width="100%" alt="content custom image"/>
+      <img v-if="imagePath" :src="imagePath" style="width: 100%" alt="content custom image"/>
       <slot v-if="!imagePath" name="image"></slot>
     </div>
     <section style="opacity: 0" :style="animation">
@@ -90,6 +90,7 @@ export default {
       zpos: {},
       isMounted: false,
       ffox: false,
+      publicPath: process.env.BASE_URL,
       fullView: this.$zircle.getNavigationMode() === 'forward' ? this.$zircle.getCurrentViewName() : this.$zircle.getPastViewName()
     }
   },

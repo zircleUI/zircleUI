@@ -10,11 +10,11 @@
       }"
       :key="view.name">
     </component>
-    <router-view
+    <!-- <router-view
       v-if="$zircle.getRouterState() === true && $zircle.getHistoryLength() >= 1"
       class="is-current-view"
       :key="$zircle.getCurrentViewName()">
-    </router-view>
+    </router-view> -->
   </transition-group>
 </template>
 
@@ -22,8 +22,11 @@
 export default {
   name: 'z-view-manager',
   computed: {
-    views () {
+    /* views () {
       return this.$zircle.getRouterState() === false ? this.$zircle.getHistory().slice(-3) : this.$zircle.getHistory().slice(-3, -1)
+    }*/
+    views () {
+      return this.$zircle.getHistory().slice(-3)
     }
   }
 }

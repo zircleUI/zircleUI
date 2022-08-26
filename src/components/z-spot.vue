@@ -7,7 +7,7 @@
     @mouseover="spotin"
     @mouseout="spotout"
     @mousedown="pulse"
-    @touchstart="pulse"
+    @touchstart.passive="pulse"
     @mouseup.stop="move"
     @click="$emit('click', $event)">
     <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="z-content" :class="[shape]">
-      <img v-if="imagePath" :src="imagePath" width="100%" alt="content custom image"/>
+      <img v-if="imagePath" :src="imagePath" style="width: 100%" alt="content custom image"/>
       <slot v-if="!imagePath" name="image"></slot>
     </div>
     <div class="z-content" :class="[shape]" style="z-index: 10">
@@ -123,7 +123,8 @@ export default {
       componentType: this.$options.name,
       zpos: {},
       innerpos: {},
-      extrainfo: ''
+      extrainfo: '',
+      publicPath: process.env.BASE_URL
     }
   },
   computed: {
