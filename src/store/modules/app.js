@@ -48,7 +48,7 @@ const app = {
     return store.state.usePercentSizes
   },
   resetConfig () {
-    store.state = initialState
+    store.state.data = initialState
   },
   config (config) {
     if (typeof config.debug === 'boolean') store.state.debug = config.debug
