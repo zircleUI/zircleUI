@@ -5637,11 +5637,10 @@ var navigation = {
     if (options.params && _typeof(options.params) !== 'object') store_store.actions.setLog('Programmatic navigation: "params" should be an object ', 'error');
 
     if (options.to && options.fromSpot) {
-      if (!options.params) {
-        options.params = {};
-      }
-
-      var positionParams = options.fromSpot.position ? {
+      store_store.actions.setView({
+        name: options.to,
+        params: options.params || {}
+      }, options.fromSpot.position ? {
         position: {
           X: options.fromSpot.position.Xabs,
           Y: options.fromSpot.position.Yabs,
@@ -5650,11 +5649,7 @@ var navigation = {
           Yi: options.fromSpot.position.Yi,
           scalei: options.fromSpot.position.scalei
         }
-      } : {};
-      store_store.actions.setView({
-        name: options.to,
-        params: options.params
-      }, positionParams);
+      } : {});
     }
   },
   setView: function setView(data, options) {
@@ -5676,10 +5671,7 @@ var navigation = {
     if (store_store.state.isRouterEnabled === false) {
       store_store.actions.addToHistory(view, position, view.route.params);
       store_store.actions.setNavigationMode('forward');
-
-      if (view.route) {
-        store_store.state.params = view.route.params;
-      }
+      if (view.route) store_store.state.params = view.route.params;
     } else {
       store_store.actions.evaluateRoute(view, position);
     }
@@ -6171,6 +6163,46 @@ var es_json_stringify = __webpack_require__(8862);
 
 
 
+var initialState = {
+  appMode: 'full',
+  navigationMode: 'forward',
+  isRouterEnabled: false,
+  router: {},
+  history: [],
+  backwardNavigation: false,
+  componentList: {},
+  goBackView: '',
+  diameters: {},
+  usePercentSizes: false,
+  percentSizes: {
+    xxl: 30,
+    xl: 20,
+    l: 16,
+    m: 8,
+    s: 6,
+    xs: 4,
+    xxs: 2
+  },
+  minSizesInPixels: {
+    xxl: 180,
+    xl: 150,
+    l: 100,
+    m: 80,
+    s: 50,
+    xs: 30,
+    xxs: 20
+  },
+  appStyle: {
+    theme: 'theme-black',
+    mode: 'mode-dark',
+    shape: 'circle'
+  },
+  currentPage: 0,
+  items: [],
+  pages: [],
+  params: {},
+  debug: false
+};
 var app = {
   getAppMode: function getAppMode() {
     return store_store.state.appMode;
@@ -6179,53 +6211,11 @@ var app = {
     return store_store.state.usePercentSizes;
   },
   resetConfig: function resetConfig() {
-    store_store.state.appMode = 'full';
-    store_store.state.navigationMode = 'forward';
-    store_store.state.isRouterEnabled = false;
-    store_store.state.router = {};
-    store_store.state.history = [];
-    store_store.state.backwardNavigation = false;
-    store_store.state.componentList = {};
-    store_store.state.goBackView = '';
-    store_store.state.lastView = '';
-    store_store.state.diameters = {};
-    store_store.state.usePercentSizes = false;
-    store_store.state.percentSizes = {
-      xxl: 55,
-      xl: 32,
-      l: 20,
-      m: 12,
-      s: 8,
-      xs: 5,
-      xxs: 2
-    };
-    store_store.state.minSizesInPixels = {
-      xxl: 200,
-      xl: 180,
-      l: 150,
-      m: 100,
-      s: 80,
-      xs: 50,
-      xxs: 20
-    };
-    store_store.state.appStyle = {
-      theme: 'theme-black',
-      mode: 'mode-dark',
-      shape: 'circle'
-    };
-    store_store.state.currentPage = 0;
-    store_store.state.items = [];
-    store_store.state.pages = [];
-    store_store.state.params = {};
-    store_store.state.debug = false;
+    store_store.state = initialState;
   },
   config: function config(_config) {
-    if (_config.debug === true || _config.debug === false) store_store.state.debug = _config.debug;
-
-    if (store_store.state.debug === true) {
-      store_store.actions.setLog('config:');
-      store_store.actions.setLog('- Debug enabled');
-    }
+    if (typeof _config.debug === 'boolean') store_store.state.debug = _config.debug;
+    if (store_store.state.debug === true) store_store.actions.setLog('- Debug enabled');
 
     if (_config.mode === 'full' || _config.mode === 'mixed') {
       store_store.state.appMode = _config.mode;
@@ -6238,24 +6228,12 @@ var app = {
     }
 
     if (_config.percentSizes) {
-      if (_config.percentSizes.xxl) store_store.state.percentSizes.xxl = _config.percentSizes.xxl;
-      if (_config.percentSizes.xl) store_store.state.percentSizes.xl = _config.percentSizes.xl;
-      if (_config.percentSizes.l) store_store.state.percentSizes.l = _config.percentSizes.l;
-      if (_config.percentSizes.m) store_store.state.percentSizes.m = _config.percentSizes.m;
-      if (_config.percentSizes.s) store_store.state.percentSizes.s = _config.percentSizes.s;
-      if (_config.percentSizes.xs) store_store.state.percentSizes.xs = _config.percentSizes.xs;
-      if (_config.percentSizes.xxs) store_store.state.percentSizes.xxs = _config.percentSizes.xxs;
+      store_store.state.percentSizes = _config.percentSizes;
       store_store.actions.setLog('- Component percentSizes: ' + JSON.stringify(_config.percentSizes));
     }
 
     if (_config.minSizesInPixels) {
-      if (_config.minSizesInPixels.xxl) store_store.state.minSizesInPixels.xxl = _config.minSizesInPixels.xxl;
-      if (_config.minSizesInPixels.xl) store_store.state.minSizesInPixels.xl = _config.minSizesInPixels.xl;
-      if (_config.minSizesInPixels.l) store_store.state.minSizesInPixels.l = _config.minSizesInPixels.l;
-      if (_config.minSizesInPixels.m) store_store.state.minSizesInPixels.m = _config.minSizesInPixels.m;
-      if (_config.minSizesInPixels.s) store_store.state.minSizesInPixels.s = _config.minSizesInPixels.s;
-      if (_config.minSizesInPixels.xs) store_store.state.minSizesInPixels.xs = _config.minSizesInPixels.xs;
-      if (_config.minSizesInPixels.xxs) store_store.state.minSizesInPixels.xxs = _config.minSizesInPixels.xxs;
+      store_store.state.minSizesInPixels = _config.minSizesInPixels;
       store_store.actions.setLog('- Component minSizesInPixels: ' + JSON.stringify(_config.minSizesInPixels));
     }
 
@@ -7119,8 +7097,8 @@ var z_view_component = normalizeComponent(
 )
 
 /* harmony default export */ var z_view = (z_view_component.exports);
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-list.vue?vue&type=template&id=05e6ebb7&
-var z_listvue_type_template_id_05e6ebb7_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/z-list.vue?vue&type=template&id=27793ef4&
+var z_listvue_type_template_id_27793ef4_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -7137,7 +7115,7 @@ var z_listvue_type_template_id_05e6ebb7_render = function render() {
       key: index + '_page',
       attrs: {
         "index": index,
-        "distance": _vm.$zircle.getComponentWidth(_vm.size) + _vm.$zircle.getComponentWidth('xs') + 10,
+        "distance": _vm.distance,
         "angle": (180 - (180 - _vm.$zircle.getNumberOfPages() * 10)) / _vm.$zircle.getNumberOfPages() * (_vm.$zircle.getNumberOfPages() - index) + (180 - (180 - (180 - _vm.$zircle.getNumberOfPages() * 10)) - (180 - (180 - _vm.$zircle.getNumberOfPages() * 10)) / _vm.$zircle.getNumberOfPages()) / 2,
         "active": _vm.$zircle.getCurrentPageIndex()
       },
@@ -7158,7 +7136,7 @@ var z_listvue_type_template_id_05e6ebb7_render = function render() {
   }) : _vm._e()], 2);
 };
 
-var z_listvue_type_template_id_05e6ebb7_staticRenderFns = [];
+var z_listvue_type_template_id_27793ef4_staticRenderFns = [];
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.splice.js
 var es_array_splice = __webpack_require__(561);
@@ -7342,6 +7320,10 @@ function chunk(myArray, chunkSize) {
     position: function position() {
       return this.$zircle.calcViewPosition(this.$parent.fullView);
     },
+    distance: function distance() {
+      var distanceInPixels = this.$zircle.getComponentWidth(this.size) + this.$zircle.getComponentWidth('xs') + 10;
+      return distanceInPixels * 100 / this.$zircle.getComponentWidth(this.size);
+    },
     collectionCopy: function collectionCopy() {
       return this.items.slice(0);
     }
@@ -7365,8 +7347,8 @@ function chunk(myArray, chunkSize) {
 ;
 var z_list_component = normalizeComponent(
   components_z_listvue_type_script_lang_js_,
-  z_listvue_type_template_id_05e6ebb7_render,
-  z_listvue_type_template_id_05e6ebb7_staticRenderFns,
+  z_listvue_type_template_id_27793ef4_render,
+  z_listvue_type_template_id_27793ef4_staticRenderFns,
   false,
   null,
   null,
