@@ -21,6 +21,9 @@
 </p>
 
 ## Using Vue 3?
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9b9332d3839e4638b7e00c0f90f98f09)](https://app.codacy.com/gh/zircleUI/zircleUI?utm_source=github.com&utm_medium=referral&utm_content=zircleUI/zircleUI&utm_campaign=Badge_Grade_Settings)
+
 Check out  [zircleui/vue3 branch](https://github.com/zircleUI/zircleUI/tree/vue3) 
 
 ## Breaking news!
