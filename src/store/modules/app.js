@@ -9,6 +9,7 @@ const initialState = {
   backwardNavigation: false,
   componentList: {},
   goBackView: '',
+  lastView: '',
   diameters: {},
   usePercentSizes: false,
   percentSizes: {
