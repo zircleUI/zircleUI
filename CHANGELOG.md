@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.3](https://github.com/zircleUI/zircleUI/compare/v1.5.2...v1.5.3) (2022-08-27)
+
+
+### Features
+
+* **state.js:** use a common initialState for Vue and resetConfig method ([4cec187](https://github.com/zircleUI/zircleUI/commit/4cec1872526eb0c80e9950c982acb6c6aa2d32c1))
+
+
+### Bug Fixes
+
+* **resetConfig:** set state's data property instead of state directly ([7ac7584](https://github.com/zircleUI/zircleUI/commit/7ac75843bb06aa4208bd8aae2728ec6dfecb27d8))
+* **resetConfig:** set value for each prop in state and copy it instead of assign directly ([2a7a989](https://github.com/zircleUI/zircleUI/commit/2a7a989e76c6ae2a96365b0cccabf39eb998c9a4))
+
 ### [1.5.2](https://github.com/zircleUI/zircleUI/compare/v1.5.1...v1.5.2) (2022-08-26)
 
 ### [1.5.1](https://github.com/zircleUI/zircleUI/compare/v1.5.0...v1.5.1) (2022-08-25)
