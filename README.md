@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/npm/v/zircle/rc.svg"></a>
+  <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/npm/v/zircle/vue3.svg"></a>
   <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-3.x-brightgreen.svg"></a>
   <a href="https://www.npmjs.com/package/zircle"><img alt="downloads" src="https://img.shields.io/npm/dm/zircle.svg?style=flat"></a>
   <br> <br>
@@ -18,7 +18,9 @@
 
 ## 💥 This is the Vue3 branch of zircle-ui
 
-**Switch to master branch for latest estable release and documentation**
+**Switch to master branch for latest estable release (Vue2), and documentation**
+
+Vue3 Zircle release has some limitations. For instance, Vue-router is not working.
 
 ## Contributing
 Many things could be improved and enriched with you collaboration no matter if you are a developer or not. [Here you will find](https://zircleui.github.io/docs/contribute/) some guidelines for inspiration.
