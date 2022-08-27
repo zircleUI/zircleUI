@@ -10,13 +10,13 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/npm/v/zircle/rc.svg"></a>
-  <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-2.x-brightgreen.svg"></a>
+  <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-3.x-brightgreen.svg"></a>
   <a href="https://www.npmjs.com/package/zircle"><img alt="downloads" src="https://img.shields.io/npm/dm/zircle.svg?style=flat"></a>
   <br> <br>
   Like it? Leave a star, it will help to attract more visitors and contributors.<a href="https://github.com/zircleUI/zircleUI/stargazers"> <img src="https://img.shields.io/github/stars/zircleUI/zircleUI.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
 </p>
 
-## 💥 This is the dev branch of zircle-ui
+## 💥 This is the Vue3 branch of zircle-ui
 
 **Switch to master branch for latest estable release and documentation**
 
@@ -39,10 +39,10 @@ After cloning the repository, execute:
 ```bash
 npm install
 ```
-To work with the dev branch, run:
+To work with the vue3 branch, run:
 
 ```bash
-git checkout dev
+git checkout vue3
 ```
 
 ## Commonly used NPM scripts
