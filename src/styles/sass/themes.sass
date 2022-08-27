@@ -2,61 +2,75 @@
   --success-color: green
   --warning-color: yellow
   --danger-color: red
+
 .theme-white
   --shade-color: black
   --primary-color: white
   --accent-color: gray
+
 .theme-light-blue
   --shade-color: #f1f1f1
   --primary-color: #5fc9f3
   --accent-color: #0d7fac
+
 .theme-black
   --shade-color: #859ba6
   --primary-color: #283237
   --accent-color: #000
+
 .theme-purple
   --shade-color: #fdecf0
   --primary-color: #ee305a
   --accent-color: #7b0a23
+
 .theme-orange
   --shade-color: #fff8f3
   --primary-color: #f7892f
   --accent-color: #884005
+
 .theme-yellow
   --shade-color: #fffcf2
   --primary-color: #ffca26
   --accent-color: #8c6a00
+
 .theme-blue
   --shade-color: #d4e1f1
   --primary-color: #3e78bb
   --accent-color: #182e48
+
 .theme-green
   --shade-color: #f6fbf6
   --primary-color: #69bf66
   --accent-color: #2b6329
+
 .theme-red
   --shade-color: #fef8f8
   --primary-color: #ef3c3b
   --accent-color: #860c0b
+
 .theme-gray
   --shade-color: #e4e4e5
   --primary-color: #7c7e81
   --accent-color: #313233
+
 .mode-light
   --background-color: var(--shade-color)
   --main-text-color: var(--primary-color)
   --main-color: var(--shade-color)
   --accent-text-color: var(--accent-color)
+
   &-filled
     --background-color: var(--shade-color)
     --main-text-color: var(--accent-color)
     --main-color: var(--primary-color)
     --accent-text-color: var(--accent-color)
+
 .mode-dark
   --background-color: var(--primary-color)
   --main-text-color: var(--shade-color)
   --main-color: var(--primary-color)
   --accent-text-color: var(--accent-color)
+
   &-filled
     --background-color: var(--primary-color)
     --main-text-color: var(--accent-color)
@@ -73,15 +87,20 @@
   border-color: var(--accent-color)
   background-color: var(--accent-color)
   color: var(--primary-text-color)
-  
+
+.shade
+  border-color: var(--shade-color)
+  background-color: var(--shade-color)
+  color: var(--accent-text-color)
+
 .success
   background-color: var(--success-color)
   border-color: var(--success-color)
-  
+
 .warning
   background-color: var(--warning-color)
   border-color: var(--warning-color)
-  
+
 .z-outer-circle
   border-color: var(--main-text-color)
 
@@ -96,11 +115,13 @@
 
 .z-slider, .z-scroll, .z-range-bar, .z-scroll-handlebar, .z-range-bar-handlebar
   stroke: var(--accent-color)
+
 .z-shape
   &.active
     background-color: var(--accent-color)
     border-width: 1px
     border-color: var(--accent-color)
+
   &.deactive
     border-color: var(--accent-color)
     background-color: transparent
@@ -110,5 +131,4 @@
   fill: var(--accent-color)
   stroke: var(--accent-text-color) */
 
-  
-  
+

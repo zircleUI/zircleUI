@@ -9,34 +9,14 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/npm/v/zircle/vue3.svg"></a>
+  <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/npm/v/zircle/rc.svg"></a>
   <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-3.x-brightgreen.svg"></a>
   <a href="https://www.npmjs.com/package/zircle"><img alt="downloads" src="https://img.shields.io/npm/dm/zircle.svg?style=flat"></a>
-  <a href="https://codeclimate.com/github/zircleUI/zircleUI/maintainability"><img src="https://api.codeclimate.com/v1/badges/bfcc880f5084f9e828ed/maintainability" /></a>
   <br> <br>
   Like it? Leave a star, it will help to attract more visitors and contributors.<a href="https://github.com/zircleUI/zircleUI/stargazers"> <img src="https://img.shields.io/github/stars/zircleUI/zircleUI.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
 </p>
 
-## Important!
-
-> I'm currently working on **Zumly**, which is a step forward to create zoomable web apps.
->
-> The main features of **Zumly** will be:
->
-> - Infinite zoom transitions
-> - Standalone lightweight library
-> - Multiple instances
->
-> **Zumly** is an open source project, but will remain private until it reaches a certain degree of maturity.
->
-> In the meantime, [you can be one of the first to try **Zumly** by joining our mailing list](https://zumly.org). You will receive betas and guides to play with it!
->
-> Best,
-> Martin
->
-> More information @ [#39](https://github.com/zircleUI/zircleUI/issues/39) 
-
-## 💥 This is the VUE3 branch of zircle-ui
+## 💥 This is the Vue3 branch of zircle-ui
 
 **Switch to master branch for latest estable release and documentation**
 
@@ -59,10 +39,10 @@ After cloning the repository, execute:
 ```bash
 npm install
 ```
-To work with the dev branch, run:
+To work with the vue3 branch, run:
 
 ```bash
-git checkout dev
+git checkout vue3
 ```
 
 ## Commonly used NPM scripts

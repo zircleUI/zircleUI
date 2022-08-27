@@ -1,27 +1,13 @@
 module.exports = {
-  root: true,
-  env: {
-    node: true
-  },
   extends: [
-    'plugin:vue/essential',
-    '@vue/standard'
+    // add more generic rulesets here, such as:
+    // 'eslint:recommended',
+    // 'plugin:vue/vue3-recommended',
+    'plugin:vue/vue3-essential', // This option doesn't impose formatting rules
+    // 'plugin:vue/vue3-strongly-recommended', // This option imposes formatting rules on your code to improve readability 
   ],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  },
-  parserOptions: {
-    parser: 'babel-eslint'
-  },
-  overrides: [
-    {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)'
-      ],
-      env: {
-        jest: true
-      }
-    }
-  ]
+    // override/add rules settings here, such as:
+    // 'vue/no-unused-vars': 'error'
+  }
 }

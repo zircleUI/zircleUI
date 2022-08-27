@@ -5,37 +5,38 @@
     :style="responsive === true ? styles.main : zpos.main"
     style="overflow: visible;"
     @animationend="notify"
-    @mouseover = "$zircle.allowBackwardNavigation(true)"
-    @mouseleave = "$zircle.allowBackwardNavigation(false)">
+    @mouseover="$zircle.allowBackwardNavigation(true)"
+    @mouseleave="$zircle.allowBackwardNavigation(false)">
     <div :id="fullView" v-if="$slots['image'] || imagePath" class="z-content">
-      <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
+      <img v-if="imagePath" :src="imagePath" style="width: 100%" alt="content custom image"/>
       <slot v-if="!imagePath" name="image"></slot>
     </div>
     <section style="opacity: 0" :style="animation">
-      <div class="z-outer-circle" :class="[shape]"  :style="responsive === true ? styles.plate : zpos.plate"></div>
-      <z-scroll v-if="scrollBarEnabled" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
+      <div class="z-outer-circle" :class="[shape]" :style="responsive === true ? styles.plate : zpos.plate"></div>
+      <z-scroll v-if="scrollBarEnabled" v-model="scrollVal" style="overflow: visible;"/>
       <z-slider v-if="sliderEnabled" :progress='progress'/>
       <div v-if="label" class="z-label" :class="[shape, labelPos]">
         <div class="inside">
-          {{label}}
+          {{ label }}
         </div>
       </div>
-      <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent, firefoxScroll]" @scroll.passive="scroll">
+      <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent]" @scroll.passive="scroll">
         <div ref="ztext">
           <slot></slot>
         </div>
       </div>
       <div v-if="$slots['media']" :class="[shape]" class="z-content" style="z-index: 60">
-        <slot name="media" ></slot>
+        <slot name="media"></slot>
       </div>
-     <slot name="extension"></slot>
-   </section>
+      <slot name="extension"></slot>
+    </section>
   </div>
 </template>
 
 <script>
 import ZSlider from './child-components/z-slider'
 import ZScroll from './child-components/z-scroll'
+
 export default {
   name: 'z-view',
   props: {
@@ -89,6 +90,7 @@ export default {
       zpos: {},
       isMounted: false,
       ffox: false,
+      publicPath: process.env.BASE_URL,
       fullView: this.$zircle.getNavigationMode() === 'forward' ? this.$zircle.getCurrentViewName() : this.$zircle.getPastViewName()
     }
   },
@@ -99,76 +101,57 @@ export default {
   },
   computed: {
     shape () {
-      return this.circle ? 'is-circle' : this.square ? 'is-square' : ''
+      if (this.square) {
+        return 'is-square'
+      }
+      return 'is-circle'
     },
     sliderEnabled () {
-      let result
-      this.slider === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.slider === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.slider === true && this.shape === 'is-circle'
     },
     scrollBarEnabled () {
-      let result
-      this.scrollBar === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.scrollBar === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.scrollBar === true && this.shape === 'is-circle'
     },
     position () {
       return this.$zircle.calcViewPosition(this.fullView)
     },
     scrollBar () {
-      var isScrollNeeded = false
+      let isScrollNeeded = false
       if (this.isMounted === true && this.fullView === this.$zircle.getCurrentViewName() && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth(this.size)) {
         isScrollNeeded = true
       }
       return isScrollNeeded
     },
     responsive () {
-      if (this.fullView === this.$zircle.getCurrentViewName()) {
-        // eslint-disable-next-line
-        this.zpos = this.styles
-        return true
-      } else {
-        return false
-      }
+      return this.fullView === this.$zircle.getCurrentViewName()
     },
     styles () {
-      var width = this.$zircle.getComponentWidth(this.size)
+      const width = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: width + 'px',
           height: width + 'px',
-          margin: -(width / 2) + 'px 0 0 ' + -(width / 2) + 'px',
+          margin: -width / 2 + 'px 0 0 ' + -width / 2 + 'px',
           transform: 'translate3d(' + this.position.X + 'px, ' + this.position.Y + 'px, 0px) scale(' + this.position.scalei + ')'
         },
         plate: {
-          width: width + 75 + 'px',
-          height: width + 75 + 'px',
-          margin: -((width + 75) / 2) + 'px 0 0 ' + -((width + 75) / 2) + 'px'
+          width: width + 74 + 'px',
+          height: width + 74 + 'px',
+          margin: -((width + 74) / 2) + 'px 0 0 ' + -((width + 74) / 2) + 'px'
         }
       }
     },
     animation () {
       if (this.fullView === this.$zircle.getCurrentViewName() && this.$zircle.getNavigationMode() === 'forward') {
-        var zstyle = 'opacity: 1; transition: opacity 1000ms linear;'
+        return 'opacity: 1; transition: opacity 1000ms linear;'
       } else if (this.fullView === this.$zircle.getCurrentViewName() && this.$zircle.getNavigationMode() !== 'forward') {
-        zstyle = 'opacity: 1;'
-      } else {
-        zstyle = 'opacity: 0; transition: opacity 500ms linear;'
+        return 'opacity: 1;'
       }
-      return zstyle
+      return 'opacity: 0; transition: opacity 500ms linear;'
     },
     longContent () {
       return {
-        'long-content': this.scrollBarEnabled === true,
-        'overflow-square': this.scrollBarEnabled === false
-      }
-    },
-    firefoxScroll () {
-      return {
-        'z-scroll-disabled-for-firefox': this.scrollBar === true && this.ffox === true
+        'overflow-square': this.scrollBar === true && this.shape === 'is-square'
       }
     }
   },
@@ -178,26 +161,27 @@ export default {
     },
     scroll () {
       if (this.scrollBar === true) {
-        var container = this.$refs.maincontent
+        const container = this.$refs.maincontent
         this.scrollVal = -45 + ((container.scrollTop * 100 / (container.scrollHeight - container.clientHeight)) * 86 / 100)
       }
     }
   },
   watch: {
+    responsive (isResponsive) {
+      if (isResponsive) {
+        this.zpos = this.styles
+      }
+    },
     scrollVal () {
       if (this.scrollBar === true) {
-        var container = this.$refs.maincontent
+        const container = this.$refs.maincontent
         container.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (container.scrollHeight - container.clientHeight) / 100
       }
     }
   },
   mounted () {
-    if (navigator.userAgent.match('Firefox') && this.scrollBarEnabled) {
-      this.$zircle.setLog('Firefox desktop detected. Scroll events disabled')
-      this.ffox = true
-    }
     this.zpos = this.styles
-    var vm = this
+    const vm = this
     setTimeout(function () {
       vm.isMounted = true
     }, 1000)

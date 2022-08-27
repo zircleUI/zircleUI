@@ -4,21 +4,21 @@
       class="z-shape is-extension primary"
       :class="[componentType, shape]"
       :style="styles.main">
-        <div v-if="$slots['image'] || imagePath" class="z-content">
-          <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
-          <slot v-if="!imagePath" name="image"></slot>
+      <div v-if="$slots['image'] || imagePath" class="z-content">
+        <img v-if="imagePath" :src="imagePath" width="100%" height="100%" alt="content custom image"/>
+        <slot v-if="!imagePath" name="image"></slot>
+      </div>
+      <div class="z-outer-circle" :class="[shape]" :style="styles.plate"></div>
+      <z-slider v-if="selfCloseEnabled" :progress="progress"></z-slider>
+      <z-scroll v-if="scrollBarEnabled" v-model="scrollVal" style="overflow: visible;"/>
+      <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent]" @scroll.passive="scroll">
+        <div ref="ztext">
+          <slot></slot>
         </div>
-        <div class="z-outer-circle" :class="[shape]" :style="styles.plate"></div>
-        <z-slider v-if="selfCloseEnabled" :progress="progress"></z-slider>
-        <z-scroll v-if="scrollBarEnabled" :scrollVal.sync="scrollVal" style="overflow: visible;"/>
-        <div class="z-content maincontent" ref="maincontent" :class="[shape, longContent, firefoxScroll]" @scroll.passive="scroll">
-          <div ref="ztext">
-            <slot></slot>
-          </div>
-        </div>
-        <div v-if="$slots['media']" :class="[shape]" class="z-content" style="z-index: 60">
-          <slot name="media" ></slot>
-        </div>
+      </div>
+      <div v-if="$slots['media']" :class="[shape]" class="z-content" style="z-index: 60">
+        <slot name="media"></slot>
+      </div>
       <slot name="extension"></slot>
     </div>
   </transition>
@@ -27,6 +27,7 @@
 <script>
 import ZSlider from './child-components/z-slider'
 import ZScroll from './child-components/z-scroll'
+
 export default {
   name: 'z-dialog',
   props: {
@@ -65,14 +66,13 @@ export default {
   },
   computed: {
     scrollBarEnabled () {
-      let result
-      this.scrollBar === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.scrollBar === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.scrollBar === true && (
+        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
+        (this.circle === true && this.$zircle.getThemeShape() === 'square')
+      )
     },
     scrollBar () {
-      var isScrollNeeded = false
+      let isScrollNeeded = false
       if (this.isMounted === true && this.$refs.ztext.clientHeight > this.$zircle.getComponentWidth(this.size)) {
         isScrollNeeded = true
       }
@@ -80,27 +80,23 @@ export default {
     },
     longContent () {
       return {
-        'long-content': this.scrollBarEnabled === true,
-        'overflow-square': this.scrollBarEnabled === false
-      }
-    },
-    firefoxScroll () {
-      return {
-        'z-scroll-disabled-for-firefox': this.scrollBar === true && this.ffox === true
+        'overflow-square': this.scrollBar === true && this.shape === 'is-square'
       }
     },
     selfCloseEnabled () {
-      let result
-      this.selfClose === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.selfClose === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.selfClose === true && (
+        (this.square === false && this.$zircle.getThemeShape() === 'circle') ||
+        (this.circle === true && this.$zircle.getThemeShape() === 'square')
+      )
     },
     shape () {
-      return this.circle ? 'is-circle' : this.square ? 'is-square' : ''
+      if (this.square) {
+        return 'is-square'
+      }
+      return 'is-circle'
     },
     styles () {
-      var zwidth = this.$zircle.getComponentWidth(this.size)
+      const zwidth = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: zwidth + 50 + 'px',
@@ -118,7 +114,7 @@ export default {
   methods: {
     scroll () {
       if (this.scrollBar === true) {
-        var container = this.$refs.maincontent
+        const container = this.$refs.maincontent
         this.scrollVal = -45 + ((container.scrollTop * 100 / (container.scrollHeight - container.clientHeight)) * 86 / 100)
       }
     }
@@ -126,21 +122,19 @@ export default {
   watch: {
     scrollVal () {
       if (this.scrollBar === true) {
-        var container = this.$refs.maincontent
+        const container = this.$refs.maincontent
         container.scrollTop = ((45 + this.scrollVal) * 100 / 86) * (container.scrollHeight - container.clientHeight) / 100
       }
     }
   },
   mounted () {
-    if (navigator.userAgent.match('Firefox') && this.scrollBarEnabled) {
-      this.$zircle.setLog('Firefox desktop detected. Scroll events disabled')
-      this.ffox = true
-    }
-    setTimeout(() => { this.isMounted = true }, 1000)
+    setTimeout(() => {
+      this.isMounted = true
+    }, 1000)
     if (this.selfClose) {
-      var vm = this
+      const vm = this
       this.progress = 5
-      var id = setInterval(function () {
+      const id = setInterval(function () {
         if (vm.progress >= 100) {
           clearInterval(id)
           vm.$emit('done')

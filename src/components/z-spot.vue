@@ -7,35 +7,38 @@
     @mouseover="spotin"
     @mouseout="spotout"
     @mousedown="pulse"
-    @touchstart="pulse"
-    @mouseup="move"
+    @touchstart.passive="pulse"
+    @mouseup.stop="move"
     @click="$emit('click', $event)">
-      <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
-      <div class="z-pulse" :class="[shape]" ref="pulse"></div>
-      <z-knob v-if="knobEnabled" :qty="computedQty" :unit="unit" :min="min" :max="max" />
-      <z-slider v-if="sliderEnabled" :progress='progress' />
-      <div class="z-label" :class="[shape,labelPos]" :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''" v-if="label">
-        <div class="inside">
-        {{label}} <span v-if="pos === 'outside'"> {{progressLabel}}</span>
-        </div>
+    <div v-if="!button" ref="spot" class="z-outer-spot" :class="[shape]" :style="styles.plate"></div>
+    <div class="z-pulse" :class="[shape]" ref="pulse"></div>
+    <z-knob v-if="knob" v-model:qty="computedQty" :unit="unit" :min="min" :max="max"/>
+    <z-slider v-if="slider" :progress='progress'/>
+    <div class="z-label" :class="[shape,labelPos]"
+         :style="$zircle.getThemeMode() === 'mode-light-filled' ? 'color: var(--accent-text-and-border-color);' : ''"
+         v-if="label">
+      <div class="inside">
+        {{ label }} <span v-if="pos === 'outside'"> {{ progressLabel }}</span>
       </div>
-      <div class="z-content" :class="[shape]" >
-        <img v-if="imagePath" :src="imagePath" width="100%" height="100%" />
-        <slot v-if="!imagePath" name="image"></slot>
-      </div>
-      <div class="z-content" :class="[shape]"  style="z-index: 10">
+    </div>
+    <div class="z-content" :class="[shape]">
+      <img v-if="imagePath" :src="imagePath" style="width: 100%" alt="content custom image"/>
+      <slot v-if="!imagePath" name="image"></slot>
+    </div>
+    <div class="z-content" :class="[shape]" style="z-index: 10">
         <span class="overflow">
-          <span v-if="pos === 'inside' || pos === undefined ">{{progressLabel}}</span>
+          <span v-if="pos === 'inside' || pos === undefined ">{{ progressLabel }}</span>
           <slot></slot>
         </span>
-      </div>
-      <slot name="extension"></slot>
+    </div>
+    <slot name="extension"></slot>
   </div>
 </template>
 
 <script>
 import ZSlider from './child-components/z-slider'
 import ZKnob from './child-components/z-knob'
+
 export default {
   name: 'z-spot',
   props: {
@@ -121,7 +124,7 @@ export default {
       zpos: {},
       innerpos: {},
       extrainfo: '',
-      val: 0
+      publicPath: process.env.BASE_URL
     }
   },
   computed: {
@@ -143,30 +146,22 @@ export default {
       return this.$zircle.getNumberOfItemsInCurrentPage() === 1 ? 0 : this.distance
     },
     responsive () {
-      if (this.view === this.$zircle.getCurrentViewName()) {
-        // eslint-disable-next-line
-        this.zpos = this.styles
-        return true
-      } else {
-        return false
+      return this.view === this.$zircle.getCurrentViewName()
+    },
+    shape () {
+      if (this.square) {
+        return 'is-square'
       }
+      return 'is-circle'
     },
     sliderEnabled () {
-      let result
-      this.slider === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.slider === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.slider === true && this.shape === 'is-circle'
     },
     knobEnabled () {
-      let result
-      this.knob === true && this.square === false && this.$zircle.getThemeShape() === 'circle' ? result = true
-        : this.knob === true && this.circle === true && this.$zircle.getThemeShape() === 'square' ? result = true
-          : result = false
-      return result
+      return this.knob === true && this.shape === 'is-circle'
     },
     styles () {
-      var width = this.$zircle.getComponentWidth(this.size)
+      const width = this.$zircle.getComponentWidth(this.size)
       return {
         main: {
           width: width + 'px',
@@ -183,29 +178,32 @@ export default {
     },
     classes () {
       return {
-        'z-zoom-in-cursor': this.componentType === 'z-spot' && this.toView !== undefined,
         primary: this.$parent.componentType !== 'z-list',
-        accent: this.$parent.componentType === 'z-list'
+        accent: this.$parent.componentType === 'z-list',
+        'z-no-zoom-cursor': this.componentType === 'z-spot' && this.toView === undefined
       }
     },
-    shape () {
-      return this.circle ? 'is-circle' : this.square ? 'is-square' : ''
-    },
-    // eslint-disable-next-line vue/return-in-computed-property
     progressLabel () {
       if (this.computedQty) {
         let unit = ''
-        this.unit ? unit = this.unit : unit = ''
+        unit = this.unit ? this.unit : ''
         return this.qty + '' + unit
       }
+      return ''
     },
     computedQty: {
       get: function () {
         return this.qty
       },
       set: function (newValue) {
-        // this.val = newValue
         this.$emit('update:qty', newValue)
+      }
+    }
+  },
+  watch: {
+    responsive (isResponsive) {
+      if (isResponsive) {
+        this.zpos = this.styles
       }
     }
   },

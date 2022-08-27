@@ -5,20 +5,20 @@
       xmlns="http://www.w3.org/2000/svg"
       class="z-scroll"
       @click.prevent="point">
-        <circle r="51" cx="50" cy="50" :style="arcStyle"></circle>
+      <circle r="51" cx="50" cy="50" :style="arcStyle"></circle>
     </svg>
     <svg
       v-show="hidden === false"
       xmlns="http://www.w3.org/2000/svg"
       class="z-scroll-bar"
       :style="circleStyle"
-      @touchstart="drag = true"
-      @touchmove.prevent="slide"
+      @touchstart.passive="drag = true"
+      @touchmove.prevent.passive="slide"
       @touchend="drag = false"
       @mousedown="drag = true"
       @mousemove.prevent="slide"
       @mouseup="drag = false">
-        <circle r="10" cx="20" cy="20" class="z-scroll-handlebar"></circle>
+      <circle r="10" cx="20" cy="20" class="z-scroll-handlebar"></circle>
     </svg>
   </section>
 </template>
@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     arcStyle () {
-      var circleLength = 2 * Math.PI * 50
+      const circleLength = 2 * Math.PI * 50
       return {
         transformOrigin: '50% 50%',
         transform: 'rotate(-45deg)',
@@ -47,7 +47,7 @@ export default {
       }
     },
     position () {
-      var zwidth = this.$zircle.getComponentWidth(this.$parent.size) / 2
+      const zwidth = this.$zircle.getComponentWidth(this.$parent.size) / 2
       return {
         X: (zwidth) * Math.cos(this.scrollVal * (Math.PI / 180)),
         Y: (zwidth) * Math.sin(this.scrollVal * (Math.PI / 180))
@@ -63,13 +63,13 @@ export default {
   methods: {
     point (e) {
       const dimensions = this.$el.querySelector('.z-scroll').getBoundingClientRect()
-      var centerx = (dimensions.width / 2) + dimensions.left
-      var centery = (dimensions.height / 2) + dimensions.top
-      var posx = e.x
-      var posy = e.y
-      var deltay = centery - posy
-      var deltax = centerx - posx
-      var tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
+      const centerx = (dimensions.width / 2) + dimensions.left
+      const centery = (dimensions.height / 2) + dimensions.top
+      const posx = e.x
+      const posy = e.y
+      const deltay = centery - posy
+      const deltax = centerx - posx
+      let tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
       tangle -= 135
       if (tangle < 0) tangle = 360 + tangle
       if (tangle >= 135) tangle = 0
@@ -81,13 +81,13 @@ export default {
       if (this.drag === true) {
         e = e.changedTouches ? e.changedTouches[0] : e
         const dimensions = this.$el.querySelector('.z-scroll').getBoundingClientRect()
-        var centerx = (dimensions.width / 2) + dimensions.left
-        var centery = (dimensions.height / 2) + dimensions.top
-        var posx = e.pageX
-        var posy = e.pageY
-        var deltay = centery - posy
-        var deltax = centerx - posx
-        var tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
+        const centerx = (dimensions.width / 2) + dimensions.left
+        const centery = (dimensions.height / 2) + dimensions.top
+        const posx = e.pageX
+        const posy = e.pageY
+        const deltay = centery - posy
+        const deltax = centerx - posx
+        let tangle = Math.atan2(deltay, deltax) * (180 / Math.PI)
         tangle -= 135
         if (tangle < 0) tangle = 360 + tangle
         if (tangle >= 135) tangle = 0

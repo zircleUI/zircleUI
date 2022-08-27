@@ -1,4 +1,5 @@
 import { reactive } from 'vue'
+
 const state = reactive({
   // app Mode
   appMode: 'full',
@@ -12,14 +13,24 @@ const state = reactive({
   goBackView: '',
   // look & feel
   diameters: {},
-  sizes: {
-    xxl: 55,
-    xl: 32,
-    l: 20,
-    m: 12,
-    s: 8,
-    xs: 5,
+  usePercentSizes: false,
+  percentSizes: {
+    xxl: 30,
+    xl: 20,
+    l: 16,
+    m: 8,
+    s: 6,
+    xs: 4,
     xxs: 2
+  },
+  minSizesInPixels: {
+    xxl: 180,
+    xl: 150,
+    l: 100,
+    m: 80,
+    s: 50,
+    xs: 30,
+    xxs: 20
   },
   appStyle: {
     theme: 'theme-black',
