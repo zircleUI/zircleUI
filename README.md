@@ -9,7 +9,8 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/npm/v/zircle/vue3.svg"></a>
+  
+  <a href="https://www.npmjs.com/package/zircle"><img src="https://img.shields.io/github/package-json/v/zircleui/zircleui/vue3" ></a>
   <a href="https://vuejs.org/"><img alt="npm" src="https://img.shields.io/badge/vue-3.x-brightgreen.svg"></a>
   <a href="https://www.npmjs.com/package/zircle"><img alt="downloads" src="https://img.shields.io/npm/dm/zircle.svg?style=flat"></a>
   <br> <br>
