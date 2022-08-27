@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.2-vue3](https://github.com/zircleUI/zircleUI/compare/v1.5.2...v1.5.2-vue3) (2022-08-27)
+
+
+### Bug Fixes
+
+* adapt to vue3 ([a58b931](https://github.com/zircleUI/zircleUI/commit/a58b931806e3b66f049221f3c0de32a5d67e308e))
+* v-model vue3 ([5462f6f](https://github.com/zircleUI/zircleUI/commit/5462f6f7cc470c9ad209d1c0ff25d70bd4c2694c))
+
 ### [1.5.2](https://github.com/zircleUI/zircleUI/compare/v1.5.1...v1.5.2) (2022-08-26)
 
 ### [1.5.1](https://github.com/zircleUI/zircleUI/compare/v1.5.0...v1.5.1) (2022-08-25)
