@@ -46,7 +46,10 @@
         {{ isRunning ? '||' : '>' }}
       </z-spot>
       <z-spot
-        v-model="speed"
+        v-model:unit="speed.unit"
+        v-model:qty="speed.qty"
+        v-model:min="speed.min"
+        v-model:max="speed.max"
         size="m"
         :angle="45"
         :distance="170"

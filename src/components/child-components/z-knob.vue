@@ -71,6 +71,7 @@ export default {
       }
     }
   },
+  emits: ['update:qty'],
   methods: {
     bar (e) {
       e = e.changedTouches ? e.changedTouches[0] : e
