@@ -3555,6 +3555,29 @@ module.exports = function (FULL_NAME, wrapper, FORCED, IS_AGGREGATE_ERROR) {
 
 /***/ }),
 
+/***/ 7327:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(2109);
+var $filter = (__webpack_require__(2092).filter);
+var arrayMethodHasSpeciesSupport = __webpack_require__(1194);
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
+
+// `Array.prototype.filter` method
+// https://tc39.es/ecma262/#sec-array.prototype.filter
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  filter: function filter(callbackfn /* , thisArg */) {
+    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
 /***/ 9826:
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
@@ -4115,6 +4138,60 @@ var assign = __webpack_require__(1574);
 // eslint-disable-next-line es-x/no-object-assign -- required for testing
 $({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign }, {
   assign: assign
+});
+
+
+/***/ }),
+
+/***/ 5003:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(2109);
+var fails = __webpack_require__(7293);
+var toIndexedObject = __webpack_require__(5656);
+var nativeGetOwnPropertyDescriptor = (__webpack_require__(1236).f);
+var DESCRIPTORS = __webpack_require__(9781);
+
+var FAILS_ON_PRIMITIVES = fails(function () { nativeGetOwnPropertyDescriptor(1); });
+var FORCED = !DESCRIPTORS || FAILS_ON_PRIMITIVES;
+
+// `Object.getOwnPropertyDescriptor` method
+// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
+$({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS }, {
+  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
+    return nativeGetOwnPropertyDescriptor(toIndexedObject(it), key);
+  }
+});
+
+
+/***/ }),
+
+/***/ 9337:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(2109);
+var DESCRIPTORS = __webpack_require__(9781);
+var ownKeys = __webpack_require__(3887);
+var toIndexedObject = __webpack_require__(5656);
+var getOwnPropertyDescriptorModule = __webpack_require__(1236);
+var createProperty = __webpack_require__(6135);
+
+// `Object.getOwnPropertyDescriptors` method
+// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
+$({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
+  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
+    var O = toIndexedObject(object);
+    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
+    var keys = ownKeys(O);
+    var result = {};
+    var index = 0;
+    var key, descriptor;
+    while (keys.length > index) {
+      descriptor = getOwnPropertyDescriptor(O, key = keys[index++]);
+      if (descriptor !== undefined) createProperty(result, key, descriptor);
+    }
+    return result;
+  }
 });
 
 
@@ -5197,61 +5274,20 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
-var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__(7203);
-var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_vue_commonjs2_vue_root_Vue_);
-;// CONCATENATED MODULE: ./src/store/state.js
-
-var state = new (external_commonjs_vue_commonjs2_vue_root_Vue_default())({
-  data: {
-    // app Mode
-    appMode: 'full',
-    // navigation
-    navigationMode: 'forward',
-    isRouterEnabled: false,
-    router: {},
-    history: [],
-    backwardNavigation: false,
-    componentList: {},
-    goBackView: '',
-    // look & feel
-    diameters: {},
-    usePercentSizes: false,
-    percentSizes: {
-      xxl: 30,
-      xl: 20,
-      l: 16,
-      m: 8,
-      s: 6,
-      xs: 4,
-      xxs: 2
-    },
-    minSizesInPixels: {
-      xxl: 180,
-      xl: 150,
-      l: 100,
-      m: 80,
-      s: 50,
-      xs: 30,
-      xxs: 20
-    },
-    appStyle: {
-      theme: 'theme-black',
-      mode: 'mode-dark',
-      shape: 'circle'
-    },
-    // pagination components
-    currentPage: 0,
-    items: [],
-    pages: [],
-    params: {},
-    // debug
-    debug: false
-  }
-});
-/* harmony default export */ var store_state = (state);
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.assign.js
-var es_object_assign = __webpack_require__(9601);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
+var es_object_keys = __webpack_require__(7941);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.js
+var es_symbol = __webpack_require__(2526);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
+var es_array_filter = __webpack_require__(7327);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
+var es_object_to_string = __webpack_require__(1539);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.get-own-property-descriptor.js
+var es_object_get_own_property_descriptor = __webpack_require__(5003);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
+var web_dom_collections_for_each = __webpack_require__(4747);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.get-own-property-descriptors.js
+var es_object_get_own_property_descriptors = __webpack_require__(9337);
 ;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -5267,6 +5303,98 @@ function _defineProperty(obj, key, value) {
 
   return obj;
 }
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
+
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    enumerableOnly && (symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    })), keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {};
+    i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
+      _defineProperty(target, key, source[key]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
+      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+    });
+  }
+
+  return target;
+}
+// EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
+var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__(7203);
+var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_vue_commonjs2_vue_root_Vue_);
+;// CONCATENATED MODULE: ./src/store/state.js
+
+
+var initialState = {
+  // app Mode
+  appMode: 'full',
+  // navigation
+  navigationMode: 'forward',
+  isRouterEnabled: false,
+  router: {},
+  history: [],
+  backwardNavigation: false,
+  componentList: {},
+  goBackView: '',
+  // look & feel
+  diameters: {},
+  usePercentSizes: false,
+  percentSizes: {
+    xxl: 30,
+    xl: 20,
+    l: 16,
+    m: 8,
+    s: 6,
+    xs: 4,
+    xxs: 2
+  },
+  minSizesInPixels: {
+    xxl: 180,
+    xl: 150,
+    l: 100,
+    m: 80,
+    s: 50,
+    xs: 30,
+    xxs: 20
+  },
+  appStyle: {
+    theme: 'theme-black',
+    mode: 'mode-dark',
+    shape: 'circle'
+  },
+  // pagination components
+  currentPage: 0,
+  items: [],
+  pages: [],
+  params: {},
+  // debug
+  debug: false
+};
+var state = new (external_commonjs_vue_commonjs2_vue_root_Vue_default())({
+  data: _objectSpread2({}, initialState)
+});
+/* harmony default export */ var store_state = (state);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.assign.js
+var es_object_assign = __webpack_require__(9601);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
 var es_function_name = __webpack_require__(8309);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
@@ -5450,12 +5578,8 @@ var position = {
   }
 };
 /* harmony default export */ var modules_position = (position);
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.js
-var es_symbol = __webpack_require__(2526);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.description.js
 var es_symbol_description = __webpack_require__(1817);
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
-var es_object_to_string = __webpack_require__(1539);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.iterator.js
 var es_symbol_iterator = __webpack_require__(2165);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
@@ -5483,10 +5607,6 @@ function _typeof(obj) {
 }
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.split.js
 var es_string_split = __webpack_require__(3123);
-// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
-var web_dom_collections_for_each = __webpack_require__(4747);
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
-var es_object_keys = __webpack_require__(7941);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.find.js
 var es_array_find = __webpack_require__(9826);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.slice.js
@@ -6163,46 +6283,10 @@ var es_json_stringify = __webpack_require__(8862);
 
 
 
-var initialState = {
-  appMode: 'full',
-  navigationMode: 'forward',
-  isRouterEnabled: false,
-  router: {},
-  history: [],
-  backwardNavigation: false,
-  componentList: {},
-  goBackView: '',
-  diameters: {},
-  usePercentSizes: false,
-  percentSizes: {
-    xxl: 30,
-    xl: 20,
-    l: 16,
-    m: 8,
-    s: 6,
-    xs: 4,
-    xxs: 2
-  },
-  minSizesInPixels: {
-    xxl: 180,
-    xl: 150,
-    l: 100,
-    m: 80,
-    s: 50,
-    xs: 30,
-    xxs: 20
-  },
-  appStyle: {
-    theme: 'theme-black',
-    mode: 'mode-dark',
-    shape: 'circle'
-  },
-  currentPage: 0,
-  items: [],
-  pages: [],
-  params: {},
-  debug: false
-};
+
+
+
+
 var app = {
   getAppMode: function getAppMode() {
     return store_store.state.appMode;
@@ -6211,7 +6295,9 @@ var app = {
     return store_store.state.usePercentSizes;
   },
   resetConfig: function resetConfig() {
-    store_store.state = initialState;
+    Object.keys(initialState).forEach(function (key) {
+      store_store.state[key] = JSON.parse(JSON.stringify(initialState[key]));
+    });
   },
   config: function config(_config) {
     if (typeof _config.debug === 'boolean') store_store.state.debug = _config.debug;
