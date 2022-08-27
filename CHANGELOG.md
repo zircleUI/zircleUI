@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.2-vue3.0](https://github.com/zircleUI/zircleUI/compare/v1.5.2-vue3...v1.5.2-vue3.0) (2022-08-27)
+
 ### [1.5.2-vue3](https://github.com/zircleUI/zircleUI/compare/v1.5.2...v1.5.2-vue3) (2022-08-27)
 
 
