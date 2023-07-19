@@ -20,14 +20,12 @@
   
 </p>
 
+## Status
+Even though it's been around for a while, this repository is still a gem that deserves to shine bright with a GitHub star. 
+No futher updates are planned for Zircle but new ideas are being developed for zoomable navigation and circular UI. Reach us on zumly telegram group to get involved
+
 ## Using Vue 3?
 Check out  [zircleui/vue3 branch](https://github.com/zircleUI/zircleUI/tree/vue3) 
-
-## Breaking news!
-
-> I've been working on a new zooming engine.
->
-> Give **Zumly** a try and joing our community at https://zumly.org!
 
 ## What is zircle-ui?
 
