@@ -24,7 +24,12 @@
 
 👇👇👇👇
 
-**Zircle** was split into two independent projects: [**Zumly**](https://github.com/zumly/zumly), as a zoomable engine library; and [**Orbit**](https://github.com/zumerlab/orbit) as a CSS framework for composing radial designs and UIs. They can be used together as well. Both Orbit and Zumly are lightweight and don't depend on other tools like Vue. 
+**Zircle** was split into two independent projects:
+
+- [**Zumly**](https://github.com/zumly/zumly), as a zoomable engine library.
+- [**Orbit**](https://github.com/zumerlab/orbit) as a CSS framework for composing radial designs and UIs. 
+
+They can be used together as well. Both Orbit and Zumly are lightweight and don't depend on other tools like Vue. 
 
  
 ## What is zircle-ui?
