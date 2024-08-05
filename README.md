@@ -62,7 +62,7 @@ Check out  [zircleui/vue3 branch](https://github.com/zircleUI/zircleUI/tree/vue3
 ## About zircle-ui
 **Zircle-ui** is the first [Open Source Project](https://opensource.guide/starting-a-project/) I've made and it was possible thanks to the Open Source community, specially the [Vue](https://vuejs.org) community. In retribution, I've created a project of the highest quality I could within my limitations since I'm not a professional developer. 
 
-**Zircle-ui** intends to promote approach in the universe of UIs. My main motivation is believing there is room for a new UI/UX not constrained to grid layouts or to squared shapes. 
+**Zircle-ui** intends to promote a different approach in the universe of UIs. My main motivation is believing there is room for a new UI/UX not constrained to grid layouts or to squared shapes. 
 
 **Zircle-ui** was inspired by the idea underneath some really awesome projects and articles like [prezi](https://www.prezi.com), [impress.js](https://github.com/impress/impress.js), [tizen](https://www.tizen.org/), [zoomooz](http://jaukia.github.io/zoomooz/), [creativebloq's article](https://www.creativebloq.com/create-zoomable-user-interface-css-transforms-9114269), [google maps](http://maps.google.com), [bootstrap](https://getbootstrap.com/), [UIKit](https://getuikit.com/) and [bulma](https://bulma.io) among others. 
 
