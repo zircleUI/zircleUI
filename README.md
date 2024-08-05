@@ -26,9 +26,7 @@
 
 **Zircle** was split into two independent projects: [**Zumly**](https://github.com/zumly/zumly), as a zoomable engine library; and [**Orbit**](https://github.com/zumerlab/orbit) as a CSS framework for composing radial designs and UIs. They can be used together as well. Both Orbit and Zumly are lightweight and don't depend on other tools like Vue. 
 
-## Using Vue 3?
-Check out  [zircleui/vue3 branch](https://github.com/zircleUI/zircleUI/tree/vue3) 
-
+ 
 ## What is zircle-ui?
 
 **Zircle-ui** is an experimental frontend library to develop [zoomable user interfaces (ZUI)](https://en.wikipedia.org/wiki/Zooming_user_interface). It is based on [vue.js](https://vuejs.org/) and JavaScript and comes with a set of components to create unconventional user interfaces.
@@ -53,6 +51,9 @@ You can try **zircle-ui** to develop a wide range of applications, such as: dash
 
 In general, using **zircle-ui** should be fine if your application is highly interactive and you need to intuitively view and control information without loosing the user’s attention. 
 
+## Using Vue 3?
+Check out  [zircleui/vue3 branch](https://github.com/zircleUI/zircleUI/tree/vue3)
+
 ## About zircle-ui
 **Zircle-ui** is the first [Open Source Project](https://opensource.guide/starting-a-project/) I've made and it was possible thanks to the Open Source community, specially the [Vue](https://vuejs.org) community. In retribution, I've created a project of the highest quality I could within my limitations since I'm not a professional developer. 
 
@@ -62,7 +63,6 @@ In general, using **zircle-ui** should be fine if your application is highly int
 
 ---
 ## Table of contents
-- [Status](#status-beta)
 - [Documentation, examples and tutorial](#documentation-examples-and-tutorial)
 - [Installation](#installation)
   * [Direct download](#--direct-download)
@@ -76,9 +76,6 @@ In general, using **zircle-ui** should be fine if your application is highly int
 - [License](#license)
 
 ---
-
-## Status: 
-Despite **zircle-ui** could be considered **stable**, it will remains as beta for a while because I would like to hear feedbacks regarding its usability.
 
 ## Documentation, examples and tutorial
 Please checkout [**https://zircleui.github.io/docs/**](https://zircleui.github.io/docs/) to learn how to use **zircle-ui**. For early **zircle-ui** users a **easy-to-follow migration guide** [is available here](https://zircleui.github.io/docs/guide/migration.html)
