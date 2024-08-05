@@ -21,7 +21,6 @@
 </p>
 
 ## Status
-No further updates are planned for Zircle but new ideas are being developed for zoomable navigation and circular UI. Reach us on [our telegram group](https://t.me/ZumlyCommunity) to get involved.
 
 👇👇👇👇
 
