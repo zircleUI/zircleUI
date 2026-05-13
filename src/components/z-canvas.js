@@ -97,9 +97,10 @@ export class ZCanvas extends HTMLElement {
         transitions: {
           driver: 'css',
           duration: '900ms',
-          ease: 'ease-in-out',
+          ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
           cover: 'width',
-          effects: ['blur(2px) brightness(0.7)', 'blur(6px) brightness(0.4)']
+          effects: ['blur(2px) brightness(0.7)', 'blur(6px) brightness(0.4)'],
+          hideTrigger: 'fade'
         },
         depthNav: { position: depthPos },
         lateralNav: lateral === 'off' || lateral === null

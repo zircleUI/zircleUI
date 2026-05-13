@@ -211,6 +211,23 @@
         }
         window.addEventListener('error', e => showErr(`ERROR: ${e.message} (${e.filename}:${e.lineno})`))
         window.addEventListener('unhandledrejection', e => showErr(`PROMISE: ${e.reason?.stack || e.reason || e}`))
+
+        // Mirror console.log / .warn / .error to the dev server so the
+        // agent driving the project can read them in the terminal.
+        ;['log', 'warn', 'error'].forEach(method => {
+          const orig = console[method].bind(console)
+          console[method] = (...args) => {
+            orig(...args)
+            try {
+              const body = `[${method}] ` + args.map(a => {
+                if (a instanceof Error) return a.stack || a.message
+                if (typeof a === 'object') { try { return JSON.stringify(a) } catch { return String(a) } }
+                return String(a)
+              }).join(' ')
+              fetch('/__client_log__', { method: 'POST', body }).catch(()=>{})
+            } catch {}
+          }
+        })
       })()
     </script>
 
