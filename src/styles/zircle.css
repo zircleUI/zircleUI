@@ -85,11 +85,11 @@ z-canvas:not([data-ready]) { visibility: hidden; }
 }
 .zircle .z-view-content {
   position: relative; z-index: 2;
-  max-width: 80%; max-height: 80%;
+  max-width: 85%; max-height: 85%;
   text-align: center;
-  overflow: auto;
-  scrollbar-width: thin;
+  overflow: hidden;
   padding: 6px;
+  line-height: 1.35;
 }
 .zircle .z-view-slider-wrap {
   position: absolute; inset: 0;
@@ -122,6 +122,7 @@ z-canvas:not([data-ready]) { visibility: hidden; }
   border-radius: 50%;
   text-align: center;
   font-size: 0.6em;
+  z-index: 5;
   transition: background-color 400ms, border-color 300ms, box-shadow 200ms;
 }
 .zircle z-spot.shape-square { border-radius: 8%; }
@@ -178,14 +179,19 @@ z-canvas:not([data-ready]) { visibility: hidden; }
 .zircle z-knob {
   position: relative;
   display: grid; place-items: center;
-  width: 80%; height: 80%;
+  width: 100%; height: 100%;
   cursor: ns-resize;
   user-select: none;
+  outline: none;
+}
+.zircle z-knob:focus, .zircle z-knob:focus-visible {
+  outline: none;
 }
 .zircle z-knob .z-knob-value {
-  font-weight: 700; font-size: 1.4em; line-height: 1;
+  font-weight: 700; font-size: 1.6em; line-height: 1;
+  color: var(--main-text-color);
 }
-.zircle z-knob .z-knob-value small { font-size: 0.6em; opacity: 0.7; margin-left: 1px; }
+.zircle z-knob .z-knob-value small { font-size: 0.5em; opacity: 0.7; margin-left: 2px; }
 
 /* ── Dialog ───────────────────────────────────────────────────────────── */
 .zircle z-dialog {
@@ -248,14 +254,46 @@ z-breadcrumb .z-crumb.current { font-weight: 700; }
 z-breadcrumb .z-crumb-sep { opacity: 0.4; }
 
 /* ── Gauge / Menu / Compass shared cosmetics ──────────────────────────── */
+/* Position absolute so they overlap the .z-view-shape that lives in the
+   same z-view grid; without this they fall into an adjacent grid cell. */
 .zircle z-menu, .zircle z-gauge, .zircle z-compass {
-  position: relative;
-  width: 100%; height: 100%;
-  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  z-index: 3;
 }
-.zircle z-menu o-arc, .zircle z-gauge o-arc { cursor: default; transition: filter 150ms; }
+.zircle z-menu .bigbang, .zircle z-gauge .bigbang, .zircle z-compass .bigbang {
+  pointer-events: auto;
+}
+.zircle z-menu o-arc, .zircle z-gauge o-arc { transition: filter 150ms; }
 .zircle z-menu o-arc { cursor: pointer; }
 .zircle z-menu o-arc:hover { filter: brightness(1.15); }
+
+/* Make the cardinal labels of z-compass visible — they default to invisible
+   because Orbit's .satellite has no background and our --main-text-color is
+   close to the canvas background. */
+.zircle z-compass .satellite {
+  background-color: var(--shade-color);
+  color: var(--accent-color);
+  border: 1px solid var(--shade-color);
+  font-weight: 700;
+}
+.zircle z-compass .satellite.accent {
+  background-color: var(--danger-color, #ef3c3b);
+  color: #fff;
+  border-color: var(--danger-color, #ef3c3b);
+}
+.zircle z-compass .satellite.at-center {
+  background-color: transparent;
+  color: var(--main-text-color);
+  border: none;
+  font-size: 1.2em;
+}
+/* Keep the cardinal labels upright; Orbit's .capsule rotates with its
+   parent satellite by default. */
+.zircle z-compass .capsule { rotate: 0deg !important; }
 
 /* ── Pulse / spot hover animations (ported from zircle 1.x) ───────────── */
 .zircle z-spot.zoom-me::after,
@@ -285,8 +323,7 @@ z-breadcrumb .z-crumb-sep { opacity: 0.4; }
 
 /* ── Demo chrome (ported from public/index.css) ───────────────────────── */
 .zircle-chrome .version  { z-index: 999; position: absolute; top: 10px; right: 14px; font-weight: 500; font-size: 13px; opacity: 0.7; }
-.zircle-chrome .title    { position: absolute; left: 5%; width: 90%; top: 24px; font-weight: 700; font-size: 32px; line-height: 1.02em; z-index: 9999; pointer-events: none; }
-.zircle-chrome .title.home { text-align: center; }
+.zircle-chrome .title    { position: absolute; left: 5%; width: 90%; top: 24px; font-weight: 700; font-size: 32px; line-height: 1.02em; z-index: 9999; pointer-events: none; text-align: center; }
 .zircle-chrome .subtitle { display: block; margin-top: 8px; font-weight: 300; font-size: 20px; opacity: 0.65; }
 .zircle-chrome .panel    { position: absolute; top: 80px; right: 5%; width: 300px; max-height: 60vh; background: rgba(255,255,255,0.06); backdrop-filter: blur(10px); border-radius: 8px; padding: 16px; line-height: 1.55; overflow: auto; z-index: 9999; }
 .zircle-chrome .footer   { position: absolute; bottom: 20px; left: 5%; width: 90%; text-align: center; font-size: 15px; font-weight: 300; opacity: 0.75; pointer-events: none; z-index: 9999; }

@@ -4,9 +4,216 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>zircle-ui | demo</title>
+    <title>zircle 2.x · component showcase</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css">
+    <link rel="stylesheet" href="https://unpkg.com/zumly@latest/dist/zumly.css">
+    <link rel="stylesheet" href="../src/styles/zircle.css">
+
+    <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "zumly":         "https://unpkg.com/zumly@latest/dist/zumly.mjs",
+          "@zumer/snapdom": "https://unpkg.com/@zumer/snapdom/dist/snapdom.mjs"
+        }
+      }
+    </script>
+
+    <style>
+      #__err__ {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 100000;
+        background: #c0392b; color: #fff; font: 13px/1.4 monospace;
+        padding: 10px 16px; max-height: 40vh; overflow: auto;
+        white-space: pre-wrap; display: none;
+      }
+      #__err__.show { display: block; }
+      #__err__ .clear { float: right; cursor: pointer; opacity: 0.7; }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+
+    <div id="__err__"><span class="clear" onclick="this.parentNode.classList.remove('show')">×</span></div>
+
+    <div class="zircle-chrome">
+      <span class="version"></span>
+      <div class="crumbs"><z-breadcrumb clickable></z-breadcrumb></div>
+      <div class="title"></div>
+      <div class="subtitle"></div>
+      <div class="footer"></div>
+    </div>
+
+    <z-canvas id="app" theme="black" mode="dark" shape="circle">
+
+      <!-- ─────────── HOME · launcher ─────────── -->
+      <z-view name="home" size="m" ring-shade="shade">
+        <b>zircle 2.x</b><br><small style="opacity:0.7">click a satellite</small>
+
+        <z-spot to-view="d-spot"       size="xs" orbit="9" angle="-90" label="z-spot">●</z-spot>
+        <z-spot to-view="d-list"       size="xs" orbit="9" angle="-60" label="z-list">≡</z-spot>
+        <z-spot to-view="d-knob"       size="xs" orbit="9" angle="-30" label="z-knob">⊙</z-spot>
+        <z-spot to-view="d-slider"     size="xs" orbit="9" angle="0"   label="z-slider">◐</z-spot>
+        <z-spot to-view="d-scroll"     size="xs" orbit="9" angle="30"  label="z-scroll">⇅</z-spot>
+        <z-spot to-view="d-pagination" size="xs" orbit="9" angle="60"  label="z-pagination">⋯</z-spot>
+        <z-spot to-view="d-dialog"     size="xs" orbit="9" angle="90"  label="z-dialog">!</z-spot>
+        <z-spot to-view="d-menu"       size="xs" orbit="9" angle="120" label="z-menu">◔</z-spot>
+        <z-spot to-view="d-gauge"      size="xs" orbit="9" angle="150" label="z-gauge">◐</z-spot>
+        <z-spot to-view="d-compass"    size="xs" orbit="9" angle="180" label="z-compass">⊕</z-spot>
+        <z-spot to-view="d-tabs"       size="xs" orbit="9" angle="210" label="z-tabs">|||</z-spot>
+        <z-spot to-view="d-solar"      size="xs" orbit="9" angle="240" label="solar">☀</z-spot>
+      </z-view>
+
+      <!-- ─────────── z-spot ─────────── -->
+      <z-view name="d-spot" size="xs" ring-shade="transparent">
+        <!-- Size ladder along the top half -->
+        <z-spot button size="xxs" orbit="14" angle="-135" label="xxs">·</z-spot>
+        <z-spot button size="xs"  orbit="14" angle="-105" label="xs">·</z-spot>
+        <z-spot button size="s"   orbit="14" angle="-75"  label="s">·</z-spot>
+        <z-spot button size="m"   orbit="14" angle="-45"  label="m">·</z-spot>
+        <z-spot button size="l"   orbit="16" angle="-10"  label="l">·</z-spot>
+
+        <!-- Variants along the bottom half -->
+        <z-spot button size="s" square orbit="14" angle="135" label="square">▢</z-spot>
+        <z-spot button size="s"        orbit="14" angle="100" label="accent" class-style="accent">A</z-spot>
+        <z-spot button size="m"        orbit="14" angle="170" label="image"  image-path="./earth.png" class-style="transparent"></z-spot>
+      </z-view>
+
+      <!-- ─────────── z-list ─────────── -->
+      <z-view name="d-list" size="xs" ring-shade="transparent">
+        <z-list per-page="6" orbit="9" range="360" size="xs"
+                items='[
+                  {"name":"Mercury","icon":"☿"},{"name":"Venus","icon":"♀"},
+                  {"name":"Earth","icon":"🜨"},{"name":"Mars","icon":"♂"},
+                  {"name":"Jupiter","icon":"♃"},{"name":"Saturn","icon":"♄"},
+                  {"name":"Uranus","icon":"♅"},{"name":"Neptune","icon":"♆"},
+                  {"name":"Pluto","icon":"♇"},{"name":"Ceres","icon":"⚳"},
+                  {"name":"Eris","icon":"⯰"},{"name":"Sedna","icon":"⯲"}
+                ]'>
+          <template>
+            <z-spot size="xs" button label="{{name}}">{{icon}}</z-spot>
+          </template>
+        </z-list>
+      </z-view>
+
+      <!-- ─────────── z-knob ─────────── -->
+      <z-view name="d-knob" size="xs" ring-shade="transparent">
+        <z-spot knob   size="xl" orbit="0" angle="0" qty="50" unit="%" min="0" max="100" label="standalone"></z-spot>
+        <z-spot button size="s"  orbit="13" angle="90" label="reset" id="knob-reset" class-style="shade">↺</z-spot>
+      </z-view>
+
+      <!-- ─────────── z-slider ─────────── -->
+      <z-view name="d-slider" size="xs" ring-shade="transparent">
+        <z-spot size="xl" orbit="0" angle="0" class-style="transparent" id="slider-host">
+          <z-slider progress="60" color="#3e78bb"></z-slider>
+        </z-spot>
+        <z-spot button size="s" orbit="18" angle="-135" label="-10" id="slider-down" class-style="shade">−</z-spot>
+        <z-spot button size="s" orbit="18" angle="-45"  label="+10" id="slider-up"   class-style="shade">+</z-spot>
+      </z-view>
+
+      <!-- ─────────── z-scroll ─────────── -->
+      <z-view name="d-scroll" size="l" ring-shade="shade">
+        <z-spot size="l" orbit="0" angle="0" class-style="shade" id="scroll-spot"></z-spot>
+      </z-view>
+
+      <!-- ─────────── z-pagination ─────────── -->
+      <z-view name="d-pagination" size="m" ring-shade="shade">
+        <b>5 pages</b><br><small style="opacity:0.65">active: 3rd</small>
+        <z-pagination pages="5" active="2" orbit="9" from="90"></z-pagination>
+      </z-view>
+
+      <!-- ─────────── z-dialog ─────────── -->
+      <z-view name="d-dialog" size="xs" ring-shade="transparent">
+        <z-spot button size="l" orbit="0" angle="0" label="open" id="dlg-open" class-style="shade">!</z-spot>
+        <z-spot button size="m" orbit="11" angle="180" label="self-close" id="dlg-self" class-style="shade">⏱</z-spot>
+      </z-view>
+
+      <!-- ─────────── z-menu ─────────── -->
+      <z-view name="d-menu" size="xs" ring-shade="transparent">
+        <!-- Labels intentionally short; o-arc renders text along the path -->
+        <z-menu orbit="6" range="360" from="90" force="80vmin" id="menu-demo"
+                items='[
+                  {"label":"","color":"#3e78bb"},
+                  {"label":"","color":"#69bf66"},
+                  {"label":"","color":"#f7892f"},
+                  {"label":"","color":"#ee305a"}
+                ]'></z-menu>
+        <!-- Static legend dots below -->
+        <z-spot button size="xxs" orbit="13" angle="60"  class-style="legend" style="background:#3e78bb;border-color:#3e78bb" label="NEW"></z-spot>
+        <z-spot button size="xxs" orbit="13" angle="120" class-style="legend" style="background:#69bf66;border-color:#69bf66" label="EDIT"></z-spot>
+        <z-spot button size="xxs" orbit="13" angle="-120" class-style="legend" style="background:#f7892f;border-color:#f7892f" label="SHARE"></z-spot>
+        <z-spot button size="xxs" orbit="13" angle="-60"  class-style="legend" style="background:#ee305a;border-color:#ee305a" label="TRASH"></z-spot>
+      </z-view>
+
+      <!-- ─────────── z-gauge ─────────── -->
+      <z-view name="d-gauge" size="xs" ring-shade="transparent">
+        <z-gauge id="gauge-demo" orbit="5" force="50vmin" value="42" max="100" label="CPU" color="#ee305a"></z-gauge>
+        <z-spot button size="s" orbit="18" angle="-135" label="-10" id="g-down" class-style="shade">−</z-spot>
+        <z-spot button size="s" orbit="18" angle="-45"  label="+10" id="g-up"   class-style="shade">+</z-spot>
+      </z-view>
+
+      <!-- ─────────── z-compass ─────────── -->
+      <z-view name="d-compass" size="xs" ring-shade="transparent">
+        <z-compass id="compass-demo" orbit="5" force="45vmin" heading="0" show-degrees></z-compass>
+        <!-- Controls at diagonals so they don't sit on top of N/S -->
+        <z-spot button size="s" orbit="18" angle="-135" label="-15°" id="c-down" class-style="shade">◀</z-spot>
+        <z-spot button size="s" orbit="18" angle="-45"  label="+15°" id="c-up"   class-style="shade">▶</z-spot>
+      </z-view>
+
+      <!-- ─────────── z-tabs ─────────── -->
+      <z-view name="d-tabs" size="m" ring-shade="shade">
+        <b>A</b>
+        <z-tabs orbit="9" range="180" from="0"
+                views='[{"name":"d-tabs","label":"A"},{"name":"d-tabs-b","label":"B"},{"name":"d-tabs-c","label":"C"}]'></z-tabs>
+      </z-view>
+      <z-view name="d-tabs-b" size="m" ring-shade="shade">
+        <b>B</b>
+        <z-tabs orbit="9" range="180" from="0" active="d-tabs-b"
+                views='[{"name":"d-tabs","label":"A"},{"name":"d-tabs-b","label":"B"},{"name":"d-tabs-c","label":"C"}]'></z-tabs>
+      </z-view>
+      <z-view name="d-tabs-c" size="m" ring-shade="shade">
+        <b>C</b>
+        <z-tabs orbit="9" range="180" from="0" active="d-tabs-c"
+                views='[{"name":"d-tabs","label":"A"},{"name":"d-tabs-b","label":"B"},{"name":"d-tabs-c","label":"C"}]'></z-tabs>
+      </z-view>
+
+      <!-- ─────────── SOLAR (Sun / Earth / Moon — the classic) ─────────── -->
+      <z-view name="d-solar" size="xl" ring-shade="transparent">
+        <z-spot to-view="d-sun" size="l" orbit="0" angle="0" image-path="./sun.png" label="sun" class-style="transparent">
+          <z-spot to-view="d-earth" data-role="earth" size="s" orbit="12" angle="160" image-path="./earth.png" label="earth" class-style="transparent">
+            <z-spot to-view="d-moon" data-role="moon" size="xs" orbit="10" angle="160" image-path="./moon.png" class-style="transparent"></z-spot>
+          </z-spot>
+        </z-spot>
+      </z-view>
+      <z-view name="d-sun"   size="xl" image-path="./sun.png"   ring-shade="transparent"></z-view>
+      <z-view name="d-earth" size="xl" image-path="./earth.png" ring-shade="transparent"></z-view>
+      <z-view name="d-moon"  size="xl" image-path="./moon.png"  ring-shade="transparent"></z-view>
+
+    </z-canvas>
+
+    <z-dialog id="dialog-plain" size="m">
+      <b>Plain dialog</b><br><br>
+      Triggered via <code>document.getElementById('dialog-plain').open()</code>.<br><br>
+      <button onclick="document.getElementById('dialog-plain').close()">close</button>
+    </z-dialog>
+
+    <z-dialog id="dialog-self" size="m" duration="4000">
+      <b>Self-closing dialog</b><br><br>
+      Closes in 4 s. The arc shows remaining time.
+    </z-dialog>
+
+    <script>
+      (function () {
+        const box = document.getElementById('__err__')
+        function showErr (msg) {
+          box.classList.add('show')
+          box.appendChild(Object.assign(document.createElement('div'), { textContent: msg }))
+          fetch('/__client_log__', { method: 'POST', body: msg }).catch(()=>{})
+        }
+        window.addEventListener('error', e => showErr(`ERROR: ${e.message} (${e.filename}:${e.lineno})`))
+        window.addEventListener('unhandledrejection', e => showErr(`PROMISE: ${e.reason?.stack || e.reason || e}`))
+      })()
+    </script>
+
+    <script type="module" src="../src/demo/app.js"></script>
   </body>
 </html>
