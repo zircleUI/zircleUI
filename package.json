@@ -1,6 +1,6 @@
 {
   "name": "zircle",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0",
   "description": "Zircle's circular components, rebuilt with Orbit and Zumly for the web. No Vue required.",
   "author": "Juan Martín Muda <juan.martin.muda@gmail.com>",
   "license": "MIT",
