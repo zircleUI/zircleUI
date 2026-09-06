@@ -1,357 +1,53 @@
-@import url('https://fonts.googleapis.com/css?family=Google+Sans:300,400,500,700');
-@import url('https://use.fontawesome.com/releases/v5.1.0/css/all.css');
-
-body {
-  font-family: 'Google Sans', serif;
-  color: #8a8f94;
-}
-
-.version {
-  z-index: 999;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-weight: 500;
-  font-size: 13px;
-}
-
-.title {
-  margin-left: 5%;
-  position: absolute;
-  width: 90%;
-  color: #454545;
-  font-weight: 700;
-  font-size: 32px;
-  z-index: 9999;
-  opacity: 1;
-  line-height: 1.02em;
-  pointer-events: none !important;
-}
-
-.subtitle {
-  line-height: 0.9em;
-  font-weight: 300;
-  font-size: 20px;
-  color: #8a8f94;
-}
-
-.panel {
-  margin-top: 5%;
-  margin-right: 5%;
-  right: 0;
-  position: absolute;
-  line-height: 1.8;
-  width: 300px;
-  max-height: 600px;
-  z-index: 9999;
-  color: #454545;
-  box-shadow: #454545;
-  background-color: rgba(255, 255, 255, 0.516);
-  border-radius: 5px;
-  backdrop-filter: blur(10px);
-  padding: 20px;
-  overflow: auto;
-}
-
-.footer {
-  margin-left: 5%;
-  position: absolute;
-  bottom: 20px;
-  width: 90%;
-  font-size: 15px;
-  pointer-events: none !important;
-  color: #454545;
-  z-index: 9999;
-  opacity: 1;
-  text-align: center;
-  font-weight: 300;
-}
-
-.title.home {
-  text-align: center;
-}
-
-.head-enter {
-  opacity: 0;
-}
-
-.head-enter-active {
-  transition: opacity 2s 0.8s;
-}
-
-.theme-github {
-  --shade-color: #8a8f94;
-  --primary-color: #454545;
-  --accent-color: #454545;
-}
-
-a {
-  color: #5484f8;
-}
-
-.title > a {
-  text-decoration: none;
-}
-
-.z-canvas {
-  background-color: white !important;
-}
-
-#app {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-}
-
-/*
-  ##Device = Desktops landscape
-  ##Screen = 1281px to higher resolution desktops
-*/
-@media (min-width: 1281px) and (orientation: landscape) {
-  .title.other {
-    text-align: center;
-    top: 80px;
-    font-size: 40px !important;
-  }
-
-  .title.home {
-    text-align: center;
-    top: 80px;
-    font-size: 40px !important;
-  }
-
-  .footer {
-    line-height: 1.5em;
-  }
-
-  .z-label .inside,
-  .pos,
-  .sub-label {
-    font-size: 18px !important;
-  }
-}
-
-@media (min-width: 1281px) and (orientation: portrait) {
-  .title.other {
-    text-align: center;
-    top: 380px;
-    font-size: 40px !important;
-  }
-
-  .title.home {
-    text-align: center;
-    top: 380px;
-    font-size: 40px !important;
-  }
-
-  .z-label .inside,
-  .pos,
-  .sub-label {
-    font-size: 16px !important;
-  }
-}
-
-/*
-  ##Device = Laptops, Desktops landscape
-  ##Screen = B/w 1025px to 1280px
-*/
-@media (min-width: 1025px) and (max-width: 1280px) {
-  .title.other {
-    text-align: center;
-    top: 50px;
-    font-size: 40px !important;
-  }
-
-  .title.home {
-    text-align: center;
-    top: 50px;
-    font-size: 40px !important;
-  }
-
-  .footer {
-    line-height: 1.5em;
-  }
-
-  .z-label .inside,
-  .pos {
-    font-size: 13px !important;
-  }
-}
-
-/*
-  ##Device = Tablets, Ipads (portrait)
-  ##Screen = B/w 768px to 1024px
-*/
-@media (width: 375px) and (orientation: portrait) {
-  .title.other {
-    text-align: center;
-    top: 40px;
-    font-size: 25px !important;
-  }
-
-  .title.home {
-    text-align: center;
-    top: 40px;
-  }
-
-  .footer {
-    line-height: 0.5em;
-  }
-}
-
-/*
-  ##Device = Tablets, Ipads (portrait)
-  ##Screen = B/w 768px to 1024px
-*/
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  .title.other {
-    text-align: center;
-    top: 220px;
-  }
-
-  .title.home {
-    text-align: center;
-    top: 220px;
-  }
-
-  .z-label .inside,
-  .pos {
-    font-size: 13px !important;
-  }
-}
-
-/*
-  ##Device = Tablets, Ipads (landscape)
-  ##Screen = B/w 768px to 1024px
-*/
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  .title.other {
-    text-align: center;
-    top: 50px;
-  }
-
-  .title.home {
-    text-align: center;
-    top: 50px;
-  }
-
-  .footer {
-    line-height: 1.5em;
-  }
-
-  .z-label .inside,
-  .pos {
-    font-size: 13px !important;
-  }
-}
-
-/* iphone x */
-@media (width: 812px) and (height: 375px) {
-  .title.other {
-    text-align: left;
-    margin-left: 30px;
-    font-size: 18px;
-    width: 30%;
-    top: calc(5vh);
-  }
-
-  .title.home {
-    text-align: left;
-    margin-left: 28px;
-    top: calc(5vh);
-    width: 45%;
-  }
-
-  .footer {
-    text-align: left;
-    margin-left: 20px;
-    font-size: 15px;
-    width: 30%;
-    line-height: 1.5em;
-  }
-}
-
-/* pixel xl */
-@media (width: 823px) and (height: 411px) {
-  .title.other {
-    text-align: left;
-    margin-left: 28px;
-    font-size: 18px;
-    width: 30%;
-    top: calc(5vh);
-  }
-
-  .title.home {
-    text-align: left;
-    margin-left: 28px;
-    top: calc(5vh);
-    width: 45%;
-  }
-
-  .footer {
-    text-align: left;
-    margin-left: 20px;
-    font-size: 15px;
-    width: 30%;
-    line-height: 1.5em;
-  }
-}
-
-/*
-  ##Device = Low Resolution Tablets, Mobiles (Landscape)
-  ##Screen = B/w 481px to 767px
-*/
-@media (min-width: 481px) and (max-width: 767px) {
-  .title.other {
-    text-align: left;
-    margin-left: 30px;
-    font-size: 25px;
-    width: 30%;
-    top: calc(5vh);
-  }
-
-  .title.home {
-    text-align: left;
-    margin-left: 18px;
-    font-size: 25px;
-    top: calc(5vh);
-    width: 40%;
-  }
-
-  .footer {
-    text-align: left;
-    margin-left: 20px;
-    font-size: 15px;
-    width: 30%;
-    line-height: 1.5em;
-  }
-
-  .z-label .inside,
-  .pos {
-    font-size: 13px !important;
-  }
-}
-
-/*
-  ##Device = Most of the Smartphones Mobiles (Portrait)
-  ##Screen = B/w 320px to 479px
-*/
-@media (min-width: 320px) and (max-width: 480px) {
-  .title.other {
-    text-align: center;
-    top: calc(10px + 5vh);
-  }
-
-  .title.home {
-    top: 40px;
-  }
-
-  .footer {
-    line-height: 0.5em;
-  }
-
-  .z-label .inside,
-  .pos {
-    font-size: 13px !important;
-  }
+html { color-scheme: light; background: #fff; color: #303537; font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+body { margin: 0; min-width: 320px; background: #fff; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+button, select { font: inherit; }
+:focus-visible { outline: 2px solid #303537; outline-offset: 5px; }
+.masthead { position: relative; z-index: 5; height: 84px; margin: 0 5%; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid #e6e8e9; }
+.wordmark { display: flex; align-items: center; gap: 10px; font-size: 28px; font-weight: 700; letter-spacing: -1.5px; text-decoration: none; }
+.brand-circle { width: 20px; height: 20px; border: 2px solid; border-radius: 50%; position: relative; }
+.brand-circle::after { content: ''; position: absolute; width: 7px; height: 7px; background: currentColor; border: 3px solid white; border-radius: 50%; right: -7px; top: -5px; }
+.masthead nav { display: flex; gap: 22px; }
+.masthead button { border: 0; border-bottom: 1px solid transparent; padding: 12px 0; background: none; color: #747c80; cursor: pointer; font-size: 14px; }
+.masthead button[aria-pressed="true"] { color: #303537; border-bottom-color: currentColor; }
+.source-link { font-size: 13px; text-decoration: none; }
+main { position: relative; height: max(660px, calc(100svh - 149px)); }
+.intro { position: absolute; z-index: 3; top: 42px; width: 90%; left: 5%; text-align: center; pointer-events: none; }
+.eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: .16em; margin: 0 0 12px; color: #747c80; }
+h1 { font-size: clamp(25px, 3vw, 38px); line-height: 1.2; margin: 0; letter-spacing: -1px; font-weight: 500; }
+#subtitle { margin: 12px 0 0; color: #858d91; font-size: 15px; }
+#demo { position: absolute; inset: 60px 0 0; }
+#demo .zircle { font-family: inherit; }
+#demo .z-content { font-size: 14px; }
+#demo .z-content strong { font-size: 1.15em; font-weight: 500; }
+#demo .z-content small { color: inherit; opacity: .65; line-height: 1.4; display: block; margin-top: 6px; }
+#demo .z-label { font-size: 12px; }
+#demo .z-back { left: 12px; bottom: 12px; }
+#demo .home-circle .z-content { font-size: 14px; }
+#demo .home-circle strong { font-size: 1em; white-space: nowrap; }
+#demo .solar-system > .z-surface-body { border-color: #eceef0; }
+#demo .solar-system > .z-plate { opacity: .04; }
+.hint { position: absolute; bottom: 8px; left: 10%; width: 80%; font-size: 13px; text-align: center; color: #858d91; pointer-events: none; }
+#error { position: absolute; left: 10%; right: 10%; top: 50%; background: white; color: #a12727; text-align: center; padding: 20px; }
+footer { margin: 0 5%; border-top: 1px solid #e6e8e9; min-height: 64px; display: flex; gap: 20px; justify-content: space-between; align-items: center; color: #858d91; font-size: 11px; }
+footer a { text-decoration: none; color: #303537; }
+#demo select { display: block; width: 100%; max-width: 180px; margin: 5px 0 12px; padding: 5px; font-size: 12px; color: inherit; background: var(--main-color); border: 1px solid currentColor; border-radius: 0; }
+#demo .control-caption { font-size: 12px; }
+#demo .z-content input { width: 100%; }
+@media (max-width: 600px) {
+  .masthead { height: 72px; margin: 0 6%; gap: 14px; }
+  .wordmark { font-size: 24px; }
+  .masthead nav { gap: 14px; }
+  .masthead button { font-size: 12px; }
+  .source-link { display: none; }
+  main { min-height: 540px; height: calc(100svh - 139px); }
+  .intro { top: 34px; }
+  .eyebrow { font-size: 9px; }
+  #subtitle { font-size: 13px; max-width: 280px; margin: 10px auto; }
+  #demo .z-content { font-size: 11px; }
+  #demo .z-label { font-size: 10px; }
+  #demo .z-back { width: 42px; height: 42px; }
+  #demo .z-content select { font-size: 10px; }
+  .hint { font-size: 11px; }
+  footer { margin: 0 6%; font-size: 10px; }
 }

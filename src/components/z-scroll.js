@@ -1,52 +1,25 @@
-/**
- * <z-scroll>
- * Gives its slotted content a scrollable circular surface. Activates a
- * thin vertical scrollbar (or arc indicator) when content overflows.
- *
- * Use as the content host inside a <z-view> when the slot is large:
- *
- *   <z-view>
- *     <z-scroll>
- *       <p>... lots of text ...</p>
- *     </z-scroll>
- *   </z-view>
- *
- * Attributes:
- *   value  0..100  read-only reflection of the scroll position
- */
-export class ZScroll extends HTMLElement {
-  connectedCallback () {
-    if (this._initialized) return
-    this._initialized = true
-    this.classList.add('z-scroll-host')
+import { RadialControl } from './control-utils.js';
 
-    const inner = document.createElement('div')
-    inner.className = 'z-scroll-inner'
-    while (this.firstChild) inner.appendChild(this.firstChild)
-    this.appendChild(inner)
-
-    // Thin vertical indicator on the right edge.
-    const track = document.createElement('div')
-    track.className = 'z-scroll-track'
-    const thumb = document.createElement('div')
-    thumb.className = 'z-scroll-thumb'
-    track.appendChild(thumb)
-    this.appendChild(track)
-
-    inner.addEventListener('scroll', () => {
-      const max = inner.scrollHeight - inner.clientHeight
-      const v = max > 0 ? (inner.scrollTop / max) : 0
-      const trackH = track.clientHeight
-      const thumbH = Math.max(20, trackH * (inner.clientHeight / inner.scrollHeight))
-      thumb.style.height = `${thumbH}px`
-      thumb.style.top    = `${v * (trackH - thumbH)}px`
-      this.setAttribute('value', String(Math.round(v * 100)))
-    }, { passive: true })
-    // Initial thumb sizing
-    queueMicrotask(() => inner.dispatchEvent(new Event('scroll')))
+/** Original right-hand quarter-circle scrollbar, from -45 to +45 degrees. */
+export class ZScroll extends RadialControl {
+  static observedAttributes = ['scroll-val', 'step', 'unit', 'disabled'];
+  get controlKind() { return 'scroll'; }
+  get min() { return -45; }
+  get max() { return 45; }
+  get scrollVal() { return this.value; }
+  set scrollVal(value) { this.value = value; }
+  get valueAttribute() { return 'scroll-val'; }
+  get startAngle() { return -45; }
+  get angleRange() { return 90; }
+  get defaultLabel() { return 'Scroll position'; }
+  get eventDetail() { return { value: this.value, scrollVal: this.value }; }
+  connectedCallback() {
+    this.upgradeProperties(['scrollVal', 'step', 'unit', 'value', 'disabled']);
+    super.connectedCallback();
   }
-}
-
-if (typeof window !== 'undefined' && !customElements.get('z-scroll')) {
-  customElements.define('z-scroll', ZScroll)
+  valueFromPointer(event) {
+    const bounds = this.getBoundingClientRect();
+    return this.normalize(Math.atan2(event.clientY - bounds.top - bounds.height / 2,
+      event.clientX - bounds.left - bounds.width / 2) * 180 / Math.PI);
+  }
 }

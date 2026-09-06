@@ -1,19 +1,19 @@
-/**
- * Component registry. Importing this file ensures every <z-*> element is
- * defined exactly once. Each module guards its own customElements.define()
- * call so they are safe to import multiple times.
- */
-import './z-canvas.js'
-import './z-view.js'
-import './z-spot.js'
-import './z-list.js'
-import './z-dialog.js'
-import './z-knob.js'
-import './z-slider.js'
-import './z-scroll.js'
-import './z-pagination.js'
-import './z-menu.js'
-import './z-gauge.js'
-import './z-compass.js'
-import './z-tabs.js'
-import './z-breadcrumb.js'
+import { registerOrbit } from '@zumer/orbit'
+import { ZCanvas } from './z-canvas.js'
+import { ZView } from './z-view.js'
+import { ZSpot } from './z-spot.js'
+import { ZList } from './z-list.js'
+import { ZDialog } from './z-dialog.js'
+import { ZKnob } from './z-knob.js'
+import { ZSlider } from './z-slider.js'
+import { ZScroll } from './z-scroll.js'
+import { ZPagination } from './z-pagination.js'
+
+export function registerElements() {
+  if (typeof customElements === 'undefined') return
+  registerOrbit()
+  const elements = { 'z-canvas': ZCanvas, 'z-view': ZView, 'z-spot': ZSpot, 'z-list': ZList, 'z-dialog': ZDialog, 'z-knob': ZKnob, 'z-slider': ZSlider, 'z-scroll': ZScroll, 'z-pagination': ZPagination }
+  for (const [name, ctor] of Object.entries(elements)) {
+    if (!customElements.get(name)) customElements.define(name, ctor)
+  }
+}

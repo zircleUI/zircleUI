@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.0.0-alpha.0 — framework-free reconstruction (unreleased)
+
+Rebuilt from the original `master` components with Orbit 1.5.0 for radial layout and Zumly 0.97.0 for zoom navigation. Restores the original component family, palettes, nested spots, radial lists, controls, dialogs, and Sun/Earth/Moon example as native custom elements.
+
+Adds per-canvas state, keyboard interaction, responsive embedded canvases, view cleanup and cancellation, TypeScript declarations, and ESM/standalone/browser-global distributions. See [the migration guide](docs/MIGRATION.md) for changes from Vue 1.x and the [original source audit](docs/ORIGINAL.md) for the reconstruction reference.
+
 ### [1.5.2](https://github.com/zircleUI/zircleUI/compare/v1.5.1...v1.5.2) (2022-08-26)
 
 ### [1.5.1](https://github.com/zircleUI/zircleUI/compare/v1.5.0...v1.5.1) (2022-08-25)

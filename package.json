@@ -1,30 +1,61 @@
 {
   "name": "zircle",
   "version": "2.0.0-alpha.0",
-  "description": "Zoomable user interface library built on Orbit (radial layout) and Zumly (zoom navigation). Vanilla JS, no framework.",
+  "description": "Zircle's circular components, rebuilt with Orbit and Zumly for the web. No Vue required.",
   "author": "Juan Martín Muda <juan.martin.muda@gmail.com>",
   "license": "MIT",
   "type": "module",
   "main": "./dist/zircle.js",
   "module": "./dist/zircle.js",
+  "types": "./index.d.ts",
+  "unpkg": "./dist/zircle.iife.js",
+  "jsdelivr": "./dist/zircle.iife.js",
   "exports": {
-    ".": "./dist/zircle.js",
-    "./style": "./dist/zircle.css"
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/zircle.js",
+      "default": "./dist/zircle.js"
+    },
+    "./standalone": {
+      "types": "./index.d.ts",
+      "import": "./dist/zircle.standalone.js",
+      "default": "./dist/zircle.standalone.js"
+    },
+    "./style": "./dist/zircle.css",
+    "./style.css": "./dist/zircle.css",
+    "./components.css": "./dist/zircle.components.css",
+    "./package.json": "./package.json"
   },
+  "sideEffects": true,
   "files": [
     "dist",
-    "src"
+    "index.d.ts",
+    "docs/MIGRATION.md",
+    "docs/ORIGINAL.md"
   ],
   "scripts": {
     "build": "node esbuild.config.mjs",
-    "dev": "node scripts/dev.mjs"
+    "dev": "node scripts/dev.mjs",
+    "test": "npm run build && node --test tests/package.test.mjs && playwright test",
+    "test:package": "npm run build && node --test tests/package.test.mjs",
+    "test:browser": "playwright test",
+    "check": "npm test",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zircleUI/zircleUI.git"
   },
   "dependencies": {
-    "@zumer/orbit": "^1.4.8",
-    "zumly": "^0.92.3"
+    "@zumer/orbit": "1.5.0",
+    "zumly": "0.97.0"
   },
   "devDependencies": {
-    "esbuild": "^0.24.0"
+    "@playwright/test": "1.55.1",
+    "esbuild": "0.25.12"
   },
   "keywords": [
     "zircle",

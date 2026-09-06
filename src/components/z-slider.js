@@ -1,48 +1,32 @@
-/**
- * <z-slider>
- * Circular progress bar — thin wrapper around Orbit's <o-progress> with
- * zircle styling. Can be used standalone or inside another component.
- *
- * Attributes:
- *   progress   0..100        default 0
- *   color      CSS color     overrides --o-fill
- */
-export class ZSlider extends HTMLElement {
-  static get observedAttributes () { return ['progress', 'color'] }
-  connectedCallback () { queueMicrotask(() => { if (this.isConnected) this._render() }) }
-  attributeChangedCallback () { if (this.isConnected) this._render() }
-  _render () {
-    const p = Number(this.getAttribute('progress') || 0)
-    const color = this.getAttribute('color')
+import { HTMLElementBase, FULL_RING_RANGE, createRing, isViewDefinition, numberAttribute, reflectNumber, upgradeProperties } from './control-utils.js';
 
-    // Already initialised → patch in place.
-    let bar = this.querySelector('o-progress')
-    if (bar) {
-      bar.setAttribute('value', String(p))
-      if (color) bar.style.setProperty('--o-fill', color)
-      return
-    }
-
-    // First render — wrap o-progress in the full Orbit chain so it shows up.
-    const cs = getComputedStyle(this)
-    const spotD = parseFloat(cs.getPropertyValue('--zircle-spot-diameter'))
-    const viewR = parseFloat(cs.getPropertyValue('--zircle-view-radius'))
-    const target = isFinite(spotD) ? spotD * 0.95
-                  : isFinite(viewR) ? viewR * 1.8
-                  : 40
-    const force = `${target}vmin`  // orbit-12 fills the full force
-
-    this.innerHTML =
-      `<div class="bigbang" style="pointer-events:none">
-         <div class="gravity-spot" style="--o-force:${force}">
-           <div class="orbit-12">
-             <o-progress value="${p}"${color ? ` style="--o-fill:${color}"` : ''}></o-progress>
-           </div>
-         </div>
-       </div>`
+/** Read-only progress ring, matching original z-slider (not a numeric input). */
+export class ZSlider extends HTMLElementBase {
+  static observedAttributes = ['progress', 'unit'];
+  get progress() { return Math.max(0, Math.min(100, numberAttribute(this, 'progress', 0))); }
+  set progress(value) { reflectNumber(this, 'progress', value); }
+  get value() { return this.progress; }
+  set value(value) { this.progress = value; }
+  get unit() { return this.getAttribute('unit') ?? '%'; }
+  set unit(value) { this.setAttribute('unit', value ?? ''); }
+  connectedCallback() {
+    if (isViewDefinition(this)) return;
+    upgradeProperties(this, ['progress', 'value', 'unit']);
+    this._ring ??= createRing(this);
+    this.classList.add('z-slider');
+    this.setAttribute('role', 'progressbar');
+    this.setAttribute('aria-valuemin', '0');
+    this.setAttribute('aria-valuemax', '100');
+    if (!this.hasAttribute('aria-label') && !this.hasAttribute('aria-labelledby')) this.setAttribute('aria-label', 'Progress');
+    this._render();
   }
-}
-
-if (typeof window !== 'undefined' && !customElements.get('z-slider')) {
-  customElements.define('z-slider', ZSlider)
+  attributeChangedCallback() { this._render(); }
+  _render() {
+    if (!this._ring) return;
+    this._ring.progress.setAttribute('value', String(this.progress));
+    this._ring.progress.style.setProperty('--o-range', FULL_RING_RANGE);
+    this._ring.progress.style.setProperty('--o-from', '0deg');
+    this.setAttribute('aria-valuenow', String(this.progress));
+    this.setAttribute('aria-valuetext', `${this.progress}${this.unit}`);
+  }
 }

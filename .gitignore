@@ -2,6 +2,10 @@
 node_modules
 /dist
 /snapshots
+/test-results
+/playwright-report
+/output
+*.tgz
 
 # local env files
 .env.local

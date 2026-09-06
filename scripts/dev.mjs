@@ -1,110 +1,118 @@
-/**
- * Minimal static dev server for the zircle demo.
- * Serves the repo root so /public/index.html can reach /src/* via relative URLs.
- */
 import { createServer } from 'node:http'
-import { readFile, stat, writeFile, mkdir } from 'node:fs/promises'
-import { extname, join, resolve, relative, sep, dirname } from 'node:path'
+import { readFile, realpath, stat } from 'node:fs/promises'
+import { extname, relative, resolve, sep } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const PORT = Number(process.env.PORT) || 8080
-const ROOT = resolve(process.cwd())
-const ENTRY = '/public/index.html'
-
-const MIME = {
+// A read-only development server. No uploads, capture endpoints, or mutations.
+const root = await realpath(fileURLToPath(new URL('../', import.meta.url)))
+const args = process.argv.slice(2)
+const portFlag = args.find(arg => arg.startsWith('--port='))?.slice(7)
+const portIndex = args.indexOf('--port')
+const requestedPort = portFlag ?? (portIndex >= 0 ? args[portIndex + 1] : undefined) ?? process.env.PORT ?? 8080
+const port = Number(requestedPort)
+if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('PORT must be an integer from 0 to 65535.')
+const host = process.env.HOST || '127.0.0.1'
+const publicDirectories = new Set(['public', 'src', 'dist', 'tests', 'examples', 'assets'])
+const mime = {
   '.html': 'text/html; charset=utf-8',
-  '.js':   'application/javascript; charset=utf-8',
-  '.mjs':  'application/javascript; charset=utf-8',
-  '.css':  'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.mjs': 'text/javascript; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
-  '.svg':  'image/svg+xml',
-  '.png':  'image/png',
-  '.jpg':  'image/jpeg',
+  '.map': 'application/json; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
-  '.ico':  'image/x-icon',
-  '.map':  'application/json'
+  '.webp': 'image/webp',
+  '.ico': 'image/x-icon',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm'
 }
 
-const LOG = process.env.QUIET !== '1'
+function isInsideRoot(path) {
+  const offset = relative(root, path)
+  return offset !== '..' && !offset.startsWith(`..${sep}`) && !offset.startsWith(sep)
+}
 
-createServer(async (req, res) => {
-  const t0 = Date.now()
-  let status = 200
+async function resolveFile(path) {
   try {
-    let urlPath = decodeURIComponent(req.url.split('?')[0])
-    if (urlPath === '/') urlPath = ENTRY
+    const canonical = await realpath(path)
+    if (!isInsideRoot(canonical)) return null
+    const parts = relative(root, canonical).split(sep)
+    if (parts.some(part => part.startsWith('.')) || !publicDirectories.has(parts[0])) return null
+    const info = await stat(canonical)
+    return info.isFile() ? { path: canonical, size: info.size } : null
+  } catch (error) {
+    if (['ENOENT', 'ENOTDIR', 'EACCES', 'ELOOP'].includes(error.code)) return null
+    throw error
+  }
+}
 
-    // Endpoint for the in-page error overlay to forward client errors.
-    if (req.method === 'POST' && urlPath === '/__client_log__') {
-      let body = ''
-      for await (const chunk of req) body += chunk
-      console.error('[browser]', body)
-      res.writeHead(204); res.end(); return
-    }
+const server = createServer(async (request, response) => {
+  const send = (status, message, headers = {}) => {
+    response.writeHead(status, {
+      'content-type': 'text/plain; charset=utf-8',
+      'cache-control': 'no-store',
+      'x-content-type-options': 'nosniff',
+      ...headers
+    })
+    response.end(request.method === 'HEAD' ? undefined : message)
+  }
 
-    // Save raw DOM HTML for an element. Headers x-snap-name = filename.
-    if (req.method === 'POST' && urlPath === '/__dom__') {
-      const name = (req.headers['x-snap-name'] || `dom-${Date.now()}`)
-        .toString().replace(/[^a-z0-9._-]/gi, '_')
-      const out = resolve(ROOT, 'snapshots', `${name}.html`)
-      await mkdir(dirname(out), { recursive: true })
-      const chunks = []
-      for await (const chunk of req) chunks.push(chunk)
-      await writeFile(out, Buffer.concat(chunks))
-      console.log(`  📄 saved snapshots/${name}.html`)
-      res.writeHead(204); res.end(); return
-    }
+  if (!['GET', 'HEAD'].includes(request.method)) {
+    send(405, 'Method not allowed', { allow: 'GET, HEAD' })
+    return
+  }
 
-    // Endpoint for snapDOM captures. POST a PNG blob, get it stored on disk.
-    // Header `x-snap-name` (or query ?name=…) sets the filename.
-    if (req.method === 'POST' && urlPath === '/__snap__') {
-      const name = (req.headers['x-snap-name'] || new URL(req.url, 'http://x').searchParams.get('name') || `snap-${Date.now()}`)
-        .toString().replace(/[^a-z0-9._-]/gi, '_')
-      const out = resolve(ROOT, 'snapshots', `${name}.png`)
-      await mkdir(dirname(out), { recursive: true })
-      const chunks = []
-      for await (const chunk of req) chunks.push(chunk)
-      await writeFile(out, Buffer.concat(chunks))
-      console.log(`  📸 saved snapshots/${name}.png (${Buffer.concat(chunks).length} bytes)`)
-      res.writeHead(200, { 'content-type': 'application/json' })
-      res.end(JSON.stringify({ ok: true, name, path: `snapshots/${name}.png` }))
+  let pathname
+  try {
+    pathname = decodeURIComponent((request.url || '/').split('?')[0])
+  } catch {
+    send(400, 'Malformed URL')
+    return
+  }
+
+  if (!pathname.startsWith('/') || /[\\\0]/.test(pathname) || pathname.split('/').some(part => part.startsWith('.'))) {
+    send(403, 'Forbidden')
+    return
+  }
+
+  try {
+    const entry = pathname === '/' ? 'public/index.html' : pathname.slice(1)
+    const segments = entry.split('/')
+    let file = publicDirectories.has(segments[0]) ? await resolveFile(resolve(root, entry)) : null
+    // Original demo assets can also be addressed as /sun.png, /earth.png, etc.
+    if (!file) file = await resolveFile(resolve(root, 'public', entry))
+    if (!file) {
+      send(404, 'Not found')
       return
     }
 
-    let filePath = resolve(join(ROOT, urlPath))
-    if (relative(ROOT, filePath).startsWith('..' + sep)) {
-      status = 403; res.writeHead(403); return res.end('forbidden')
-    }
-    let s = await stat(filePath).catch(() => null)
-    // Fallback: try /public/<urlPath> so demo assets like /sun.png also work.
-    if (!s || !s.isFile()) {
-      const fallback = resolve(join(ROOT, 'public', urlPath))
-      if (!relative(ROOT, fallback).startsWith('..' + sep)) {
-        const s2 = await stat(fallback).catch(() => null)
-        if (s2 && s2.isFile()) { filePath = fallback; s = s2 }
-      }
-    }
-    if (!s || !s.isFile()) {
-      status = 404
-      res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' })
-      return res.end(`404 ${urlPath}`)
-    }
-    const body = await readFile(filePath)
-    res.writeHead(200, {
-      'content-type': MIME[extname(filePath).toLowerCase()] || 'application/octet-stream',
-      'cache-control': 'no-store'
+    const body = request.method === 'HEAD' ? undefined : await readFile(file.path)
+    response.writeHead(200, {
+      'content-type': mime[extname(file.path).toLowerCase()] || 'application/octet-stream',
+      'content-length': file.size,
+      'cache-control': 'no-store',
+      'x-content-type-options': 'nosniff'
     })
-    res.end(body)
-  } catch (err) {
-    status = 500
-    res.writeHead(500, { 'content-type': 'text/plain; charset=utf-8' })
-    res.end(String(err))
-  } finally {
-    if (LOG) {
-      const dt = Date.now() - t0
-      const mark = status >= 400 ? '✗' : '·'
-      console.log(`${mark} ${status} ${req.method} ${req.url} ${dt}ms`)
-    }
+    response.end(body)
+  } catch (error) {
+    console.error('[zircle dev]', error)
+    send(500, 'Internal server error')
   }
-}).listen(PORT, () => {
-  console.log(`zircle demo → http://localhost:${PORT}${ENTRY}`)
 })
+
+server.on('error', error => {
+  console.error(`[zircle dev] ${error.message}`)
+  process.exitCode = 1
+})
+server.listen(port, host, () => {
+  if (process.env.QUIET !== '1') console.log(`Zircle demo: http://${host}:${server.address().port}`)
+})
+
+for (const signal of ['SIGINT', 'SIGTERM']) {
+  process.once(signal, () => server.close(() => process.exit(0)))
+}

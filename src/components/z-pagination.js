@@ -1,47 +1,58 @@
-/**
- * <z-pagination>
- * Stand-alone version of the pagination dots used by <z-list>. Can be used
- * to drive any external collection.
- *
- * Attributes:
- *   pages    number of pages
- *   active   current page index (0-based)
- *   orbit    ring number for the dots          default 8
- *   from     base angle (deg)                  default 90
- *
- * Emits 'page-change' with detail { index }.
- */
-export class ZPagination extends HTMLElement {
-  static get observedAttributes () { return ['pages', 'active', 'orbit', 'from'] }
-  connectedCallback () { this._render() }
-  attributeChangedCallback () { this._render() }
-  _render () {
-    if (!this.isConnected) return
-    const pages  = Math.max(1, Number(this.getAttribute('pages')  || 1))
-    const active = Math.min(pages - 1, Math.max(0, Number(this.getAttribute('active') || 0)))
-    const orbit  = Number(this.getAttribute('orbit') || 8)
-    const from   = Number(this.getAttribute('from')  || 90)
-    // Spread dots across ~60° so they breathe even with many pages.
-    const step = 60 / Math.max(1, pages - 1)
-    this.innerHTML = ''
-    for (let p = 0; p < pages; p++) {
-      const dot = document.createElement('z-spot')
-      dot.setAttribute('size', 'xxs')
-      dot.setAttribute('orbit', orbit)
-      dot.setAttribute('angle', from - (p - (pages - 1) / 2) * step)
-      dot.setAttribute('button', '')
-      dot.classList.add('z-pagination')
-      if (p === active) dot.classList.add('active')
-      dot.addEventListener('click', e => {
-        e.stopPropagation()
-        this.setAttribute('active', String(p))
-        this.dispatchEvent(new CustomEvent('page-change', { detail: { index: p }, bubbles: true }))
-      })
-      this.appendChild(dot)
-    }
-  }
-}
+import { HTMLElementBase, emit, isViewDefinition, numberAttribute, reflectNumber, upgradeProperties } from './control-utils.js';
+import { normaliseSize } from './sizes.js';
 
-if (typeof window !== 'undefined' && !customElements.get('z-pagination')) {
-  customElements.define('z-pagination', ZPagination)
+/** One original radial pagination point, now a keyboard-accessible button. */
+export class ZPagination extends HTMLElementBase {
+  static observedAttributes = ['index', 'active', 'angle', 'distance', 'size', 'disabled'];
+  get index() { return Math.max(0, Math.floor(numberAttribute(this, 'index', 0))); }
+  set index(value) { reflectNumber(this, 'index', value); }
+  get active() { return Math.max(0, Math.floor(numberAttribute(this, 'active', 0))); }
+  set active(value) { reflectNumber(this, 'active', value); }
+  get angle() { return numberAttribute(this, 'angle', 0); }
+  set angle(value) { reflectNumber(this, 'angle', value); }
+  get distance() { return Math.max(0, numberAttribute(this, 'distance', 100)); }
+  set distance(value) { reflectNumber(this, 'distance', value); }
+  get size() { return normaliseSize(this.getAttribute('size'), 'xs'); }
+  set size(value) { this.setAttribute('size', value); }
+  get disabled() { return this.hasAttribute('disabled'); }
+  set disabled(value) { this.toggleAttribute('disabled', Boolean(value)); }
+
+  connectedCallback() {
+    if (isViewDefinition(this)) return;
+    upgradeProperties(this, ['index', 'active', 'angle', 'distance', 'size', 'disabled']);
+    if (!this._button) {
+      this._button = this.querySelector(':scope > .z-pagination-button') ?? this.ownerDocument.createElement('button');
+      this._button.type = 'button';
+      this._button.className = 'z-pagination-button';
+      this.append(this._button);
+    }
+    this.classList.add('z-pagination', 'satellite');
+    if (!this._listeners) {
+      this._listeners = new this.ownerDocument.defaultView.AbortController();
+      this._button.addEventListener('click', event => {
+        event.stopPropagation();
+        if (!this.disabled) emit(this, 'change', { index: this.index, page: this.index + 1 });
+      }, { signal: this._listeners.signal });
+    }
+    this._render();
+  }
+  disconnectedCallback() { this._listeners?.abort(); this._listeners = null; }
+  attributeChangedCallback() { this._render(); }
+  _render() {
+    if (!this._button) return;
+    this._button.textContent = String(this.index + 1);
+    this._button.setAttribute('aria-label', `Page ${this.index + 1}`);
+    this._button.disabled = this.disabled;
+    this._button.toggleAttribute('data-active', this.index === this.active);
+    if (this.index === this.active) this._button.setAttribute('aria-current', 'page');
+    else this._button.removeAttribute('aria-current');
+    this.classList.toggle('active', this.index === this.active);
+    this.classList.toggle('deactive', this.index !== this.active);
+    this.style.setProperty('--o-from', `${this.angle}deg`);
+    this.style.setProperty('--o-offset', '0deg');
+    this.style.setProperty('--o-angle', '0deg');
+    this.style.setProperty('--z-pagination-distance', String(this.distance / 100));
+    this.style.setProperty('--o-aligment', `calc(var(--o-radius) * ${1 - this.distance / 100})`);
+    this.style.setProperty('--z-pagination-size', `var(--z-size-${this.size}, var(--z-size-xs))`);
+  }
 }
