@@ -1,20 +1,28 @@
 # Zircle
 
-Circular components and spatial navigation, built with **Orbit** and **Zumly**. The original `z-view`, `z-spot`, `z-list`, and `z-dialog` return as web components. Vue is no longer required.
+Zircle is a JavaScript library for circular interfaces with zoom navigation. Place controls around a view, nest circles inside other circles, and click a spot to zoom into another view.
 
-This branch is the **2.0 alpha reconstruction**. The original Vue library remains on `master`; unversioned npm/CDN links may still serve that older release. Use this checkout or its locally built package to try this implementation.
+Zircle was my first project, built with Vue. I later split its layout and navigation into Orbit and Zumly. This alpha is the first merge of those two projects back into Zircle: Orbit handles radial layout, Zumly handles zoom and view history, and Zircle provides the components. You can use them directly in HTML or from a JavaScript framework.
+
+The reconstruction is on `main`, at version `2.0.0-alpha.0`. The original Vue library remains on `master`. Build this checkout to try the merge; the examples below use its files and local package.
+
+## Run the demo
+
+Use Node.js 20 or newer:
 
 ```sh
+git clone --branch main https://github.com/zircleUI/zircleUI.git
+cd zircleUI
 npm ci
-npm run build
+npm run compile
 npm run dev
 ```
 
-Open `http://127.0.0.1:8080` for the Sun, Earth & Moon demo. The development server is read-only; run `npm run build` again after editing the library. Node 20 or later is required for development.
+Open http://127.0.0.1:8080 for the Sun, Earth & Moon demo and component examples. Run `npm run compile` again after editing the library, then reload the page.
 
-## Start with HTML
+## Use it in HTML
 
-Copy `dist/` from the build into your application and serve the files over HTTP:
+Copy the built `dist/` directory into your site and serve it over HTTP:
 
 ```html
 <link rel="stylesheet" href="./dist/zircle.css">
@@ -37,27 +45,42 @@ Copy `dist/` from the build into your application and serve the files over HTTP:
 </z-canvas>
 ```
 
-Each template has one root `z-view`. Click the spot to zoom in, then use the back button or canvas background to return. A canvas needs a nonzero height; use `height:100dvh` for a full-screen interface.
+Each template defines a named view with one root `z-view`. Click the spot to zoom in; use the back button or canvas background to return. Give the canvas a height, such as `600px` or `100dvh`.
 
-The standalone module includes both engines. A classic-script alternative is `dist/zircle.iife.js`, which exposes `window.Zircle`; it also registers the elements and includes both engines. Load one JavaScript distribution, plus `zircle.css`.
+The standalone module includes Orbit and Zumly. For a classic script tag, replace the module script with:
 
-## Use JavaScript
+```html
+<script defer src="./dist/zircle.iife.js"></script>
+```
 
-For a bundler, build and install this checkout's package first:
+This exposes `window.Zircle` and registers the same elements. `defer` lets the browser parse your templates before Zircle initializes. Load one JavaScript distribution and the stylesheet.
+
+## Use it with JavaScript
+
+Create a local package:
 
 ```sh
-# In this repository; produces zircle-2.0.0-alpha.0.tgz
-npm pack
-# In your application, substitute the actual path to the generated file
+# In this repository: compile and create zircle-2.0.0-alpha.0.tgz
+npm run build
+
+# In your application: use the path to that file
 npm install /path/to/zircle-2.0.0-alpha.0.tgz
 ```
+
+Add a host element to your page:
+
+```html
+<div id="explorer" style="height:600px"></div>
+```
+
+Then initialize Zircle after the element is mounted:
 
 ```js
 import { createZircle } from 'zircle'
 import 'zircle/style'
 
 const ui = await createZircle({
-  mount: '#explorer', // a connected, sized element in the document
+  mount: '#explorer',
   initialView: 'home',
   views: {
     home: `<z-view>
@@ -70,33 +93,34 @@ const ui = await createZircle({
   mode: 'light'
 })
 
-const unsubscribe = ui.on('viewchange', event => {
+ui.on('viewchange', event => {
   console.log(event.detail.view)
 })
-await ui.setView({ name: 'details', params: { id: 42 } })
-await ui.goBack()
-// When the owning application component is removed:
-unsubscribe()
-ui.destroy()
 ```
 
-The default module keeps Orbit and Zumly as package imports so bundlers can share them. `zircle/style` combines all three stylesheets. If the host already loads Orbit and Zumly CSS, import `zircle/components.css` instead.
+You can also navigate with `await ui.setView('details')` and `await ui.goBack()`. Call `ui.destroy()` when removing the app.
 
-## The component vocabulary
+The package module imports Orbit and Zumly as dependencies. `zircle/style` includes their CSS and Zircle's CSS. If your app already loads both engines' stylesheets, use `zircle/components.css` instead.
 
-| Component | Purpose | Main attributes/properties |
+## Components and layout
+
+| Component | What it does | Main attributes and properties |
 | --- | --- | --- |
-| `z-canvas` | Independent navigation and theme context | `initial-view`, `theme`, `mode`, `shape`; `views`, `options`, `ready`, `instance` |
-| `z-view` | A circular destination | `size`, `square`, `circle`, `label`, `label-pos`, `image-path`, `slider`, `progress` |
-| `z-spot` | A nested satellite, target, button, or knob | `size`, `angle`, `distance`, `to-view`, `button`, `knob`, `qty`, `min`, `max`, `step`, `unit`, `slider`, `progress`, `label`, `label-pos`, `pos`, `image-path` |
-| `z-list` | A locally paginated radial collection | `per-page`, `page`; `items`, `renderItem`, `next()`, `previous()` |
-| `z-dialog` | Circular dialog with optional timed completion | `open`, `self-close`, `duration`, `size`, `image-path`; `show()`, `close()` |
+| `z-canvas` | Owns navigation and theme for one app | `initial-view`, `theme`, `mode`, `shape`; `views`, `options`, `ready`, `instance` |
+| `z-view` | Defines a destination | `size`, `square`, `circle`, `label`, `label-pos`, `image-path`, `slider`, `progress` |
+| `z-spot` | Places a satellite, link, button, or knob | `size`, `angle`, `distance`, `to-view`, `button`, `knob`, `qty`, `min`, `max`, `step`, `unit`, `slider`, `progress`, `label`, `label-pos`, `pos`, `image-path` |
+| `z-list` | Arranges items around a view, with pagination | `per-page`, `page`; `items`, `renderItem`, `next()`, `previous()` |
+| `z-dialog` | Opens a circular dialog | `open`, `self-close`, `duration`, `size`, `image-path`; `show()`, `close()` |
 
-Sizes: `xxl`, `xl`, `l`, `m`, `s`, `xs`, `xxs`. The original aliases `extralarge`, `large`, `medium`, `small`, and `extrasmall` are accepted. Views default to `xxl`; spots default to `medium`. Geometry adapts to the canvas size.
+Sizes are `xxl`, `xl`, `l`, `m`, `s`, `xs`, and `xxs`. The original aliases `extralarge`, `large`, `medium`, `small`, and `extrasmall` also work. Views default to `xxl`; spots default to `medium`. Sizes scale with the canvas.
 
-An angle of `0` points right and `90` points down. Distance is a percentage of the **parent radius**: `100` places a spot's center on its parent's circumference, and `0` centers it. Nest a spot in another spot using `slot="extension"` to compose orbital structures.
+An angle of `0` points right and `90` points down. Distance is a percentage of the parent radius: `100` places a spot's center on its parent's circumference; `0` centers it.
 
-Ordinary child content occupies the center. Use `slot="image"` for imagery, `slot="media"` for view media, and `slot="extension"` for surrounding components. `image-path` takes precedence over the image slot. These are light-DOM relationships: ordinary DOM events, CSS, element references, and event listeners remain usable.
+Ordinary child content sits in the center. Use `slot="extension"` to place surrounding components, including a spot inside another spot. Use `slot="image"` for images and `slot="media"` for view media. When set, `image-path` takes precedence over the image slot. Components use light DOM, so you can style them and attach ordinary DOM listeners.
+
+### Controls
+
+Add these to a view or spot:
 
 ```html
 <z-spot slot="extension" knob qty="1" min="0" max="5" step="0.1"
@@ -105,12 +129,14 @@ Ordinary child content occupies the center. Use `slot="image"` for imagery, `slo
         label="Progress" angle="135" distance="150"></z-spot>
 ```
 
-Knobs emit `input` while changing and `change` when committed; read `event.detail.qty`. Set `spot.qty` or its `qty` attribute to update it. Progress rings display a percentage; `slider` retains the original Zircle name and is not a draggable input.
+Knobs emit `input` while changing and `change` when committed. Read the value from `event.detail.qty`; set `spot.qty` or the `qty` attribute to update it. The `slider` attribute keeps its original Zircle meaning: a progress ring displaying a percentage.
 
-Lists accept authored `z-spot` children or an array plus renderer:
+### Lists and dialogs
+
+A list accepts authored `z-spot` children or an array with a renderer. For a `<z-list>` already in your view:
 
 ```js
-const list = document.createElement('z-list')
+const list = document.querySelector('z-list')
 list.perPage = 5
 list.renderItem = item => {
   const spot = document.createElement('z-spot')
@@ -121,51 +147,53 @@ list.renderItem = item => {
   return spot
 }
 list.items = [{ id: 1, name: 'Ada', initial: 'A' }]
-// Append to a mounted view's extension, or return it from a view factory.
-list.slot = 'extension'
 ```
 
-List pages start at **1**. `pagechange` supplies `{ page, previousPage, pageCount }`. A one-item page centers its spot. Each list owns its pagination and keeps authored item nodes and listeners.
+Pages start at `1`. Each list has its own pagination and emits `pagechange` with `{ page, previousPage, pageCount }` in `event.detail`.
 
-Dialogs start closed. `dialog.show()` opens one; `dialog.close()` closes it. `self-close` defaults to 10 seconds, or specify `duration` in milliseconds. Completion closes the dialog and emits `done`; `close` reports the reason. This is an intentional lifecycle improvement over the original `done`-only timer.
+Dialogs start closed. Call `dialog.show()` to open one and `dialog.close()` to close it. Add `self-close` for automatic completion after 10 seconds, or set `duration` in milliseconds. Completion closes the dialog and emits `done`; the `close` event reports the reason.
 
-## Views with state and cleanup
+## Views with state
 
-A view can be an HTML string, an element, or a factory. Use factories for fresh state, listeners, or framework mounts. HTML strings must be trusted application markup; render untrusted text with `textContent`.
+A view can be an HTML string, an element, or a factory. Use factories for state, listeners, timers, or framework mounts. HTML strings are application markup; put untrusted text in `textContent`.
 
 ```js
-const clockView = ({ props, context, onCleanup }) => {
+const clockView = ({ onCleanup }) => {
   const view = document.createElement('z-view')
   const time = document.createElement('time')
   view.append(time)
+
   const update = () => { time.textContent = new Date().toLocaleTimeString() }
   update()
   const timer = setInterval(update, 1000)
   onCleanup(() => clearInterval(timer))
   return view
 }
+
+// Use it in the views map: views: { clock: clockView }
 ```
 
-Factories receive `{ target, trigger, props, context, onCleanup }` from Zumly. `props` includes navigation data; `context` is the Map passed as `createZircle({ context })`. Register cleanup for timers, subscriptions, and mounted framework roots. It runs when the engine discards that view or the canvas is destroyed, not every time another view becomes current.
+Factories receive `{ target, trigger, props, context, onCleanup }`. Navigate with `ui.setView({ name: 'details', params: { id: 42 } })` to pass data in `props`. Supply a Map or object as `context` to share data between views; the default is a new Map. Cleanup runs when Zumly discards the view or the canvas is destroyed. Earlier views can remain mounted while you zoom deeper.
 
-Inside React, Vue, Svelte, Angular, or another DOM framework, give Zircle a dedicated, connected host element and initialize after mount. Let Zircle own that host's generated children. Pass an AbortSignal to cancel pending initialization or dispose the initialized controller on unmount. The package can be imported during SSR, but creating a canvas requires a browser and a document light-DOM host. Shadow-root mounts are not supported by the current Zumly integration.
+For React, Vue, Svelte, Angular, or another DOM framework, give Zircle a dedicated host element and initialize after mount. Let Zircle manage that host's generated children. Use an `AbortController` to tie it to your component's lifetime:
 
 ```js
-// Framework-neutral pattern for your mount/unmount hooks:
 const lifetime = new AbortController()
 createZircle({
   mount: hostElement, views, initialView: 'home', signal: lifetime.signal
 }).catch(error => {
   if (error.name !== 'AbortError') console.error(error)
 })
-function onHostUnmount() {
-  lifetime.abort()
-}
+
+// In your component's unmount hook:
+lifetime.abort()
 ```
 
-Aborted `createZircle` initialization rejects with `AbortError` and releases its generated DOM immediately. It cannot force arbitrary application promises to stop: pass the same signal to your own fetches or other cancellable work. If a cancelled renderer later returns, its result is discarded and its registered cleanup runs.
+Aborting cancels pending initialization or destroys the initialized controller. Pending initialization rejects with `AbortError`. Pass the signal to your own fetches too if they should stop when the host is removed.
 
-For declarative canvases, set `.views` and `.options` before connecting the element, then await `.ready`. Removing `z-canvas` cancels pending initialization and cleans up its instance automatically; a cancelled `.ready` resolves to `null`. Reconnecting creates a fresh instance. The declarative canvas owns its lifetime signal; `.options` does not accept `signal`. Use `canvas.instance` for the full controller.
+For declarative `z-canvas`, set `.views` and `.options` before mounting, then await `.ready`. The canvas handles cleanup when removed and creates a fresh instance when reconnected. A cancelled `.ready` resolves to `null`. Use `.instance` to access the controller; `.options` does not accept a lifetime signal.
+
+You can import Zircle during SSR, but initialization needs a browser and a connected light-DOM host. Zumly's current integration does not support mounting inside a shadow root. Native mobile apps need a WebView.
 
 ## Controller and themes
 
@@ -175,28 +203,36 @@ For declarative canvases, set `.views` and `.options` before connecting the elem
 | --- | --- |
 | Navigate | `setView(nameOrObject, options?)`, `goTo(name, options?)`, `zoomTo(name, options?)` |
 | Return | `back()`, `goBack()`, `zoomOut()` |
-| Inspect | `getCurrentViewName()`, `getHistory()` (names), `getHistoryLength()` |
+| Inspect | `getCurrentViewName()`, `getHistory()` (view names), `getHistoryLength()` |
 | Style | `getTheme()`, `getMode()`, `getShape()`, `setTheme(name)`, `setMode(name)`, `setShape(name)` |
-| Lifecycle | `refresh()`, `on(type, handler)` → unsubscribe, `destroy()` |
+| Lifecycle | `refresh()`, `on(type, handler)` (returns an unsubscribe function), `destroy()` |
 | Engines and DOM | `app` (Zumly), `canvas` (generated element), `mount` (host) |
 
-Options include `mount`, `views`, `initialView`, `theme`, `mode`, `shape`, `transitions`, `inputs`, `context`, `preload`, `router`, `backButton`, `backLabel`, `label`, `debug`, and `signal`. `router: true` enables Zumly's optional hash router. Router state belongs to the page URL, so use one routed canvas per page. Navigation methods return promises; await them when sequencing transitions.
+Options include `mount`, `views`, `initialView`, `theme`, `mode`, `shape`, `transitions`, `inputs`, `context`, `preload`, `router`, `backButton`, `backLabel`, `label`, `debug`, and `signal`. Set `router: true` for Zumly's hash router; use one routed canvas per page. Await navigation methods when sequencing transitions. See [the TypeScript declarations](index.d.ts) for signatures and payloads.
 
-Controller events are `ready`, `viewmount`, `viewchange`, `stylechange`, and `destroy`. Mount elements receive the corresponding bubbling `zircle:*` CustomEvents. Attach `zircle:ready` before initialization when observing startup; declarative startup failures emit `zircle:error`. Controller listeners receive the CustomEvent, and `event.detail` contains the payload.
+Controller events are `ready`, `viewmount`, `viewchange`, `stylechange`, and `destroy`. Listeners receive a CustomEvent with data in `event.detail`. The host also receives bubbling `zircle:*` events. Attach `zircle:ready` before initialization to observe startup; declarative startup failures emit `zircle:error`.
 
-The original palettes remain: `white`, `light-blue`, `black`, `purple`, `orange`, `yellow`, `blue`, `green`, `red`, `gray`. Modes: `light`, `light-filled`, `dark`, `dark-filled`. Shape: `circle` or `square`; individual components can override it. The default is black/dark/circle. Customize components with CSS rather than editing their generated structure.
+Palettes: `white`, `light-blue`, `black`, `purple`, `orange`, `yellow`, `blue`, `green`, `red`, `gray`. Modes: `light`, `light-filled`, `dark`, `dark-filled`. Shape: `circle` or `square`, with per-component overrides. The defaults are black, dark, and circle.
 
-## Development and migration
+## Development and releases
 
-```sh
-npx playwright install chromium firefox webkit
-npm test
-npm pack --dry-run
-```
+The scripts follow SnapDOM's release workflow:
 
-`npm test` builds distributions, runs package checks, and runs browser tests. `npm run test:browser` reruns browser checks against an existing build. CI uses the same checks. The development server accepts only GET/HEAD and can use `PORT=8081 npm run dev`.
+| Command | What it does |
+| --- | --- |
+| `npm run compile` | Generates JavaScript and CSS in `dist/` |
+| `npm run dev` | Serves the local demo on port 8080 |
+| `npm test` | Compiles, checks the package, and runs Chromium, Firefox, and WebKit tests |
+| `npm run bump:dry` | Previews a version bump with `@zumerbox/bump` |
+| `npm run bump` | Bumps the version, commits and tags it, then generates the changelog |
+| `npm run build` | Compiles and creates the `.tgz` package with `npm pack` |
+| `npm run release:push` | Commits `CHANGELOG.md` and pushes the current branch with its tags |
 
-Read [the migration guide](docs/MIGRATION.md) for Vue syntax changes and lifecycle differences. [The original source audit](docs/ORIGINAL.md) records every original component and the preservation contract. This is a DOM-based web library; framework independence does not imply native UIKit, Android Views, or React Native support without a WebView.
+Install the test browsers once with `npx playwright install chromium firefox webkit`. Run `npm run test:browser` to repeat browser tests against an existing build, or `npm run test:package` for package checks.
+
+For a release, start from a clean working tree on `main`: run `bump:dry`, `bump`, the tests, `build`, then `release:push`. Publishing to npm is a separate step. See [CONTRIBUTING](.github/CONTRIBUTING.md) for the commands.
+
+If you're coming from the Vue version, read [the migration guide](docs/MIGRATION.md). [The original component audit](docs/ORIGINAL.md) records the source and behavior used for this merge.
 
 MIT © Juan Martín Muda. Orbit and Zumly retain their own MIT licenses.
 

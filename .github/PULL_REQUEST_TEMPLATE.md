@@ -1,20 +1,13 @@
-## Pull Request Guidelines
+## Change
 
-- The `master` branch is basically just a snapshot of the latest stable release. All development should be done in dedicated branches. **Do not submit PRs against the `master` branch.**
+Describe the problem and the resulting behavior. Link the related issue, if there is one.
 
-- Checkout a topic branch from the relevant branch, e.g. `dev`, and merge back against that branch.
+## Verification
 
-- Work in the `src` folder and **DO NOT** checkin `dist` in the commits.
+List the checks you ran and their results. Add a demo or screenshot when it helps explain a visual change.
 
-- It's OK to have multiple small commits as you work on the PR - we will let GitHub automatically squash it before merging.
+## Before opening
 
-- Make sure `npm test` passes. (see [development setup](https://zircleui.github.io/docs/contribute/#development-setup))
-
-- If adding new feature:
-  - Add accompanying test case.
-  - Provide convincing reason to add this feature. Ideally you should open a suggestion issue first and have it greenlighted before working on it.
-
-- If fixing a bug:
-  - If you are resolving a special issue, add `(fix #xxxx[,#xxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update entities encoding/decoding (fix #3899)`.
-  - Provide detailed description of the bug in the PR. Live demo preferred.
-  - Add appropriate test coverage if applicable.
+- Target `main` from a topic branch.
+- Follow the [development setup](CONTRIBUTING.md) and run `npm test`.
+- Keep generated `dist/`, package archives and browser artifacts out of the commit.
