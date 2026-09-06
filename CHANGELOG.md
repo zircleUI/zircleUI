@@ -1,8 +1,15 @@
-# Changelog
+### Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file.
 
-## 2.0.0-alpha.0 — framework-free reconstruction (unreleased)
+### [v2.0.0](https://github.com/zircleUI/zircleUI/compare/v1.5.4...v2.0.0)
+
+> 6 September 2026
+
+- zircle 2.x rewrite: vanilla JS on Orbit + Zumly + custom elements [`004fab5`](https://github.com/zircleUI/zircleUI/commit/004fab5e14f8ba572a4b138ad73a478dbafdd12c)
+- Rebuild Zircle from its original components with Orbit and Zumly [`a2babf0`](https://github.com/zircleUI/zircleUI/commit/a2babf046502ab3e2aae63cca7cca56b7e875120)
+- demo: mission-control redesign + real-click snap navigation [`e7f8d27`](https://github.com/zircleUI/zircleUI/commit/e7f8d27a355a1c5fd33412c380be49e797287e34)
+- docs: introduce the Orbit and Zumly merge and align release scripts [`71f9b1a`](https://github.com/zircleUI/zircleUI/commit/71f9b1a6647ebed8c5a68949492e5c7791cf9ab5)
 
 Rebuilt from the original `master` components with Orbit 1.5.0 for radial layout and Zumly 0.97.0 for zoom navigation. Restores the original component family, palettes, nested spots, radial lists, controls, dialogs, and Sun/Earth/Moon example as native custom elements.
 
