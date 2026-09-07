@@ -2,9 +2,9 @@
 
 Zircle is a JavaScript library for circular interfaces with zoom navigation. Place controls around a view, nest circles inside other circles, and click a spot to zoom into another view.
 
-Zircle was my first project, built with Vue. I later split its layout and navigation into Orbit and Zumly. This alpha is the first merge of those two projects back into Zircle: Orbit handles radial layout, Zumly handles zoom and view history, and Zircle provides the components. You can use them directly in HTML or from a JavaScript framework.
+Zircle was my first project, built with Vue. I later split its layout and navigation into Orbit and Zumly. Version 2.0 is the first merge of those two projects back into Zircle: Orbit handles radial layout, Zumly handles zoom and view history, and Zircle provides the components. You can use them directly in HTML or from a JavaScript framework.
 
-The reconstruction is on `main`, at version `2.0.0-alpha.0`. The original Vue library remains on `master`. Build this checkout to try the merge; the examples below use its files and local package.
+The reconstruction is on `main` and is published to npm as `zircle@2.0.0`. The original Vue library remains on `master`. Install the package or build this checkout; the examples below work with either.
 
 ## Run the demo
 
@@ -22,7 +22,7 @@ Open http://127.0.0.1:8080 for the Sun, Earth & Moon demo and component examples
 
 ## Use it in HTML
 
-Copy the built `dist/` directory into your site and serve it over HTTP:
+Copy the `dist/` directory from the npm package (or from a local build) into your site and serve it over HTTP:
 
 ```html
 <link rel="stylesheet" href="./dist/zircle.css">
@@ -55,17 +55,22 @@ The standalone module includes Orbit and Zumly. For a classic script tag, replac
 
 This exposes `window.Zircle` and registers the same elements. `defer` lets the browser parse your templates before Zircle initializes. Load one JavaScript distribution and the stylesheet.
 
+The same files are available from a CDN without copying anything:
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/zircle@2.0.0/dist/zircle.css">
+<script defer src="https://unpkg.com/zircle@2.0.0/dist/zircle.iife.js"></script>
+```
+
 ## Use it with JavaScript
 
-Create a local package:
+Install the package:
 
 ```sh
-# In this repository: compile and create zircle-2.0.0-alpha.0.tgz
-npm run build
-
-# In your application: use the path to that file
-npm install /path/to/zircle-2.0.0-alpha.0.tgz
+npm install zircle
 ```
+
+To try a local build instead, run `npm run build` in this repository and install the generated `zircle-2.0.0.tgz` by path.
 
 Add a host element to your page:
 
