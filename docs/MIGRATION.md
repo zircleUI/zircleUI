@@ -1,6 +1,6 @@
 # Moving from Vue Zircle to framework-free Zircle
 
-The original source is `master` at commit `2bd60e731f7afb86c737177eb83decac01deb8e2` (Zircle 1.5.4). This branch rebuilds its component model with Orbit 1.5.0 and Zumly 0.97.0. It is a full rewrite; Vue templates and the global `$zircle` store are not source-compatible.
+The original source is the `legacy-vue` tag, commit `2bd60e731f7afb86c737177eb83decac01deb8e2` (Zircle 1.5.4). Zircle 2.0 rebuilds its component model with Orbit 1.5.0 and Zumly 0.97.0. It is a full rewrite; Vue templates and the global `$zircle` store are not source-compatible.
 
 The circular composition, nested spots, labels, images, progress, knobs, lists, dialogs, and spatial navigation remain the reference. [ORIGINAL.md](ORIGINAL.md) has the complete source audit, including distinctions between intended behavior and original defects.
 

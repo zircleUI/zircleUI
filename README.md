@@ -4,14 +4,14 @@ Zircle is a JavaScript library for circular interfaces with zoom navigation. Pla
 
 Zircle was my first project, built with Vue. I later split its layout and navigation into Orbit and Zumly. Version 2.0 is the first merge of those two projects back into Zircle: Orbit handles radial layout, Zumly handles zoom and view history, and Zircle provides the components. You can use them directly in HTML or from a JavaScript framework.
 
-The reconstruction is on `main` and is published to npm as `zircle@2.0.0`. The original Vue library remains on `master`. Install the package or build this checkout; the examples below work with either.
+This version is published to npm as `zircle@2.0.0`. The original Vue library is tagged `legacy-vue`. Install the package or build this checkout; the examples below work with either.
 
 ## Run the demo
 
 Use Node.js 20 or newer:
 
 ```sh
-git clone --branch main https://github.com/zircleUI/zircleUI.git
+git clone https://github.com/zircleUI/zircleUI.git
 cd zircleUI
 npm ci
 npm run compile

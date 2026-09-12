@@ -1,6 +1,6 @@
 # Returning to the original Zircle
 
-This is the source audit and preservation contract for rebuilding Zircle without Vue. The original branch in this repository is named **`master`**, not `main`. This audit reads commit **`2bd60e731f7afb86c737177eb83decac01deb8e2`**, whose package version is `1.5.4`. It does not use the former `dev` implementation as the product specification.
+This is the source audit and preservation contract for rebuilding Zircle without Vue. The original code is tagged **`legacy-vue`** in this repository. This audit reads commit **`2bd60e731f7afb86c737177eb83decac01deb8e2`**, whose package version is `1.5.4`. It does not use the former `dev` implementation as the product specification.
 
 The new composition is Orbit for radial layout, Zumly for spatial zoom and navigation, and Zircle for the original component vocabulary and its controls. The public tags remain `z-canvas`, `z-view`, `z-spot`, `z-list`, and `z-dialog`. They are framework-independent custom elements. Content is ordinary light DOM; `slot="content"`, `slot="image"`, `slot="media"`, and `slot="extension"` identify the original content relationships where supported.
 
@@ -8,7 +8,7 @@ This document records original behavior, including defects. A recorded behavior 
 
 ## Source coverage
 
-All references in this document refer to that commit. Use `git show master:<path>` to inspect them without switching branches.
+All references in this document refer to that commit. Use `git show legacy-vue:<path>` to inspect them without switching branches.
 
 | Area | Original source |
 | --- | --- |

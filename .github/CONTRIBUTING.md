@@ -1,6 +1,6 @@
 # Contributing to Zircle
 
-Open pull requests against `main`. The `master` branch preserves the original Vue library.
+Open pull requests against `main`. The original Vue library is tagged `legacy-vue`.
 
 ## Local development
 
